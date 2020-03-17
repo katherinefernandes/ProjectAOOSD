@@ -1,4 +1,4 @@
-package dataObjects;
+package users;
 
 public class LogisticCompany {
 
