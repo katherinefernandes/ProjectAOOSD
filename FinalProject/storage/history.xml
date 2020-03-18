@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:History xmlns:tns="dataStructure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="dataStructure dataStructure.xsd ">
+  <tns:DataPoint>
+    <tns:TimeStamp>2001-12-31T12:00:00</tns:TimeStamp>
+    <tns:ContainerID>0</tns:ContainerID>
+    <tns:JourneyID>0</tns:JourneyID>
+    <tns:ClientID>0</tns:ClientID>
+    <tns:DestinationPortID>0</tns:DestinationPortID>
+    <tns:StartPortID>0</tns:StartPortID>
+    <tns:Cargo>tns:Cargo</tns:Cargo>
+    <tns:InternalState>
+      <tns:Temperature>0.0</tns:Temperature>
+      <tns:Atmosphere>0.0</tns:Atmosphere>
+      <tns:Humidity>0.0</tns:Humidity>
+    </tns:InternalState>
+    <tns:Location>
+      <tns:Latitude>0.0</tns:Latitude>
+      <tns:Longitude>0.0</tns:Longitude>
+    </tns:Location>
+  </tns:DataPoint>
+</tns:History>

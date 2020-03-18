@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:Containers xmlns:tns="dataStructure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="dataStructure dataStructure.xsd ">
+  <tns:Container>
+    <tns:ClientID>0</tns:ClientID>
+    <tns:ContainerID>0</tns:ContainerID>
+    <tns:JourneyID>0</tns:JourneyID>
+    <tns:StartPortID>0</tns:StartPortID>
+    <tns:DestionationPortID>0</tns:DestionationPortID>
+    <tns:CurrentPosition>
+      <tns:Latitude>0.0</tns:Latitude>
+      <tns:Longitude>0.0</tns:Longitude>
+    </tns:CurrentPosition>
+    <tns:Cargo>tns:Cargo</tns:Cargo>
+    <tns:InternalState>
+      <tns:Temperature>0.0</tns:Temperature>
+      <tns:Atmosphere>0.0</tns:Atmosphere>
+      <tns:Humidity>0.0</tns:Humidity>
+    </tns:InternalState>
+    <tns:Updated>2001-12-31T12:00:00</tns:Updated>
+    <tns:ArriveBy>2001-12-31T12:00:00</tns:ArriveBy>
+  </tns:Container>
+</tns:Containers>
