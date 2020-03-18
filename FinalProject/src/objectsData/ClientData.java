@@ -1,13 +1,13 @@
-package dataObjects;
+package objectsData;
 
-public class DataClient {
+public class ClientData {
 	private int ClientId;
 	private String name;
 	private String phone;
 	private String email;
 	private String referenceName;
 	
-	public DataClient(int cl, String name, String phone, String email, String refname) {
+	public ClientData(int cl, String name, String phone, String email, String refname) {
 		this.ClientId=cl;
 		this.name=name;
 		this.phone=phone;

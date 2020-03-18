@@ -1,19 +1,19 @@
-package dataObjectsTests;
+package objectsDataTest;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import dataObjects.DataHistory;
-import dataObjects.InternalStatus;
+import objectsData.HistoryData;
+import objectsData.InternalStatusData;
 
-public class DataHistoryTest {
-	private DataHistory history;
-	private InternalStatus object = new InternalStatus(1,25,79);
+public class HistoryDataTest {
+	private HistoryData history;
+	private InternalStatusData object = new InternalStatusData(1,25,79);
 	@Before
 	public void testDataHistory() {
-		history = new DataHistory(1, "banana",object, 33,"netherlands");
+		history = new HistoryData(1, "banana",object, 33,"netherlands");
 		
 	}
 	@Test 

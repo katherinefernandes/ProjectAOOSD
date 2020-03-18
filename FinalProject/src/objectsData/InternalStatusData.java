@@ -1,10 +1,10 @@
-package dataObjects;
+package objectsData;
 
-public class InternalStatus {
+public class InternalStatusData {
 	private int pressure;
 	private int temperature;
 	private int humidity;
-	public InternalStatus(int p, int t, int h) {
+	public InternalStatusData(int p, int t, int h) {
 		this.pressure=p;
 		this.humidity=h;
 		this.temperature=t;

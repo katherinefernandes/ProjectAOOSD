@@ -1,17 +1,17 @@
-package dataObjectsTests;
+package objectsDataTest;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import dataObjects.DataClient;
+import objectsData.ClientData;
 
-public class DataClientTest {
-	private DataClient client;
+public class ClientDataTest {
+	private ClientData client;
 	@Before
 	public void testDataClient() {
-		client=new DataClient(1, "client1", "+404899000", "random@gmail.com", "trustedperson");
+		client=new ClientData(1, "client1", "+404899000", "random@gmail.com", "trustedperson");
 	}
 	
 	@Test

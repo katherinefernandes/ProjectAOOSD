@@ -1,17 +1,17 @@
-package dataObjects;
+package objectsData;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class DataHistory {
+public class HistoryData {
 	private LocalDateTime time;
 	private Date date;
 	private int ContainerId;
 	private String contains;
-	private InternalStatus status;
+	private InternalStatusData status;
 	private int journeyId;
 	private String location;
-	public DataHistory(int cont, String contains, InternalStatus status, int jou, String location) {
+	public HistoryData(int cont, String contains, InternalStatusData status, int jou, String location) {
 		this.time=LocalDateTime.now();
 		this.date=new Date();
 		this.ContainerId=cont;
@@ -21,7 +21,7 @@ public class DataHistory {
 		this.location=location;
 		
 	}
-	public InternalStatus getStatus() {
+	public InternalStatusData getStatus() {
 		return status;
 	}
 	public String getLocation() {
