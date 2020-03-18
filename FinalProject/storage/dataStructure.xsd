@@ -1,14 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/dataStructure" xmlns:tns="http://www.example.org/dataStructure" elementFormDefault="qualified">
+<schema targetNamespace="dataStructure" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="dataStructure">
 
-    <complexType name="Client">
+    <complexType name="ClientType">
     	<sequence>
-    		<element name="ClientID" type="string"></element>
-    		<element name="CompanyName" type="string"></element>
-    		<element name="PhoneNumber" type="int"></element>
-    		<element name="Email" type="string"></element>
-    		<element name="RefrencePersonName" type="string"></element>
-    		<element name="Address" type="string"></element>
+    		<element name="ClientID" type="tns:IDType"></element>
+    		<element name="CompanyName" type="tns:CompanyNameType"></element>
+    		<element name="PhoneNumber" type="tns:PhoneNumberType"></element>
+    		<element name="Email" type="tns:EmailType"></element>
+    		<element name="RefrencePersonName" type="tns:NameType"></element>
+    		<element name="Address" type="tns:AddressType"></element>
+    		<element name="ActiveShipments" type="tns:JourneyIDsType"></element>
+    	</sequence>
+    </complexType>
+
+
+
+
+
+    <element name="Clients" type="tns:ClientsType"></element>
+    
+    <complexType name="ClientsType">
+    	<sequence>
+    		<element name="Client" type="tns:ClientType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="PhoneNumberType">
+    	<restriction base="int"></restriction>
+    </simpleType>
+
+    <simpleType name="EmailType">
+    	<restriction base="string"></restriction>
+    </simpleType>
+
+    <simpleType name="IDType">
+    	<restriction base="int"></restriction>
+    </simpleType>
+
+
+    <complexType name="AddressType">
+    	<sequence>
+    		<element name="StreetName" type="string"></element>
+    		<element name="HouseNumber" type="int"></element>
+    		<element name="City" type="string"></element>
+    		<element name="ZipCode" type="int"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="NameType">
+    	<sequence>
+    		<element name="FirstName" type="string"></element>
+    		<element name="MiddleName" type="string" maxOccurs="1" minOccurs="0"></element>
+    		<element name="LastName" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="Containers" type="tns:ContainersType"></element>
+    
+    <complexType name="ContainersType">
+    	<sequence>
+    		<element name="Container" type="tns:ContainerType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="ContainerType">
+    	<sequence>
+            <element name="ContainerID" type="tns:IDType"></element>
+            <element name="ClientID" type="tns:IDType"></element>
+    		<element name="JourneyID" type="tns:IDType"></element>
+    		<element name="StartPortID" type="tns:IDType"></element>
+    		<element name="DestionationPortID" type="tns:IDType"></element>
+    		<element name="CurrentPosition" type="tns:PositionType"></element>
+    		<element name="Cargo" type="tns:CargoType"></element>
+    		<element name="InternalState"
+    			type="tns:InternalStateType">
+    		</element>
+    		<element name="Updated" type="dateTime"></element>
+    		<element name="ArriveBy" type="dateTime"></element>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="CompanyNameType">
+    	<restriction base="string"></restriction>
+    </simpleType>
+
+    <complexType name="PortType">
+    	<sequence>
+    		<element name="PortID" type="tns:IDType"></element>
+    		<element name="Country" type="tns:CountryType"></element>
+    		<element name="PortName" type="tns:PortNameType"></element>
+    		<element name="Position" type="tns:PositionType"></element>
+    		<element name="StationedContainers"
+    			type="tns:ContainerIDsType">
+    		</element>
+    		<element name="ArrivingContainers" type="tns:ContainerIDsType"></element>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="CountryType">
+    	<restriction base="string"></restriction>
+    </simpleType>
+
+    <simpleType name="PortNameType">
+    	<restriction base="string"></restriction>
+    </simpleType>
+
+    <complexType name="PositionType">
+    	<sequence>
+    		<element name="Latitude" type="float"></element>
+    		<element name="Longitude" type="float"></element>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="CargoType">
+    	<restriction base="string"></restriction>
+    </simpleType>
+
+    <complexType name="InternalStateType">
+    	<sequence>
+    		<element name="Temperature" type="float"></element>
+    		<element name="Atmosphere" type="float"></element>
+    		<element name="Humidity" type="float"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="Ports" type="tns:PortsType"></element>
+    
+    <complexType name="PortsType">
+    	<sequence>
+    		<element name="Port" type="tns:PortType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="History" type="tns:HistoryType"></element>
+    
+    <complexType name="HistoryType">
+    	<sequence>
+    		<element name="DataPoint" type="tns:DataPointType"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="DataPointType">
+    	<sequence>
+    		<element name="TimeStamp" type="dateTime"></element>
+    		<element name="ContainerID" type="tns:IDType"></element>
+    		<element name="JourneyID" type="tns:IDType"></element>
+    		<element name="ClientID" type="tns:IDType"></element>
+    		<element name="DestinationPortID" type="tns:IDType"></element>
+    		<element name="StartPortID" type="tns:IDType"></element>
+    		<element name="Cargo" type="tns:CargoType"></element>
+    		<element name="InternalState"
+    			type="tns:InternalStateType">
+    		</element>
+    		<element name="Location" type="tns:PositionType"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="ContainerIDsType">
+    	<sequence>
+    		<element name="ContainerID" type="tns:IDType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="JourneyIDsType">
+    	<sequence>
+    		<element name="JourneyID" type="tns:IDType" maxOccurs="unbounded" minOccurs="0"></element>
     	</sequence>
     </complexType>
 </schema>
