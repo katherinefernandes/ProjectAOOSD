@@ -4,11 +4,19 @@ import java.util.*;
 import javax.xml.stream.*;
 import javax.xml.stream.events.*;
 
-public abstract class DataAccess {
+import objectsData.ObjectData;
+
+public class DataAccess<OjectData> {
 	File dataBase;
-	public abstract ObjectData newEntry();
+	public void newEntry(ObjectData data) {
+		
+	}
 	
-	public abstract ObjectData editEntry();
+	public void editEntry(ObjectData data) {
+		
+	}
 	
-	public ObjectData getEntry(ID entryID);
+	public void getEntry() { 
+		
+	}
 }
