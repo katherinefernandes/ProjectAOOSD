@@ -14,14 +14,13 @@
     </complexType>
 
 
-
-
-
     <element name="Clients" type="tns:ClientsType"></element>
     
     <complexType name="ClientsType">
     	<sequence>
-    		<element name="Client" type="tns:ClientType" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="Client" type="tns:ClientType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
     	</sequence>
     </complexType>
 
@@ -167,4 +166,5 @@
     		<element name="JourneyID" type="tns:IDType" maxOccurs="unbounded" minOccurs="0"></element>
     	</sequence>
     </complexType>
+
 </schema>
