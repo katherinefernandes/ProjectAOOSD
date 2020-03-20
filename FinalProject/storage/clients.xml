@@ -1,20 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:Clients xmlns:tns="dataStructure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="dataStructure dataStructure.xsd ">
-  <tns:Client>
-    <tns:ClientID>0</tns:ClientID>
-    <tns:CompanyName>tns:CompanyName</tns:CompanyName>
-    <tns:PhoneNumber>0</tns:PhoneNumber>
-    <tns:Email>tns:Email</tns:Email>
-    <tns:RefrencePersonName>
-      <tns:FirstName>tns:FirstName</tns:FirstName>
-      <tns:LastName>tns:LastName</tns:LastName>
-    </tns:RefrencePersonName>
-    <tns:Address>
-      <tns:StreetName>tns:StreetName</tns:StreetName>
-      <tns:HouseNumber>0</tns:HouseNumber>
-      <tns:City>tns:City</tns:City>
-      <tns:ZipCode>0</tns:ZipCode>
-    </tns:Address>
-    <tns:ActiveShipments/>
-  </tns:Client>
-</tns:Clients>
+<tns:Clients xmlns:tns="dataStructure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="dataStructure dataStructure.xsd "></tns:Clients>
