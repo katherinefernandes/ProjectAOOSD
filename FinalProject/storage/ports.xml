@@ -1,14 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:Ports xmlns:tns="dataStructure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="dataStructure dataStructure.xsd ">
-  <tns:Port>
-    <tns:PortID>0</tns:PortID>
-    <tns:Country>tns:Country</tns:Country>
-    <tns:PortName>tns:PortName</tns:PortName>
-    <tns:Position>
-      <tns:Latitude>0.0</tns:Latitude>
-      <tns:Longitude>0.0</tns:Longitude>
-    </tns:Position>
-    <tns:StationedContainers/>
-    <tns:ArrivingContainers/>
-  </tns:Port>
-</tns:Ports>
+<tns:Ports xmlns:tns="dataStructure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="dataStructure dataStructure.xsd "></tns:Ports>
