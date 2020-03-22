@@ -28,6 +28,18 @@ public class ContainerData extends ObjectData {
 		this.arriveBy=arriveby;
 		
 	}
+	public void useContainerAgain(long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, LocalDateTime arriveby) {
+		this.clientID=clid;
+		this.journeyID=jid;
+		this.startPortID=spid;
+		this.destinationPortID=dpid;
+		this.currentPosition= new Location(lat,lon);
+		this.cargo=cargo;
+		this.status=new InternalState(a, t, h);
+		this.updated=LocalDateTime.now();
+		this.arriveBy=arriveby;
+	}
+	
 	public void setCurrentPosition(float lat, float lon) {
 		this.currentPosition.setLatitude(lat);
 		this.currentPosition.setlongitude(lon);
