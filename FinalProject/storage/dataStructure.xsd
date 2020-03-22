@@ -33,7 +33,7 @@
     </simpleType>
 
     <simpleType name="IDType">
-    	<restriction base="int"></restriction>
+    	<restriction base="long"></restriction>
     </simpleType>
 
 
