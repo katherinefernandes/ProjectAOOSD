@@ -7,9 +7,12 @@ import org.junit.jupiter.api.Test;
 class Login_PageTest {
 	
 	@Test
-	void test() {
+	void testget_input() {
+		
 		fail("Not yet implemented");
 		
+		
 	}
+
 
 }
