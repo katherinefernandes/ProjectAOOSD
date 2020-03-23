@@ -1,11 +1,10 @@
 package dataAccess;
 
 import objectsData.ClientData;
-
+import objectsData.ReferenceName;
+import objectsData.Address;
 
 import java.io.*;
-import javax.xml.parsers.*;
-import javax.xml.validation.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
@@ -16,7 +15,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 	
 	
 	ClientAccess() {
-		super("storage/clients.xml");
+		super("storage/activeData/clients.xml");
 	}
 	
 	public void newEntry(ClientData data) {
@@ -26,7 +25,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 		NodeList clients = root.getChildNodes();
 		int clientsLength = clients.getLength();
-		int clientIDValue = data.getClientId();
+		long clientIDValue = data.getClientID();
 		
 		if( (clientsLength == 0) || (clientIDValue >= getElementID(clients.item(clientsLength - 1)))) {
 			root.appendChild(newClient);
@@ -53,20 +52,21 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 	}
 
-	public ClientData getEntry(int ID) {
+	public ClientData getEntry(long ID) {
 		return null;
 	}
 
 	
-	public Element createNewClientElement(ClientData data) {
+	//-----------HELPER METHODS(private visibility)----------
+	private Element createNewClientElement(ClientData data) {
 		Element newClient = doc.createElement("Client");
-		newElementWithValue(newClient, "ClientID", String.valueOf(data.getClientId()));
+		newElementWithValue(newClient, "ClientID", String.valueOf(data.getClientID()));
 		newElementWithValue(newClient, "CompanyName", data.getCompanyName());
 		newElementWithValue(newClient, "PhoneNumber", String.valueOf(data.getPhoneNumber()));
 		newElementWithValue(newClient, "Email", data.getEmail());
 		
-		Name name = data.getName();
-		Element nameElement = doc.createElement("Name");
+		ReferenceName name = data.getPerson();
+		Element nameElement = doc.createElement("RefrencePersonName");
 		newElementWithValue(nameElement,"FirstName",name.getFirstName());
 		for(String middleName : name.getMiddleName()) {
 			newElementWithValue(nameElement,"MiddleName",middleName);
@@ -79,11 +79,11 @@ public class ClientAccess extends DataAccess<ClientData> {
 		newElementWithValue(addressElement,"StreetName",address.getStreetName());
 		newElementWithValue(addressElement,"HouseNumber",String.valueOf(address.getHouseNumber()));
 		newElementWithValue(addressElement,"City",address.getCity());
-		newElementWithValue(addressElement,"ZipCode",String.valueOf(address.getZipCode));
+		newElementWithValue(addressElement,"ZipCode",String.valueOf(address.getZipCode()));
 		newClient.appendChild(addressElement);
 		
 		Element activeShipments = doc.createElement("ActiveShipments");
-		for(long journeyID : data.getActiveShipments()) {
+		for(long journeyID : data.getActiveShipment()) {
 			newElementWithValue(activeShipments,"JourneyID",String.valueOf(journeyID));
 		}
 		newClient.appendChild(activeShipments);

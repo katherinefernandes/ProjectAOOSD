@@ -11,7 +11,7 @@ public class ClientData extends ObjectData{
 	private Address address;
 	private ArrayList<Long> activeShipment;
 	
-	public ClientData(long cid, String companyname, int phone, String email, String fn, String mn, String ln, String street, String city, int house, int zip) {
+	public ClientData(long cid, String companyname, int phone, String email, String fn, ArrayList<String> mn, String ln, String street, String city, int house, int zip) {
 		this.clientID=cid;
 		this.companyName=companyname;
 		this.phoneNumber=phone;
@@ -26,7 +26,7 @@ public class ClientData extends ObjectData{
 	public void setEmail(String email) {
 		this.email=email;
 	}
-	public void setPerson(String fn, String mn, String ln) {
+	public void setPerson(String fn, ArrayList<String> mn, String ln) {
 		this.person= new ReferenceName(fn,mn,ln);
 	}
 	public void addActiveShipment(Long JourneyID) {
@@ -53,4 +53,5 @@ public class ClientData extends ObjectData{
 	public ArrayList<Long> getActiveShipment(){
 		return this.activeShipment;
 	}
+	
 }

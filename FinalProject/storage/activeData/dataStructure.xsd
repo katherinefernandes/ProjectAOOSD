@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="urn:Schema-Namespace" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:Schema-Namespace">
+
+    <xsd:complexType name="ClientType">
+    	<xsd:sequence>
+    		<xsd:element name="ClientID" type="IDType"></xsd:element>
+    		<xsd:element name="CompanyName" type="CompanyNameType"></xsd:element>
+    		<xsd:element name="PhoneNumber" type="PhoneNumberType"></xsd:element>
+    		<xsd:element name="Email" type="EmailType"></xsd:element>
+    		<xsd:element name="RefrencePersonName" type="NameType"></xsd:element>
+    		<xsd:element name="Address" type="AddressType"></xsd:element>
+    		<xsd:element name="ActiveShipments" type="JourneyIDsType"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:element name="Clients">
+    <xsd:complexType>
+    <xsd:sequence>
+    		<xsd:element name="Client" type="ClientType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    
+
+    <xsd:simpleType name="PhoneNumberType">
+    	<xsd:restriction base="xsd:int"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="EmailType">
+    	<xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="IDType">
+    	<xsd:restriction base="xsd:long"></xsd:restriction>
+    </xsd:simpleType>
+
+
+    <xsd:complexType name="AddressType">
+    	<xsd:sequence>
+    		<xsd:element name="StreetName" type="xsd:string"></xsd:element>
+    		<xsd:element name="HouseNumber" type="xsd:int"></xsd:element>
+    		<xsd:element name="City" type="xsd:string"></xsd:element>
+    		<xsd:element name="ZipCode" type="xsd:int"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NameType">
+    	<xsd:sequence>
+    		<xsd:element name="FirstName" type="xsd:string"></xsd:element>
+    		<xsd:element name="MiddleName" type="xsd:string" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    		<xsd:element name="LastName" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="Containers" type="ContainersType"></xsd:element>
+    
+    <xsd:complexType name="ContainersType">
+    	<xsd:sequence>
+    		<xsd:element name="Container" type="ContainerType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContainerType">
+    	<xsd:sequence>
+            <xsd:element name="ContainerID" type="IDType"></xsd:element>
+            <xsd:element name="ClientID" type="IDType"></xsd:element>
+    		<xsd:element name="JourneyID" type="IDType"></xsd:element>
+    		<xsd:element name="StartPortID" type="IDType"></xsd:element>
+    		<xsd:element name="DestionationPortID" type="IDType"></xsd:element>
+    		<xsd:element name="CurrentPosition" type="PositionType"></xsd:element>
+    		<xsd:element name="Cargo" type="CargoType"></xsd:element>
+    		<xsd:element name="InternalState" type="InternalStateType">
+    		</xsd:element>
+    		<xsd:element name="Updated" type="xsd:dateTime"></xsd:element>
+    		<xsd:element name="ArriveBy" type="xsd:dateTime"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="CompanyNameType">
+    	<xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="PortType">
+    	<xsd:sequence>
+    		<xsd:element name="PortID" type="IDType"></xsd:element>
+    		<xsd:element name="Country" type="CountryType"></xsd:element>
+    		<xsd:element name="PortName" type="PortNameType"></xsd:element>
+    		<xsd:element name="Position" type="PositionType"></xsd:element>
+    		<xsd:element name="StationedContainers" type="ContainerIDsType">
+    		</xsd:element>
+    		<xsd:element name="ArrivingContainers" type="ContainerIDsType"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="CountryType">
+    	<xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="PortNameType">
+    	<xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="PositionType">
+    	<xsd:sequence>
+    		<xsd:element name="Latitude" type="xsd:float"></xsd:element>
+    		<xsd:element name="Longitude" type="xsd:float"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="CargoType">
+    	<xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="InternalStateType">
+    	<xsd:sequence>
+    		<xsd:element name="Temperature" type="xsd:float"></xsd:element>
+    		<xsd:element name="Atmosphere" type="xsd:float"></xsd:element>
+    		<xsd:element name="Humidity" type="xsd:float"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="Ports" type="PortsType"></xsd:element>
+    
+    <xsd:complexType name="PortsType">
+    	<xsd:sequence>
+    		<xsd:element name="Port" type="PortType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="History" type="HistoryType"></xsd:element>
+    
+    <xsd:complexType name="HistoryType">
+    	<xsd:sequence>
+    		<xsd:element name="DataPoint" type="DataPointType"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DataPointType">
+    	<xsd:sequence>
+    		<xsd:element name="TimeStamp" type="xsd:dateTime"></xsd:element>
+    		<xsd:element name="ContainerID" type="IDType"></xsd:element>
+    		<xsd:element name="JourneyID" type="IDType"></xsd:element>
+    		<xsd:element name="ClientID" type="IDType"></xsd:element>
+    		<xsd:element name="DestinationPortID" type="IDType"></xsd:element>
+    		<xsd:element name="StartPortID" type="IDType"></xsd:element>
+    		<xsd:element name="Cargo" type="CargoType"></xsd:element>
+    		<xsd:element name="InternalState" type="InternalStateType">
+    		</xsd:element>
+    		<xsd:element name="Location" type="PositionType"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContainerIDsType">
+    	<xsd:sequence>
+    		<xsd:element name="ContainerID" type="IDType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="JourneyIDsType">
+    	<xsd:sequence>
+    		<xsd:element name="JourneyID" type="IDType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+
+</xsd:schema>

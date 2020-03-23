@@ -1,6 +1,5 @@
 package dataAccess;
 
-import objectsData.ClientData;
 import objectsData.ObjectData;
 
 import java.io.*;
@@ -25,7 +24,7 @@ public class DataAccess<T extends ObjectData> {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		
 		dataBase = new File(filePath);
-		schemaFile = new File("storage/dataStructure.xsd");
+		schemaFile = new File("storage/activeData/dataStructure.xsd");
 		
 		schema = schemaFactory.newSchema(schemaFile);
 		dbFactory.setSchema(schema);
@@ -52,7 +51,9 @@ public class DataAccess<T extends ObjectData> {
 		return null;
 	}
 	
-	public void newElementWithValue(Element parentElement, String elementName, String elementValue) {
+	
+	//---------HELPER METHODS(protected visibility)----------
+	protected void newElementWithValue(Element parentElement, String elementName, String elementValue) {
 		Element element = doc.createElement(elementName);
 		Text valueNode = doc.createTextNode(String.valueOf(elementValue));
 		
@@ -60,11 +61,11 @@ public class DataAccess<T extends ObjectData> {
 		parentElement.appendChild(element);
 	}
 	
-	public int getElementID(Node node) {
+	protected int getElementID(Node node) {
 		return Integer.parseInt(node.getChildNodes().item(0).getTextContent());
 	}
 	
-	public void insertElementSorted(Element root, Element newClient) {
+	protected void insertElementSorted(Element root, Element newClient) {
 		int newClientIDValue = getElementID(newClient);
 		NodeList clients = root.getChildNodes();
 		int lower = 0;
