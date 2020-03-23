@@ -41,7 +41,7 @@ public class DataAccess<T extends ObjectData> {
 		
 	}
 	
-	public T getEntry(int ID) {
+	public T getEntry(long ID) {
 		return null;
 	}
 }

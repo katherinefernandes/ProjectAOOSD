@@ -26,7 +26,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 	}
 
-	public ClientData getEntry(int ID) {
+	public ClientData getEntry(long ID) {
 		return null;
 	}
 
