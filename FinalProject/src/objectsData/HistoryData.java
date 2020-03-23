@@ -1,35 +1,58 @@
 package objectsData;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class HistoryData extends ObjectData {
-	private LocalDateTime time;
-	private Date date;
-	private int ContainerId;
-	private String contains;
-	private InternalStatusData status;
-	private int journeyId;
-	private String location;
-	public HistoryData(int cont, String contains, InternalStatusData status, int jou, String location) {
-		this.time=LocalDateTime.now();
-		this.date=new Date();
-		this.ContainerId=cont;
-		this.contains=contains;
-		this.status=status;
-		this.journeyId=jou;
-		this.location=location;
-		
+	private  LocalDateTime timeStamp ;
+	private long containerID;
+	private long journeyID;
+	private long clientID;
+	private long destinationPortID;
+	private long startPortID;
+	private String cargo;
+	private InternalState status;
+	private Location location;
+	
+	public HistoryData (long cid, long jid, long clid, long dpid, long stid, String cargo, float temp, float atm, float humidity, float lat,float longitude) {
+		this.timeStamp = LocalDateTime.now();
+		this.containerID = cid;
+		this.journeyID = jid;
+		this.clientID = clid;
+		this.destinationPortID = dpid;
+		this.startPortID = stid;
+		this.cargo = cargo;
+		this.status = new InternalState(atm, temp, humidity);
+		this.location = new Location(lat,longitude);
 	}
-	public InternalStatusData getStatus() {
-		return status;
+	public LocalDateTime getTimeStamp() {
+		return this.timeStamp;
 	}
-	public String getLocation() {
-		return location;
+	public long getContainerID() {
+		return this.containerID;
 	}
-	public String getContains() {
-		return contains;
+	public long getJourneyID() {
+		return this.journeyID;
 	}
+	public long getClientID() {
+		return this.clientID;
+	}
+	public long getDestinationPortID() {
+		return this.destinationPortID;
+	}
+	public long getStartPortID() {
+		return this.startPortID;
+	}
+	
+	public String getCargo() {
+		return this.cargo;
+	}
+	public InternalState getInternalStatus() {
+		return this.status;
+	}
+	public Location getLocation() {
+		return this.location;
+	}
+	
 	
 	
 }

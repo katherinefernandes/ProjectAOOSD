@@ -1,33 +1,56 @@
 package objectsData;
 
+import java.util.ArrayList;
+
 public class ClientData extends ObjectData{
-	private int ClientId;
-	private String name;
-	private String phone;
+	private long clientID;
+	private String companyName;
+	private int phoneNumber;
 	private String email;
-	private String referenceName;
+	private ReferenceName person;
+	private Address address;
+	private ArrayList<Long> activeShipment;
 	
-	public ClientData(int cl, String name, String phone, String email, String refname) {
-		this.ClientId=cl;
-		this.name=name;
-		this.phone=phone;
+	public ClientData(long cid, String companyname, int phone, String email, String fn, String mn, String ln, String street, String city, int house, int zip) {
+		this.clientID=cid;
+		this.companyName=companyname;
+		this.phoneNumber=phone;
+		this.email= email;
+		this.person= new ReferenceName(fn,mn,ln);
+		this.address= new Address(street,house,city,zip);
+		this.activeShipment= new ArrayList<Long>();
+	}
+	public void setPhoneNumber(int phone) {
+		this.phoneNumber=phone;
+	}
+	public void setEmail(String email) {
 		this.email=email;
-		this.referenceName=refname;
 	}
-	public int getClientId() {
-		return ClientId;
+	public void setPerson(String fn, String mn, String ln) {
+		this.person= new ReferenceName(fn,mn,ln);
 	}
-	
-	public String getName() {
-		return name;
+	public void addActiveShipment(Long JourneyID) {
+		this.activeShipment.add(JourneyID);
 	}
-	public String getPhone() {
-		return phone;
+	public long getClientID() {
+		return this.clientID;
+	}
+	public String getCompanyName() {
+		return this.companyName;
+	}
+	public int getPhoneNumber() {
+		return this.phoneNumber;
 	}
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
-	public String getRefName() {
-		return referenceName;
+	public ReferenceName getPerson() {
+		return this.person;
+	}
+	public Address getAddress() {
+		return this.address;
+	}
+	public ArrayList<Long> getActiveShipment(){
+		return this.activeShipment;
 	}
 }

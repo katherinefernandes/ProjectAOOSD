@@ -2,37 +2,68 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import objectsData.ClientData;
-
 public class ClientDataTest {
-	private ClientData client;
-	@Before
-	public void testDataClient() {
-		client=new ClientData(1, "client1", "+404899000", "random@gmail.com", "trustedperson");
-	}
-	
+
 	@Test
-	public void testGetClientId() {
-		assertEquals("should be equal",1,client.getClientId());
+	public void testClientData() {
+		fail("Not yet implemented");
 	}
+
 	@Test
-	public void testGetName() {
-		assertEquals("should be equal","client1",client.getName());
+	public void testSetPhoneNumber() {
+		fail("Not yet implemented");
 	}
+
 	@Test
-	public void testGetPhone() {
-		assertEquals("should be equal","+404899000",client.getPhone());
+	public void testSetEmail() {
+		fail("Not yet implemented");
 	}
+
+	@Test
+	public void testSetPerson() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testAddActiveShipment() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetClientID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetCompanyName() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetPhoneNumber() {
+		fail("Not yet implemented");
+	}
+
 	@Test
 	public void testGetEmail() {
-		assertEquals("should be equal","random@gmail.com",client.getEmail());
+		fail("Not yet implemented");
 	}
+
 	@Test
-	public void testGetRefName() {
-		assertEquals("should be equal","trustedperson",client.getRefName());
+	public void testGetPerson() {
+		fail("Not yet implemented");
 	}
-	
+
+	@Test
+	public void testGetAddress() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetActiveShipment() {
+		fail("Not yet implemented");
+	}
+
 }

@@ -1,64 +1,88 @@
 package objectsData;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class ContainerData extends ObjectData {
-	private int ContainerId;
-	private int ClientId;
-	private String Contains;
-	private int JourneyId;
-	private String StartLocation;
-	private String CurrentLocation;
-	private String Destination;
-	private InternalStatusData Current = new InternalStatusData(1,25,79);
-	private Date deadline;
-	public String getStartLocation() {
-		return StartLocation;
-	}
-	public String getDestination() {
-		return Destination;
-	}
-	public Date getDeadline() {
-		return deadline;
-	}
-	public int getContainerId() {
-		return this.ContainerId;
-	}
-	public int getClientId() {
-		return this.ClientId;
-	}
-	public int getJourneyId() {
-		return this.JourneyId;
-	}
-	public String getContains() {
-		return this.Contains;
-	}
-	public void setCurrentLocation(String location) {
-		this.CurrentLocation=location;
-	}
-	public String getCurrentLocation() {
-		return CurrentLocation;
-	}
-	public InternalStatusData getInternalStatus() {
-		return Current;
-	}
-	public void setInternalStatus(InternalStatusData status) {
-		this.Current=status;
-	}
-	public ContainerData(int cont,int cli, String contains, int jou, String stl, String des, Date deadline) {
+	private long containerID;
+	private long clientID;
+	private long journeyID;
+	private long startPortID;
+	private long destinationPortID;
+	private Location currentPosition;
+	private String cargo;
+	private InternalState status;
+	private LocalDateTime updated;
+	private LocalDateTime arriveBy;
+	
+	public ContainerData(long cid, long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, LocalDateTime arriveby) {
 		
-		this.ContainerId=cont;
-		this.ClientId=cli;
-		this.Contains=contains;
-		this.JourneyId=jou;
-		this.StartLocation=stl;
-		this.CurrentLocation=stl;
-		this.Destination=des;
-		this.deadline=deadline;
+		this.containerID=cid;
+		this.clientID=clid;
+		this.journeyID=jid;
+		this.startPortID=spid;
+		this.destinationPortID=dpid;
+		this.currentPosition= new Location(lat,lon);
+		this.cargo=cargo;
+		this.status=new InternalState(a, t, h);
+		this.updated=LocalDateTime.now();
+		this.arriveBy=arriveby;
 		
 	}
+	public void useContainerAgain(long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, LocalDateTime arriveby) {
+		this.clientID=clid;
+		this.journeyID=jid;
+		this.startPortID=spid;
+		this.destinationPortID=dpid;
+		this.currentPosition= new Location(lat,lon);
+		this.cargo=cargo;
+		this.status=new InternalState(a, t, h);
+		this.updated=LocalDateTime.now();
+		this.arriveBy=arriveby;
+	}
+	
+	public void setCurrentPosition(float lat, float lon) {
+		this.currentPosition.setLatitude(lat);
+		this.currentPosition.setlongitude(lon);
+		this.updated=LocalDateTime.now();
+	}
+	public void setStatus(float a, float t, float h) {
+		this.status.setAtmosphere(a);
+		this.status.setHumidity(h);
+		this.status.setTemperature(t);
+		this.updated=LocalDateTime.now();
+	}
 	
 	
+	public Location getCurrentPosition() {
+		return this.currentPosition;
+	}
+	public LocalDateTime getUpdated() {
+		return this.updated;
+	}
+	public LocalDateTime getArriveBy() {
+		return this.arriveBy;
+	}
 	
+	public long getContainerID() {
+		return this.containerID;
+	}
+	public long getJourneyID() {
+		return this.journeyID;
+	}
+	public long getClientID() {
+		return this.clientID;
+	}
+	public long getDestinationPortID() {
+		return this.destinationPortID;
+	}
+	public long getStartPortID() {
+		return this.startPortID;
+	}
 	
+	public String getCargo() {
+		return this.cargo;
+	}
+	public InternalState getInternalStatus() {
+		return this.status;
+	}
 }

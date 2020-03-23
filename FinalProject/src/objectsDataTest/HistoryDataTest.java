@@ -2,31 +2,58 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import objectsData.HistoryData;
-import objectsData.InternalStatusData;
-
 public class HistoryDataTest {
-	private HistoryData history;
-	private InternalStatusData object = new InternalStatusData(1,25,79);
-	@Before
-	public void testDataHistory() {
-		history = new HistoryData(1, "banana",object, 33,"netherlands");
-		
+
+	@Test
+	public void testHistoryData() {
+		fail("Not yet implemented");
 	}
-	@Test 
-	public void testGetStatus() {
-		assertSame(object,history.getStatus());
+
+	@Test
+	public void testGetTimeStamp() {
+		fail("Not yet implemented");
 	}
+
+	@Test
+	public void testGetContainerID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetJourneyID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetClientID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetDestinationPortID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetStartPortID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetCargo() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetInternalStatus() {
+		fail("Not yet implemented");
+	}
+
 	@Test
 	public void testGetLocation() {
-		assertSame("netherlands",history.getLocation());
-	}
-	@Test
-	public void testGetContains() {
-		assertSame("banana",history.getContains());
+		fail("Not yet implemented");
 	}
 
 }
