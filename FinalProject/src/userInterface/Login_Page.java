@@ -26,9 +26,6 @@ class Login_Page {
 				if(templogin.trim()==username.trim() && tempPass.trim()==password.trim()) {
 					found=true; //we'll stop searching for the username
 					System.out.println("print");
-					
-					
-					
 				}
 				
 			System.out.println(found);	
