@@ -5,10 +5,14 @@ import java.util.Scanner;
 class Login_Page {
 	// the path takes the value of the file context where all the data is
 	// I assume we will search for username and password are searched for in the file
+	boolean found = false;
+	String templogin = "";
+	String tempPass = "";
+	public boolean LCompany = false;
 	public void get_input() {
-		boolean found = false;
-		String templogin = "";
-		String tempPass = "";
+//		boolean found = false;
+//		String templogin = "";
+//		String tempPass = "";
 		
 		Scanner s = new Scanner (System.in);
 		System.out.println("Enter LogIn :");
@@ -45,8 +49,22 @@ class Login_Page {
 			
 		
 }
-		s.close();
-		}
+	
+	}
+	
+		
+public boolean status() {	
+	if (tempPass.trim()=="admin" && templogin.trim()=="admin" ){
+		LCompany = true;
+	}
+	return LCompany;
+
+
+	
+
+}
+		
+ 
 
 
 //
@@ -54,5 +72,5 @@ class Login_Page {
 //	Login_Page l = new Login_Page();
 //	l.get_input();
 //	
-//}
+//}	
 }
