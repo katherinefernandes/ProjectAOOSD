@@ -2,58 +2,74 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
+
+import org.junit.Before;
 import org.junit.Test;
+
+import objectsData.HistoryData;
 
 public class HistoryDataTest {
 
-	@Test
+	private HistoryData objectTest;
+	
+	@Before
 	public void testHistoryData() {
-		fail("Not yet implemented");
+		objectTest = new HistoryData(45l,36l,78l,89l,90l,"Banana",36.0f,1.0f,75.0f,56.0f,7.8f);
+		
 	}
 
 	@Test
 	public void testGetTimeStamp() {
-		fail("Not yet implemented");
+		assertNotSame(LocalDateTime.now(),objectTest.getTimeStamp());
 	}
 
 	@Test
 	public void testGetContainerID() {
-		fail("Not yet implemented");
+		assertEquals(45,(int) objectTest.getContainerID());
+		
+		
 	}
 
 	@Test
 	public void testGetJourneyID() {
-		fail("Not yet implemented");
+		assertEquals(36,(int) objectTest.getJourneyID());
+		
+		
 	}
 
 	@Test
 	public void testGetClientID() {
-		fail("Not yet implemented");
+		assertEquals(78,(int) objectTest.getClientID());
+		
 	}
 
 	@Test
 	public void testGetDestinationPortID() {
-		fail("Not yet implemented");
+		assertEquals(89,(int) objectTest.getDestinationPortID());
+		
 	}
 
 	@Test
 	public void testGetStartPortID() {
-		fail("Not yet implemented");
+		assertEquals(90,(int) objectTest.getStartPortID());
 	}
 
 	@Test
 	public void testGetCargo() {
-		fail("Not yet implemented");
+		assertSame("Banana",objectTest.getCargo());
+		
 	}
 
 	@Test
 	public void testGetInternalStatus() {
-		fail("Not yet implemented");
+		assertEquals((int)36,(int)objectTest.getInternalStatus().getTemperature());
 	}
 
 	@Test
 	public void testGetLocation() {
-		fail("Not yet implemented");
+		assertEquals((int)7.8,(int)objectTest.getLocation().getlongitude());
+		
 	}
 
 }
