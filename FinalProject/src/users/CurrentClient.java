@@ -1,5 +1,6 @@
 package users;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
@@ -22,20 +23,32 @@ public class CurrentClient {
 			displayClientInfo();
 		}
 	}
+	private String infoClient() {
+		return "\nClient Name is: \t"+client.getCompanyName()+"\nClient Phone number is: \t"+client.getPhoneNumber()+"\nClient email is: \t"+client.getEmail()+"\nClient reference person is: \t"+client.getPerson().getFirstName()+" "+client.getPerson().getMiddleName()+" "+client.getPerson().getLastName();
+	}
 
 	private void displayClientInfo() {
-		System.out.println("Client Name is: \n"+client.getCompanyName());
-		System.out.println("Client Phone number is: \n"+client.getPhoneNumber());
-		System.out.println("Client email is: \n"+client.getEmail());
-		System.out.println("Client reference person is: \n"+client.getPerson().getFirstName()+" "+client.getPerson().getMiddleName()+" "+client.getPerson().getLastName());
-	}
+		System.out.println(infoClient());
+		}
 	
 	private void updateReferencePerson() {
 		
+		s = new Scanner (System.in);
+		System.out.println("Enter the first name of the person: ");
+		String firstname = s.next();
+		System.out.println("Enter the middle names of the person: ");
+		ArrayList<String> middlename = new ArrayList<String>();
+		middlename.add( s.next());// assuming that only 1 name is entered.
+		System.out.println("Enter the last name of the person: ");
+		String lastname = s.next();
+		client.setPerson(firstname, middlename, lastname);
 	}
 	
 	private void updateEmail() {
-		
+		s = new Scanner (System.in);
+		System.out.println("Enter the new email: ");
+		String email= s.next();
+		client.setEmail(email);
 	}
 	
 	public void updateInfoClient() {
@@ -54,6 +67,7 @@ public class CurrentClient {
 		case 2: updateEmail(); break;
 		}
 		display=true;
+		database.editEntry(client);
 	}
 	
 	
