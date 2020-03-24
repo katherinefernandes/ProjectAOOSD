@@ -10,6 +10,7 @@ public class ClientData extends ObjectData{
 	private ReferenceName person;
 	private Address address;
 	private ArrayList<Long> activeShipment;
+
 	
 	public ClientData(long cid, String companyname, int phone, String email, String fn, ArrayList<String> mn, String ln, String street, String city, int house, int zip) {
 		this.clientID=cid;

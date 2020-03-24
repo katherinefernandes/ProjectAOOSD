@@ -12,7 +12,7 @@ public class HistoryData extends ObjectData {
 	private String cargo;
 	private InternalState status;
 	private Location location;
-	
+ 
 	public HistoryData (long cid, long jid, long clid, long dpid, long stid, String cargo, float temp, float atm, float humidity, float lat,float longitude) {
 		this.timeStamp = LocalDateTime.now();
 		this.containerID = cid;

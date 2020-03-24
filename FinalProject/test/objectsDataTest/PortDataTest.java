@@ -2,23 +2,20 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
-import java.io.FileNotFoundException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import objectsData.PortData;
-import supportingClasses.Security;
 
 public class PortDataTest {
 	
 	
 	private PortData objectTest;
-	private Security ids;
 	
 	@Before
 	public void testPortData() {
-		objectTest = new PortData(ids.get_ID(),"Pakistan","gawadar",36.0f,87.0f);
+		objectTest = new PortData(36l,"Pakistan","gawadar",36.0f,87.0f);
 		
 	}
 
@@ -40,28 +37,23 @@ public class PortDataTest {
 	@Test
 	public void testGetPosition() {
 		
-		assertEquals((int)36.0f,(int)objectTest.getPosition().getLatitude());
+		assertSame((int)36.0f,(int)objectTest.getPosition().getLatitude());
 		
 	}
 
 	@Test
 	public void testGetStationedContainers() {
-		objectTest.addStationedContainer(ids.get_ID());
+		assertTrue(objectTest.getStationedContainers().isEmpty());
+		objectTest.addStationedContainer(89l);
+		assertFalse(objectTest.getStationedContainers().isEmpty());
 	}
 
 	@Test
 	public void testGetArrivingContainers() {
-		fail("Not yet implemented");
+		assertTrue(objectTest.getArrivingContainers().isEmpty());
+		objectTest.addArrivingContainer(30l);
+		assertFalse(objectTest.getArrivingContainers().isEmpty());
 	}
 
-	@Test
-	public void testAddStationedContainer() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddArrivingContainer() {
-		fail("Not yet implemented");
-	}
 
 }

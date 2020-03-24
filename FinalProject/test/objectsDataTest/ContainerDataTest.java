@@ -2,13 +2,35 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
+
+import org.junit.Before;
 import org.junit.Test;
 
-public class ContainerDataTest {
+import objectsData.ContainerData;
 
-	@Test
+public class ContainerDataTest {
+	private ContainerData objectTest;
+	private long cid =78l;
+	private long clid=87l;
+	private long jid=74l;
+	private long spid=75l;
+	private long dpid=72l; 
+	private float lat= 8.7f;
+	private float lon= 78.9f;
+	private String cargo="banana";
+	private float t =36.8f;
+	private float a=1.2f;
+	private float h=78.0f;
+	private LocalDateTime arriveby = LocalDateTime.now();
+	
+	
+	@Before
 	public void testContainerData() {
-		fail("Not yet implemented");
+		
+		objectTest = new ContainerData( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, arriveby);
+		
+		
 	}
 
 	@Test
