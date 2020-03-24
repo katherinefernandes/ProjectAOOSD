@@ -2,46 +2,40 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class InternalStateTest {
+import objectsData.InternalState;
 
+public class InternalStateTest {
 	
+	private InternalState testobject;
 	
-	
-	@Test
+	@Before
 	public void testInternalState() {
-		fail("Not yet implemented");
+		testobject = new InternalState(1.0f,36.9f,75.0f);
 	}
 
 	@Test
 	public void testGetAtmosphere() {
-		fail("Not yet implemented");
+		assertEquals((int) 1.0f,(int)testobject.getAtmosphere());
+		testobject.setAtmosphere(3.0f);
+		assertEquals((int) 3.0f,(int)testobject.getAtmosphere());
 	}
 
 	@Test
 	public void testGetTemperature() {
-		fail("Not yet implemented");
+		assertEquals((int) 36.9f,(int)testobject.getTemperature());
+		testobject.setTemperature(33.0f);
+		assertEquals((int) 33.0f,(int)testobject.getTemperature());
 	}
 
 	@Test
 	public void testGetHumidity() {
-		fail("Not yet implemented");
+		assertEquals((int) 75.0f,(int)testobject.getHumidity());
+		testobject.setHumidity(80.0f);
+		assertEquals((int) 80.0f,(int)testobject.getHumidity());
 	}
 
-	@Test
-	public void testSetAtmosphere() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTemperature() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetHumidity() {
-		fail("Not yet implemented");
-	}
 
 }
