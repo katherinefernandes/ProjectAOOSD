@@ -2,38 +2,51 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+
+import org.junit.Before;
 import org.junit.Test;
 
-public class PortDataTest {
+import objectsData.PortData;
+import supportingClasses.Security;
 
-	@Test
+public class PortDataTest {
+	
+	
+	private PortData objectTest;
+	private Security ids;
+	
+	@Before
 	public void testPortData() {
-		fail("Not yet implemented");
+		objectTest = new PortData(ids.get_ID(),"Pakistan","gawadar",36.0f,87.0f);
+		
 	}
 
 	@Test
 	public void testGetPortID() {
-		fail("Not yet implemented");
+		assertNotSame(122900L,objectTest.getPortID());
 	}
 
 	@Test
 	public void testGetCountry() {
-		fail("Not yet implemented");
+		assertSame("Pakistan",objectTest.getCountry());
 	}
 
 	@Test
 	public void testGetPortName() {
-		fail("Not yet implemented");
+		assertSame("gawadar",objectTest.getPortName());
 	}
 
 	@Test
 	public void testGetPosition() {
-		fail("Not yet implemented");
+		
+		assertEquals((int)36.0f,(int)objectTest.getPosition().getLatitude());
+		
 	}
 
 	@Test
 	public void testGetStationedContainers() {
-		fail("Not yet implemented");
+		objectTest.addStationedContainer(ids.get_ID());
 	}
 
 	@Test
