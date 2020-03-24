@@ -2,33 +2,38 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class AddressTest {
+import objectsData.Address;
 
-	@Test
+public class AddressTest {
+	private Address testclass;
+	
+	@Before
 	public void testAddress() {
-		fail("Not yet implemented");
+		testclass= new Address("G11/2",59,"Islamabad",2620);
 	}
 
 	@Test
 	public void testGetStreetName() {
-		fail("Not yet implemented");
+		assertSame("G11/2", testclass.getStreetName());
 	}
 
 	@Test
 	public void testGetCity() {
-		fail("Not yet implemented");
+		assertSame("Islamabad", testclass.getCity());
 	}
 
 	@Test
 	public void testGetHouseNumber() {
-		fail("Not yet implemented");
+
+		assertSame(59, testclass.getHouseNumber());
 	}
 
 	@Test
 	public void testGetZipCode() {
-		fail("Not yet implemented");
+		assertEquals(2620, testclass.getZipCode());
 	}
 
 }
