@@ -53,6 +53,8 @@ public class ClientAccess extends DataAccess<ClientData> {
 	}
 
 	public ClientData getEntry(long ID) {
+		Element root = doc.getDocumentElement();
+		
 		return null;
 	}
 
