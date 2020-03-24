@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-class Security {	
-	public long get_ID() throws FileNotFoundException {
+public class Security {	
+	public long get_ID()  {
     	//we need to save the id in the txt file
 //    	File file = new File("output.txt");
 //    	FileOutputStream fos = new FileOutputStream(file);
@@ -18,11 +18,15 @@ class Security {
 		//System.out.println("userID "+ userID);
 		//System.out.println("journeyID "+ journeyID);
 		//System.out.println("ID: "+ ID);
-		File file = new File("output.txt");
-    	FileOutputStream fos = new FileOutputStream(file);
-    	PrintStream ps = new PrintStream(fos);
-    	System.setOut(ps);
-		return ID;
+		try {
+			File file = new File("output.txt");
+	    	FileOutputStream fos = new FileOutputStream(file);
+	    	PrintStream ps = new PrintStream(fos);
+	    	System.setOut(ps);
+	    	return ID;
+		} catch(FileNotFoundException e) {
+			return ID;
+		}
 	
 }    
 
