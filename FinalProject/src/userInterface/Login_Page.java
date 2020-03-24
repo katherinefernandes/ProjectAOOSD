@@ -17,7 +17,7 @@ class Login_Page {
 		String password = s.nextLine();
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
-			Scanner x = new Scanner (new File("/Users/daniela/Desktop/Test_File.txt"));
+			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/storage/clients.xml "));
 			x.useDelimiter("[,\n]"); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
 			//time to loop through the txt file to check for the username and password
 			while(x.hasNext() && !found) {
@@ -36,22 +36,23 @@ class Login_Page {
 			
 			
 		}
+
 		
 		catch(Exception e) {
 			System.out.println("Username and Password don't match");
+			get_input();
 			
 			
-		}
 		
-		
+}
+		s.close();
 		}
 
 
-
+//
 //public static void main (String[] args) {
 //	Login_Page l = new Login_Page();
 //	l.get_input();
-//
 //	
 //}
 }
