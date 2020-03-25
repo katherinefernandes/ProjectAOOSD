@@ -20,15 +20,19 @@ public class TestDataAccess {
 	public void setup() {
 		clientAccess = new ClientAccess();
 		
+		ArrayList<String> firstNames = new ArrayList<String>();
+		firstNames.add("Rincewind");
 		ArrayList<String> middleNames = new ArrayList<String>();
 		middleNames.add("S.");
 		middleNames.add("Thompson");
 		middleNames.add("Providence");
+		ArrayList<String> lastNames = new ArrayList<String>();
+		lastNames.add("Marx");
 		
-		client = new ClientData(102621L,"Washington cleaning",
+		client = new ClientData(102621L,"Washington cleaning",45,
 								123456789,"clean.your.pipes@wash.com",
-								"Rincewind",middleNames,"Marx",
-								"Bakerstreet","Derry",42,1213);
+								firstNames,middleNames,lastNames,
+								"Bakerstreet","Derry",42,"1213");
 	}
 	
 	@Test
