@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 public class Security {	
 	//try generating ID in chaotic order
-	public static long generateID()  {
+	public long generateID()  {
     	//we need to save the id in the txt file
 //    	File file = new File("output.txt");
 //    	FileOutputStream fos = new FileOutputStream(file);

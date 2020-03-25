@@ -1,18 +1,26 @@
 package users;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
+import dataAccess.ContainerAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
+import objectsData.ContainerData;
+import supportingClasses.Security;
+import supportingClasses.activeContainers;
 
 public class CurrentClient {
 	private ClientData client;
 	private Scanner s = new Scanner (System.in);
 	private Long clientID;
-	private ClientAccess database;
+	private ClientAccess databaseClient;
+	private ContainerAccess databaseContainer;
+	private ContainerData container;
 	private boolean display=true;
+	private activeContainers containers = new activeContainers();
 	private int choice;
 	
 	public void getInfoClient(){
@@ -26,7 +34,7 @@ public class CurrentClient {
 			try {
 				System.out.println("Please enter your valid clientID");
 				clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct value
-				client = database.getEntry(clientID);
+				client = databaseClient.getEntry(clientID);
 				break;
 			} catch (ElementNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -70,7 +78,6 @@ public class CurrentClient {
 		client.setEmail(email);
 	}
 	private String inputForUpdateEmail() {
-		s = new Scanner (System.in);
 		System.out.println("Enter the new email: ");
 		String email= s.next();
 		return email;
@@ -85,7 +92,7 @@ public class CurrentClient {
 		}
 		display=true;
 		try {
-			database.editEntry(client);
+			databaseClient.editEntry(client);
 		} catch (ElementNotFoundException e) {
 			e.printStackTrace(); //find a better way to fix this
 			System.out.println("Client can't be edited for some weird reason");
@@ -103,5 +110,26 @@ public class CurrentClient {
 		return choice;
 	}
 	
+	public void addJourney() {
+		//long containerID = containers.assignContainer();
+		//long clientId = 89l;//ask client to enter valid ID
+		//long journeyId = new Security().generateID();
+		//long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime arriveby
+	 //get the startport and destination portid by asking user where it wants cargo to do. (ask user: start and end place to generate the startid and destID, ask for clientID, ask for arriveby, ask for current internalstatus or set that to ideal,
+	}
+	
+	public void viewInternalStatusOfAJourney() {
+		while (true) {
+			System.out.println("Please enter valid containerID");
+			long containerID = s.nextLong(); // in actual it should be a string which is parsed to return a long but waiting for the validinput class
+			container = databaseContainer.getEntry(containerID);
+			//remember to add the catch phrase once the containerAccess is updated.
+			break;
+		}
+		System.out.println("The internal atmosphere is:  "+container.getInternalStatus().getAtmosphere());
+		System.out.println("The internal Temperature is:  "+ container.getInternalStatus().getTemperature());
+		System.out.println("The internal Humidity is:  "+container.getInternalStatus().getHumidity());
+	
+	}
 	
 }

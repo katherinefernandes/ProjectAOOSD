@@ -51,7 +51,7 @@ public class LogisticCompany {
 		System.out.println("Post code: ");
 		String zip = s.nextLine();
 		
-		long id = Security.generateID();
+		long id = new Security().generateID();
 		
 		//Check for valid input
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstNames, middleNames, lastNames, street, city, bNumber, zip);
