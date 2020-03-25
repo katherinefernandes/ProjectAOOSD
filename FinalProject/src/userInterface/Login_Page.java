@@ -22,8 +22,11 @@ class Login_Page {
 		System.out.println("Enter Password : ");
 		this.password = s.nextLine();
 		Login();
+		s.close();
 	}
+	
 	public void Login() {
+		
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
 			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/storage/clients.xml "));
@@ -35,47 +38,31 @@ class Login_Page {
 				if(templogin.trim()==username.trim() && tempPass.trim()==password.trim()) {
 					found=true; //we'll stop searching for the username
 					System.out.println("print");
-				}
-				
+				}	
 			System.out.println(found);	
 			}
 			x.close();
-			System.out.println(found);
-			
-			
-			
+			System.out.println(found);	
 		}
-
 		
 		catch(Exception e) {
 			System.out.println("Username and Password don't match");
 			get_input();
-			
-			
-		
-}
-	
+				
+}	
 	}
 	
-public boolean found_information() {
-	return found;
+	public boolean found_information() {
+		return found;
 }
-	
-		
-public boolean status() {	
-	if (tempPass.trim()=="admin" && templogin.trim()=="admin" ){
-		LCompany = true;
-	}
-	return LCompany;
-
-
-	
-
+			
+	public boolean status() {	
+		if (tempPass.trim()=="admin" && templogin.trim()=="admin" ){
+			LCompany = true;
+		}
+		return LCompany;
 }
 		
- 
-
-
 //
 //public static void main (String[] args) {
 //	Login_Page l = new Login_Page();
