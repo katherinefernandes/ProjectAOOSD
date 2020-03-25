@@ -4,9 +4,9 @@ public class Address {
   private String streetName;
   private int houseNumber;
   private String city;
-  private int zipCode;
+  private String zipCode;
   
-  public Address(String streetname, int house, String city, int zip) {
+  public Address(String streetname, int house, String city, String zip) {
 	  this.streetName=streetname;
 	  this.houseNumber=house;
 	  this.city=city;
@@ -22,7 +22,7 @@ public class Address {
    public int getHouseNumber() {
 	  return houseNumber;
   }
-   public int getZipCode() {
+   public String getZipCode() {
 	  return zipCode;
   }
 }

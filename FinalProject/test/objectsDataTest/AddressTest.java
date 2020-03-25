@@ -12,7 +12,7 @@ public class AddressTest {
 	
 	@Before
 	public void testAddress() {
-		testclass= new Address("G11/2",59,"Islamabad",2620);
+		testclass= new Address("G11/2",59,"Islamabad","2620");
 	}
 
 	@Test
@@ -33,7 +33,7 @@ public class AddressTest {
 
 	@Test
 	public void testGetZipCode() {
-		assertEquals(2620, testclass.getZipCode());
+		assertSame("2620", testclass.getZipCode());
 	}
 
 }
