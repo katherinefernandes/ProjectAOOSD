@@ -35,12 +35,14 @@ public class CurrentClient {
 		
 		s = new Scanner (System.in);
 		System.out.println("Enter the first name of the person: ");
-		String firstname = s.next();
+		ArrayList<String> firstname = new ArrayList<String>();
+		firstname.add(s.next());
 		System.out.println("Enter the middle names of the person: ");
 		ArrayList<String> middlename = new ArrayList<String>();
 		middlename.add( s.next());// assuming that only 1 name is entered.
 		System.out.println("Enter the last name of the person: ");
-		String lastname = s.next();
+		ArrayList<String> lastname = new ArrayList<String>();
+		lastname.add(s.next());
 		client.setPerson(firstname, middlename, lastname);
 	}
 	
