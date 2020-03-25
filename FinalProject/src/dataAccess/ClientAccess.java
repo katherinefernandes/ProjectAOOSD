@@ -21,44 +21,45 @@ public class ClientAccess extends DataAccess<ClientData> {
 	public void newEntry(ClientData data) {
 		Element root = doc.getDocumentElement();
 		
-		Element newClient = createNewClientElement(data);
+		Element newClient = elementFromData(data);
 		
 		NodeList clients = root.getChildNodes();
 		int clientsLength = clients.getLength();
 		long clientIDValue = data.getClientID();
 		
-		if( (clientsLength == 0) || (clientIDValue >= getElementID(clients.item(clientsLength - 1)))) {
+		if( (clientsLength == 0) || (clientIDValue >= getElementID((Element) clients.item(clientsLength - 1)))) {
 			root.appendChild(newClient);
 		}
 		else {
-			insertElementSorted(root, newClient);
+			insertElement(newClient);
 		}
 		
-		try {
-			
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File(filePath));
-		transformer.transform(source, result);
 		
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		transform();
 	}
 
 
-	public void editEntry(ClientData data) {
+	public void editEntry(ClientData data) throws ElementNotFoundException{
+		Element root = doc.getDocumentElement();
+		Element oldClient;
+		Element newClient = elementFromData(data);
 		
+		oldClient = getElementFromID(getElementID(newClient));
+		root.replaceChild(newClient, oldClient);
+		
+		transform();
 	}
 
-	public ClientData getEntry(long ID) {
-		return null;
+	public ClientData getEntry(long ID) throws ElementNotFoundException {
+		Element client = getElementFromID(ID);
+		ClientData clientData = dataFromElement(client);
+		return clientData;
 	}
 
 	
-	//-----------HELPER METHODS(private visibility)----------
-	private Element createNewClientElement(ClientData data) {
+	
+	
+	protected Element elementFromData(ClientData data) {
 		Element newClient = doc.createElement("Client");
 		newElementWithValue(newClient, "ClientID", String.valueOf(data.getClientID()));
 		newElementWithValue(newClient, "CompanyName", data.getCompanyName());
