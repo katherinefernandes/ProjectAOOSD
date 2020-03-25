@@ -1,4 +1,6 @@
-package dataObjects;
+package users;
+
+import supportingClasses.validInput;
 
 public class Testing {
 

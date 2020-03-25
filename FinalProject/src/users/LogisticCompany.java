@@ -1,5 +1,8 @@
-package dataObjects;
-import java.util.Scanner; 
+package users;
+import java.util.Scanner;
+
+import dataAccess.ClientAccess;
+import objectsData.ClientData; 
 
 public class LogisticCompany {
 	public void addClient () {
