@@ -68,7 +68,7 @@ public class ContainerData extends ObjectData {
 	}
 	public long getJourneyID() {
 		return this.journeyID;
-	}
+	} 
 	public long getClientID() {
 		return this.clientID;
 	}
@@ -78,7 +78,7 @@ public class ContainerData extends ObjectData {
 	public long getStartPortID() {
 		return this.startPortID;
 	}
-	
+ 
 	public String getCargo() {
 		return this.cargo;
 	}
