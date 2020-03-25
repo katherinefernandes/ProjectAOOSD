@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 public class Security {	
 	
-	public long get_ID()  {
+	public static long generateID()  {
     	//we need to save the id in the txt file
 //    	File file = new File("output.txt");
 //    	FileOutputStream fos = new FileOutputStream(file);

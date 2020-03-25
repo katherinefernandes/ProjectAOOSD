@@ -2,7 +2,8 @@ package users;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
-import objectsData.ClientData; 
+import objectsData.ClientData;
+import supportingClasses.Security; 
 
 public class LogisticCompany {
 	public void addClient () {
