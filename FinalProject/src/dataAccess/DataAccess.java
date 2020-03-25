@@ -12,6 +12,9 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.*;
 import org.w3c.dom.*;
 
+import exceptions.AmbiguousElementSelectionException;
+import exceptions.ElementNotFoundException;
+
 public class DataAccess<T extends ObjectData> {
 	String filePath;
 	File dataBase;
@@ -68,6 +71,17 @@ public class DataAccess<T extends ObjectData> {
 	
 	protected int getElementID(Element element) {
 		return Integer.parseInt(element.getChildNodes().item(0).getTextContent());
+	}
+	
+	public String valueFromTagName(Element root, String tagName) throws AmbiguousElementSelectionException, ElementNotFoundException {
+		NodeList element = root.getElementsByTagName(tagName);
+		if(element.getLength() > 1) {
+			throw new AmbiguousElementSelectionException("Multiple elements with same tag name");
+		}
+		if(element.getLength() < 1) {
+			throw new ElementNotFoundException("No element with that tag name");
+		}
+		return element.item(0).getTextContent();
 	}
 	
 	protected void insertElement(Element newElement) {

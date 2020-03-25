@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
-import dataAccess.ElementNotFoundException;
+import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
 public class CurrentClient {
@@ -20,7 +20,12 @@ public class CurrentClient {
 		s = new Scanner (System.in);
 		System.out.println("Please enter your valid clientID");
 		clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatdly try to get the correct value
-		client = database.getEntry(clientID);
+		try {
+			client = database.getEntry(clientID);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (display) {
 			displayClientInfo();
 		}
@@ -71,7 +76,12 @@ public class CurrentClient {
 		case 2: updateEmail(); break;
 		}
 		display=true;
-		database.editEntry(client);
+		try {
+			database.editEntry(client);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
