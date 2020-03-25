@@ -1,4 +1,5 @@
 package users;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
@@ -15,18 +16,28 @@ public class LogisticCompany {
 		System.out.println("E-mail: ");
 		String email = s.nextLine();
 		
+		System.out.println("Country code: ");
+		int countryCode = s.nextInt();
+		
 		System.out.println("Phone number: ");
-		String phone = s.nextLine();
+		int phone = s.nextInt();
+		
+		ArrayList<String> firstNames = new ArrayList<String>();
+		ArrayList<String> middleNames = new ArrayList<String>();
+		ArrayList<String> lastNames = new ArrayList<String>();
 		
 		System.out.println("Reference person ");
 		System.out.println("First name: ");
 		String firstName = s.nextLine();
+		firstNames.add(firstName);
 		
 		System.out.println("Middle name: ");
 		String middleName = s.nextLine();
+		firstNames.add(middleName);
 		
 		System.out.println("Last name: ");
 		String lastName = s.nextLine();
+		lastNames.add(lastName);
 		
 		System.out.println("Street: ");
 		String street = s.nextLine();
@@ -35,7 +46,7 @@ public class LogisticCompany {
 		String city = s.nextLine();
 		
 		System.out.println("Building number: ");
-		String bNumber = s.nextLine();
+		int bNumber = s.nextInt();
 		
 		System.out.println("Post code: ");
 		String zip = s.nextLine();
@@ -43,9 +54,10 @@ public class LogisticCompany {
 		long id = Security.generateID();
 		
 		//Check for valid input
-		ClientData newClient = new ClientData(id, name, phone, email, firstName, middleName, lastName, street, city, bNumber, zip);
+		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstNames, middleNames, lastNames, street, city, bNumber, zip);
 		
-		ClientAccess.newEntry(newClient);
+		ClientAccess clientAccess = new ClientAccess();
+		clientAccess.newEntry(newClient);
 		s.close();
 	}
 	

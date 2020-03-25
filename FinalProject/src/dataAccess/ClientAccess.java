@@ -14,7 +14,7 @@ import org.w3c.dom.*;
 public class ClientAccess extends DataAccess<ClientData> {
 	
 	
-	ClientAccess() {
+	public ClientAccess() {
 		super("storage/activeData/clients.xml");
 	}
 	
