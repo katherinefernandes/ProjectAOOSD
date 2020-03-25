@@ -12,11 +12,14 @@ import objectsData.ReferenceName;
 public class ReferenceNameTest {
 	private ReferenceName name;
 	private ArrayList<String> middlename = new ArrayList<String>();
-	
+	private ArrayList<String> firstname = new ArrayList<String>();
+	private ArrayList<String> lastname = new ArrayList<String>();
 	@Before
 	public void testReferenceName() {
 		middlename.add("J");
-		name = new ReferenceName("Mamuna",middlename,"azam");
+		firstname.add("Mamuna");
+		lastname.add("azam");
+		name = new ReferenceName(firstname,middlename,lastname);
 	}
 	
 	@Test
