@@ -8,6 +8,8 @@ class Login_Page {
 	boolean found = false;
 	String templogin = "";
 	String tempPass = "";
+	String username;
+	String password;
 	public boolean LCompany = false;
 	public void get_input() {
 //		boolean found = false;
@@ -16,9 +18,12 @@ class Login_Page {
 		
 		Scanner s = new Scanner (System.in);
 		System.out.println("Enter LogIn :");
-		String username = s.nextLine();
+		this.username = s.nextLine();
 		System.out.println("Enter Password : ");
-		String password = s.nextLine();
+		this.password = s.nextLine();
+		Login();
+	}
+	public void Login() {
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
 			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/storage/clients.xml "));

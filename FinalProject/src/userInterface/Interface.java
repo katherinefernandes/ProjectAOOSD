@@ -39,8 +39,9 @@ public class Interface {
 	
 	public void load_Menu() {
 		Login_Page L = new Login_Page();
-		try {
 		L.get_input();
+		try {
+//		L.get_input();
 		if (L.status() == true) {
 			get_LogisticMenu();
 		}
