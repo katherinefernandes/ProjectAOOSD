@@ -52,6 +52,10 @@ class Login_Page {
 	
 	}
 	
+public boolean found_information() {
+	return found;
+}
+	
 		
 public boolean status() {	
 	if (tempPass.trim()=="admin" && templogin.trim()=="admin" ){
