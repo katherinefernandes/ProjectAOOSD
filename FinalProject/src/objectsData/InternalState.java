@@ -1,6 +1,6 @@
 package objectsData;
 
-public class InternalState extends ObjectData {
+public class InternalState  {
 	private float Atmosphere;
 	private float Temperature;
 	private float Humidity;

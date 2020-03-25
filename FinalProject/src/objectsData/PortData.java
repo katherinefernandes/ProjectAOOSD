@@ -2,7 +2,7 @@ package objectsData;
 
 import java.util.ArrayList;
 
-public class PortData {
+public class PortData extends ObjectData{
 	private long portID;
 	private String country;
 	private String portName;

@@ -5,10 +5,14 @@ import java.util.Scanner;
 class Login_Page {
 	// the path takes the value of the file context where all the data is
 	// I assume we will search for username and password are searched for in the file
+	boolean found = false;
+	String templogin = "";
+	String tempPass = "";
+	public boolean LCompany = false;
 	public void get_input() {
-		boolean found = false;
-		String templogin = "";
-		String tempPass = "";
+//		boolean found = false;
+//		String templogin = "";
+//		String tempPass = "";
 		
 		Scanner s = new Scanner (System.in);
 		System.out.println("Enter LogIn :");
@@ -17,7 +21,7 @@ class Login_Page {
 		String password = s.nextLine();
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
-			Scanner x = new Scanner (new File("/Users/daniela/Desktop/Test_File.txt"));
+			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/storage/clients.xml "));
 			x.useDelimiter("[,\n]"); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
 			//time to loop through the txt file to check for the username and password
 			while(x.hasNext() && !found) {
@@ -36,22 +40,37 @@ class Login_Page {
 			
 			
 		}
+
 		
 		catch(Exception e) {
 			System.out.println("Username and Password don't match");
+			get_input();
 			
 			
-		}
 		
+}
+	
+	}
+	
 		
-		}
+public boolean status() {	
+	if (tempPass.trim()=="admin" && templogin.trim()=="admin" ){
+		LCompany = true;
+	}
+	return LCompany;
 
 
+	
 
+}
+		
+ 
+
+
+//
 //public static void main (String[] args) {
 //	Login_Page l = new Login_Page();
 //	l.get_input();
-//
 //	
-//}
+//}	
 }

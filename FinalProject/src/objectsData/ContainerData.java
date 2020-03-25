@@ -15,7 +15,7 @@ public class ContainerData extends ObjectData {
 	private LocalDateTime arriveBy;
 	
 	public ContainerData(long cid, long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, LocalDateTime arriveby) {
-		
+	
 		this.containerID=cid;
 		this.clientID=clid;
 		this.journeyID=jid;
@@ -68,7 +68,7 @@ public class ContainerData extends ObjectData {
 	}
 	public long getJourneyID() {
 		return this.journeyID;
-	}
+	} 
 	public long getClientID() {
 		return this.clientID;
 	}
@@ -78,7 +78,7 @@ public class ContainerData extends ObjectData {
 	public long getStartPortID() {
 		return this.startPortID;
 	}
-	
+ 
 	public String getCargo() {
 		return this.cargo;
 	}

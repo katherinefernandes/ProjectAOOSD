@@ -5,7 +5,7 @@
     	<xsd:sequence>
     		<xsd:element name="ClientID" type="IDType"></xsd:element>
     		<xsd:element name="CompanyName" type="CompanyNameType"></xsd:element>
-    		<xsd:element name="PhoneNumber" type="PhoneNumberType"></xsd:element>
+    		<xsd:element name="PhoneNumber" type="PhoneNrType"></xsd:element>
     		<xsd:element name="Email" type="EmailType"></xsd:element>
     		<xsd:element name="RefrencePersonName" type="NameType"></xsd:element>
     		<xsd:element name="Address" type="AddressType"></xsd:element>
@@ -41,15 +41,15 @@
     		<xsd:element name="StreetName" type="xsd:string"></xsd:element>
     		<xsd:element name="HouseNumber" type="xsd:int"></xsd:element>
     		<xsd:element name="City" type="xsd:string"></xsd:element>
-    		<xsd:element name="ZipCode" type="xsd:int"></xsd:element>
+    		<xsd:element name="ZipCode" type="xsd:string"></xsd:element>
     	</xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="NameType">
     	<xsd:sequence>
-    		<xsd:element name="FirstName" type="xsd:string"></xsd:element>
+    		<xsd:element name="FirstName" type="xsd:string" maxOccurs="unbounded" minOccurs="1"></xsd:element>
     		<xsd:element name="MiddleName" type="xsd:string" maxOccurs="unbounded" minOccurs="0"></xsd:element>
-    		<xsd:element name="LastName" type="xsd:string"></xsd:element>
+    		<xsd:element name="LastName" type="xsd:string" maxOccurs="unbounded" minOccurs="1"></xsd:element>
     	</xsd:sequence>
     </xsd:complexType>
 
@@ -164,4 +164,11 @@
     </xsd:complexType>
 
 
+
+    <xsd:complexType name="PhoneNrType">
+    	<xsd:sequence>
+    		<xsd:element name="countryCode" type="xsd:int"></xsd:element>
+    		<xsd:element name="PhoneNr" type="xsd:int"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
 </xsd:schema>
