@@ -21,10 +21,10 @@ public class ReferenceNameTest {
 		lastname.add("azam");
 		name = new ReferenceName(firstname,middlename,lastname);
 	}
-	
+
 	@Test
 	public void testGetfirstname() {
-		assertSame("Mamuna",name.getFirstName());
+		assertSame("Mamuna",name.getFirstName().get(0));
 	}
 	
 	@Test
@@ -34,7 +34,7 @@ public class ReferenceNameTest {
 	
 	@Test
 	public void testGetlastname() {
-		assertSame("azam",name.getLastName());
+		assertSame("azam",name.getLastName().get(0));
 	}
 
 }

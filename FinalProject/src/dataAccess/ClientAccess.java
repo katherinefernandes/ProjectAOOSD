@@ -67,11 +67,16 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 		ReferenceName name = data.getPerson();
 		Element nameElement = doc.createElement("RefrencePersonName");
-		newElementWithValue(nameElement,"FirstName",name.getFirstName());
+		for(String firstname : name.getFirstName()) {
+			newElementWithValue(nameElement,"FirstName",firstname);
+		}
+		
 		for(String middleName : name.getMiddleName()) {
 			newElementWithValue(nameElement,"MiddleName",middleName);
 		}
-		newElementWithValue(nameElement,"LastName",name.getLastName());
+		for (String lastName: name.getLastName()) {
+			newElementWithValue(nameElement,"LastName",lastName);
+		}
 		newClient.appendChild(nameElement);
 		
 		Address address = data.getAddress();
