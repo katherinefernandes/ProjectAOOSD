@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
+import dataAccess.ElementNotFoundException;
 import objectsData.ClientData;
 
 public class CurrentClient {
@@ -13,7 +14,8 @@ public class CurrentClient {
 	private ClientAccess database;
 	private boolean display=true;
 	private int choice;
-	public void getInfoClient() {
+	
+	public void getInfoClient(){
 			
 		s = new Scanner (System.in);
 		System.out.println("Please enter your valid clientID");
@@ -53,7 +55,7 @@ public class CurrentClient {
 		client.setEmail(email);
 	}
 	
-	public void updateInfoClient() {
+	public void updateInfoClient(){
 		display=false;
 		getInfoClient();
 		while (true) {
