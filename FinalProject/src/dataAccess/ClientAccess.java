@@ -10,6 +10,9 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
+import exceptions.AmbiguousElementSelectionException;
+import exceptions.ElementNotFoundException;
+
 
 public class ClientAccess extends DataAccess<ClientData> {
 	
@@ -95,4 +98,22 @@ public class ClientAccess extends DataAccess<ClientData> {
 		newClient.appendChild(activeShipments);
 		return newClient;
 	}
+	
+	protected ClientData dataFromElement(Element client) {
+		try {
+			int clientID = Integer.valueOf(valueFromTagName(client, "ClientID"));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AmbiguousElementSelectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
+

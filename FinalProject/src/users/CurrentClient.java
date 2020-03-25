@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
-import dataAccess.ElementNotFoundException;
+import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
 public class CurrentClient {
