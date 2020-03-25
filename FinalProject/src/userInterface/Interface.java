@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import dataAccess.DataAccess;
 import objectsData.ClientData;
 import users.CurrentClient;
+import users.LogisticCompany;
 
 public class Interface {
 	
@@ -31,6 +32,17 @@ public class Interface {
 		System.out.println("+-------------------------------------+");
 		System.out.println("|Welcome to the Logistics Company Menu| ");
 		System.out.println("+-------------------------------------+");
+		LogisticCompany l = new LogisticCompany();
+		l.getInfoClient();
+		l.getInfoContainer();
+		System.out.println("If you want add new Client------press button------");
+		button();
+		l.addClient();
+		System.out.println("Click for updating the container information");
+		button()
+		l.updateContainer();
+		
+		
 		
 		
 		
