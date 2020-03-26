@@ -3,13 +3,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
+import dataAccess.ContainerAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
+import objectsData.ContainerData;
 import supportingClasses.Security;
 import supportingClasses.parseInput;
 import supportingClasses.validInput; 
 
 public class LogisticCompany {
+	private ContainerData container;
+	private ContainerAccess databaseContainer;
+	
 	public void addClient () {
 		Scanner s = new Scanner(System.in);
 		
@@ -118,8 +123,11 @@ public class LogisticCompany {
 	public void updateContainer() {
 		Scanner s = new Scanner(System.in);
 		
+		
 		System.out.println("ID of the container: ");
 		long idc = s.nextLong();
+		
+		container = databaseContainer.getEntry(idc);
 		
 		System.out.println("New longitude: ");
 		float lon = s.nextFloat();
@@ -127,12 +135,10 @@ public class LogisticCompany {
 		System.out.println("New latitude: ");
 		float lat = s.nextFloat();
 		
-		/*try {
-			ContainerAccess.setCurrentPosition(lat, lon);
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace(); //find a better way to fix this
-			System.out.println("Client can't be edited for some weird reason");
-		}*/
+		
+		
+		container.setCurrentPosition(lat, lon);
+		
 		
 		System.out.println("Atmosphere: ");
 		float atm = s.nextFloat();
@@ -143,12 +149,9 @@ public class LogisticCompany {
 		System.out.println("Temperature: ");
 		float temp = s.nextFloat();
 		
-		/*try {
-			ContainerAccess.setStatus(atm, temp, hum);
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace(); //find a better way to fix this
-			System.out.println("Client can't be edited for some weird reason");
-		}*/
+		
+		container.setStatus(atm, temp, hum);
+		
 		
 		s.close();
 	}
