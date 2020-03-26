@@ -107,8 +107,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 	}
 	
 	protected ClientData dataFromElement(Element client) throws NumberFormatException, AmbiguousElementSelectionException, ElementNotFoundException {
-		
-		int clientID = Integer.valueOf(nodeMethods.valueFromTagName(client, "ClientID"));
+		long clientID = Integer.valueOf(nodeMethods.valueFromTagName(client, "ClientID"));
 		String companyName = nodeMethods.valueFromTagName(client, "CompanyName");
 		int countryCode = Integer.valueOf(nodeMethods.valueFromTagName(nodeMethods.singleElementFromTagName(client,"PhoneNumber"), "CountryCode"));
 		int phoneNumber = Integer.valueOf(nodeMethods.valueFromTagName(nodeMethods.singleElementFromTagName(client,"PhoneNumber"), "PhoneBaseNumber"));
@@ -123,12 +122,16 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 		NodeList activeShipmentsElements = nodeMethods.singleElementFromTagName(client, "ActiveShipments").getChildNodes();
 		List<String> journeyIDStrings = getValuesFromChildNodes(activeShipmentsElements);
-		List<Integer> journeyIDs = new ArrayList<>();
+		List<Long> journeyIDs = new ArrayList<>();
 		for (int i = 0; i < journeyIDStrings.size(); i++) {
-			journeyIDs.add(Integer.valueOf(journeyIDStrings.get(i)));
+			journeyIDs.add(Long.valueOf(journeyIDStrings.get(i)));
 		}
 		
-		return null;
+		
+		ClientData clientData = new ClientData(clientID, companyName, countryCode, phoneNumber, email, (ArrayList<String>) names.get(0), (ArrayList<String>) names.get(1), (ArrayList<String>) names.get(2), streetName, city, houseNumber, zipCode);
+		
+		
+		return clientData;
 	}
 
 	public List<List<String>> getNames(Element client) throws AmbiguousElementSelectionException, ElementNotFoundException {
