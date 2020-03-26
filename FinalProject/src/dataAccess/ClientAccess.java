@@ -84,7 +84,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 		newElementWithValue(newClient, "CompanyName", data.getCompanyName());
 		
 		newElementWithValue(phoneNumberElement, "CountryCode", String.valueOf(phoneNumber.getCountryCode()));
-		newElementWithValue(phoneNumberElement, "PhoneNumberBase", String.valueOf(phoneNumber.getPhone()));
+		newElementWithValue(phoneNumberElement, "PhoneBaseNumber", String.valueOf(phoneNumber.getPhone()));
 		newClient.appendChild(phoneNumberElement);
 		
 		newElementWithValue(newClient, "Email", data.getEmail());
@@ -153,10 +153,10 @@ public class ClientAccess extends DataAccess<ClientData> {
 		NodeList firstNamesElements = namesElement.getElementsByTagName("FirstName");
 		NodeList middleNamesElements = namesElement.getElementsByTagName("MiddleName");
 		NodeList lastNamesElements = namesElement.getElementsByTagName("LastName");
-		List<NodeList> namesElementsList = new ArrayList<NodeList>(3);
-		namesElementsList.set(0, firstNamesElements);
-		namesElementsList.set(1, middleNamesElements);
-		namesElementsList.set(2, lastNamesElements);
+		List<NodeList> namesElementsList = new ArrayList<NodeList>();
+		namesElementsList.add(firstNamesElements);
+		namesElementsList.add(middleNamesElements);
+		namesElementsList.add(lastNamesElements);
 		
 		for(int i = 0; i < 3; i++) {
 			NodeList namesElements = namesElementsList.get(i);

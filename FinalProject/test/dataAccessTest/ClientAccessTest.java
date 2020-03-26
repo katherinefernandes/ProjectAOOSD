@@ -6,8 +6,11 @@ import java.util.*;
 
 import org.junit.Before;
 import org.junit.jupiter.api.*;
+import org.w3c.dom.DOMException;
 
 import dataAccess.ClientAccess;
+import exceptions.AmbiguousElementSelectionException;
+import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
 public class ClientAccessTest {
@@ -19,9 +22,10 @@ public class ClientAccessTest {
 	ClientAccess clientAccess;
 	Random random;
 	
-	@Before
-	public void init() {
+	public ClientAccessTest() {
 		clientAccess = new ClientAccess();
+		random = new Random();
+		sortTestClients = new ArrayList<ClientData>();
 
 		ArrayList<String> firstNames1 = new ArrayList<String>();
 		firstNames1.add("Rincewind");
@@ -68,13 +72,47 @@ public class ClientAccessTest {
 			
 			sortTestClients.add(new ClientData(ID,"a",1,1,"a",firstName,middleName,lastName,"a","a",1,"1"));
 		}
+		
+		toBeDeleted = new ArrayList<Long>();
 	}
 	
 	@AfterEach
 	public void CleanUp() {
-		
+		for(long ID : toBeDeleted) {
+			try {
+				clientAccess.deleteEntry(ID);
+			} catch (DOMException e) {
+				fail("DOMException in clean up");
+				e.printStackTrace();
+			} catch (ElementNotFoundException e) {
+			}
+		}
+		toBeDeleted = new ArrayList<Long>();
 	}
 	
+	@Test
+	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+		insertClient(client1);
+	
+		ClientData pulledClient = clientAccess.getEntry(client1.getClientID());
+		
+		assertEqualClients(pulledClient,client1);
+	}
+
+	public void assertEqualClients(ClientData clientX, ClientData clientY) {
+		assertEquals(clientY.getClientID(),clientX.getClientID());
+		assertEquals(clientY.getCompanyName(),clientX.getCompanyName());
+		assertEquals(clientY.getPhoneNumber().getCountryCode(),clientX.getPhoneNumber().getCountryCode());
+		assertEquals(clientY.getPhoneNumber().getPhone(),clientX.getPhoneNumber().getPhone());
+		assertEquals(clientY.getEmail(),clientX.getEmail());
+		assertEquals(clientY.getPerson().getFirstName(),clientX.getPerson().getFirstName());
+		assertEquals(clientY.getPerson().getMiddleName(),clientX.getPerson().getMiddleName());
+		assertEquals(clientY.getPerson().getLastName(),clientX.getPerson().getLastName());
+		assertEquals(clientY.getAddress().getStreetName(),clientX.getAddress().getStreetName());
+		assertEquals(clientY.getAddress().getCity(),clientX.getAddress().getCity());
+		assertEquals(clientY.getAddress().getHouseNumber(),clientX.getAddress().getHouseNumber());
+		assertEquals(clientY.getAddress().getZipCode(),clientX.getAddress().getZipCode());
+	}
 	
 	public void insertClient(ClientData clientData) {
 		clientAccess.newEntry(clientData);
