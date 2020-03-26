@@ -14,14 +14,10 @@
     </xsd:complexType>
 
 
-    <xsd:element name="Clients">
-    <xsd:complexType>
-    <xsd:sequence>
-    		<xsd:element name="Client" type="ClientType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
-    </xsd:sequence>
-    </xsd:complexType>
+    <xsd:element name="Clients" type="ClientsType">
+
     </xsd:element>
-    
+
 
     <xsd:simpleType name="PhoneNumberType">
     	<xsd:restriction base="xsd:int"></xsd:restriction>
@@ -169,6 +165,12 @@
     	<xsd:sequence>
     		<xsd:element name="countryCode" type="xsd:int"></xsd:element>
     		<xsd:element name="PhoneNr" type="xsd:int"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ClientsType">
+    	<xsd:sequence>
+    		<xsd:element name="Client" type="ClientType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
     	</xsd:sequence>
     </xsd:complexType>
 </xsd:schema>
