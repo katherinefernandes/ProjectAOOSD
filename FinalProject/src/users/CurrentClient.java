@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
+import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -34,7 +35,12 @@ public class CurrentClient {
 			try {
 				System.out.println("Please enter your valid clientID");
 				clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct value
-				client = databaseClient.getEntry(clientID);
+				try {
+					client = databaseClient.getEntry(clientID);
+				} catch (NumberFormatException | AmbiguousElementSelectionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			} catch (ElementNotFoundException e) {
 				// TODO Auto-generated catch block

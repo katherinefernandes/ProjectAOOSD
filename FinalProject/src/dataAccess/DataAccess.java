@@ -17,7 +17,7 @@ import exceptions.ElementNotFoundException;
 
 public class DataAccess<T extends ObjectData> {
 	String filePath;
-	File dataBase;
+	NodeMethods nodeMethods;
 	File schemaFile;
 	Document doc;
 	Schema schema;
@@ -25,13 +25,14 @@ public class DataAccess<T extends ObjectData> {
 	
 	DataAccess(String fileName) {
 		filePath = fileName;
+		nodeMethods = new NodeMethods();
 		
 		try {
 			
 		SchemaFactory schemaFactory = SchemaFactory.newDefaultInstance();
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		
-		dataBase = new File(filePath);
+		File dataBase = new File(filePath);
 		schemaFile = new File("storage/activeData/dataStructure.xsd");
 		
 		schema = schemaFactory.newSchema(schemaFile);
@@ -55,7 +56,7 @@ public class DataAccess<T extends ObjectData> {
 		
 	}
 	
-	public T getEntry(long ID) throws ElementNotFoundException {
+	public T getEntry(long ID) throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
 		return null;
 	}
 	
@@ -69,24 +70,9 @@ public class DataAccess<T extends ObjectData> {
 		parentElement.appendChild(element);
 	}
 	
-	protected int getElementID(Element element) {
-		return Integer.parseInt(element.getChildNodes().item(0).getTextContent());
-	}
-	
-	public String valueFromTagName(Element root, String tagName) throws AmbiguousElementSelectionException, ElementNotFoundException {
-		NodeList element = root.getElementsByTagName(tagName);
-		if(element.getLength() > 1) {
-			throw new AmbiguousElementSelectionException("Multiple elements with same tag name");
-		}
-		if(element.getLength() < 1) {
-			throw new ElementNotFoundException("No element with that tag name");
-		}
-		return element.item(0).getTextContent();
-	}
-	
 	protected void insertElement(Element newElement) {
 		Element root = doc.getDocumentElement();
-		long newElementID = getElementID(newElement);
+		long newElementID = nodeMethods.getElementID(newElement);
 		NodeList elements = root.getChildNodes();
 		int elementsLen = elements.getLength();
 		int insertionIndex;
@@ -112,7 +98,7 @@ public class DataAccess<T extends ObjectData> {
 		int nodesLen = nodes.getLength();
 		Node closestNode;
 		
-		if (nodesLen == 0 || getElementID((Element) (closestNode = nodes.item(searchSupremum(nodes, ID)))) != ID) {
+		if (nodesLen == 0 || nodeMethods.getElementID((Element) (closestNode = nodes.item(searchSupremum(nodes, ID)))) != ID) {
 			throw new ElementNotFoundException("Element with given ID not found");
 		}
 
@@ -137,11 +123,11 @@ public class DataAccess<T extends ObjectData> {
 		return null;
 	}
 	
-	protected T dataFromElement(Element element) {
+	protected T dataFromElement(Element element) throws NumberFormatException, AmbiguousElementSelectionException, ElementNotFoundException {
 		return null;
 	}
 	//--------HELPER HELPER METHODS(private visibility)---------
-	private int searchSupremum(NodeList nodes, long ID) {
+	public int searchSupremum(NodeList nodes, long ID) {
 		int lower = 0;
 		int upper = nodes.getLength() - 1;
 		int index;
@@ -150,7 +136,7 @@ public class DataAccess<T extends ObjectData> {
 		do {
 			index = (lower + upper)/2;
 			
-			curID = getElementID((Element) nodes.item(index));
+			curID = nodeMethods.getElementID((Element) nodes.item(index));
 			if(curID < ID) {
 				lower = index + 1;
 			}

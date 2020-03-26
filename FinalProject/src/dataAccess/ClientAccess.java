@@ -5,6 +5,8 @@ import objectsData.ReferenceName;
 import objectsData.Address;
 
 import java.io.*;
+import java.util.*;
+
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
@@ -30,7 +32,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 		int clientsLength = clients.getLength();
 		long clientIDValue = data.getClientID();
 		
-		if( (clientsLength == 0) || (clientIDValue >= getElementID((Element) clients.item(clientsLength - 1)))) {
+		if( (clientsLength == 0) || (clientIDValue >= nodeMethods.getElementID((Element) clients.item(clientsLength - 1)))) {
 			root.appendChild(newClient);
 		}
 		else {
@@ -47,13 +49,13 @@ public class ClientAccess extends DataAccess<ClientData> {
 		Element oldClient;
 		Element newClient = elementFromData(data);
 		
-		oldClient = getElementFromID(getElementID(newClient));
+		oldClient = getElementFromID(nodeMethods.getElementID(newClient));
 		root.replaceChild(newClient, oldClient);
 		
 		transform();
 	}
 
-	public ClientData getEntry(long ID) throws ElementNotFoundException {
+	public ClientData getEntry(long ID) throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
 		Element client = getElementFromID(ID);
 		ClientData clientData = dataFromElement(client);
 		return clientData;
@@ -66,7 +68,12 @@ public class ClientAccess extends DataAccess<ClientData> {
 		Element newClient = doc.createElement("Client");
 		newElementWithValue(newClient, "ClientID", String.valueOf(data.getClientID()));
 		newElementWithValue(newClient, "CompanyName", data.getCompanyName());
-		newElementWithValue(newClient, "PhoneNumber", String.valueOf(data.getPhoneNumber()));
+		
+		Element phoneNumber = doc.createElement("PhoneNumber");
+		newElementWithValue(phoneNumber, "CountryCode", String.valueOf(data.getPhoneNumber().getCountryCode()));
+		newElementWithValue(phoneNumber, "PhoneNumberBase", String.valueOf(data.getPhoneNumber().getPhone()));
+		newClient.appendChild(phoneNumber);
+		
 		newElementWithValue(newClient, "Email", data.getEmail());
 		
 		ReferenceName name = data.getPerson();
@@ -99,21 +106,47 @@ public class ClientAccess extends DataAccess<ClientData> {
 		return newClient;
 	}
 	
-	protected ClientData dataFromElement(Element client) {
-		try {
-			int clientID = Integer.valueOf(valueFromTagName(client, "ClientID"));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (AmbiguousElementSelectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	protected ClientData dataFromElement(Element client) throws NumberFormatException, AmbiguousElementSelectionException, ElementNotFoundException {
+		
+		int clientID = Integer.valueOf(nodeMethods.valueFromTagName(client, "ClientID"));
+		String companyName = nodeMethods.valueFromTagName(client, "CompanyName");
+		int countryCode = Integer.valueOf(nodeMethods.valueFromTagName(nodeMethods.singleElementFromTagName(client,"PhoneNumber"), "CountryCode"));
+		int phoneNumber = Integer.valueOf(nodeMethods.valueFromTagName(nodeMethods.singleElementFromTagName(client,"PhoneNumber"), "PhoneBaseNumber"));
+		String email = nodeMethods.valueFromTagName(client, "Email");
+		List<List<String>> names = getNames(client);
+		
 		
 		return null;
+	}
+
+	public List<List<String>> getNames(Element client) throws AmbiguousElementSelectionException, ElementNotFoundException {
+		List<List<String>> names = new ArrayList<List<String>>(3);
+		
+		Element namesElement = nodeMethods.singleElementFromTagName(client, "RefrencePersonName");
+		
+		List<String> firstNames = new ArrayList<String>();
+		List<String> middleNames = new ArrayList<String>();
+		List<String> lastNames = new ArrayList<String>();
+		names.set(0,firstNames);
+		names.set(1, middleNames);
+		names.set(2, lastNames);
+		
+		NodeList firstNamesElements = namesElement.getElementsByTagName("FirstName");
+		NodeList middleNamesElements = namesElement.getElementsByTagName("MiddleName");
+		NodeList lastNamesElements = namesElement.getElementsByTagName("LastName");
+		List<NodeList> namesElementsList = new ArrayList<NodeList>(3);
+		namesElementsList.set(0, firstNamesElements);
+		namesElementsList.set(1, middleNamesElements);
+		namesElementsList.set(2, lastNamesElements);
+		
+		for(int i = 0; i < 3; i++) {
+			NodeList namesElements = namesElementsList.get(i);
+			int namesLen = namesElements.getLength();
+			for(int j = 0; j < namesLen; j++) {
+				names.get(i).add(namesElements.item(j).getTextContent());
+			}
+		}
+		return names;
 	}
 }
 

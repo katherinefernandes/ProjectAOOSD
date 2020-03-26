@@ -54,5 +54,4 @@ public class ClientData extends ObjectData{
 	public ArrayList<Long> getActiveShipment(){
 		return this.activeShipment;
 	}
-	
 }
