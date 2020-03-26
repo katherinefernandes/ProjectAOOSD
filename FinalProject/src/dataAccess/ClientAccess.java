@@ -115,21 +115,26 @@ public class ClientAccess extends DataAccess<ClientData> {
 		String email = nodeMethods.valueFromTagName(client, "Email");
 		List<List<String>> names = getNames(client);
 		
+		Element addressElement = nodeMethods.singleElementFromTagName(client, "Address");
+		String streetName = nodeMethods.valueFromTagName(addressElement, "StreetName");
+		int houseNumber = Integer.valueOf(nodeMethods.valueFromTagName(addressElement, "HouseNumber"));
+		String city = nodeMethods.valueFromTagName(addressElement, "City");
+		String zipCode = nodeMethods.valueFromTagName(addressElement, "ZipCode");
+		
+		NodeList activeShipmentsElements = nodeMethods.singleElementFromTagName(client, "ActiveShipments").getChildNodes();
+		List<String> journeyIDStrings = getValuesFromChildNodes(activeShipmentsElements);
+		List<Integer> journeyIDs = new ArrayList<>();
+		for (int i = 0; i < journeyIDStrings.size(); i++) {
+			journeyIDs.add(Integer.valueOf(journeyIDStrings.get(i)));
+		}
 		
 		return null;
 	}
 
 	public List<List<String>> getNames(Element client) throws AmbiguousElementSelectionException, ElementNotFoundException {
-		List<List<String>> names = new ArrayList<List<String>>(3);
+		List<List<String>> names = new ArrayList<List<String>>();
 		
 		Element namesElement = nodeMethods.singleElementFromTagName(client, "RefrencePersonName");
-		
-		List<String> firstNames = new ArrayList<String>();
-		List<String> middleNames = new ArrayList<String>();
-		List<String> lastNames = new ArrayList<String>();
-		names.set(0,firstNames);
-		names.set(1, middleNames);
-		names.set(2, lastNames);
 		
 		NodeList firstNamesElements = namesElement.getElementsByTagName("FirstName");
 		NodeList middleNamesElements = namesElement.getElementsByTagName("MiddleName");
@@ -141,12 +146,18 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 		for(int i = 0; i < 3; i++) {
 			NodeList namesElements = namesElementsList.get(i);
-			int namesLen = namesElements.getLength();
-			for(int j = 0; j < namesLen; j++) {
-				names.get(i).add(namesElements.item(j).getTextContent());
-			}
+			names.add(getValuesFromChildNodes(namesElements));
 		}
 		return names;
+	}
+	
+	public List<String> getValuesFromChildNodes(NodeList childNodes){
+		List<String> values = new ArrayList<String>();
+		int childNodesLen = childNodes.getLength();
+		for(int i = 0; i < childNodesLen; i++) {
+			values.add(childNodes.item(i).getTextContent());
+		}
+		return values;
 	}
 }
 
