@@ -56,6 +56,10 @@ public class DataAccess<T extends ObjectData> {
 		
 	}
 	
+	public void deleteEntry(long ID) throws DOMException, ElementNotFoundException {
+		
+	}
+	
 	public T getEntry(long ID) throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
 		return null;
 	}
@@ -70,8 +74,7 @@ public class DataAccess<T extends ObjectData> {
 		parentElement.appendChild(element);
 	}
 	
-	protected void insertElement(Element newElement) {
-		Element root = doc.getDocumentElement();
+	protected void insertElement(Element newElement, Element root) {
 		long newElementID = nodeMethods.getElementID(newElement);
 		NodeList elements = root.getChildNodes();
 		int elementsLen = elements.getLength();
@@ -92,8 +95,7 @@ public class DataAccess<T extends ObjectData> {
 		}
 	}
 	
-	protected Element getElementFromID(long ID) throws ElementNotFoundException {
-		Element root = doc.getDocumentElement();
+	protected Element getElementFromID(long ID, Element root) throws ElementNotFoundException {
 		NodeList nodes = root.getChildNodes();
 		int nodesLen = nodes.getLength();
 		Node closestNode;

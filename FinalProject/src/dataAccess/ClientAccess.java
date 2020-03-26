@@ -1,8 +1,6 @@
 package dataAccess;
 
-import objectsData.ClientData;
-import objectsData.ReferenceName;
-import objectsData.Address;
+import objectsData.*;
 
 import java.io.*;
 import java.util.*;
@@ -35,7 +33,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 			root.appendChild(newClient);
 		}
 		else {
-			insertElement(newClient);
+			insertElement(newClient, root);
 		}
 		
 		transform();
@@ -47,15 +45,24 @@ public class ClientAccess extends DataAccess<ClientData> {
 		Element oldClient;
 		Element newClient = elementFromData(data);
 		
-		oldClient = getElementFromID(nodeMethods.getElementID(newClient));
+		oldClient = getElementFromID(nodeMethods.getElementID(newClient), root);
 		root.replaceChild(newClient, oldClient);
+		
+		transform();
+	}
+	
+	
+	public void deleteEntry(long ID) throws DOMException, ElementNotFoundException {
+		Element root = doc.getDocumentElement();
+		
+		root.removeChild(getElementFromID(ID, root));
 		
 		transform();
 	}
 
 	
 	public ClientData getEntry(long ID) throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
-		Element client = getElementFromID(ID);
+		Element client = getElementFromID(ID, doc.getDocumentElement());
 		ClientData clientData = dataFromElement(client);
 		return clientData;
 	}
@@ -63,7 +70,9 @@ public class ClientAccess extends DataAccess<ClientData> {
 	
 	protected Element elementFromData(ClientData data) {
 		Element newClient = doc.createElement("Client");
-		Element phoneNumber = doc.createElement("PhoneNumber");
+		
+		PhoneNumber phoneNumber = data.getPhoneNumber();
+		Element phoneNumberElement = doc.createElement("PhoneNumber");
 		ReferenceName name = data.getPerson();
 		Element nameElement = doc.createElement("RefrencePersonName");
 		Address address = data.getAddress();
@@ -73,9 +82,11 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 		newElementWithValue(newClient, "ClientID", String.valueOf(data.getClientID()));
 		newElementWithValue(newClient, "CompanyName", data.getCompanyName());
-		newElementWithValue(phoneNumber, "CountryCode", String.valueOf(data.getPhoneNumber().getCountryCode()));
-		newElementWithValue(phoneNumber, "PhoneNumberBase", String.valueOf(data.getPhoneNumber().getPhone()));
-		newClient.appendChild(phoneNumber);
+		
+		newElementWithValue(phoneNumberElement, "CountryCode", String.valueOf(phoneNumber.getCountryCode()));
+		newElementWithValue(phoneNumberElement, "PhoneNumberBase", String.valueOf(phoneNumber.getPhone()));
+		newClient.appendChild(phoneNumberElement);
+		
 		newElementWithValue(newClient, "Email", data.getEmail());
 	
 		for(String firstname : name.getFirstName()) {
