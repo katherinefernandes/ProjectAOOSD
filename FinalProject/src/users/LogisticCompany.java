@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
+import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import supportingClasses.Security;
 import supportingClasses.parseInput;
@@ -103,7 +104,6 @@ public class LogisticCompany {
 		
 		long id = new Security().generateID();
 		
-		//Check for valid input
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstNames, middleNames, lastNames, street, city, bNumber, zip);
 		
 		ClientAccess clientAccess = new ClientAccess();
@@ -119,24 +119,36 @@ public class LogisticCompany {
 		Scanner s = new Scanner(System.in);
 		
 		System.out.println("ID of the container: ");
-		String idc = s.nextLine();
+		long idc = s.nextLong();
 		
 		System.out.println("New longitude: ");
-		float lon = s.nextLine();
+		float lon = s.nextFloat();
 		
 		System.out.println("New latitude: ");
-		float lat = s.nextLine();
+		float lat = s.nextFloat();
+		
+		/*try {
+			ContainerAccess.setCurrentPosition(lat, lon);
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace(); //find a better way to fix this
+			System.out.println("Client can't be edited for some weird reason");
+		}*/
 		
 		System.out.println("Atmosphere: ");
-		String atm = s.nextLine();
+		float atm = s.nextFloat();
 		
 		System.out.println("Humidity: ");
-		String hum = s.nextLine();
+		float hum = s.nextFloat();
 		
 		System.out.println("Temperature: ");
-		String temp = s.nextLine();
+		float temp = s.nextFloat();
 		
-		
+		/*try {
+			ContainerAccess.setStatus(atm, temp, hum);
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace(); //find a better way to fix this
+			System.out.println("Client can't be edited for some weird reason");
+		}*/
 		
 		s.close();
 	}
