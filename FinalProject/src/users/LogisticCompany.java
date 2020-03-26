@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
+import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -14,9 +15,12 @@ import supportingClasses.validInput;
 public class LogisticCompany {
 	private ContainerData container;
 	private ContainerAccess databaseContainer;
+	private ClientData client;
+	private ClientAccess databaseClient;
 	
+	private Scanner s = new Scanner(System.in);
 	public void addClient () {
-		Scanner s = new Scanner(System.in);
+		
 		
 		System.out.println("Company name: ");
 		String name = s.nextLine();
@@ -113,28 +117,38 @@ public class LogisticCompany {
 		
 		ClientAccess clientAccess = new ClientAccess();
 		clientAccess.newEntry(newClient);
-		s.close();
+		
 	}
 	
 	public void getInfoClient() {
-		
+		while (true)  {
+			try {
+				System.out.println("Please enter your valid clientID");
+				long clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct value
+				try {
+					client = databaseClient.getEntry(clientID);
+				} catch (NumberFormatException | AmbiguousElementSelectionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			} catch (ElementNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Invalid ID, please try again.");	
+			}
+		}
 	}
 	
 	public void updateContainer() {
-		Scanner s = new Scanner(System.in);
 		
-		
-		System.out.println("ID of the container: ");
-		long idc = s.nextLong();
-		
-		container = databaseContainer.getEntry(idc);
+		getInfoContainer();
 		
 		System.out.println("New longitude: ");
 		float lon = s.nextFloat();
 		
 		System.out.println("New latitude: ");
 		float lat = s.nextFloat();
-		
 		
 		
 		container.setCurrentPosition(lat, lon);
@@ -152,11 +166,15 @@ public class LogisticCompany {
 		
 		container.setStatus(atm, temp, hum);
 		
-		
-		s.close();
+
 	}
 	
 	public void getInfoContainer() {
+		//throw an exception when it is not found 
+		System.out.println("ID of the container: ");
+		long idc = s.nextLong();
+		
+		container = databaseContainer.getEntry(idc);
 		
 	}
 }
