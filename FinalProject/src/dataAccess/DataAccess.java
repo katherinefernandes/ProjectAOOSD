@@ -64,6 +64,9 @@ public class DataAccess<T extends ObjectData> {
 		return null;
 	}
 	
+	public Element getRoot() { //Mostly for testing
+		return doc.getDocumentElement();
+	}
 	
 	//---------HELPER METHODS(protected visibility)----------
 	protected void newElementWithValue(Element parentElement, String elementName, String elementValue) {
