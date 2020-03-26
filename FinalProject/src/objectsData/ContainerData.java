@@ -14,16 +14,16 @@ public class ContainerData extends ObjectData {
 	private LocalDateTime updated;
 	private LocalDateTime arriveBy;
 	
-	public ContainerData(long cid, long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, LocalDateTime arriveby) {
+	public ContainerData(long containerID, long clientId, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime arriveby) {
 	
-		this.containerID=cid;
-		this.clientID=clid;
-		this.journeyID=jid;
-		this.startPortID=spid;
-		this.destinationPortID=dpid;
-		this.currentPosition= new Location(lat,lon);
+		this.containerID=containerID;
+		this.clientID=clientId;
+		this.journeyID=journeyID;
+		this.startPortID=startPortID;
+		this.destinationPortID=destinationPortID;
+		this.currentPosition= new Location(latitude,longitude);
 		this.cargo=cargo;
-		this.status=new InternalState(a, t, h);
+		this.status=new InternalState(atmosphere, temperature, humidity);
 		this.updated=LocalDateTime.now();
 		this.arriveBy=arriveby;
 		
