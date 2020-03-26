@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 import dataAccess.ClientAccess;
 import objectsData.ClientData;
-import supportingClasses.Security; 
+import supportingClasses.Security;
+import supportingClasses.parseInput;
+import supportingClasses.validInput; 
 
 public class LogisticCompany {
 	public void addClient () {
@@ -16,40 +18,88 @@ public class LogisticCompany {
 		System.out.println("E-mail: ");
 		String email = s.nextLine();
 		
+		while (validInput.validateEmail(email) != true) {
+			System.out.println("Invalid E-mail, enter again: ");
+			email = s.nextLine();
+		}
+		
 		System.out.println("Country code: ");
 		int countryCode = s.nextInt();
 		
-		System.out.println("Phone number: ");
-		int phone = s.nextInt();
+		while (validInput.validateCountryCode(countryCode) != true) {
+			System.out.println("Invalid country code, enter again: ");
+			countryCode = s.nextInt();
+		}
 		
-		ArrayList<String> firstNames = new ArrayList<String>();
-		ArrayList<String> middleNames = new ArrayList<String>();
-		ArrayList<String> lastNames = new ArrayList<String>();
+		
+		System.out.println("Phone number: ");
+		long phone = s.nextLong();
+		
+		
+		while (validInput.validatePhone(phone) != true) {
+			System.out.println("Invalid phone, enter again: ");
+			phone = s.nextLong();
+		}
+		
 		
 		System.out.println("Reference person ");
 		System.out.println("First name: ");
 		String firstName = s.nextLine();
-		firstNames.add(firstName);
+		
+		while (validInput.validateName(firstName) != true) {
+			System.out.println("Invalid name, enter again: ");
+			firstName = s.nextLine();
+		}
+		
+		ArrayList<String> firstNames = parseInput.parsingNames(firstName);
+
 		
 		System.out.println("Middle name: ");
 		String middleName = s.nextLine();
-		firstNames.add(middleName);
+		
+		while (validInput.validateName(middleName) != true) {
+			System.out.println("Invalid name, enter again: ");
+			middleName = s.nextLine();
+		}
+		
+		ArrayList<String> middleNames = parseInput.parsingNames(middleName);
 		
 		System.out.println("Last name: ");
 		String lastName = s.nextLine();
-		lastNames.add(lastName);
 		
+		while (validInput.validateName(lastName) != true) {
+			System.out.println("Invalid name, enter again: ");
+			lastName = s.nextLine();
+		}
+		
+		ArrayList<String> lastNames = parseInput.parsingNames(lastName);
 		System.out.println("Street: ");
 		String street = s.nextLine();
 		
+		while (validInput.validateStreet(street) != true) {
+			System.out.println("Invalid street, enter again: ");
+			street = s.nextLine();
+		}
+		
 		System.out.println("City: ");
 		String city = s.nextLine();
+		
+		while (validInput.validateName(city) != true) {
+			System.out.println("Invalid city, enter again: ");
+			city = s.nextLine();
+		}
 		
 		System.out.println("Building number: ");
 		int bNumber = s.nextInt();
 		
 		System.out.println("Post code: ");
 		String zip = s.nextLine();
+		
+		while (validInput.validatePostCode(zip) != true) {
+			System.out.println("Invalid post code, enter again: ");
+			zip = s.nextLine();
+		}
+		
 		
 		long id = new Security().generateID();
 		
@@ -72,10 +122,10 @@ public class LogisticCompany {
 		String idc = s.nextLine();
 		
 		System.out.println("New longitude: ");
-		String lon = s.nextLine();
+		float lon = s.nextLine();
 		
 		System.out.println("New latitude: ");
-		String lat = s.nextLine();
+		float lat = s.nextLine();
 		
 		System.out.println("Atmosphere: ");
 		String atm = s.nextLine();
