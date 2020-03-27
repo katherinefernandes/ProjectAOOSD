@@ -3,6 +3,8 @@ package dataAccess;
 import objectsData.ObjectData;
 
 import java.io.*;
+import java.util.List;
+
 import javax.xml.parsers.*;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -29,14 +31,14 @@ public class DataAccess<T extends ObjectData> {
 		
 		try {
 			
-		SchemaFactory schemaFactory = SchemaFactory.newDefaultInstance();
+		//SchemaFactory schemaFactory = SchemaFactory.newDefaultInstance();
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		
 		File dataBase = new File(filePath);
-		schemaFile = new File("storage/activeData/dataStructure.xsd");
+		//schemaFile = new File("storage/activeData/dataStructure.xsd");
 		
-		schema = schemaFactory.newSchema(schemaFile);
-		dbFactory.setSchema(schema);
+		//schema = schemaFactory.newSchema(schemaFile);
+		//dbFactory.setSchema(schema);
 		
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(dataBase);
@@ -135,11 +137,10 @@ public class DataAccess<T extends ObjectData> {
 	public int searchSupremum(NodeList nodes, long ID) {
 		int lower = 0;
 		int upper = nodes.getLength() - 1;
-		int index;
+		int index = (lower + upper)/2;
 		long curID;
 		
-		do {
-			index = (lower + upper)/2;
+		while (lower < upper) {
 			
 			curID = nodeMethods.getElementID((Element) nodes.item(index));
 			if(curID < ID) {
@@ -152,8 +153,9 @@ public class DataAccess<T extends ObjectData> {
 				upper = index;
 				lower = index;
 			}
-		} while (lower < upper);
-		
+			index = (lower + upper)/2;
+		}
+		curID = nodeMethods.getElementID((Element) nodes.item(index));
 		if (index == -1) {
 			return 0;
 		}if (ID > curID) {
