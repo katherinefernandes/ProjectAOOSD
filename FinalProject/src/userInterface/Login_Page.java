@@ -51,7 +51,7 @@ class Login_Page {
 				}	
 			}
 			x.close();
-			System.out.println("basbjabaus"+found);
+			System.out.println(found);
 		}
 		
 		
@@ -68,7 +68,7 @@ class Login_Page {
 }
 			
 	public boolean status() {	
-		if (tempPass.trim().equals(this.logistics_log) && templogin.trim().contentEquals(this.logistics_log)){
+		if (this.password.equals(this.logistics_log) && templogin.trim().contentEquals(this.logistics_log)){
 			LCompany = true;
 		}
 		return LCompany;
