@@ -39,10 +39,14 @@ class Login_Page {
 			//while(x.hasNext() && !found) {
 			while(!found) {
 				templogin = x.next();
+<<<<<<< HEAD
 				//System.out.println("temp="+templogin+" username="+this.username);
 				//System.out.println(templogin.trim());
 				//System.out.println(this.username.trim());
 				if(templogin.trim().equals(this.username.trim()) && templogin.trim()!=this.logistics_log) {
+=======
+				if(templogin.trim()==this.username && templogin.trim()!=this.logistics_log) {
+>>>>>>> 361bf287edf6aff09825d5175b19e4d7227f19eb
 					found=true; //we'll stop searching for the username					
 				}
 				else if(templogin.trim()=="admin" && tempPass.trim()!="admin") {
