@@ -45,19 +45,18 @@ class Login_Page {
 				if(templogin.trim().equals(this.username.trim()) && templogin.trim()!=this.logistics_log) {
 					found=true; //we'll stop searching for the username					
 				}
-				else if(templogin.trim().equals("admin") && this.password!="admin") {
-					System.out.println("fix this");
+				else if(this.username.equals(this.logistics_log) && this.password.contentEquals(this.logistics_log)) {
+					found=true;
 					
 				}	
 			}
 			x.close();
-			System.out.println(found);
+			//System.out.println(found);
 		}
 		
 		
 		catch(Exception e) {
 			System.out.println("You enterent inconsistent information...try again ");
-			System.out.println(e);
 			get_input();
 				
 }	
@@ -68,16 +67,10 @@ class Login_Page {
 }
 			
 	public boolean status() {	
-		if (this.password.equals(this.logistics_log) && templogin.trim().contentEquals(this.logistics_log)){
+		if (this.password.equals(this.logistics_log) && this.username.contentEquals(this.logistics_log)){
 			LCompany = true;
 		}
 		return LCompany;
 }
 		
-//
-//public static void main (String[] args) {
-//	Login_Page l = new Login_Page();
-//	l.get_input();
-//	
-//}	
 }
