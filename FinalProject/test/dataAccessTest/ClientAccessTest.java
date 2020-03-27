@@ -7,11 +7,14 @@ import java.util.*;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import dataAccess.ClientAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
+import dataAccess.NodeMethods;
 
 public class ClientAccessTest {
 	ClientData client1;
@@ -21,9 +24,11 @@ public class ClientAccessTest {
 	ArrayList<Long> toBeDeleted;
 	ClientAccess clientAccess;
 	Random random;
+	NodeMethods nodeMethods;
 	
 	public ClientAccessTest() {
 		clientAccess = new ClientAccess();
+		nodeMethods = new NodeMethods();
 		random = new Random();
 		sortTestClients = new ArrayList<ClientData>();
 
@@ -60,9 +65,12 @@ public class ClientAccessTest {
 									123456789,"clean.your.pipes@wash.com",
 									firstNames1,middleNames1,lastNames1,
 									"Bakerstreet","Darry",42,"1216");
+		client1.addActiveShipment(1766465L);
+		client1.addActiveShipment(8923892L);
+		client1.addActiveShipment(10390101L);
 		
-		for (int i = 0; i < 20; i++) {
-			long ID = random.nextLong();
+		for (int i = 0; i < 200; i++) {
+			long ID = Math.abs(random.nextLong());
 			ArrayList<String> firstName = new ArrayList<>();
 			ArrayList<String> middleName = new ArrayList<>();
 			ArrayList<String> lastName = new ArrayList<>();
@@ -76,7 +84,7 @@ public class ClientAccessTest {
 		toBeDeleted = new ArrayList<Long>();
 	}
 	
-	//@AfterEach
+	@AfterEach
 	public void CleanUp() {
 		for(long ID : toBeDeleted) {
 			try {
@@ -97,10 +105,41 @@ public class ClientAccessTest {
 		ClientData pulledClient = clientAccess.getEntry(client1.getClientID());
 		
 		assertEqualClients(pulledClient,client1);
-		
-		clientAccess.deleteEntry(client1.getClientID());
 	}
-
+	
+	@Test
+	public void editTest() throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
+		insertClient(client1);
+		clientAccess.editEntry(client1_v2);
+		ClientData pulledClient = clientAccess.getEntry(client1.getClientID());
+		
+		assertEqualClients(pulledClient,client1_v2);
+	}
+	
+	@Test
+	public void sortTest() {
+		for(ClientData clientData : sortTestClients) {
+			insertClient(clientData);
+		}
+		
+		NodeList clients = clientAccess.getRoot().getChildNodes();
+		int clientsLen = clients.getLength();
+		long previousID = nodeMethods.getElementID((Element) clients.item(0));
+		for(int i = 1; i < clientsLen; i++) {
+			long currentID = nodeMethods.getElementID((Element) clients.item(i));
+			assertTrue(previousID < currentID);
+			previousID = currentID;
+		}
+	}
+	
+	@Test
+	public void exceptionTest() {
+		insertClient(client1);
+		insertClient(client2);
+	}
+	
+	
+	
 	public void assertEqualClients(ClientData clientX, ClientData clientY) {
 		assertEquals(clientY.getClientID(),clientX.getClientID());
 		assertEquals(clientY.getCompanyName(),clientX.getCompanyName());
@@ -114,6 +153,12 @@ public class ClientAccessTest {
 		assertEquals(clientY.getAddress().getCity(),clientX.getAddress().getCity());
 		assertEquals(clientY.getAddress().getHouseNumber(),clientX.getAddress().getHouseNumber());
 		assertEquals(clientY.getAddress().getZipCode(),clientX.getAddress().getZipCode());
+		List<Long> journeyIDsX = clientX.getActiveShipment();
+		List<Long> journeyIDsY = clientY.getActiveShipment();
+		
+		for(int i = 0; i < Math.max(journeyIDsX.size(),journeyIDsY.size()); i++) {
+			assertEquals(journeyIDsX.get(i),journeyIDsY.get(i));
+		}
 	}
 	
 	public void insertClient(ClientData clientData) {
