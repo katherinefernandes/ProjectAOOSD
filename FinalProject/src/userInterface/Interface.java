@@ -63,7 +63,7 @@ public class Interface {
 	}
 	
 	private void button() { //this will be a button :D doesn't work yet 
-		JFrame f=new JFrame("Button Example");  
+		JFrame f=new JFrame("Button prototype");  
 	    JButton b=new JButton("UpdateInfo");  
 	    b.setBounds(50,100,95,30);  
 	    f.add(b);  
