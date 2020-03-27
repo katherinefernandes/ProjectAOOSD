@@ -24,6 +24,7 @@ class Login_Page {
 		if(this.username.contentEquals(this.logistics_log)) {   
 			System.out.println("Enter Password : ");
 			this.password = s.nextLine();
+			LCompany = true;
 		}
 		Login();
 		s.close();
@@ -67,9 +68,9 @@ class Login_Page {
 }
 			
 	public boolean status() {	
-		if (this.password.equals(this.logistics_log) && this.username.contentEquals(this.logistics_log)){
-			LCompany = true;
-		}
+//		if (this.password.equals(this.logistics_log) && this.username.contentEquals(this.logistics_log)){
+//			LCompany = true;
+//		}
 		return LCompany;
 }
 		
