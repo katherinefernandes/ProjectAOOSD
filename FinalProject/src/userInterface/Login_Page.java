@@ -21,7 +21,7 @@ class Login_Page {
 		System.out.println("Enter LogIn :");
 		this.username = s.nextLine();
 		//I aded the if statement to only ask for password if the user is the logistic company 
-		if(this.username == this.logistics_log) {   
+		if(this.username.contentEquals(this.logistics_log)) {   
 			System.out.println("Enter Password : ");
 			this.password = s.nextLine();
 		}
@@ -33,34 +33,30 @@ class Login_Page {
 		
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
-			Scanner x = new Scanner (new File("/Users/Katherine/Documents/GitHub/ProjectAOOSD/FinalProject/src/userInterface/passwords.txt"));
+			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/src/userInterface/passwords.txt"));
 			x.useDelimiter(","); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
 			//time to loop through the txt file to check for the username and password
 			//while(x.hasNext() && !found) {
 			while(!found) {
 				templogin = x.next();
-<<<<<<< HEAD
 				//System.out.println("temp="+templogin+" username="+this.username);
 				//System.out.println(templogin.trim());
 				//System.out.println(this.username.trim());
 				if(templogin.trim().equals(this.username.trim()) && templogin.trim()!=this.logistics_log) {
-=======
-				if(templogin.trim()==this.username && templogin.trim()!=this.logistics_log) {
->>>>>>> 361bf287edf6aff09825d5175b19e4d7227f19eb
 					found=true; //we'll stop searching for the username					
 				}
-				else if(templogin.trim()=="admin" && tempPass.trim()!="admin") {
-					System.out.println("fix this");
+				else if(this.username.equals(this.logistics_log) && this.password.contentEquals(this.logistics_log)) {
+					found=true;
 					
 				}	
 			}
 			x.close();
-			System.out.println("basbjabaus"+found);
+			//System.out.println(found);
 		}
+		
 		
 		catch(Exception e) {
 			System.out.println("You enterent inconsistent information...try again ");
-			System.out.println(e);
 			get_input();
 				
 }	
@@ -71,16 +67,10 @@ class Login_Page {
 }
 			
 	public boolean status() {	
-		if (tempPass.trim()=="admin" && templogin.trim()=="admin" ){
+		if (this.password.equals(this.logistics_log) && this.username.contentEquals(this.logistics_log)){
 			LCompany = true;
 		}
 		return LCompany;
 }
 		
-//
-//public static void main (String[] args) {
-//	Login_Page l = new Login_Page();
-//	l.get_input();
-//	
-//}	
 }
