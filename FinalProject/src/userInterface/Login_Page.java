@@ -39,8 +39,6 @@ class Login_Page {
 			//while(x.hasNext() && !found) {
 			while(!found) {
 				templogin = x.next();
-				//System.out.println("temp="+templogin+" username="+this.username);
-				System.out.println("temp log = "+templogin.trim()+"!="+ this.logistics_log);
 				if(templogin.trim()==this.username && templogin.trim()!=this.logistics_log) {
 					found=true; //we'll stop searching for the username					
 				}
