@@ -65,8 +65,11 @@ public class ClientAccessTest {
 									123456789,"clean.your.pipes@wash.com",
 									firstNames1,middleNames1,lastNames1,
 									"Bakerstreet","Darry",42,"1216");
+		client1.addActiveShipment(1766465L);
+		client1.addActiveShipment(8923892L);
+		client1.addActiveShipment(10390101L);
 		
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 200; i++) {
 			long ID = Math.abs(random.nextLong());
 			ArrayList<String> firstName = new ArrayList<>();
 			ArrayList<String> middleName = new ArrayList<>();
@@ -129,6 +132,14 @@ public class ClientAccessTest {
 		}
 	}
 	
+	@Test
+	public void exceptionTest() {
+		insertClient(client1);
+		insertClient(client2);
+	}
+	
+	
+	
 	public void assertEqualClients(ClientData clientX, ClientData clientY) {
 		assertEquals(clientY.getClientID(),clientX.getClientID());
 		assertEquals(clientY.getCompanyName(),clientX.getCompanyName());
@@ -142,6 +153,12 @@ public class ClientAccessTest {
 		assertEquals(clientY.getAddress().getCity(),clientX.getAddress().getCity());
 		assertEquals(clientY.getAddress().getHouseNumber(),clientX.getAddress().getHouseNumber());
 		assertEquals(clientY.getAddress().getZipCode(),clientX.getAddress().getZipCode());
+		List<Long> journeyIDsX = clientX.getActiveShipment();
+		List<Long> journeyIDsY = clientY.getActiveShipment();
+		
+		for(int i = 0; i < Math.max(journeyIDsX.size(),journeyIDsY.size()); i++) {
+			assertEquals(journeyIDsX.get(i),journeyIDsY.get(i));
+		}
 	}
 	
 	public void insertClient(ClientData clientData) {

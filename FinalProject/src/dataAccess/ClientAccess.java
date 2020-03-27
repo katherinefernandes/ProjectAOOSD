@@ -131,14 +131,13 @@ public class ClientAccess extends DataAccess<ClientData> {
 		int 			   houseNumber = Integer.valueOf(nodeMethods.valueFromTagName(addressElement, "HouseNumber"));
 		String 			   city = nodeMethods.valueFromTagName(addressElement, "City");
 		String 			   zipCode = nodeMethods.valueFromTagName(addressElement, "ZipCode");
-		List<Long> 		   journeyIDs = new ArrayList<>();
+		ClientData clientData = new ClientData(clientID, companyName, countryCode, phoneNumber, email, (ArrayList<String>) names.get(0), (ArrayList<String>) names.get(1), (ArrayList<String>) names.get(2), streetName, city, houseNumber, zipCode);
 		
 		
 		for (int i = 0; i < journeyIDStrings.size(); i++) {
-			journeyIDs.add(Long.valueOf(journeyIDStrings.get(i)));
+			clientData.addActiveShipment(Long.valueOf(journeyIDStrings.get(i)));
 		}
 		
-		ClientData clientData = new ClientData(clientID, companyName, countryCode, phoneNumber, email, (ArrayList<String>) names.get(0), (ArrayList<String>) names.get(1), (ArrayList<String>) names.get(2), streetName, city, houseNumber, zipCode);
 		
 		
 		return clientData;

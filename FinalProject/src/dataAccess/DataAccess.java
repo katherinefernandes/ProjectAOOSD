@@ -82,22 +82,8 @@ public class DataAccess<T extends ObjectData> {
 	protected void insertElement(Element newElement, Element root) {
 		long newElementID = nodeMethods.getElementID(newElement);
 		NodeList elements = root.getChildNodes();
-		int elementsLen = elements.getLength();
-		int insertionIndex;
-		
-		if(elementsLen > 0) {
-			insertionIndex = searchSupremum(elements,newElementID);
-		}
-		else {
-			insertionIndex = 1;
-		}
-		
-		if (insertionIndex < elementsLen) {
-			root.insertBefore(newElement, elements.item(insertionIndex));
-		}
-		else {
-			root.appendChild(newElement);
-		}
+		int insertionIndex = searchSupremum(elements,newElementID);
+		root.insertBefore(newElement, elements.item(insertionIndex));
 	}
 	
 	protected Element getElementFromID(long ID, Element root) throws ElementNotFoundException {
@@ -156,9 +142,8 @@ public class DataAccess<T extends ObjectData> {
 			index = (lower + upper)/2;
 		}
 		curID = nodeMethods.getElementID((Element) nodes.item(index));
-		if (index == -1) {
-			return 0;
-		}if (ID > curID) {
+		
+		if (ID > curID) {
 			return index + 1;
 		}
 		return index;
