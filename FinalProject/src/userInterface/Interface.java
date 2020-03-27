@@ -5,7 +5,6 @@ import users.CurrentClient;
 import users.LogisticCompany;
 
 public class Interface {
-	//test if my git is working eiuadvbbsvuasvhav
 	
 	public void get_ClientMenu() {
 		System.out.println("+--------------------------+");

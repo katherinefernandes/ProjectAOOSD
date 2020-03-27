@@ -10,6 +10,7 @@ class Login_Page {
 	String tempPass = "";
 	String username;
 	String password;
+	String logistics_log = "admin";
 	public boolean LCompany = false;
 	public void get_input() {
 //		boolean found = false;
@@ -19,8 +20,11 @@ class Login_Page {
 		Scanner s = new Scanner (System.in);
 		System.out.println("Enter LogIn :");
 		this.username = s.nextLine();
-		System.out.println("Enter Password : ");
-		this.password = s.nextLine();
+		//I aded the if statement to only ask for password if the user is the logistic company 
+		if(this.username == this.logistics_log) {   
+			System.out.println("Enter Password : ");
+			this.password = s.nextLine();
+		}
 		Login();
 		s.close();
 	}
@@ -29,24 +33,29 @@ class Login_Page {
 		
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
-			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/storage/clients.xml "));
-			x.useDelimiter("[,\n]"); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
+			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/src/userInterface/passwords.txt"));
+			x.useDelimiter(","); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
 			//time to loop through the txt file to check for the username and password
-			while(x.hasNext() && !found) {
+			//while(x.hasNext() && !found) {
+			while(!found) {
 				templogin = x.next();
-				tempPass = x.next();
-				if(templogin.trim()==username.trim() && tempPass.trim()==password.trim()) {
-					found=true; //we'll stop searching for the username
-					System.out.println("print");
+				//System.out.println("temp="+templogin+" username="+this.username);
+				System.out.println("temp log = "+templogin.trim()+"!="+ this.logistics_log);
+				if(templogin.trim()==this.username && templogin.trim()!=this.logistics_log) {
+					found=true; //we'll stop searching for the username					
+				}
+				else if(templogin.trim()=="admin" && tempPass.trim()!="admin") {
+					System.out.println("fix this");
+					
 				}	
-			System.out.println(found);	
 			}
 			x.close();
-			System.out.println(found);	
+			System.out.println("basbjabaus"+found);
 		}
 		
 		catch(Exception e) {
-			System.out.println("Username and Password don't match");
+			System.out.println("You enterent inconsistent information...try again ");
+			System.out.println(e);
 			get_input();
 				
 }	
