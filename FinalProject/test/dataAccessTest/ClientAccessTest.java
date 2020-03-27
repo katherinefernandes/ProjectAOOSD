@@ -76,7 +76,7 @@ public class ClientAccessTest {
 		toBeDeleted = new ArrayList<Long>();
 	}
 	
-	@AfterEach
+	//@AfterEach
 	public void CleanUp() {
 		for(long ID : toBeDeleted) {
 			try {
@@ -97,6 +97,8 @@ public class ClientAccessTest {
 		ClientData pulledClient = clientAccess.getEntry(client1.getClientID());
 		
 		assertEqualClients(pulledClient,client1);
+		
+		clientAccess.deleteEntry(client1.getClientID());
 	}
 
 	public void assertEqualClients(ClientData clientX, ClientData clientY) {

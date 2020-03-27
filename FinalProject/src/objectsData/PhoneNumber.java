@@ -2,16 +2,16 @@ package objectsData;
 
 public class PhoneNumber {
 	private int country;
-	private int phone;
+	private long phone;
 	
-	public PhoneNumber(int country, int phone) {
+	public PhoneNumber(int country, long phone) {
 		this.country=country;
 		this.phone=phone;
 	}
 	public int getCountryCode() {
 		return country;
 	}
-	public int getPhone() {
+	public long getPhone() {
 		return phone;
 	}
 
