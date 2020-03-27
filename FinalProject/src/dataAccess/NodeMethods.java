@@ -14,8 +14,8 @@ public class NodeMethods {
 	public NodeMethods() {
 	}
 
-	public int getElementID(Element element) {
-		return Integer.parseInt(element.getChildNodes().item(0).getTextContent());
+	public long getElementID(Element element) {
+		return Long.parseLong(element.getChildNodes().item(0).getTextContent());
 	}
 
 	public String valueFromTagName(Element root, String tagName) throws AmbiguousElementSelectionException, ElementNotFoundException {

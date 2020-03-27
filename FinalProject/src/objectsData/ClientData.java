@@ -12,7 +12,7 @@ public class ClientData extends ObjectData{
 	private ArrayList<Long> activeShipment;
 
 	
-	public ClientData(long cid, String companyname, int country, int phone, String email, ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln, String street, String city, int house, String zip) {
+	public ClientData(long cid, String companyname, int country, long phone, String email, ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln, String street, String city, int house, String zip) {
 		this.clientID=cid;
 		this.companyName=companyname;
 		this.phoneNumber= new PhoneNumber(country,phone);

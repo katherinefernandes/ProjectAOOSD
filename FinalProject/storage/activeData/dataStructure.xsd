@@ -163,8 +163,8 @@
 
     <xsd:complexType name="PhoneNrType">
     	<xsd:sequence>
-    		<xsd:element name="countryCode" type="xsd:int"></xsd:element>
-    		<xsd:element name="PhoneBaseNumber" type="xsd:int"></xsd:element>
+    		<xsd:element name="CountryCode" type="xsd:int"></xsd:element>
+    		<xsd:element name="PhoneBaseNumber" type="xsd:long"></xsd:element>
     	</xsd:sequence>
     </xsd:complexType>
 
