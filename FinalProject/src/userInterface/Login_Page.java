@@ -12,12 +12,17 @@ class Login_Page {
 	String password;
 	String logistics_log = "admin";
 	public boolean LCompany = false;
+	public Scanner s;
+	public Login_Page(Scanner s) {
+		this.s=s;
+	}
 	public void get_input() {
 //		boolean found = false;
 //		String templogin = "";
 //		String tempPass = "";
 		
-		Scanner s = new Scanner (System.in);
+	//	Scanner s = new Scanner (System.in);
+		
 		System.out.println("Enter LogIn :");
 		this.username = s.nextLine();
 		//I aded the if statement to only ask for password if the user is the logistic company 
@@ -26,8 +31,8 @@ class Login_Page {
 			this.password = s.nextLine();
 			LCompany = true;
 		}
+		//s.close();
 		Login();
-		s.close();
 	}
 	
 	public void Login() {
