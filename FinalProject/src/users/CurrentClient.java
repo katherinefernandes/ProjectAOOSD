@@ -161,7 +161,7 @@ public class CurrentClient {
 		 //for the moment as I am adding a random portID to both startPortID and destinationPortID, 
 		 //I will not update the PORTDATA which needs to be done when the search by name is implemented.
 		 
-		 
+		 //blahhhhh
 		 
 	}
 	
