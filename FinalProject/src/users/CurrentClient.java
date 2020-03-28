@@ -19,7 +19,6 @@ public class CurrentClient {
 	private Long clientID;
 	private ClientAccess databaseClient;
 	private ContainerAccess databaseContainer;
-	private ContainerData container;
 	private boolean display=true;
 	private activeContainers containers = new activeContainers();
 	private int choice;
@@ -125,17 +124,24 @@ public class CurrentClient {
 	}
 	
 	public void viewInternalStatusOfAJourney() {
+		displayInternalStatus(getContainerData());
+	
+	}
+	private ContainerData getContainerData() {
+		ContainerData container;
 		while (true) {
 			System.out.println("Please enter valid containerID");
 			long containerID = s.nextLong(); // in actual it should be a string which is parsed to return a long but waiting for the validinput class
-			container = databaseContainer.getEntry(containerID);
+			 container = databaseContainer.getEntry(containerID);
 			//remember to add the catch phrase once the containerAccess is updated.
 			break;
 		}
+		return container;
+	}
+	private void displayInternalStatus(ContainerData container) {
 		System.out.println("The internal atmosphere is:  "+container.getInternalStatus().getAtmosphere());
 		System.out.println("The internal Temperature is:  "+ container.getInternalStatus().getTemperature());
 		System.out.println("The internal Humidity is:  "+container.getInternalStatus().getHumidity());
-	
 	}
 	
 }
