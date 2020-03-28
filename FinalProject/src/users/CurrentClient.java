@@ -15,13 +15,17 @@ import supportingClasses.activeContainers;
 
 public class CurrentClient {
 	private ClientData client;
-	private Scanner s = new Scanner (System.in);
+	private Scanner s;
 	private Long clientID;
 	private ClientAccess databaseClient;
 	private ContainerAccess databaseContainer;
 	private boolean display=true;
 	private activeContainers containers = new activeContainers();
 	private int choice;
+	
+	public CurrentClient(Scanner sc) {
+		this.s = sc;
+	}
 	
 	public void getInfoClient(){
 		getIDByUserInput(); //gets the ID by the user and updated the client with a clientData object
@@ -33,7 +37,10 @@ public class CurrentClient {
 		while(true) {
 			try {
 				System.out.println("Please enter your valid clientID");
+				
 				clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct value
+			    
+				
 				try {
 					client = databaseClient.getEntry(clientID);
 				} catch (NumberFormatException | AmbiguousElementSelectionException e) {
@@ -63,19 +70,25 @@ public class CurrentClient {
 	private ArrayList<String> getLastName() {
 		System.out.println("Enter the last name of the person: ");
 		ArrayList<String> lastname = new ArrayList<String>();
+		
 		lastname.add(s.next());
+		
 		return lastname;
 	}
 	private ArrayList<String> getMiddleName() {
 		System.out.println("Enter the middle names of the person: ");
 		ArrayList<String> middlename = new ArrayList<String>();
+		
 		middlename.add( s.next());// assuming that only 1 name is entered.
+		
 		return middlename;
 	}
 	private ArrayList<String> getFirstName() {
 		System.out.println("Enter the first name of the person: ");
 		ArrayList<String> firstname = new ArrayList<String>();
+		
 		firstname.add(s.next());
+		
 		return firstname;
 	}
 	
@@ -84,7 +97,9 @@ public class CurrentClient {
 	}
 	private String inputForUpdateEmail() {
 		System.out.println("Enter the new email: ");
+		
 		String email= s.next();
+		
 		return email;
 	}
 	
@@ -106,7 +121,9 @@ public class CurrentClient {
 	private int getChoiceForUpdateClient() {
 		while (true) {
 			System.out.println("Please enter the following numbers: \n\t1 ---------- to update the Reference person \n\t2 ---------- to update the Email");
+			
 			choice = s.nextInt();
+			
 			if (choice==1||choice==2) {
 				break;
 			}
@@ -131,8 +148,10 @@ public class CurrentClient {
 		ContainerData container;
 		while (true) {
 			System.out.println("Please enter valid containerID");
+			
 			long containerID = s.nextLong(); // in actual it should be a string which is parsed to return a long but waiting for the validinput class
-			 container = databaseContainer.getEntry(containerID);
+			 
+			container = databaseContainer.getEntry(containerID);
 			//remember to add the catch phrase once the containerAccess is updated.
 			break;
 		}

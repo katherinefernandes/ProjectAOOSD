@@ -1,4 +1,6 @@
 package userInterface;
+import java.util.Scanner;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import users.CurrentClient;
@@ -6,14 +8,16 @@ import users.LogisticCompany;
 
 public class Interface {
 	
-	public void get_ClientMenu() {
+	public static void get_ClientMenu(Scanner sc) {
 		System.out.println("+--------------------------+");
 		System.out.println("|Welcome to the Client Menu|");
 		System.out.println("+--------------------------+");
-		CurrentClient c = new CurrentClient();
+		CurrentClient c = new CurrentClient(sc);
 		c.getInfoClient();
 		System.out.println("/n");
 		System.out.println("+----------------------------+");
+		System.out.println("+----------------------------+");
+
 		System.out.println("/n");
 		button();
 		System.out.println("/n");
@@ -22,7 +26,7 @@ public class Interface {
 		System.out.println("+----------------------------+");		
 	}
 	
-	public void get_LogisticMenu() {
+	public static void get_LogisticMenu() {
 		System.out.println("+-------------------------------------+");
 		System.out.println("|Welcome to the Logistics Company Menu| ");
 		System.out.println("+-------------------------------------+");
@@ -42,8 +46,11 @@ public class Interface {
 				
 	}
 	
-	public void load_Menu() {
-		Login_Page L = new Login_Page();
+	
+	public static void load_Menu() {
+		Scanner sc = new Scanner(System.in);
+		Login_Page L = new Login_Page(sc);
+		
 		L.get_input();
 		try {
 //		L.get_input();
@@ -51,18 +58,19 @@ public class Interface {
 			get_LogisticMenu();
 		}
 		else if(L.status()==false && L.found_information() == true){
-			get_ClientMenu(); //I hope this line doesn't just load the menu without the password input 
+			get_ClientMenu(sc); //I hope this line doesn't just load the menu without the password input 
 		}
 		PrintDisplay();
-		}
 		
+		sc.close();
+		}
 		catch(Exception e){   // here we need to find a exception but didn't think of one yet
 			System.out.println("Sorry something went wrong, try again in a couple of minutes");
-			L.get_input();
-		}		
+			sc.close();
+			System.out.println(e.getMessage());
 	}
-	
-	private void button() { //this will be a button :D doesn't work yet 
+	}
+	private static void button() { //this will be a button :D doesn't work yet 
 		JFrame f=new JFrame("Button prototype");  
 	    JButton b=new JButton("UpdateInfo");  
 	    b.setBounds(50,100,95,30);  
@@ -72,14 +80,15 @@ public class Interface {
 	    f.setVisible(true);   
 	}  
 			
-	private void PrintDisplay() {
+	private static void PrintDisplay() {
 		// the nice display that we will implement later on 		
 	}
 			
 public static void main(String[] args) 
     {
-	Interface I = new Interface();
-	I.load_Menu();
+	
+	//Interface I = new Interface();
+	load_Menu();
 	}
 
 }
