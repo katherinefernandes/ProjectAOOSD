@@ -18,7 +18,19 @@ public class Interface {
 		//interactive menu to give the user the choice
 		Scanner menu = new Scanner(System.in);
 		for(int i = 1 ; i <= 3 ; i++) {
-			System.out.println(i+". Option "+i);
+			if(i==1) {
+			System.out.println(i+". Get the client Information");
+			}
+			if(i==2) {
+				System.out.println(i+". Update the current client Information");
+				}
+			if(i==3) {
+				System.out.println(i+". Add a new journey");
+				}
+			if(i==4) {
+				System.out.println(i+". View Internal Status of a Journey");
+				}
+			
 		}
 		System.out.println("0. Quit");
 		do {
@@ -73,7 +85,18 @@ public class Interface {
 		LogisticCompany l = new LogisticCompany();
 		Scanner m = new Scanner(System.in);
 		for(int i = 1 ; i <= 3 ; i++) {
-			System.out.println(i+". Option "+i);
+			if(i==1) {
+				System.out.println(i+". Add a new Client");
+				}
+				if(i==2) {
+					System.out.println(i+". Get client Information");
+					}
+				if(i==3) {
+					System.out.println(i+". Update Client Information");
+					}
+				if(i==4) {
+					System.out.println(i+". Get Containter Information");
+					}
 		}
 		System.out.println("0. Quit");
 		do {
@@ -81,22 +104,24 @@ public class Interface {
 			Option = m.nextInt();
 			switch(Option) {
 			case 1:
-				System.out.println("Option 1");
-			    //call Muna's method
-
+				System.out.println("Add a new Client");
+			    l.addClient();
 			    break;
 			    
 			    
 			case 2:
-				System.out.println("Option 2");
-				//call Muna's method
-
+				System.out.println("Get client Information");
+				l.getInfoClient();
 				break;
 				
 				
 			case 3:
-				System.out.println("Option 3");
-				//Call muna's method
+				System.out.println("Update Client Information");
+				l.updateContainer();
+				break;
+			case 4:
+				System.out.println("Get Containter Information");
+				l.getInfoContainer();
 				break;
 			case 0:
 				quit = true;
@@ -134,8 +159,7 @@ public class Interface {
 		catch(Exception e){   // here we need to find a exception but didn't think of one yet
 			System.out.println("Sorry something went wrong, try again in a couple of minutes");
 			sc.close();
-			System.out.println(e.getMessage());
-	}
+			}
 	}
 			
 	private static void PrintDisplay() {
