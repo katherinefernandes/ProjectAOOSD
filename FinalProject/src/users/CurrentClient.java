@@ -10,8 +10,10 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
+import objectsData.InternalState;
 import supportingClasses.Security;
 import supportingClasses.activeContainers;
+
 
 public class CurrentClient {
 	private ClientData client;
@@ -133,12 +135,74 @@ public class CurrentClient {
 	}
 	
 	public void addJourney() {
-		//long containerID = containers.assignContainer();
-		//long clientId = 89l;//ask client to enter valid ID
-		//long journeyId = new Security().generateID();
-		//long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime arriveby
-	 //get the startport and destination portid by asking user where it wants cargo to do. (ask user: start and end place to generate the startid and destID, ask for clientID, ask for arriveby, ask for current internalstatus or set that to ideal,
+		 getIDByUserInput();//gets the clientID
+		 long clientID = client.getClientID();
+		 long containerID = this.containers.assignContainer();
+		 long journeyID = new Security().generateID();
+		 //for the version one, generating a new portID as don't have the ability to get a portID by entering the port name
+		 long startPortID = new Security().generateID();
+		 long destinationPortID = new Security().generateID();
+		 //need to find a better solution for location..
+		 float latitude =37.75f;
+		 float longitude =-97.82f;
+		 String cargo = getCargoByUser();
+		 InternalState state = getTheOptimalInternalState();
+		 LocalDateTime arriveBy = getArrivalDate();
+		 ContainerData container = new ContainerData(containerID,clientID,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,state.getTemperature(),state.getAtmosphere(),state.getHumidity(),arriveBy);
+		 databaseContainer.newEntry(container);
+		 client.addActiveShipment(journeyID);
+		 try {
+			databaseClient.editEntry(client);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Some error in editing the client with ID: "+client.getClientID());
+		}
+		 //for the moment as I am adding a random portID to both startPortID and destinationPortID, 
+		 //I will not update the PORTDATA which needs to be done when the search by name is implemented.
+		 
+		 //blahhhhh
+		 
 	}
+	
+	
+	private LocalDateTime getArrivalDate() {
+		//at the moment just setting it to arandom date but will find a better solution for this
+		
+		
+		return  LocalDateTime.of(2021, 2, 14, 18, 32);
+	}
+	
+	private String getCargoByUser() {
+		String cargo;
+		while (true) {
+			System.out.println("Please enter what the cargo will be: ");
+			cargo = s.next();
+			//need to check if the cargo is valid..
+			break;
+		}
+		return cargo;
+	}
+	
+	private InternalState getTheOptimalInternalState() {
+	
+		float temperature;
+		float atmosphere;
+		float humidity;
+		while (true) {
+			System.out.println("Please enter the optimal Temperature required for the cargo: ");
+			temperature = s.nextFloat();
+			//check if it is valid...
+			System.out.println("Please enter the optimal atmosphere pressure required for the cargo: ");
+			atmosphere = s.nextFloat();
+			System.out.println("Please enter the optimal humidity level required for the cargo: ");
+			humidity = s.nextFloat();
+			break;
+		}
+		
+		return new InternalState(atmosphere,temperature,humidity);
+	}
+	
 	
 	public void viewInternalStatusOfAJourney() {
 		displayInternalStatus(getContainerData());
