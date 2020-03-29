@@ -12,38 +12,28 @@ class Login_Page {
 	String password;
 	String logistics_log = "admin";
 	public boolean LCompany = false;
-	public Scanner s;
-	public Login_Page(Scanner s) {
-		this.s=s;
-	}
 	public void get_input() {
 //		boolean found = false;
 //		String templogin = "";
 //		String tempPass = "";
 		
-	//	Scanner s = new Scanner (System.in);
-		
+		Scanner s = new Scanner (System.in);
 		System.out.println("Enter LogIn :");
 		this.username = s.nextLine();
 		//I aded the if statement to only ask for password if the user is the logistic company 
 		if(this.username.contentEquals(this.logistics_log)) {   
 			System.out.println("Enter Password : ");
 			this.password = s.nextLine();
-			LCompany = true;
 		}
-		//s.close();
 		Login();
+		s.close();
 	}
 	
 	public void Login() {
 		
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
-<<<<<<< HEAD
 			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/src/userInterface/passwords.txt"));
-=======
-			Scanner x = new Scanner (new File("C:\\Users\\Abdullah da boss\\git\\javaProject\\ProjectAOOSD\\FinalProject\\src\\userInterface\\passwords.txt"));
->>>>>>> e2cba825cc91f63d5aeafdb738c4f88317aae509
 			x.useDelimiter(","); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
 			//time to loop through the txt file to check for the username and password
 			//while(x.hasNext() && !found) {
@@ -66,11 +56,7 @@ class Login_Page {
 		
 		
 		catch(Exception e) {
-<<<<<<< HEAD
 			System.out.println("You enterent inconsistent information...try again ");
-=======
-			System.out.println("You entered inconsistent information...try again ");
->>>>>>> e2cba825cc91f63d5aeafdb738c4f88317aae509
 			get_input();
 				
 }	
@@ -81,15 +67,9 @@ class Login_Page {
 }
 			
 	public boolean status() {	
-<<<<<<< HEAD
 		if (this.password.equals(this.logistics_log) && this.username.contentEquals(this.logistics_log)){
 			LCompany = true;
 		}
-=======
-//		if (this.password.equals(this.logistics_log) && this.username.contentEquals(this.logistics_log)){
-//			LCompany = true;
-//		}
->>>>>>> e2cba825cc91f63d5aeafdb738c4f88317aae509
 		return LCompany;
 }
 		
