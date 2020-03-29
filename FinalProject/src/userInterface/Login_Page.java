@@ -39,7 +39,7 @@ class Login_Page {
 		
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
-			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/src/userInterface/passwords.txt"));
+			Scanner x = new Scanner (new File("C:\\Users\\Abdullah da boss\\git\\javaProject\\ProjectAOOSD\\FinalProject\\src\\userInterface\\passwords.txt"));
 			x.useDelimiter(","); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
 			//time to loop through the txt file to check for the username and password
 			//while(x.hasNext() && !found) {

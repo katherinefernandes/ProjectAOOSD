@@ -16,6 +16,10 @@ import supportingClasses.activeContainers;
 
 
 public class CurrentClient {
+	
+	
+	
+	
 	private ClientData client;
 	private Scanner s;
 	private Long clientID;
