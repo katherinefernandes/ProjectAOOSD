@@ -12,6 +12,10 @@ class Login_Page {
 	String password;
 	String logistics_log = "admin";
 	public boolean LCompany = false;
+	public Scanner s;
+	public Login_Page(Scanner s) {
+		this.s=s;
+	}
 	public void get_input() {
 //		boolean found = false;
 //		String templogin = "";
