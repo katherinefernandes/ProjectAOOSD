@@ -1,35 +1,18 @@
 package dataAccessTest;
 
 import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.*;
 
-import org.junit.Before;
-import org.junit.jupiter.api.*;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
 import dataAccess.ClientAccess;
-import exceptions.AmbiguousElementSelectionException;
-import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
-import dataAccess.NodeMethods;
 
-public class ClientAccessTest {
-	ClientData client1;
-	ClientData client2;
-	ClientData client1_v2;
-	ArrayList<ClientData> sortTestClients;
-	ArrayList<Long> toBeDeleted;
-	ClientAccess clientAccess;
-	Random random;
+public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 	
 	public ClientAccessTest() {
-		clientAccess = new ClientAccess();
-		random = new Random();
-		sortTestClients = new ArrayList<ClientData>();
+		super();
+		dataAccess = new ClientAccess();
+		sortTestData = new ArrayList<ClientData>();
 
 		ArrayList<String> firstNames1 = new ArrayList<String>();
 		firstNames1.add("Rincewind");
@@ -40,7 +23,7 @@ public class ClientAccessTest {
 		ArrayList<String> lastNames1 = new ArrayList<String>();
 		lastNames1.add("Marx");
 
-		client1 = new ClientData(102621L,"Washington cleaning",45,
+		data1 = new ClientData(102621L,"Washington cleaning",45,
 								123456789,"clean.your.pipes@wash.com",
 								firstNames1,middleNames1,lastNames1,
 								"Bakerstreet","Derry",42,"1213");
@@ -55,18 +38,18 @@ public class ClientAccessTest {
 		lastNames2.add("the");
 		lastNames2.add("Third");
 
-		client2 = new ClientData(2530321L,"Trucking brothers AS",47,
+		data2 = new ClientData(2530321L,"Trucking brothers AS",47,
 								666663436,"trucker.m.f@gmail.com",
 								firstNames2,middleNames2,lastNames2,
 								"Elm street","Arkham",33,"2000");
 		
-		client1_v2 = new ClientData(102621L,"new Washington cleansing",46,
+		data1_v2 = new ClientData(102621L,"new Washington cleansing",46,
 									123456789,"clean.your.pipes@wash.com",
 									firstNames1,middleNames1,lastNames1,
 									"Bakerstreet","Darry",42,"1216");
-		client1.addActiveShipment(1766465L);
-		client1.addActiveShipment(8923892L);
-		client1.addActiveShipment(10390101L);
+		data1.addActiveShipment(1766465L);
+		data1.addActiveShipment(8923892L);
+		data1.addActiveShipment(10390101L);
 		
 		for (int i = 0; i < 200; i++) {
 			long ID = Math.abs(random.nextLong());
@@ -77,73 +60,13 @@ public class ClientAccessTest {
 			middleName.add("a");
 			lastName.add("a");
 			
-			sortTestClients.add(new ClientData(ID,"a",1,1,"a",firstName,middleName,lastName,"a","a",1,"1"));
-		}
-		
-		toBeDeleted = new ArrayList<Long>();
-	}
-	
-	@AfterEach
-	public void CleanUp() {
-		for(long ID : toBeDeleted) {
-			try {
-				clientAccess.deleteEntry(ID);
-			} catch (DOMException e) {
-				fail("DOMException in clean up");
-				e.printStackTrace();
-			} catch (ElementNotFoundException e) {
-			}
-		}
-		toBeDeleted = new ArrayList<Long>();
-	}
-	
-	@Test
-	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		insertClient(client1);
-	
-		ClientData pulledClient = clientAccess.getEntry(client1.getClientID());
-		
-		assertEqualClients(pulledClient,client1);
-	}
-	
-	@Test
-	public void editTest() throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
-		insertClient(client1);
-		clientAccess.editEntry(client1_v2);
-		ClientData pulledClient = clientAccess.getEntry(client1.getClientID());
-		
-		assertEqualClients(pulledClient,client1_v2);
-	}
-	
-	@Test
-	public void sortTest() throws AmbiguousElementSelectionException {
-		for(ClientData clientData : sortTestClients) {
-			insertClient(clientData);
-		}
-		
-		NodeList clients = clientAccess.getRoot().getChildNodes();
-		int clientsLen = clients.getLength();
-		long previousID = NodeMethods.getElementID((Element) clients.item(0));
-		for(int i = 1; i < clientsLen; i++) {
-			long currentID = NodeMethods.getElementID((Element) clients.item(i));
-			assertTrue(previousID < currentID);
-			previousID = currentID;
+			sortTestData.add(new ClientData(ID,"a",1,1,"a",firstName,middleName,lastName,"a","a",1,"1"));
 		}
 	}
 	
-	@Test
-	public void exceptionTest() throws AmbiguousElementSelectionException{
-		insertClient(client1);
-		insertClient(client2);
-		
-		assertThrows(ElementNotFoundException.class,()->clientAccess.getEntry(29199));
-		assertThrows(ElementNotFoundException.class,()->clientAccess.getEntry(29199));
-		assertThrows(AmbiguousElementSelectionException.class,()->insertClient(client1_v2));
-	}
 	
 	
-	
-	public void assertEqualClients(ClientData clientX, ClientData clientY) {
+	protected void assertEqualData(ClientData clientX, ClientData clientY) {
 		assertEquals(clientY.getClientID(),clientX.getClientID());
 		assertEquals(clientY.getCompanyName(),clientX.getCompanyName());
 		assertEquals(clientY.getPhoneNumber().getCountryCode(),clientX.getPhoneNumber().getCountryCode());
@@ -164,8 +87,7 @@ public class ClientAccessTest {
 		}
 	}
 	
-	public void insertClient(ClientData clientData) throws AmbiguousElementSelectionException {
-		clientAccess.newEntry(clientData);
-		toBeDeleted.add(clientData.getClientID());
+	protected long getDataID(ClientData clientData) {
+		return clientData.getClientID();
 	}
 }
