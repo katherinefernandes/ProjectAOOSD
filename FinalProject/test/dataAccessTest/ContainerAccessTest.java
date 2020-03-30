@@ -7,7 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import org.junit.jupiter.api.Test;
+
 import dataAccess.ContainerAccess;
+import exceptions.AmbiguousElementSelectionException;
+import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 
 public class ContainerAccessTest extends DataAccessTest<ContainerData,ContainerAccess>{
@@ -24,6 +28,26 @@ public class ContainerAccessTest extends DataAccessTest<ContainerData,ContainerA
 			long ID = random.nextLong();
 			sortTestData.add(new ContainerData(ID, 1L, 1L, 1L, 1L, 1F, 1F, "a", 1F, 1F, 1F, LocalDateTime.of(2020,4,1,1,1)));
 		}
+	}
+	
+	@Test
+	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+		persistencyTest();
+	}
+	
+	@Test
+	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+		editTest();
+	}
+	
+	@Test
+	public void sortTestT() throws AmbiguousElementSelectionException {
+		sortTest();
+	}
+	
+	@Test
+	public void exceptionTestT() throws AmbiguousElementSelectionException {
+		exceptionTest();
 	}
 	
 	public void assertEqualData(ContainerData container1, ContainerData container2) {

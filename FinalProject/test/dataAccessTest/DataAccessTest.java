@@ -45,7 +45,6 @@ public class DataAccessTest<T extends ObjectData, A extends DataAccess<T>> {
 		toBeDeleted = new ArrayList<Long>();
 	}
 	
-	@Test
 	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
 		insertData(data1);
 	
@@ -54,7 +53,6 @@ public class DataAccessTest<T extends ObjectData, A extends DataAccess<T>> {
 		assertEqualData(pulledData,data1);
 	}
 	
-	@Test
 	public void editTest() throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
 		insertData(data1);
 		dataAccess.editEntry(data1_v2);
@@ -63,7 +61,6 @@ public class DataAccessTest<T extends ObjectData, A extends DataAccess<T>> {
 		assertEqualData(pulledData,data1_v2);
 	}
 	
-	@Test
 	public void sortTest() throws AmbiguousElementSelectionException {
 		for(T clientData : sortTestData) {
 			insertData(clientData);
@@ -79,12 +76,10 @@ public class DataAccessTest<T extends ObjectData, A extends DataAccess<T>> {
 		}
 	}
 	
-	@Test
 	public void exceptionTest() throws AmbiguousElementSelectionException{
 		insertData(data1);
 		insertData(data2);
 		
-		assertThrows(ElementNotFoundException.class,()->dataAccess.getEntry(29199));
 		assertThrows(ElementNotFoundException.class,()->dataAccess.getEntry(29199));
 		assertThrows(AmbiguousElementSelectionException.class,()->insertData(data1_v2));
 	}

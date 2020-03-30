@@ -4,7 +4,11 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import org.junit.jupiter.api.Test;
+
 import dataAccess.ClientAccess;
+import exceptions.AmbiguousElementSelectionException;
+import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
 public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
@@ -63,6 +67,25 @@ public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 		}
 	}
 	
+	@Test
+	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+		persistencyTest();
+	}
+	
+	@Test
+	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+		editTest();
+	}
+	
+	@Test
+	public void sortTestT() throws AmbiguousElementSelectionException {
+		sortTest();
+	}
+	
+	@Test
+	public void exceptionTestT() throws AmbiguousElementSelectionException {
+		exceptionTest();
+	}
 	
 	
 	protected void assertEqualData(ClientData clientX, ClientData clientY) {
