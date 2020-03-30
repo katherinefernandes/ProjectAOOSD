@@ -32,23 +32,16 @@ public class ContainerAccessTest extends DataAccessTest<ContainerData,ContainerA
 	
 	@Test
 	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		persistencyTest();
-	}
-	
+		persistencyTest(); }
 	@Test
 	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		editTest();
-	}
-	
+		editTest(); }
 	@Test
 	public void sortTestT() throws AmbiguousElementSelectionException {
-		sortTest();
-	}
-	
+		sortTest(); }
 	@Test
 	public void exceptionTestT() throws AmbiguousElementSelectionException {
-		exceptionTest();
-	}
+		exceptionTest(); }
 	
 	public void assertEqualData(ContainerData container1, ContainerData container2) {
 		assertEquals(container1.getContainerID(),container2.getContainerID());

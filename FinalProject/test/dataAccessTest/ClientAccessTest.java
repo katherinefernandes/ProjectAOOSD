@@ -69,23 +69,16 @@ public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 	
 	@Test
 	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		persistencyTest();
-	}
-	
+		persistencyTest(); }
 	@Test
 	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		editTest();
-	}
-	
+		editTest(); }
 	@Test
 	public void sortTestT() throws AmbiguousElementSelectionException {
-		sortTest();
-	}
-	
+		sortTest(); }
 	@Test
 	public void exceptionTestT() throws AmbiguousElementSelectionException {
-		exceptionTest();
-	}
+		exceptionTest(); }
 	
 	
 	protected void assertEqualData(ClientData clientX, ClientData clientY) {
@@ -103,9 +96,11 @@ public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 		assertEquals(clientY.getAddress().getZipCode(),clientX.getAddress().getZipCode());
 		List<Long> journeyIDsX = clientX.getActiveShipment();
 		List<Long> journeyIDsY = clientY.getActiveShipment();
+		Set<Long> journeyIDSetX = new HashSet<Long>();
+		journeyIDSetX.addAll(journeyIDsX);
 		
-		for(int i = 0; i < Math.max(journeyIDsX.size(),journeyIDsY.size()); i++) {
-			assertEquals(journeyIDsX.get(i),journeyIDsY.get(i));
+		for(long journeyID : journeyIDsY) {
+			assertTrue(journeyIDSetX.contains(journeyID));
 		}
 	}
 	

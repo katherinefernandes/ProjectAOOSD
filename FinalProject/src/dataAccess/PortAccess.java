@@ -1,23 +1,71 @@
 package dataAccess;
 
+import java.util.*;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import exceptions.AmbiguousElementSelectionException;
+import exceptions.ElementNotFoundException;
+import objectsData.Location;
 import objectsData.PortData;
 
 public class PortAccess extends DataAccess<PortData> {
 	
-	PortAccess() {
+	public PortAccess() {
 		super("storage/activeData/ports.xml");
 	}
 	
-	public void newEntry(PortData data) {
-	
-	}
-
-
-	public void editEntry(PortData data) {
+	protected Element elementFromData(PortData data) {
+		Element newPort = doc.createElement("Port");
 		
+		Location position = data.getPosition();
+		Element positionElement = doc.createElement("Position");
+		List<Long> stationedContainers = data.getStationedContainers();
+		Element stationedElement = doc.createElement("StationedContainers");
+		List<Long> arrivingContainers = data.getArrivingContainers();
+		Element arrivingElement = doc.createElement("ArrivingContainers");
+		
+		newElementWithValue(newPort,"PortID",String.valueOf(data.getPortID()));
+		newElementWithValue(newPort,"Country",data.getCountry());
+		newElementWithValue(newPort,"PortName",data.getPortName());
+		newElementWithValue(positionElement,"Latitude",String.valueOf(position.getLatitude()));
+		newElementWithValue(positionElement,"Longitude",String.valueOf(position.getlongitude()));
+		newPort.appendChild(positionElement);
+		
+		for(Long containerID : stationedContainers) {
+			newElementWithValue(stationedElement,"ContainerID",String.valueOf(containerID));
+		}
+		for(Long containerID : arrivingContainers) {
+			newElementWithValue(arrivingElement,"ContainerID",String.valueOf(containerID));
+		}
+		newPort.appendChild(stationedElement);
+		newPort.appendChild(arrivingElement);
+		
+		return newPort;
 	}
-
-	public PortData getEntry(long ID) {
-		return null;
+	
+	protected PortData dataFromElement(Element element) throws NumberFormatException, AmbiguousElementSelectionException, ElementNotFoundException {
+		long portID = Long.valueOf(NodeMethods.valueFromTagName(element, "PortID"));
+		String country = NodeMethods.valueFromTagName(element, "Country");
+		String portName = NodeMethods.valueFromTagName(element, "PortName");
+		Element positionElement = NodeMethods.singleElementFromTagName(element, "Position");
+		float latitude = Float.valueOf(NodeMethods.valueFromTagName(positionElement, "Latitude"));
+		float longitude = Float.valueOf(NodeMethods.valueFromTagName(positionElement, "Longitude"));
+		
+		PortData port = new PortData(portID,country,portName,latitude,longitude);
+		
+		NodeList stationedElements = NodeMethods.singleElementFromTagName(element, "StationedContainers").getChildNodes();
+		NodeList arrivingElements = NodeMethods.singleElementFromTagName(element, "ArrivingContainers").getChildNodes();
+		
+		for(String containerString : NodeMethods.getValuesFromChildNodes(stationedElements)) {
+			port.addStationedContainer(Long.valueOf(containerString));
+		}
+		for(String containerString : NodeMethods.getValuesFromChildNodes(arrivingElements)) {
+			port.addArrivingContainer(Long.valueOf(containerString));
+		}
+		
+		return port;
 	}
 }
