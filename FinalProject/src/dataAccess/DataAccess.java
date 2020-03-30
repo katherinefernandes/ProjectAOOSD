@@ -1,5 +1,6 @@
 package dataAccess;
 
+import objectsData.ClientData;
 import objectsData.ObjectData;
 
 import java.io.*;
@@ -50,20 +51,50 @@ public class DataAccess<T extends ObjectData> {
 		}
 	}
 	
-	public void newEntry(T data) {
+	public void newEntry(T data) throws AmbiguousElementSelectionException {
+		Element root = doc.getDocumentElement();
 		
+		Element newEntry = elementFromData(data);
+		
+		NodeList elements = root.getChildNodes();
+		
+		long newEntryID = nodeMethods.getElementID(newEntry);
+		
+		if( nodeMethods.needsToBeInsertedAtEnd(elements, newEntryID)) {
+			root.appendChild(newEntry);
+		}
+		else {
+			nodeMethods.insertElement(newEntry, root);
+		}
+		
+		transform();
 	}
 	
 	public void editEntry(T data) throws ElementNotFoundException {
+		Element root = doc.getDocumentElement();
+		Element oldEntry;
+		Element newEntry = elementFromData(data);
 		
+		oldEntry = nodeMethods.getElementFromID(nodeMethods.getElementID(newEntry), root);
+		root.replaceChild(newEntry, oldEntry);
+		
+		transform();
 	}
 	
 	public void deleteEntry(long ID) throws DOMException, ElementNotFoundException {
+		Element root = doc.getDocumentElement();
 		
+		root.removeChild(nodeMethods.getElementFromID(ID, root));
+		
+		transform();
 	}
 	
 	public T getEntry(long ID) throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
-		return null;
+		Element entry = nodeMethods.getElementFromID(ID, doc.getDocumentElement());
+		
+		T data = dataFromElement(entry);
+		
+		return data;
 	}
 	
 	public Element getRoot() { //Mostly for testing
@@ -77,25 +108,6 @@ public class DataAccess<T extends ObjectData> {
 		
 		element.appendChild(valueNode);
 		parentElement.appendChild(element);
-	}
-	
-	protected void insertElement(Element newElement, Element root) {
-		long newElementID = nodeMethods.getElementID(newElement);
-		NodeList elements = root.getChildNodes();
-		int insertionIndex = searchSupremum(elements,newElementID);
-		root.insertBefore(newElement, elements.item(insertionIndex));
-	}
-	
-	protected Element getElementFromID(long ID, Element root) throws ElementNotFoundException {
-		NodeList nodes = root.getChildNodes();
-		int nodesLen = nodes.getLength();
-		Node closestNode;
-		
-		if (nodesLen == 0 || nodeMethods.getElementID((Element) (closestNode = nodes.item(searchSupremum(nodes, ID)))) != ID) {
-			throw new ElementNotFoundException("Element with given ID not found");
-		}
-
-		return (Element) closestNode;
 	}
 	
 	protected void transform() throws TransformerFactoryConfigurationError {
@@ -118,34 +130,5 @@ public class DataAccess<T extends ObjectData> {
 	
 	protected T dataFromElement(Element element) throws NumberFormatException, AmbiguousElementSelectionException, ElementNotFoundException {
 		return null;
-	}
-	//--------HELPER HELPER METHODS(private visibility)---------
-	public int searchSupremum(NodeList nodes, long ID) {
-		int lower = 0;
-		int upper = nodes.getLength() - 1;
-		int index = (lower + upper)/2;
-		long curID;
-		
-		while (lower < upper) {
-			
-			curID = nodeMethods.getElementID((Element) nodes.item(index));
-			if(curID < ID) {
-				lower = index + 1;
-			}
-			else if(curID > ID) {
-				upper = index - 1;
-			}
-			else {
-				upper = index;
-				lower = index;
-			}
-			index = (lower + upper)/2;
-		}
-		curID = nodeMethods.getElementID((Element) nodes.item(index));
-		
-		if (ID > curID) {
-			return index + 1;
-		}
-		return index;
 	}
 }

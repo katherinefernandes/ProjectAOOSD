@@ -21,52 +21,6 @@ public class ClientAccess extends DataAccess<ClientData> {
 		super("storage/activeData/clients.xml");
 	}
 	
-	public void newEntry(ClientData data) {
-		Element root = doc.getDocumentElement();
-		
-		Element newClient = elementFromData(data);
-		
-		NodeList clients = root.getChildNodes();
-		long clientIDValue = data.getClientID();
-		
-		if( nodeMethods.needsToBeInsertedAtEnd(clients, clientIDValue)) {
-			root.appendChild(newClient);
-		}
-		else {
-			insertElement(newClient, root);
-		}
-		
-		transform();
-	}
-	
-
-	public void editEntry(ClientData data) throws ElementNotFoundException{
-		Element root = doc.getDocumentElement();
-		Element oldClient;
-		Element newClient = elementFromData(data);
-		
-		oldClient = getElementFromID(nodeMethods.getElementID(newClient), root);
-		root.replaceChild(newClient, oldClient);
-		
-		transform();
-	}
-	
-	
-	public void deleteEntry(long ID) throws DOMException, ElementNotFoundException {
-		Element root = doc.getDocumentElement();
-		
-		root.removeChild(getElementFromID(ID, root));
-		
-		transform();
-	}
-
-	
-	public ClientData getEntry(long ID) throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
-		Element client = getElementFromID(ID, doc.getDocumentElement());
-		ClientData clientData = dataFromElement(client);
-		return clientData;
-	}
-	
 	
 	protected Element elementFromData(ClientData data) {
 		Element newClient = doc.createElement("Client");
@@ -131,6 +85,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 		int 			   houseNumber = Integer.valueOf(nodeMethods.valueFromTagName(addressElement, "HouseNumber"));
 		String 			   city = nodeMethods.valueFromTagName(addressElement, "City");
 		String 			   zipCode = nodeMethods.valueFromTagName(addressElement, "ZipCode");
+		
 		ClientData clientData = new ClientData(clientID, companyName, countryCode, phoneNumber, email, (ArrayList<String>) names.get(0), (ArrayList<String>) names.get(1), (ArrayList<String>) names.get(2), streetName, city, houseNumber, zipCode);
 		
 		

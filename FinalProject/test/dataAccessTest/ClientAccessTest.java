@@ -1,6 +1,7 @@
 package dataAccessTest;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.*;
 
@@ -117,7 +118,7 @@ public class ClientAccessTest {
 	}
 	
 	@Test
-	public void sortTest() {
+	public void sortTest() throws AmbiguousElementSelectionException {
 		for(ClientData clientData : sortTestClients) {
 			insertClient(clientData);
 		}
@@ -133,9 +134,13 @@ public class ClientAccessTest {
 	}
 	
 	@Test
-	public void exceptionTest() {
+	public void exceptionTest() throws AmbiguousElementSelectionException{
 		insertClient(client1);
 		insertClient(client2);
+		
+		assertThrows(ElementNotFoundException.class,()->clientAccess.getEntry(29199));
+		assertThrows(ElementNotFoundException.class,()->clientAccess.getEntry(29199));
+		assertThrows(AmbiguousElementSelectionException.class,()->insertClient(client1_v2));
 	}
 	
 	
@@ -161,7 +166,7 @@ public class ClientAccessTest {
 		}
 	}
 	
-	public void insertClient(ClientData clientData) {
+	public void insertClient(ClientData clientData) throws AmbiguousElementSelectionException {
 		clientAccess.newEntry(clientData);
 		toBeDeleted.add(clientData.getClientID());
 	}

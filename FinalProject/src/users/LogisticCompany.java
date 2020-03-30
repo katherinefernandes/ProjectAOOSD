@@ -116,7 +116,12 @@ public class LogisticCompany {
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstNames, middleNames, lastNames, street, city, bNumber, zip);
 		
 		ClientAccess clientAccess = new ClientAccess();
-		clientAccess.newEntry(newClient);
+		try { //Try-catch added by Simon to avoid compile errors. Changed because I added an error when you try to add client with same ID two times. Added code
+			
+			clientAccess.newEntry(newClient);//Old code
+			
+		} catch (AmbiguousElementSelectionException e) { //Added code
+			e.printStackTrace(); } //Added code
 		
 	}
 	
