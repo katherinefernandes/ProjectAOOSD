@@ -11,7 +11,7 @@ public class LocationTest {
 	private Location location;
 	private float delta=3.6f;
 	
-	@Before
+	@BeforeEach
 	public void testLocation() {
 		location = new Location(12.35F,36.99F);
 	}

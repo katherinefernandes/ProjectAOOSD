@@ -25,7 +25,7 @@ public class ContainerDataTest {
 	private LocalDateTime arriveby = LocalDateTime.now();
 	
 	
-	@Before
+	@BeforeEach
 	public void testContainerData() {
 		
 		objectTest = new ContainerData( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, arriveby);

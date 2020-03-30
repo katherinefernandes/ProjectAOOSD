@@ -15,7 +15,7 @@ public class ClientDataTest {
 	private ArrayList<String> firstname = new ArrayList<String>();
 	private ArrayList<String> lastname = new ArrayList<String>();
 	
-	@Before
+	@BeforeEach
 	public void testClientData() {
 		firstname.add("Muna");
 		lastname.add("azam");

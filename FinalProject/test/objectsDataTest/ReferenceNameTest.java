@@ -14,7 +14,7 @@ public class ReferenceNameTest {
 	private ArrayList<String> middlename = new ArrayList<String>();
 	private ArrayList<String> firstname = new ArrayList<String>();
 	private ArrayList<String> lastname = new ArrayList<String>();
-	@Before
+	@BeforeEach
 	public void testReferenceName() {
 		middlename.add("J");
 		firstname.add("Mamuna");

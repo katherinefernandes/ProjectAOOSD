@@ -13,7 +13,7 @@ public class PortDataTest {
 	
 	private PortData objectTest;
 	
-	@Before
+	@BeforeEach
 	public void testPortData() {
 		objectTest = new PortData(36l,"Pakistan","gawadar",36.0f,87.0f);
 		

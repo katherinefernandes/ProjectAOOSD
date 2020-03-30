@@ -10,7 +10,7 @@ import objectsData.Address;
 public class AddressTest {
 	private Address testclass;
 	
-	@Before
+	@BeforeEach
 	public void testAddress() {
 		testclass= new Address("G11/2",59,"Islamabad","2620");
 	}

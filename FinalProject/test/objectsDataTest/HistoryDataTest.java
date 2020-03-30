@@ -13,7 +13,7 @@ public class HistoryDataTest {
 
 	private HistoryData objectTest;
 	
-	@Before
+	@BeforeEach
 	public void testHistoryData() {
 		objectTest = new HistoryData(45l,36l,78l,89l,90l,"Banana",36.0f,1.0f,75.0f,56.0f,7.8f);
 		

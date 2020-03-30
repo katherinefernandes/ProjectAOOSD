@@ -11,7 +11,7 @@ public class InternalStateTest {
 	
 	private InternalState testobject;
 	
-	@Before
+	@BeforeEach
 	public void testInternalState() {
 		testobject = new InternalState(1.0f,36.9f,75.0f);
 	}

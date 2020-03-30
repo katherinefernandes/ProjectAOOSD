@@ -2,7 +2,6 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 import objectsData.PhoneNumber;
@@ -13,7 +12,7 @@ public class PhoneNumberTest {
 	private PhoneNumber objectTest;
 	
 	
-	@Before
+	@BeforeEach
 	public void test() {
 		objectTest = new PhoneNumber(36,8978789);
 	}
