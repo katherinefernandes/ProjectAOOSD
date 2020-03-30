@@ -45,7 +45,7 @@ public class NodeMethods {
 	
 	public static boolean needsToBeInsertedAtEnd(NodeList nodes, long newNodeID) {
 		int nodesLength = nodes.getLength();
-		return (nodesLength == 0) || (newNodeID >= getElementID((Element) nodes.item(nodesLength - 1)));
+		return (nodesLength == 0) || (newNodeID > getElementID((Element) nodes.item(nodesLength - 1)));
 	}
 
 	public static void insertElement(Element newElement, Element root) throws AmbiguousElementSelectionException {

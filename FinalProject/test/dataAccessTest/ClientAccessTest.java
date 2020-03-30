@@ -12,7 +12,6 @@ public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 	public ClientAccessTest() {
 		super();
 		dataAccess = new ClientAccess();
-		sortTestData = new ArrayList<ClientData>();
 
 		ArrayList<String> firstNames1 = new ArrayList<String>();
 		firstNames1.add("Rincewind");
@@ -51,7 +50,7 @@ public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 		data1.addActiveShipment(8923892L);
 		data1.addActiveShipment(10390101L);
 		
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 20; i++) {
 			long ID = Math.abs(random.nextLong());
 			ArrayList<String> firstName = new ArrayList<>();
 			ArrayList<String> middleName = new ArrayList<>();

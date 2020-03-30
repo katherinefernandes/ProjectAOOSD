@@ -28,6 +28,7 @@ public class DataAccessTest<T extends ObjectData, A extends DataAccess<T>> {
 	public DataAccessTest() {
 		random = new Random();
 		toBeDeleted = new ArrayList<Long>();
+		sortTestData = new ArrayList<T>();
 	}
 	
 	@AfterEach

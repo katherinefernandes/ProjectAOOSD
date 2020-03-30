@@ -24,10 +24,17 @@ public class ContainerData extends ObjectData {
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo=cargo;
 		this.status=new InternalState(atmosphere, temperature, humidity);
-		this.updated=LocalDateTime.now();
+		this.updated=LocalDateTime.now(); 
 		this.arriveBy=arriveby;
 		
 	}
+	
+	//Overloaded constructor added by Simon to handle values of updated that are not right now, for example when getting a container from the xml files. new code from here -
+	public ContainerData(long containerID, long clientId, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime updated, LocalDateTime arriveby) {
+		this(containerID,clientId,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,temperature,atmosphere,humidity,arriveby);
+		this.updated = updated;
+	}//- to here
+	
 	public void useContainerAgain(long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, LocalDateTime arriveby) {
 		this.clientID=clid;
 		this.journeyID=jid;

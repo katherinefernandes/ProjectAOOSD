@@ -75,7 +75,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 		List<String> journeyIDStrings = NodeMethods.getValuesFromChildNodes(activeShipmentsElements);
 		
 		
-		long 			   clientID = Integer.valueOf(NodeMethods.valueFromTagName(client, "ClientID"));
+		long 			   clientID = Long.valueOf(NodeMethods.valueFromTagName(client, "ClientID"));
 		String 			   companyName = NodeMethods.valueFromTagName(client, "CompanyName");
 		int 			   countryCode = Integer.valueOf(NodeMethods.valueFromTagName(NodeMethods.singleElementFromTagName(client,"PhoneNumber"), "CountryCode"));
 		int 			   phoneNumber = Integer.valueOf(NodeMethods.valueFromTagName(NodeMethods.singleElementFromTagName(client,"PhoneNumber"), "PhoneBaseNumber"));
