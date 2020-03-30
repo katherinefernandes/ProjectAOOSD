@@ -13,16 +13,16 @@ import exceptions.ElementNotFoundException;
 
 public class NodeMethods {
 
-	public long getElementID(Element element) {
+	public static long getElementID(Element element) {
 		return Long.parseLong(element.getChildNodes().item(0).getTextContent());
 	}
 
-	public String valueFromTagName(Element root, String tagName) throws AmbiguousElementSelectionException, ElementNotFoundException {
+	public static String valueFromTagName(Element root, String tagName) throws AmbiguousElementSelectionException, ElementNotFoundException {
 		Element element = singleElementFromTagName(root, tagName);
 		return element.getTextContent();
 	}
 
-	public Element singleElementFromTagName(Element root, String tagName)
+	public static Element singleElementFromTagName(Element root, String tagName)
 			throws AmbiguousElementSelectionException, ElementNotFoundException {
 		NodeList element = root.getElementsByTagName(tagName);
 		if(element.getLength() > 1) {
@@ -34,7 +34,7 @@ public class NodeMethods {
 		return (Element) element.item(0);
 	}
 	
-	public List<String> getValuesFromChildNodes(NodeList childNodes){
+	public static List<String> getValuesFromChildNodes(NodeList childNodes){
 		List<String> values = new ArrayList<String>();
 		int childNodesLen = childNodes.getLength();
 		for(int i = 0; i < childNodesLen; i++) {
@@ -43,12 +43,12 @@ public class NodeMethods {
 		return values;
 	}
 	
-	public boolean needsToBeInsertedAtEnd(NodeList nodes, long newNodeID) {
+	public static boolean needsToBeInsertedAtEnd(NodeList nodes, long newNodeID) {
 		int nodesLength = nodes.getLength();
 		return (nodesLength == 0) || (newNodeID >= getElementID((Element) nodes.item(nodesLength - 1)));
 	}
 
-	protected void insertElement(Element newElement, Element root) throws AmbiguousElementSelectionException {
+	public static void insertElement(Element newElement, Element root) throws AmbiguousElementSelectionException {
 		long newElementID = getElementID(newElement);
 		NodeList elements = root.getChildNodes();
 		int insertionIndex = searchSupremum(elements,newElementID);
@@ -58,7 +58,7 @@ public class NodeMethods {
 		root.insertBefore(newElement, elements.item(insertionIndex));
 	}
 
-	public int searchSupremum(NodeList nodes, long ID) {
+	public static int searchSupremum(NodeList nodes, long ID) {
 		int lower = 0;
 		int upper = nodes.getLength() - 1;
 		int index = (lower + upper)/2;
@@ -87,7 +87,7 @@ public class NodeMethods {
 		return index;
 	}
 
-	protected Element getElementFromID(long ID, Element root) throws ElementNotFoundException {
+	public static Element getElementFromID(long ID, Element root) throws ElementNotFoundException {
 		NodeList nodes = root.getChildNodes();
 		int nodesLen = nodes.getLength();
 		Node closestNode;

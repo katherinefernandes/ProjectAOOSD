@@ -70,21 +70,21 @@ public class ClientAccess extends DataAccess<ClientData> {
 	
 	
 	protected ClientData dataFromElement(Element client) throws NumberFormatException, AmbiguousElementSelectionException, ElementNotFoundException {
-		Element addressElement = nodeMethods.singleElementFromTagName(client, "Address");
-		NodeList activeShipmentsElements = nodeMethods.singleElementFromTagName(client, "ActiveShipments").getChildNodes();
-		List<String> journeyIDStrings = nodeMethods.getValuesFromChildNodes(activeShipmentsElements);
+		Element addressElement = NodeMethods.singleElementFromTagName(client, "Address");
+		NodeList activeShipmentsElements = NodeMethods.singleElementFromTagName(client, "ActiveShipments").getChildNodes();
+		List<String> journeyIDStrings = NodeMethods.getValuesFromChildNodes(activeShipmentsElements);
 		
 		
-		long 			   clientID = Integer.valueOf(nodeMethods.valueFromTagName(client, "ClientID"));
-		String 			   companyName = nodeMethods.valueFromTagName(client, "CompanyName");
-		int 			   countryCode = Integer.valueOf(nodeMethods.valueFromTagName(nodeMethods.singleElementFromTagName(client,"PhoneNumber"), "CountryCode"));
-		int 			   phoneNumber = Integer.valueOf(nodeMethods.valueFromTagName(nodeMethods.singleElementFromTagName(client,"PhoneNumber"), "PhoneBaseNumber"));
-		String 			   email = nodeMethods.valueFromTagName(client, "Email");
+		long 			   clientID = Integer.valueOf(NodeMethods.valueFromTagName(client, "ClientID"));
+		String 			   companyName = NodeMethods.valueFromTagName(client, "CompanyName");
+		int 			   countryCode = Integer.valueOf(NodeMethods.valueFromTagName(NodeMethods.singleElementFromTagName(client,"PhoneNumber"), "CountryCode"));
+		int 			   phoneNumber = Integer.valueOf(NodeMethods.valueFromTagName(NodeMethods.singleElementFromTagName(client,"PhoneNumber"), "PhoneBaseNumber"));
+		String 			   email = NodeMethods.valueFromTagName(client, "Email");
 		List<List<String>> names = getNames(client);
-		String 			   streetName = nodeMethods.valueFromTagName(addressElement, "StreetName");
-		int 			   houseNumber = Integer.valueOf(nodeMethods.valueFromTagName(addressElement, "HouseNumber"));
-		String 			   city = nodeMethods.valueFromTagName(addressElement, "City");
-		String 			   zipCode = nodeMethods.valueFromTagName(addressElement, "ZipCode");
+		String 			   streetName = NodeMethods.valueFromTagName(addressElement, "StreetName");
+		int 			   houseNumber = Integer.valueOf(NodeMethods.valueFromTagName(addressElement, "HouseNumber"));
+		String 			   city = NodeMethods.valueFromTagName(addressElement, "City");
+		String 			   zipCode = NodeMethods.valueFromTagName(addressElement, "ZipCode");
 		
 		ClientData clientData = new ClientData(clientID, companyName, countryCode, phoneNumber, email, (ArrayList<String>) names.get(0), (ArrayList<String>) names.get(1), (ArrayList<String>) names.get(2), streetName, city, houseNumber, zipCode);
 		
@@ -102,7 +102,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 	private List<List<String>> getNames(Element client) throws AmbiguousElementSelectionException, ElementNotFoundException {
 		List<List<String>> names = new ArrayList<List<String>>();
 		
-		Element namesElement = nodeMethods.singleElementFromTagName(client, "RefrencePersonName");
+		Element namesElement = NodeMethods.singleElementFromTagName(client, "RefrencePersonName");
 		
 		NodeList firstNamesElements = namesElement.getElementsByTagName("FirstName");
 		NodeList middleNamesElements = namesElement.getElementsByTagName("MiddleName");
@@ -114,7 +114,7 @@ public class ClientAccess extends DataAccess<ClientData> {
 		
 		for(int i = 0; i < 3; i++) {
 			NodeList namesElements = namesElementsList.get(i);
-			names.add(nodeMethods.getValuesFromChildNodes(namesElements));
+			names.add(NodeMethods.getValuesFromChildNodes(namesElements));
 		}
 		return names;
 	}

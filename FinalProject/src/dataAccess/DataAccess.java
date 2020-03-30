@@ -20,7 +20,6 @@ import exceptions.ElementNotFoundException;
 
 public class DataAccess<T extends ObjectData> {
 	String filePath;
-	NodeMethods nodeMethods;
 	File schemaFile;
 	Document doc;
 	Schema schema;
@@ -28,7 +27,6 @@ public class DataAccess<T extends ObjectData> {
 	
 	DataAccess(String fileName) {
 		filePath = fileName;
-		nodeMethods = new NodeMethods();
 		
 		try {
 			
@@ -58,13 +56,13 @@ public class DataAccess<T extends ObjectData> {
 		
 		NodeList elements = root.getChildNodes();
 		
-		long newEntryID = nodeMethods.getElementID(newEntry);
+		long newEntryID = NodeMethods.getElementID(newEntry);
 		
-		if( nodeMethods.needsToBeInsertedAtEnd(elements, newEntryID)) {
+		if( NodeMethods.needsToBeInsertedAtEnd(elements, newEntryID)) {
 			root.appendChild(newEntry);
 		}
 		else {
-			nodeMethods.insertElement(newEntry, root);
+			NodeMethods.insertElement(newEntry, root);
 		}
 		
 		transform();
@@ -75,7 +73,7 @@ public class DataAccess<T extends ObjectData> {
 		Element oldEntry;
 		Element newEntry = elementFromData(data);
 		
-		oldEntry = nodeMethods.getElementFromID(nodeMethods.getElementID(newEntry), root);
+		oldEntry = NodeMethods.getElementFromID(NodeMethods.getElementID(newEntry), root);
 		root.replaceChild(newEntry, oldEntry);
 		
 		transform();
@@ -84,13 +82,13 @@ public class DataAccess<T extends ObjectData> {
 	public void deleteEntry(long ID) throws DOMException, ElementNotFoundException {
 		Element root = doc.getDocumentElement();
 		
-		root.removeChild(nodeMethods.getElementFromID(ID, root));
+		root.removeChild(NodeMethods.getElementFromID(ID, root));
 		
 		transform();
 	}
 	
 	public T getEntry(long ID) throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
-		Element entry = nodeMethods.getElementFromID(ID, doc.getDocumentElement());
+		Element entry = NodeMethods.getElementFromID(ID, doc.getDocumentElement());
 		
 		T data = dataFromElement(entry);
 		

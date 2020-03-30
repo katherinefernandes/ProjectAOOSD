@@ -153,7 +153,13 @@ public class CurrentClient {
 		 InternalState state = getTheOptimalInternalState();
 		 LocalDateTime arriveBy = getArrivalDate();
 		 ContainerData container = new ContainerData(containerID,clientID,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,state.getTemperature(),state.getAtmosphere(),state.getHumidity(),arriveBy);
-		 databaseContainer.newEntry(container);
+		 
+		 try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
+			databaseContainer.newEntry(container); //Old code
+		} catch (AmbiguousElementSelectionException e1) { //Added code
+			e1.printStackTrace(); //Added code
+		} //Added code
+		 
 		 client.addActiveShipment(journeyID);
 		 try {
 			databaseClient.editEntry(client);
@@ -213,13 +219,18 @@ public class CurrentClient {
 	
 	}
 	private ContainerData getContainerData() {
-		ContainerData container;
+		ContainerData container = null; //Added "= null" to fix compile error. Simon
 		while (true) {
 			System.out.println("Please enter valid containerID");
 			
 			long containerID = s.nextLong(); // in actual it should be a string which is parsed to return a long but waiting for the validinput class
 			 
-			container = databaseContainer.getEntry(containerID);
+			try { //Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
+				container = databaseContainer.getEntry(containerID); //Old code
+			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) { //Added code
+				e.printStackTrace(); //Added code
+			}
+			
 			//remember to add the catch phrase once the containerAccess is updated.
 			break;
 		}

@@ -179,7 +179,12 @@ public class LogisticCompany {
 		System.out.println("ID of the container: ");
 		long idc = s.nextLong();
 		
-		container = databaseContainer.getEntry(idc);
+		
+		try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
+			container = databaseContainer.getEntry(idc); //Old code
+		} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {//Added code
+			e.printStackTrace(); //Added code
+		}
 		
 	}
 }

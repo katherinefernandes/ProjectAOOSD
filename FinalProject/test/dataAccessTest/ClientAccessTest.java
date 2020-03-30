@@ -25,11 +25,9 @@ public class ClientAccessTest {
 	ArrayList<Long> toBeDeleted;
 	ClientAccess clientAccess;
 	Random random;
-	NodeMethods nodeMethods;
 	
 	public ClientAccessTest() {
 		clientAccess = new ClientAccess();
-		nodeMethods = new NodeMethods();
 		random = new Random();
 		sortTestClients = new ArrayList<ClientData>();
 
@@ -125,9 +123,9 @@ public class ClientAccessTest {
 		
 		NodeList clients = clientAccess.getRoot().getChildNodes();
 		int clientsLen = clients.getLength();
-		long previousID = nodeMethods.getElementID((Element) clients.item(0));
+		long previousID = NodeMethods.getElementID((Element) clients.item(0));
 		for(int i = 1; i < clientsLen; i++) {
-			long currentID = nodeMethods.getElementID((Element) clients.item(i));
+			long currentID = NodeMethods.getElementID((Element) clients.item(i));
 			assertTrue(previousID < currentID);
 			previousID = currentID;
 		}
