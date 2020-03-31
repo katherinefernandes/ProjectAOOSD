@@ -43,14 +43,13 @@ public class CurrentClient {
 		while(true) {
 			try {
 				System.out.println("Please enter your valid clientID");
-				
-				clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct value
-			    
+				clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct values
 				
 				try {
 					client = databaseClient.getEntry(clientID);
 				} catch (NumberFormatException | AmbiguousElementSelectionException e) {
 					// TODO Auto-generated catch block
+					System.out.println("Element not found");
 					e.printStackTrace();
 				}
 				break;
