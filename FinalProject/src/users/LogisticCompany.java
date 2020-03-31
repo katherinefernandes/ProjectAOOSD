@@ -119,6 +119,7 @@ public class LogisticCompany {
 		try { //Try-catch added by Simon to avoid compile errors. Changed because I added an error when you try to add client with same ID two times. Added code
 			
 			clientAccess.newEntry(newClient);//Old code
+			System.out.println("This is your ID:" + id);;
 			
 		} catch (AmbiguousElementSelectionException e) { //Added code
 			e.printStackTrace(); } //Added code
