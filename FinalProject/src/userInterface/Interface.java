@@ -1,8 +1,6 @@
 package userInterface;
 import java.util.Scanner;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import users.CurrentClient;
 import users.LogisticCompany;
 
