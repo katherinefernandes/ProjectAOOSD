@@ -158,6 +158,8 @@ public class Interface {
 		}
 		catch(Exception e){   // here we need to find a exception but didn't think of one yet
 			System.out.println("Sorry something went wrong, try again in a couple of minutes");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			sc.close();
 			}
 	}
