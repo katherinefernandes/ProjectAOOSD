@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <History xmlns="urn:Schema-Namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:Schema-Namespace dataStructure.xsd ">
   <DataPoint>
-    <TimeStamp>2001-12-31T12:00:00</TimeStamp>
+    <TimeStamp>0</TimeStamp>
     <ContainerID>0</ContainerID>
     <JourneyID>0</JourneyID>
     <ClientID>0</ClientID>

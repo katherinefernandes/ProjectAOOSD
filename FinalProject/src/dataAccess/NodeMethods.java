@@ -15,7 +15,7 @@ public class NodeMethods {
 	public static long getElementID(Element element) {
 		return Long.parseLong(element.getChildNodes().item(0).getTextContent());
 	}
-
+	
 	public static String valueFromTagName(Element root, String tagName) throws AmbiguousElementSelectionException, ElementNotFoundException {
 		Element element = singleElementFromTagName(root, tagName);
 		return element.getTextContent();
