@@ -1,6 +1,5 @@
 package dataAccess;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +42,8 @@ public class NodeMethods {
 		return values;
 	}
 	
-	public static boolean needsToBeInsertedAtEnd(NodeList nodes, long newNodeID) {
+	public static boolean needsToBeInsertedAtEnd(NodeList nodes, Element element) {
+		long newNodeID = getElementID(element);
 		int nodesLength = nodes.getLength();
 		return (nodesLength == 0) || (newNodeID > getElementID((Element) nodes.item(nodesLength - 1)));
 	}
@@ -86,6 +86,8 @@ public class NodeMethods {
 		}
 		return index;
 	}
+	
+	
 
 	public static Element getElementFromID(long ID, Element root) throws ElementNotFoundException {
 		NodeList nodes = root.getChildNodes();

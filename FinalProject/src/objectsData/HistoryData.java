@@ -24,6 +24,13 @@ public class HistoryData extends ObjectData {
 		this.status = new InternalState(atm, temp, humidity);
 		this.location = new Location(lat,longitude);
 	}
+	
+	//Overloaded constructor added by Simon to handle values of updated that are not right now, for example when getting a datapoint from the xml files. new code from here -
+	public HistoryData (LocalDateTime timeStamp, long cid, long jid, long clid, long dpid, long stid, String cargo, float temp, float atm, float humidity, float lat,float longitude) {
+		this(cid, jid, clid, dpid, stid, cargo, temp, atm, humidity, lat, longitude);
+		this.timeStamp = timeStamp;
+	}//- to here
+	
 	public LocalDateTime getTimeStamp() {
 		return this.timeStamp;
 	}
