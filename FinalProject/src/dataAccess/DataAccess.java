@@ -1,11 +1,8 @@
 package dataAccess;
 
-import objectsData.ClientData;
 import objectsData.ObjectData;
 
 import java.io.*;
-import java.util.List;
-
 import javax.xml.parsers.*;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -56,9 +53,8 @@ public class DataAccess<T extends ObjectData> {
 		
 		NodeList elements = root.getChildNodes();
 		
-		long newEntryID = NodeMethods.getElementID(newEntry);
 		
-		if( NodeMethods.needsToBeInsertedAtEnd(elements, newEntryID)) {
+		if( NodeMethods.needsToBeInsertedAtEnd(elements, newEntry)) {
 			root.appendChild(newEntry);
 		}
 		else {
