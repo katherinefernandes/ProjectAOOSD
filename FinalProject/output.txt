@@ -1,2 +1,1 @@
-Choose an option: 
-Sorry something went wrong, try again in a couple of minutes
+Please enter what the cargo will be: 

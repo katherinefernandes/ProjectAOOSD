@@ -12,16 +12,12 @@ class Login_Page {
 	String password;
 	String logistics_log = "admin";
 	public boolean LCompany = false;
-	public Scanner s;
-	public Login_Page(Scanner s) {
-		this.s=s;
-	}
-	public void get_input() {
+
+	public void get_input(Scanner s) {
 //		boolean found = false;
 //		String templogin = "";
 //		String tempPass = "";
 		
-		Scanner s = new Scanner (System.in);
 		System.out.println("Enter LogIn :");
 		this.username = s.nextLine();
 		//I aded the if statement to only ask for password if the user is the logistic company 
@@ -29,15 +25,14 @@ class Login_Page {
 			System.out.println("Enter Password : ");
 			this.password = s.nextLine();
 		}
-		Login();
-		s.close();
+		Login(s);
 	}
 	
-	public void Login() {
+	public void Login(Scanner s) {
 		
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
-			Scanner x = new Scanner (new File("/Users/daniela/Documents/GitHub/ProjectAOOSD/FinalProject/src/userInterface/passwords.txt"));
+			Scanner x = new Scanner (new File("src/userInterface/passwords.txt"));
 			x.useDelimiter(","); //inbuilt method to separate the info in the text file, reads till a comma or till a new line
 			//time to loop through the txt file to check for the username and password
 			//while(x.hasNext() && !found) {
@@ -61,7 +56,7 @@ class Login_Page {
 		
 		catch(Exception e) {
 			System.out.println("You enterent inconsistent information...try again ");
-			get_input();
+			get_input(s);
 				
 }	
 	}
@@ -71,7 +66,7 @@ class Login_Page {
 }
 			
 	public boolean status() {	
-		if (this.password.equals(this.logistics_log) && this.username.contentEquals(this.logistics_log)){
+		if (this.username.contentEquals(this.logistics_log) && this.password.equals(this.logistics_log)){
 			LCompany = true;
 		}
 		return LCompany;

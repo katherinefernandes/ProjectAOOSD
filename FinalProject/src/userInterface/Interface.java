@@ -14,49 +14,40 @@ public class Interface {
 		System.out.println("+--------------------------+");
 		System.out.println("|Welcome to the Client Menu|");
 		System.out.println("+--------------------------+");
-		CurrentClient c = new CurrentClient(sc);
-		//interactive menu to give the user the choice
-		Scanner menu = new Scanner(System.in);
-		for(int i = 1 ; i <= 3 ; i++) {
-			if(i==1) {
-			System.out.println(i+". Get the client Information");
-			}
-			if(i==2) {
-				System.out.println(i+". Update the current client Information");
-				}
-			if(i==3) {
-				System.out.println(i+". Add a new journey");
-				}
-			if(i==4) {
-				System.out.println(i+". View Internal Status of a Journey");
-				}
-			
-		}
-		System.out.println("0. Quit");
+		CurrentClient c = new CurrentClient();
 		do {
+			
+			//interactive menu to give the user the choice
+			System.out.println("1. Get the client Information");
+			System.out.println("2. Update the current client Information");
+			System.out.println("3. Add a new journey");
+			System.out.println("4. View Internal Status of a Journey");
+			
+			System.out.println("0. Quit");
+			
 			System.out.println("Choose an option: ");
-			Option = menu.nextInt();
+			Option = sc.nextInt();
 			switch(Option) {
 			case 1:
 				System.out.println("Get the client Information");
-			    c.getInfoClient();
+			    c.getInfoClient(sc);
 			    break;
 			    
 			    
 			case 2:
 				System.out.println("Update the current client Information");
-				c.updateInfoClient();
+				c.updateInfoClient(sc);
 				break;
 				
 				
 			case 3:
 				System.out.println("Add a new journey");
-				c.addJourney();
+				c.addJourney(sc);
 				break;
 				
 			case 4:
 				System.out.println("View Internal Status of a Journey");
-				c.viewInternalStatusOfAJourney();
+				c.viewInternalStatusOfAJourney(sc);
 				break;
 				
 			case 0:
@@ -73,55 +64,46 @@ public class Interface {
 		System.out.println("/n");
 		System.out.println("+----------------------------+");
 		System.out.println("+----------------------------+");
-		menu.close();
 	}
 	
-	public static void get_LogisticMenu() {
+	public static void get_LogisticMenu(Scanner sc) {
 		Boolean quit = false;
 		int Option;
 		System.out.println("+-------------------------------------+");
 		System.out.println("|Welcome to the Logistics Company Menu| ");
 		System.out.println("+-------------------------------------+");
 		LogisticCompany l = new LogisticCompany();
-		Scanner m = new Scanner(System.in);
-		for(int i = 1 ; i <= 3 ; i++) {
-			if(i==1) {
-				System.out.println(i+". Add a new Client");
-				}
-				if(i==2) {
-					System.out.println(i+". Get client Information");
-					}
-				if(i==3) {
-					System.out.println(i+". Update Client Information");
-					}
-				if(i==4) {
-					System.out.println(i+". Get Containter Information");
-					}
-		}
-		System.out.println("0. Quit");
+		CurrentClient c = new CurrentClient();
+		
 		do {
+			System.out.println("1. Add a new Client");
+			System.out.println("2. Get client Information");
+			System.out.println("3. Update container Information");
+			System.out.println("4. Get Containter Information");
+			System.out.println("0. Quit");
 			System.out.println("Choose an option: ");
-			Option = m.nextInt();
+			
+			Option = sc.nextInt();
 			switch(Option) {
 			case 1:
 				System.out.println("Add a new Client");
-			    l.addClient();
+			    l.addClient(sc);
 			    break;
 			    
 			    
 			case 2:
 				System.out.println("Get client Information");
-				l.getInfoClient();
+				c.getInfoClient(sc);
 				break;
 				
 				
 			case 3:
-				System.out.println("Update Client Information");
-				l.updateContainer();
+				System.out.println("Update container Information");
+				l.updateContainer(sc);
 				break;
 			case 4:
 				System.out.println("Get Containter Information");
-				l.getInfoContainer();
+				l.getInfoContainer(sc);
 				break;
 			case 0:
 				quit = true;
@@ -134,20 +116,18 @@ public class Interface {
 			
 		} while(!quit);
 		System.out.println("Exiting menu");
-		m.close();
-				
 	}
 	
 	
 	public static void load_Menu() {
 		Scanner sc = new Scanner(System.in);
-		Login_Page L = new Login_Page(sc);
+		Login_Page L = new Login_Page();
 		
-		L.get_input();
+		L.get_input(sc);
 		try {
 //		L.get_input();
 		if (L.status() == true) {
-			get_LogisticMenu();
+			get_LogisticMenu(sc);
 		}
 		else if(L.status()==false && L.found_information() == true){
 			get_ClientMenu(sc); //I hope this line doesn't just load the menu without the password input 

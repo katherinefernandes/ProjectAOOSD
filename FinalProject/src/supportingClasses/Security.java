@@ -19,15 +19,20 @@ public class Security {
 		//System.out.println("userID "+ userID);
 		//System.out.println("journeyID "+ journeyID);
 		//System.out.println("ID: "+ ID);
-		try {
-			File file = new File("output.txt");
-	    	FileOutputStream fos = new FileOutputStream(file);
-	    	PrintStream ps = new PrintStream(fos);
-	    	System.setOut(ps);
-	    	return ID;
-		} catch(FileNotFoundException e) {
-			return ID;
-		}
+		
+		return ID;
+		
+		
+		//GIVES ERRORS
+//		try {
+//			File file = new File("output.txt");
+//	    	FileOutputStream fos = new FileOutputStream(file);
+//	    	PrintStream ps = new PrintStream(fos);
+//	    	System.setOut(ps);
+//	    	return ID;
+//		} catch(FileNotFoundException e) {
+//			return ID;
+//		}
 	
 }    
 

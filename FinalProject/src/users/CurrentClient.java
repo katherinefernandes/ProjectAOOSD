@@ -21,42 +21,37 @@ public class CurrentClient {
 	
 	
 	private ClientData client;
-	private Scanner s;
 	private Long clientID;
 	private ClientAccess databaseClient;
 	private ContainerAccess databaseContainer;
-	private boolean display=true;
-	private activeContainers containers = new activeContainers();
+	private boolean display;
+	private activeContainers containers;
 	private int choice;
 	
-	public CurrentClient(Scanner sc) {
-		this.s = sc;
+	public CurrentClient() {
+		databaseClient = new ClientAccess();
+		databaseContainer = new ContainerAccess();
+		containers = new activeContainers();
+		display=true;
 	}
 	
-	public void getInfoClient(){
-		getIDByUserInput(); //gets the ID by the user and updated the client with a clientData object
+	public void getInfoClient(Scanner s){
+		getIDByUserInput(s); //gets the ID by the user and updated the client with a clientData object
 		if (display) {
 			displayClientInfo(infoClient());
 		}
 	}
-	private void getIDByUserInput() {
+	private void getIDByUserInput(Scanner s) {
 		while(true) {
+			System.out.println("Please enter your valid clientID");
+			clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct values
+			
 			try {
-				System.out.println("Please enter your valid clientID");
-				clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct values
-				
-				try {
-					client = databaseClient.getEntry(clientID);
-				} catch (NumberFormatException | AmbiguousElementSelectionException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Element not found");
-					e.printStackTrace();
-				}
+				client = databaseClient.getEntry(clientID);
 				break;
-			} catch (ElementNotFoundException e) {
+			} catch (NumberFormatException | ElementNotFoundException| AmbiguousElementSelectionException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("Invalid ID, please try again.");	
+				System.out.println("Element not found");
 			}
 		}
 	}
@@ -68,11 +63,11 @@ public class CurrentClient {
 		System.out.println(info);
 		}
 	
-	private void updateReferencePerson() {
-		client.setPerson(getFirstName(), getMiddleName(), getLastName());
+	private void updateReferencePerson(Scanner s) {
+		client.setPerson(getFirstName(s), getMiddleName(s), getLastName(s));
 	}
 	//for all the methods get_name, need to make sure that the input is valid and the person could add more than one name
-	private ArrayList<String> getLastName() {
+	private ArrayList<String> getLastName(Scanner s) {
 		System.out.println("Enter the last name of the person: ");
 		ArrayList<String> lastname = new ArrayList<String>();
 		
@@ -80,7 +75,7 @@ public class CurrentClient {
 		
 		return lastname;
 	}
-	private ArrayList<String> getMiddleName() {
+	private ArrayList<String> getMiddleName(Scanner s) {
 		System.out.println("Enter the middle names of the person: ");
 		ArrayList<String> middlename = new ArrayList<String>();
 		
@@ -88,7 +83,7 @@ public class CurrentClient {
 		
 		return middlename;
 	}
-	private ArrayList<String> getFirstName() {
+	private ArrayList<String> getFirstName(Scanner s) {
 		System.out.println("Enter the first name of the person: ");
 		ArrayList<String> firstname = new ArrayList<String>();
 		
@@ -100,7 +95,7 @@ public class CurrentClient {
 	private void updateEmail(String email) {
 		client.setEmail(email);
 	}
-	private String inputForUpdateEmail() {
+	private String inputForUpdateEmail(Scanner s) {
 		System.out.println("Enter the new email: ");
 		
 		String email= s.next();
@@ -108,12 +103,12 @@ public class CurrentClient {
 		return email;
 	}
 	
-	public void updateInfoClient(){
+	public void updateInfoClient(Scanner s){
 		display=false;
-		getInfoClient();
-		switch (getChoiceForUpdateClient()) {
-		case 1: updateReferencePerson();break;
-		case 2: updateEmail(inputForUpdateEmail()); break;
+		getInfoClient(s);
+		switch (getChoiceForUpdateClient(s)) {
+		case 1: updateReferencePerson(s);break;
+		case 2: updateEmail(inputForUpdateEmail(s)); break;
 		}
 		display=true;
 		try {
@@ -123,7 +118,7 @@ public class CurrentClient {
 			System.out.println("Client can't be edited for some weird reason");
 		}
 	}
-	private int getChoiceForUpdateClient() {
+	private int getChoiceForUpdateClient(Scanner s) {
 		while (true) {
 			System.out.println("Please enter the following numbers: \n\t1 ---------- to update the Reference person \n\t2 ---------- to update the Email");
 			
@@ -137,8 +132,8 @@ public class CurrentClient {
 		return choice;
 	}
 	
-	public void addJourney() {
-		 getIDByUserInput();//gets the clientID
+	public void addJourney(Scanner s) {
+		 getIDByUserInput(s);//gets the clientID
 		 long clientID = client.getClientID();
 		 long containerID = this.containers.assignContainer();
 		 long journeyID = new Security().generateID();
@@ -148,8 +143,8 @@ public class CurrentClient {
 		 //need to find a better solution for location..
 		 float latitude =37.75f;
 		 float longitude =-97.82f;
-		 String cargo = getCargoByUser();
-		 InternalState state = getTheOptimalInternalState();
+		 String cargo = getCargoByUser(s);
+		 InternalState state = getTheOptimalInternalState(s);
 		 LocalDateTime arriveBy = getArrivalDate();
 		 ContainerData container = new ContainerData(containerID,clientID,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,state.getTemperature(),state.getAtmosphere(),state.getHumidity(),arriveBy);
 		 
@@ -182,7 +177,7 @@ public class CurrentClient {
 		return  LocalDateTime.of(2021, 2, 14, 18, 32);
 	}
 	
-	private String getCargoByUser() {
+	private String getCargoByUser(Scanner s) {
 		String cargo;
 		while (true) {
 			System.out.println("Please enter what the cargo will be: ");
@@ -193,7 +188,7 @@ public class CurrentClient {
 		return cargo;
 	}
 	
-	private InternalState getTheOptimalInternalState() {
+	private InternalState getTheOptimalInternalState(Scanner s) {
 	
 		float temperature;
 		float atmosphere;
@@ -213,11 +208,11 @@ public class CurrentClient {
 	}
 	
 	
-	public void viewInternalStatusOfAJourney() {
-		displayInternalStatus(getContainerData());
+	public void viewInternalStatusOfAJourney(Scanner s) {
+		displayInternalStatus(getContainerData(s));
 	
 	}
-	private ContainerData getContainerData() {
+	private ContainerData getContainerData(Scanner s) {
 		ContainerData container = null; //Added "= null" to fix compile error. Simon
 		while (true) {
 			System.out.println("Please enter valid containerID");
@@ -226,12 +221,12 @@ public class CurrentClient {
 			 
 			try { //Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
 				container = databaseContainer.getEntry(containerID); //Old code
+				break;
 			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) { //Added code
-				e.printStackTrace(); //Added code
+				System.out.println("Container not found");
 			}
 			
 			//remember to add the catch phrase once the containerAccess is updated.
-			break;
 		}
 		return container;
 	}

@@ -18,12 +18,19 @@ public class LogisticCompany {
 	private ClientData client;
 	private ClientAccess databaseClient;
 	
-	private Scanner s = new Scanner(System.in);
-	public void addClient () {
+	public LogisticCompany() {
+		databaseContainer = new ContainerAccess();
+		databaseClient = new ClientAccess();
+	}
+	
+	public void addClient (Scanner s) {
 		
 		
 		System.out.println("Company name: ");
-		String name = s.nextLine();
+		String name = "";
+		while(name.length() == 0) {
+			name = s.nextLine();
+		}
 		
 		System.out.println("E-mail: ");
 		String email = s.nextLine();
@@ -126,29 +133,24 @@ public class LogisticCompany {
 		
 	}
 	
-	public void getInfoClient() {
-		while (true)  {
-			try {
-				System.out.println("Please enter your valid clientID");
-				long clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct value
-				try {
-					client = databaseClient.getEntry(clientID);
-				} catch (NumberFormatException | AmbiguousElementSelectionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
-			} catch (ElementNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("Invalid ID, please try again.");	
-			}
-		}
-	}
+//	public void getInfoClient(Scanner s) {
+////		while (true)  {
+////			System.out.println("Please enter your valid clientID");
+////			long clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct value
+////			try {
+////				client = databaseClient.getEntry(clientID);
+////				break;
+////			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {
+////				// TODO Auto-generated catch block
+////				System.out.println("Element not found");
+////			}
+////			
+////		}
+//	}
 	
-	public void updateContainer() {
+	public void updateContainer(Scanner s) {
 		
-		getInfoContainer();
+		getInfoContainer(s);
 		
 		System.out.println("New longitude: ");
 		float lon = s.nextFloat();
@@ -172,20 +174,29 @@ public class LogisticCompany {
 		
 		container.setStatus(atm, temp, hum);
 		
+		try {
+			databaseContainer.editEntry(container);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Element not found");
+		}
 
 	}
 	
-	public void getInfoContainer() {
+	public void getInfoContainer(Scanner s) {
 		//throw an exception when it is not found 
-		System.out.println("ID of the container: ");
-		long idc = s.nextLong();
-		
-		
-		try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
-			container = databaseContainer.getEntry(idc); //Old code
-		} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {//Added code
-			e.printStackTrace(); //Added code
+		while(true) {
+			System.out.println("ID of the container: ");
+			long idc = s.nextLong();
+			
+			
+			try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
+				container = databaseContainer.getEntry(idc); //Old code
+				System.out.println("Found but not printed");
+				return;
+			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {//Added code
+				System.out.println("Element not found");
+			}
 		}
-		
 	}
 }
