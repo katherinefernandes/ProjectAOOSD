@@ -9,4 +9,7 @@ public class parseInput {
 		ArrayList<String> aList= new ArrayList<String>(Arrays.asList(name.split(" ")));
 		return aList;
 	}
+	/*public static void main(String[] args) {
+		System.out.println(parsingNames("munaazam"));
+	}*/ //mamuna-> I added this to test it out in console...
 }

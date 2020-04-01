@@ -23,7 +23,7 @@ public class CurrentClient {
 	private boolean display;
 	private activeContainers containers;
 	private CurrentClientInput input;
-	
+
 	public CurrentClient() {
 		databaseClient = new ClientAccess();
 		databaseContainer = new ContainerAccess();
