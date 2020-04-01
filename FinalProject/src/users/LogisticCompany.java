@@ -72,9 +72,15 @@ public class LogisticCompany {
 		System.out.println("Middle name: ");
 		String middleName = s.nextLine();
 		
+		
 		while (new ValidInput().validateName(middleName) != true) {
-			System.out.println("Invalid name, enter again: ");
-			middleName = s.nextLine();
+			if (middleName.length() == 0) {
+				break;
+			}
+			else {
+				System.out.println("Invalid name, enter again: ");
+				middleName = s.nextLine();
+			}
 		}
 		
 		ArrayList<String> middleNames = parseInput.parsingNames(middleName);
@@ -206,8 +212,8 @@ public class LogisticCompany {
 			long idc = s.nextLong();
 			
 			
-			try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
-				container = databaseContainer.getEntry(idc); //Old code
+			try {
+				container = databaseContainer.getEntry(idc); 
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 				System.out.println("This is the container ID: " + idc);
 				System.out.println("Cargo: " + container.getCargo());
@@ -219,7 +225,7 @@ public class LogisticCompany {
 				System.out.println("Last updated: " + container.getUpdated().format(formatter ));
 				System.out.println("Arriving by: " + container.getArriveBy().format(formatter));
 				return;
-			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {//Added code
+			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {
 				System.out.println("Element not found");
 			}
 			
