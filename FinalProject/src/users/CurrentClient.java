@@ -84,6 +84,7 @@ public class CurrentClient {
 		 
 		 try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
 			databaseContainer.newEntry(container); //Old code
+			System.out.println("The container is on its way to the destination.\n You can track the changes by this ID:  "+container.getContainerID());
 		} catch (AmbiguousElementSelectionException e1) { //Added code
 			System.out.println("Couldn't add the new journey, check manually whats wrong");
 		} //Added code
