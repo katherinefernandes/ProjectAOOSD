@@ -1,4 +1,4 @@
-package users;
+package userTests;
 
 import supportingClasses.ValidInput;
 

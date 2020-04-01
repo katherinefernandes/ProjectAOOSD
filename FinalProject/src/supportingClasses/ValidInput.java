@@ -8,7 +8,7 @@ public class ValidInput {
 	public  boolean validateEmail (String email) {
 		return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
 	}
-	
+ 
 	public  boolean validateCountryCode (int cc) {
 		
 		if (cc < 1000 & cc > 0) {

@@ -31,7 +31,7 @@ public class LogisticCompany {
 		while(name.length() == 0) {
 			name = s.nextLine();
 		}
-		
+	
 		System.out.println("E-mail: ");
 		String email = s.nextLine();
 		

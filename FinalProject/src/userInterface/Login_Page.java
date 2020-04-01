@@ -5,13 +5,15 @@ import java.util.Scanner;
 class Login_Page {
 	// the path takes the value of the file context where all the data is
 	// I assume we will search for username and password are searched for in the file
-	boolean found = false;
-	String templogin = "";
-	String tempPass = "";
-	String username;
-	String password;
-	String logistics_log = "admin";
-	public boolean LCompany = false;
+	
+	//mamuna -> I have changed all the attributes to private
+	private boolean found = false;
+	private String templogin = "";
+	//private String tempPass = ""; //mamuna commented out as not being used.
+	private String username;
+	private String password;
+	private String logistics_log = "admin";
+	private boolean LCompany = false;
 
 	public void get_input(Scanner s) {
 //		boolean found = false;
@@ -27,8 +29,8 @@ class Login_Page {
 		}
 		Login(s);
 	}
-	
-	public void Login(Scanner s) {
+	// mamuna ->I made login private 
+	private void Login(Scanner s) {
 		
 		try {
 			//this thing is going to read the file where we store the username/ids/any info from the customers
