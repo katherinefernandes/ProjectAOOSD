@@ -50,7 +50,10 @@ public class CurrentClientInput {
 	
 	public ArrayList<String> getLastName(Scanner s) {
 		System.out.println("Enter the last name of the person: ");
-		String lastName = s.nextLine();				
+		String lastName = s.nextLine();	
+		while(lastName.length() == 0) {
+			lastName = s.nextLine();
+		}
 		while (validate.validateName(lastName) != true) {
 			System.out.println("Invalid name, enter again: ");
 			lastName = s.nextLine();
@@ -62,7 +65,9 @@ public class CurrentClientInput {
 	public ArrayList<String> getMiddleName(Scanner s) {
 		System.out.println("Enter the middle names of the person: ");
 		String middleName = s.nextLine();
-		
+		while(middleName.length() == 0) {
+			middleName = s.nextLine();
+		}
 		while (new ValidInput().validateName(middleName) != true) {
 			if (middleName.length() == 0) {
 				break;
@@ -79,6 +84,9 @@ public class CurrentClientInput {
 	public ArrayList<String> getFirstName(Scanner s) {
 		System.out.println("Enter the first name of the person: ");
 		String firstName = s.nextLine();
+		while(firstName.length() == 0) {
+			firstName = s.nextLine();
+		}
 		while (validate.validateName(firstName) != true) {
 			System.out.println("Invalid name, enter again: ");
 			firstName = s.nextLine();
@@ -91,6 +99,9 @@ public class CurrentClientInput {
 	public String inputForUpdateEmail(Scanner s) {
 		System.out.println("Enter the new email: ");
 		String email= s.next();
+		while(email.length() == 0) {
+			email = s.nextLine();
+		}
 		while (validate.validateEmail(email) != true) {
 			System.out.println("Invalid E-mail, enter again: ");
 			email = s.nextLine();

@@ -61,8 +61,11 @@ public class LogisticCompany {
 		
 		System.out.println("Reference person ");
 		System.out.println("First name: ");
+	
 		String firstName = s.nextLine();
-		
+		while(firstName.length() == 0) {
+			firstName = s.nextLine(); //toavoid that error of invalid when no name is actually entered. -mamuna
+		}
 		while (validate.validateName(firstName) != true) {
 			System.out.println("Invalid name, enter again: ");
 			firstName = s.nextLine();
@@ -73,7 +76,9 @@ public class LogisticCompany {
 		
 		System.out.println("Middle name: ");
 		String middleName = s.nextLine();
-		
+		while(middleName.length() == 0) { //newcode
+			middleName = s.nextLine(); //newcode /mamuna
+		}
 		
 		while (validate.validateName(middleName) != true) {
 			if (middleName.length() == 0) {
@@ -89,6 +94,9 @@ public class LogisticCompany {
 		
 		System.out.println("Last name: ");
 		String lastName = s.nextLine();
+		while(lastName.length() == 0) {//newcode-mamuna
+			lastName = s.nextLine(); 
+		}
 		
 		while (validate.validateName(lastName) != true) {
 			System.out.println("Invalid name, enter again: ");
@@ -98,6 +106,9 @@ public class LogisticCompany {
 		ArrayList<String> lastNames = parseInput.parsingNames(lastName);
 		System.out.println("Street: ");
 		String street = s.nextLine();
+		while(street.length() == 0) { //newcodemamuna
+			street = s.nextLine();
+		}
 		
 		while (validate.validateStreet(street) != true) {
 			System.out.println("Invalid street, enter again: ");
@@ -106,6 +117,9 @@ public class LogisticCompany {
 		
 		System.out.println("City: ");
 		String city = s.nextLine();
+		while(city.length() == 0) {
+			city = s.nextLine(); //newcode-mamuna
+		}
 		
 		while (validate.validateName(city) != true) {
 			System.out.println("Invalid city, enter again: ");
@@ -117,6 +131,9 @@ public class LogisticCompany {
 		
 		System.out.println("Post code: ");
 		String zip = s.nextLine();
+		while(zip.length() == 0) {
+			zip = s.nextLine(); //newcode mamuna
+		}
 		
 		while (validate.validatePostCode(zip) != true) {
 			System.out.println("Invalid post code, enter again: ");
