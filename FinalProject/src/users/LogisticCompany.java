@@ -76,9 +76,6 @@ public class LogisticCompany {
 		
 		System.out.println("Middle name: ");
 		String middleName = s.nextLine();
-		while(middleName.length() == 0) { //newcode
-			middleName = s.nextLine(); //newcode /mamuna
-		}
 		
 		while (validate.validateName(middleName) != true) {
 			if (middleName.length() == 0) {
@@ -209,6 +206,8 @@ public class LogisticCompany {
 			
 			case 3:
 				initialize = false;
+				
+				break;
 			default: System.out.println("Please try again, enter the correct number.");
 			
 			}
