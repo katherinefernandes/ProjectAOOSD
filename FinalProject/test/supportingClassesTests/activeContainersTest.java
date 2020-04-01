@@ -1,9 +1,9 @@
 package supportingClassesTests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import supportingClasses.activeContainers;
 
@@ -17,9 +17,9 @@ class activeContainersTest {
 	
 	@Test
 	public void testAssignContainer() {
-		assertFalse(containerManager.getSetID(),"It should be false");
+		assertFalse(containerManager.getSetID());
 		long containerID =containerManager.assignContainer();
-		assertTrue(containerManager.getSetID(),"It should be true");
+		assertTrue("It should be true",containerManager.getSetID());
 	}
 
 }
