@@ -1,4 +1,5 @@
 package users;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -146,30 +147,49 @@ public class LogisticCompany {
 //	}
 	
 	public void updateContainer(Scanner s) {
-		
+		int choice;
+		boolean initialize = true;
 		getInfoContainer(s);
 		
-		System.out.println("New longitude: ");
-		float lon = s.nextFloat();
+		while (initialize) {
+			System.out.println("Please enter the following numbers: \n\t1 ---------- to update the position \n\t2 ---------- to update the status \n\t3 ---------- quit ");
+			
+			choice = s.nextInt();
+			
+			switch (choice) {
+			case 1: 
+				System.out.println("New longitude: ");
+				float lon = s.nextFloat();
+				
+				System.out.println("New latitude: ");
+				float lat = s.nextFloat();
+				
+				
+				container.setCurrentPosition(lat, lon);
+				break;
+			
+			case 2:
+				System.out.println("Atmosphere: ");
+				float atm = s.nextFloat();
+				
+				System.out.println("Humidity: ");
+				float hum = s.nextFloat();
+				
+				System.out.println("Temperature: ");
+				float temp = s.nextFloat();
+				
+				
+				container.setStatus(atm, temp, hum);
+				break;
+			
+			case 3:
+				initialize = false;
+			default: System.out.println("Please try again, enter the correct number.");
+			
+			}
 		
-		System.out.println("New latitude: ");
-		float lat = s.nextFloat();
+		}
 		
-		
-		container.setCurrentPosition(lat, lon);
-		
-		
-		System.out.println("Atmosphere: ");
-		float atm = s.nextFloat();
-		
-		System.out.println("Humidity: ");
-		float hum = s.nextFloat();
-		
-		System.out.println("Temperature: ");
-		float temp = s.nextFloat();
-		
-		
-		container.setStatus(atm, temp, hum);
 		
 		try {
 			databaseContainer.editEntry(container);
@@ -181,7 +201,6 @@ public class LogisticCompany {
 	}
 	
 	public void getInfoContainer(Scanner s) {
-		//throw an exception when it is not found 
 		while(true) {
 			System.out.println("ID of the container: ");
 			long idc = s.nextLong();
@@ -189,11 +208,22 @@ public class LogisticCompany {
 			
 			try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
 				container = databaseContainer.getEntry(idc); //Old code
-				System.out.println("Found but not printed");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+				System.out.println("This is the container ID: " + idc);
+				System.out.println("Cargo: " + container.getCargo());
+				System.out.println("It is located at latitude " + container.getCurrentPosition().getLatitude());
+				System.out.println("and longitude " + container.getCurrentPosition().getlongitude());
+				System.out.println("The internal atmosphere is:  "+container.getInternalStatus().getAtmosphere());
+				System.out.println("The internal Temperature is:  "+ container.getInternalStatus().getTemperature());
+				System.out.println("The internal Humidity is:  "+container.getInternalStatus().getHumidity());
+				System.out.println("Last updated: " + container.getUpdated().format(formatter ));
+				System.out.println("Arriving by: " + container.getArriveBy().format(formatter));
 				return;
 			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {//Added code
 				System.out.println("Element not found");
 			}
+			
+			
 		}
 	}
 }
