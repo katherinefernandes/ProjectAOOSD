@@ -65,9 +65,7 @@ public class CurrentClientInput {
 	public ArrayList<String> getMiddleName(Scanner s) {
 		System.out.println("Enter the middle names of the person: ");
 		String middleName = s.nextLine();
-		while(middleName.length() == 0) {
-			middleName = s.nextLine();
-		}
+		
 		while (new ValidInput().validateName(middleName) != true) {
 			if (middleName.length() == 0) {
 				break;
