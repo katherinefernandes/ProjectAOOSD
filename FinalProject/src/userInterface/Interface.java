@@ -59,7 +59,7 @@ public class Interface {
 			
 		} while(!quit);
 		System.out.println("Exiting menu");
-		System.out.println("/n");
+		System.out.println("\n");
 		System.out.println("+----------------------------+");
 		System.out.println("+----------------------------+");
 	}
@@ -150,7 +150,7 @@ public static void main(String[] args)
     {
 	
 	//Interface I = new Interface();
-	load_Menu();
+		load_Menu();
 	}
 
 }
