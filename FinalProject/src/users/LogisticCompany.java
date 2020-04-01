@@ -16,9 +16,11 @@ import supportingClasses.ValidInput;
 public class LogisticCompany {
 	private ContainerData container;
 	private ContainerAccess databaseContainer;
+	private ValidInput validate;
 	
 	public LogisticCompany() {
 		databaseContainer = new ContainerAccess();
+		validate = new ValidInput();
 	}
 	
 	public void addClient (Scanner s) {
@@ -33,7 +35,7 @@ public class LogisticCompany {
 		System.out.println("E-mail: ");
 		String email = s.nextLine();
 		
-		while (new ValidInput().validateEmail(email) != true) {
+		while (validate.validateEmail(email) != true) {
 			System.out.println("Invalid E-mail, enter again: ");
 			email = s.nextLine();
 		}
@@ -41,7 +43,7 @@ public class LogisticCompany {
 		System.out.println("Country code: ");
 		int countryCode = s.nextInt();
 		
-		while (new ValidInput().validateCountryCode(countryCode) != true) {
+		while (validate.validateCountryCode(countryCode) != true) {
 			System.out.println("Invalid country code, enter again: ");
 			countryCode = s.nextInt();
 		}
@@ -51,7 +53,7 @@ public class LogisticCompany {
 		long phone = s.nextLong();
 		
 		
-		while (new ValidInput().validatePhone(phone) != true) {
+		while (validate.validatePhone(phone) != true) {
 			System.out.println("Invalid phone, enter again: ");
 			phone = s.nextLong();
 		}
@@ -61,7 +63,7 @@ public class LogisticCompany {
 		System.out.println("First name: ");
 		String firstName = s.nextLine();
 		
-		while (new ValidInput().validateName(firstName) != true) {
+		while (validate.validateName(firstName) != true) {
 			System.out.println("Invalid name, enter again: ");
 			firstName = s.nextLine();
 		}
@@ -73,7 +75,7 @@ public class LogisticCompany {
 		String middleName = s.nextLine();
 		
 		
-		while (new ValidInput().validateName(middleName) != true) {
+		while (validate.validateName(middleName) != true) {
 			if (middleName.length() == 0) {
 				break;
 			}
@@ -88,7 +90,7 @@ public class LogisticCompany {
 		System.out.println("Last name: ");
 		String lastName = s.nextLine();
 		
-		while (new ValidInput().validateName(lastName) != true) {
+		while (validate.validateName(lastName) != true) {
 			System.out.println("Invalid name, enter again: ");
 			lastName = s.nextLine();
 		}
@@ -97,7 +99,7 @@ public class LogisticCompany {
 		System.out.println("Street: ");
 		String street = s.nextLine();
 		
-		while (new ValidInput().validateStreet(street) != true) {
+		while (validate.validateStreet(street) != true) {
 			System.out.println("Invalid street, enter again: ");
 			street = s.nextLine();
 		}
@@ -105,7 +107,7 @@ public class LogisticCompany {
 		System.out.println("City: ");
 		String city = s.nextLine();
 		
-		while (new ValidInput().validateName(city) != true) {
+		while (validate.validateName(city) != true) {
 			System.out.println("Invalid city, enter again: ");
 			city = s.nextLine();
 		}
@@ -116,7 +118,7 @@ public class LogisticCompany {
 		System.out.println("Post code: ");
 		String zip = s.nextLine();
 		
-		while (new ValidInput().validatePostCode(zip) != true) {
+		while (validate.validatePostCode(zip) != true) {
 			System.out.println("Invalid post code, enter again: ");
 			zip = s.nextLine();
 		}
