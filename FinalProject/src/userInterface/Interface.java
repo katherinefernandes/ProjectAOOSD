@@ -12,9 +12,9 @@ public class Interface {
 		System.out.println("+--------------------------+");
 		System.out.println("|Welcome to the Client Menu|");
 		System.out.println("+--------------------------+");
-		CurrentClient c = new CurrentClient();
+		
 		do {
-			
+			CurrentClient c = new CurrentClient();
 			//interactive menu to give the user the choice
 			System.out.println("1. Get the client Information");
 			System.out.println("2. Update the current client Information");
@@ -71,7 +71,6 @@ public class Interface {
 		System.out.println("|Welcome to the Logistics Company Menu| ");
 		System.out.println("+-------------------------------------+");
 		LogisticCompany l = new LogisticCompany();
-		CurrentClient c = new CurrentClient();
 		
 		do {
 			System.out.println("1. Add a new Client");
@@ -90,6 +89,7 @@ public class Interface {
 			    
 			    
 			case 2:
+				CurrentClient c = new CurrentClient();
 				System.out.println("Get client Information");
 				c.getInfoClient(sc);
 				break;

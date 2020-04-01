@@ -24,6 +24,7 @@ public class CurrentClientInput {
 	public CurrentClientInput() {
 		databaseClient = new ClientAccess();
 		databaseContainer = new ContainerAccess();
+		validate = new ValidInput();
 	}
 	
 	public ClientData getIDByUserInput(Scanner s) {
@@ -63,8 +64,13 @@ public class CurrentClientInput {
 		String middleName = s.nextLine();
 		
 		while (new ValidInput().validateName(middleName) != true) {
-			System.out.println("Invalid name, enter again: ");
-			middleName = s.nextLine();
+			if (middleName.length() == 0) {
+				break;
+			}
+			else {
+				System.out.println("Invalid name, enter again: ");
+				middleName = s.nextLine();
+			}
 		}
 		
 		ArrayList<String> middleNames = parseInput.parsingNames(middleName);
