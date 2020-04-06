@@ -7,6 +7,7 @@ import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
+import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import supportingClasses.Security;
@@ -17,10 +18,11 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 	private ContainerData container;
 	private ContainerAccess databaseContainer;
 	private ValidInput validate;
-	
+	private CurrentClientInput input;// using this to set a new container 
 	public LogisticCompany() {
 		databaseContainer = new ContainerAccess();
 		validate = new ValidInput();
+		input = new CurrentClientInput();
 	}
 	
 	public void addClient (Scanner s) {
@@ -171,8 +173,9 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 	public void updateContainer(Scanner s) {
 		int choice;
 		boolean initialize = true;
-		getInfoContainer(s);
-		
+		//getInfoContainer(s); // mamuna: replacing this code by another which will update the container...
+		container = input.getContainerData(s);
+		viewInternalStatusOfAJourney(container);
 		while (initialize) {
 			System.out.println("Please enter the following numbers: \n\t1 ---------- to update the position \n\t2 ---------- to update the status \n\t3 ---------- quit ");
 			
@@ -224,7 +227,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 
 	}
 	
-	public void getInfoContainer(Scanner s) {
+	/*public void getInfoContainer(Scanner s) {//commenting out this function by mamuna
 		while(true) {
 			System.out.println("ID of the container: ");
 			long idc = s.nextLong();
@@ -249,5 +252,20 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 			
 			
 		}
+	}*/
+
+	@Override
+	public void viewInternalStatusOfAJourney(ContainerData container) { //mamuna added this to distinguish between input and logic and to reduce code
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+		System.out.println("This is the container ID: " + container.getContainerID());
+		System.out.println("Cargo: " + container.getCargo());
+		System.out.println("It is located at latitude " + container.getCurrentPosition().getLatitude());
+		System.out.println("and longitude " + container.getCurrentPosition().getlongitude());
+		System.out.println("The internal atmosphere is:  "+container.getInternalStatus().getAtmosphere());
+		System.out.println("The internal Temperature is:  "+ container.getInternalStatus().getTemperature());
+		System.out.println("The internal Humidity is:  "+container.getInternalStatus().getHumidity());
+		System.out.println("Last updated: " + container.getUpdated().format(formatter ));
+		System.out.println("Arriving by: " + container.getArriveBy().format(formatter));
+		
 	}
 }

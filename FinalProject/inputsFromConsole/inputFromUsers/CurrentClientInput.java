@@ -27,7 +27,7 @@ public class CurrentClientInput {
 		validate = new ValidInput();
 	}
 	
-	public ClientData getIDByUserInput(Scanner s) {
+	public ClientData getTheClientData(Scanner s) {
 		while(true) {
 			System.out.println("Please enter your valid clientID");
 			clientID = s.nextLong(); //need to check that the ID is valid, if not then repeatedly try to get the correct values

@@ -18,6 +18,6 @@
 #Sample Feature Definition Template
 @tag
 Feature: Track the history of the Journey
-	Description: The container internal status and the locations it visits before the destination should be saved
+	Description: The container internal status and the locations it visits before reaching the destination
 
 

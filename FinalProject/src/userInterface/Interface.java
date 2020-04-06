@@ -1,11 +1,15 @@
 package userInterface;
 import java.util.Scanner;
 
+import inputFromUsers.CurrentClientInput;
+import objectsData.ClientData;
+import objectsData.ContainerData;
+import objectsData.InternalState;
 import users.CurrentClient;
 import users.LogisticCompany;
 
 public class Interface {
-	
+	private static CurrentClientInput input = new CurrentClientInput();
 	public static void get_ClientMenu(Scanner sc) {
 		Boolean quit = false;
 		int Option;
@@ -28,7 +32,8 @@ public class Interface {
 			switch(Option) {
 			case 1:
 				System.out.println("Get the client Information");
-			    c.getInformationClient(sc);
+				ClientData client = input.getTheClientData(sc);
+			    c.getInformationClient(client);
 			    break;
 			    
 			    
@@ -40,12 +45,16 @@ public class Interface {
 				
 			case 3:
 				System.out.println("Add a new journey");
-				c.addJourney(sc);
+				ClientData client2 = input.getTheClientData(sc);
+				String cargo = input.getCargoByUser(sc);
+				InternalState state = input.getTheOptimalInternalState(sc);
+				c.addJourney(client2,cargo,state);
 				break;
 				
 			case 4:
 				System.out.println("View Internal Status of a Journey");
-				c.viewInternalStatusOfAJourney(sc);
+				ContainerData container = input.getContainerData(sc);
+				c.viewInternalStatusOfAJourney(container);
 				break;
 				
 			case 0:
@@ -91,7 +100,8 @@ public class Interface {
 			case 2:
 				
 				System.out.println("Get client Information");
-				l.getInformationClient(sc);// now l has access to this method as it is part of the user
+				ClientData client = input.getTheClientData(sc);
+				l.getInformationClient(client);// now l has access to this method as it is part of the user
 				break;
 				
 				
@@ -100,8 +110,9 @@ public class Interface {
 				l.updateContainer(sc);
 				break;
 			case 4:
-				System.out.println("Get Containter Information");
-				l.getInfoContainer(sc);
+				System.out.println("Get Container Information");
+				ContainerData container = input.getContainerData(sc);
+				l.viewInternalStatusOfAJourney(container);
 				break;
 			case 0:
 				quit = true;
