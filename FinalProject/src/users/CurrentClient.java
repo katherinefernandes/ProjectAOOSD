@@ -8,21 +8,15 @@ import dataAccess.ContainerAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import inputFromUsers.CurrentClientInput;
-import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.InternalState;
 import supportingClasses.Security;
 import supportingClasses.activeContainers;
 
 
-public class CurrentClient {
+public class CurrentClient extends User{
 
-	private ClientData client;
-	private ClientAccess databaseClient;
-	private ContainerAccess databaseContainer;
-	private boolean display;
 	private activeContainers containers;
-	private CurrentClientInput input;
 
 	public CurrentClient() {
 		databaseClient = new ClientAccess();
@@ -32,15 +26,7 @@ public class CurrentClient {
 		input = new CurrentClientInput();
 	}
 	
-	public void getInfoClient(Scanner s){
-		client = input.getIDByUserInput(s); //gets the ID by the user and updated the client with a clientData object
-		if (display) {
-			input.displayClientInfo(infoClient());
-		}
-	}
-	private String infoClient() {
-		return "\nClient Name is: \t"+client.getCompanyName()+"\nClient Phone number is: \t"+client.getPhoneNumber().getCountryCode()+" "+client.getPhoneNumber().getPhone()+"\nClient email is: \t"+client.getEmail()+"\nClient reference person is: \t"+client.getPerson().getFirstName().toString()+" "+client.getPerson().getMiddleName().toString()+" "+client.getPerson().getLastName().toString();
-	}
+	
 
 	private void updateReferencePerson(Scanner s) {
 		client.setPerson(input.getFirstName(s), input.getMiddleName(s), input.getLastName(s));
@@ -53,7 +39,7 @@ public class CurrentClient {
 	
 	public void updateInfoClient(Scanner s){
 		display=false;
-		getInfoClient(s);
+		getInformationClient(s);
 		switch (input.getChoiceForUpdateClient(s)) {
 		case 1: updateReferencePerson(s);break;
 		case 2: updateEmail(input.inputForUpdateEmail(s)); break;

@@ -10,16 +10,17 @@ import supportingClasses.activeContainers;
 class activeContainersTest {
 	private activeContainers containerManager;
 	
-	@Before
-	public void activeContainersTests() {
+
+	public activeContainersTest() {
 		containerManager = new activeContainers();
 	}
 	
 	@Test
 	public void testAssignContainer() {
-		assertFalse(containerManager.getSetID());
-		long containerID =containerManager.assignContainer();
-		assertTrue("It should be true",containerManager.getSetID());
+		boolean value = containerManager.getSetID();
+		assertFalse("this should be false",value);
+		containerManager.assignContainer();
+		assertTrue("this should be true",containerManager.getSetID());
 	}
 
 }

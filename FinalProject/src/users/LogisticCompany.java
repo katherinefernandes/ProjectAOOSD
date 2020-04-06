@@ -13,7 +13,7 @@ import supportingClasses.Security;
 import supportingClasses.parseInput;
 import supportingClasses.ValidInput; 
 
-public class LogisticCompany {
+public class LogisticCompany extends User{// Mamuna I have created a User class which will contain abstract methods or common methods such has getinformationclient or getinformationjourney
 	private ContainerData container;
 	private ContainerAccess databaseContainer;
 	private ValidInput validate;

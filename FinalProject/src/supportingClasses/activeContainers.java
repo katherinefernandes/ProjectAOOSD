@@ -14,6 +14,6 @@ public class activeContainers {
 		return ID.generateID();
 	}
 	public boolean getSetID() {
-		return setID;
+		return this.setID;
 	}
 }

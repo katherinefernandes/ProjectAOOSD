@@ -28,7 +28,7 @@ public class Interface {
 			switch(Option) {
 			case 1:
 				System.out.println("Get the client Information");
-			    c.getInfoClient(sc);
+			    c.getInformationClient(sc);
 			    break;
 			    
 			    
@@ -89,9 +89,9 @@ public class Interface {
 			    
 			    
 			case 2:
-				CurrentClient c = new CurrentClient();
+				
 				System.out.println("Get client Information");
-				c.getInfoClient(sc);
+				l.getInformationClient(sc);// now l has access to this method as it is part of the user
 				break;
 				
 				
