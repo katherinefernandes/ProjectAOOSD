@@ -1,14 +1,23 @@
 package acceptanceTests.steps;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Scanner;
 
 import cucumber.api.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import userInterface.Login_Page;
 
 public class ViewClientSteps {
+	private Login_Page loginPage = new Login_Page();
+	private Scanner s = new Scanner(System.in);
 	@Given("that the logistic Company is logged in")
 	public void that_the_logistic_Company_is_logged_in() {
-		throw  new PendingException();
+		loginPage.set_username("admin");
+		loginPage.set_password("admin");
+		loginPage.Login(s);
+		assertTrue(loginPage.status());
 	}
 	
 	@When("the logistic Company decides to view the Client information")
