@@ -16,6 +16,6 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+
 Feature: Find a journey
 

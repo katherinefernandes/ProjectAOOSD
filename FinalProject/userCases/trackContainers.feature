@@ -16,5 +16,5 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+
 Feature: Track the containers

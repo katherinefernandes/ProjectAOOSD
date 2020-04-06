@@ -16,5 +16,5 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+
 Feature: Update the internal status of the container during a journey

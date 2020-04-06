@@ -16,26 +16,26 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+
 Feature: Update the information of the client
   description: The client can update parts of its own information
 
  
-  @tag1
+ 
  # Scenario: Client can update its email address
   #  Given that the Client with the ID "897841664500" is logged in
   #  When the client chooses to update its email address 
    # And provides the new email address "newemail@email.com"
    # Then the current email "random@random.com" is replaced with the new email
 
-  @tag2
+  
   #Scenario: Client can update its phone number
   	#Given that the Client with the ID "897841664500" is logged in
   	#When the client chooses to update its phone number
   	#And provides the new country code "45" and the new phone number "45670912"
   	#Then the previous phone number and the country code are replaced with the new values.
   
-  @tag3
+  
   #Scenario: Client tries to update someone elses information
   # Given that the Client with the ID "897841664500" is logged in
   # When the client chooses to update its phone number 

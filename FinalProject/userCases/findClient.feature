@@ -17,18 +17,18 @@
 ## (Comments)
 #Sample Feature Definition Template
 #
-@tag
+
 Feature: Get Client information
 	Description: The users can view the client information
 	
-@tag1	
+	
 Scenario: Logistic Company can view the Client information
 	Given that the logistic Company is logged in
 	When the logistic Company decides to view the Client information
-	And provides the client ID "897841664500"
+	And provides the client ID 897841664500
 	Then the Client information is shown that the company name is "random", the email is "random@random.com"
 
-@tag2	
+
 #Scenario: Logistic Company cannot view the Client information
  #Given that the logistic Company is logged in
 #	When the logistic Company decides to view the Client information

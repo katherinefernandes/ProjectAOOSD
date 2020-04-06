@@ -23,6 +23,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 		databaseContainer = new ContainerAccess();
 		validate = new ValidInput();
 		input = new CurrentClientInput();
+		display = true;
 	}
 	
 	public void addClient (Scanner s) {

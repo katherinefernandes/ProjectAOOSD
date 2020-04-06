@@ -16,5 +16,5 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+
 Feature: Register a new journey
