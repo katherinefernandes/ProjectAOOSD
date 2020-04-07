@@ -157,7 +157,8 @@ public class login_window {
 		textField.setColumns(10);
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("");
-		chckbxNewCheckBox.setBounds(73, 168, 28, 51);
+		chckbxNewCheckBox.setBackground(new Color(102, 205, 170));
+		chckbxNewCheckBox.setBounds(59, 184, 28, 48);
 		frmLoginPage.getContentPane().add(chckbxNewCheckBox);
 		
 		JButton btnNewButton = new JButton("Enter");
