@@ -59,19 +59,19 @@ public class Company_Menu_1 {
 		frame.getContentPane().add(txtpnWelcomeToThe);
 		
 		JButton btnNewButton = new JButton("Add a new Client");
-		btnNewButton.setBounds(125, 34, 170, 29);
+		btnNewButton.setBounds(105, 34, 213, 29);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Get client Information");
-		btnNewButton_1.setBounds(125, 65, 170, 29);
+		btnNewButton_1.setBounds(105, 65, 213, 29);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Update container Information");
-		btnNewButton_2.setBounds(125, 95, 170, 29);
+		btnNewButton_2.setBounds(105, 95, 213, 29);
 		frame.getContentPane().add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Get Containter Information");
-		btnNewButton_3.setBounds(125, 126, 170, 29);
+		btnNewButton_3.setBounds(105, 126, 213, 29);
 		frame.getContentPane().add(btnNewButton_3);
 		
 		JSlider slider = new JSlider();
