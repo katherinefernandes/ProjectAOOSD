@@ -21,7 +21,7 @@ public class ViewClientForClientSteps {
 	
 	@Given("that the client is logged in")
 	public void thatTheClientIsLoggedIn() {
-	    login.set_username("client1");
+	    login.set_username("36836570081685");
 	    login.Login(scan);
 	    assertTrue(login.found_information());
 	    assertFalse(login.status());

@@ -6,6 +6,7 @@ import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.InternalState;
 import users.CurrentClient;
+import users.CurrentClientV2;
 import users.LogisticCompany;
 
 public class Interface {
@@ -16,12 +17,11 @@ public class Interface {
 		System.out.println("+--------------------------+");
 		System.out.println("|Welcome to the Client Menu|");
 		System.out.println("+--------------------------+");
-		
+		CurrentClientV2 c2 = new CurrentClientV2(L.get_username()); 
 		do {
-			CurrentClient c = new CurrentClient();
+			CurrentClient c = new CurrentClient(); //delete later and change c to c2
 			//there will be a helper class/method which will ensure that the client enters a valid ID
 			//long ClientID = helperclass();
-			//CurrentClientV2 c = new CurrentClientV2(username from loginpage);
 			//interactive menu to give the user the choice
 			System.out.println("1. Get the client Information");
 			System.out.println("2. Update the current client Information");
@@ -35,8 +35,9 @@ public class Interface {
 			switch(Option) {
 			case 1:
 				System.out.println("Get the client Information");
-				ClientData client = input.getTheClientData(sc);
-			    c.viewClient(client);
+				c2.setViewClient(true);
+				c2.getViewClient();
+				c2.setViewClient(false);
 			    break;
 			    
 			    
@@ -130,11 +131,9 @@ public class Interface {
 		System.out.println("Exiting menu");
 	}
 	
-	
+	private static Login_Page L = new Login_Page();
 	public static void load_Menu() {
 		Scanner sc = new Scanner(System.in);
-		Login_Page L = new Login_Page();
-		
 		L.get_input(sc);
 		try {
 //		L.get_input();

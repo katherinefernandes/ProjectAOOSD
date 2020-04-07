@@ -15,6 +15,11 @@ public class Login_Page {
 	public void set_password(String password) {
 		this.password = password;
 	}
+	
+	
+	public long get_username() {
+		return Long.parseLong(username);	
+	}
 
 	public void get_input(Scanner s) {
 		
@@ -29,7 +34,7 @@ public class Login_Page {
 	public void Login(Scanner s) {
 		
 		try {
-			Scanner x = new Scanner (new File("src/userInterface/passwords.txt"));
+			Scanner x = new Scanner (new File("output.txt"));
 			x.useDelimiter(",");
 			while(!found) {
 				templogin = x.next();

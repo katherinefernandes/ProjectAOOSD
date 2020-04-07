@@ -1,19 +1,23 @@
 package supportingClasses;
 
-//import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.FileOutputStream;
-//import java.io.PrintStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
 
 public class Security {	
 	//try generating ID in chaotic order
+	private long ID; 
 	public long generateID()  {
     	//we need to save the id in the txt file
 //    	File file = new File("output.txt");
 //    	FileOutputStream fos = new FileOutputStream(file);
 //    	PrintStream ps = new PrintStream(fos);
 //    	System.setOut(ps);
-		long ID = System.nanoTime();
+		ID = System.nanoTime();
 		//long journeyID = System.nanoTime();
 		//long containerID = System.nanoTime();
 		//System.out.println("userID "+ userID);
@@ -23,29 +27,32 @@ public class Security {
 		return ID;
 		
 		
-		//GIVES ERRORS
-//		try {
-//			File file = new File("output.txt");
-//	    	FileOutputStream fos = new FileOutputStream(file);
-//	    	PrintStream ps = new PrintStream(fos);
-//	    	System.setOut(ps);
-//	    	return ID;
-//		} catch(FileNotFoundException e) {
-//			return ID;
-//		}
+		
+	
 	
 }    
+	public void saveClientID(long ID) {
+		BufferedWriter writer = null;
+		try
+		{
+		    writer = new BufferedWriter( new FileWriter("output.txt"));
+		    String output = Long.toString(ID);
+		    writer.write(output);
 
-
-//public static void main(String[] args) throws FileNotFoundException {
-//	Security s = new Security();
-//	s.get_ID();
-////
-////	
-////	
-////	
-//}
-
-
-
+		}
+		catch ( IOException e)
+		{
+		}
+		finally
+		{
+		    try
+		    {
+		        if ( writer != null)
+		        writer.close( );
+		    }
+		    catch ( IOException e)
+		    {
+		    }
+		}
+	}
 }

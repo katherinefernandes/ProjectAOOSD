@@ -139,8 +139,10 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 			zip = s.nextLine();
 		}
 		
-		
-		long id = new Security().generateID();
+		//Dani changed this:
+		long id = ssecurity.generateID();
+		//this id needs to be saved into a file Daniela and Muna (ssecurity because java confuses it to the inbuilt security)
+		ssecurity.saveClientID(id);
 		
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstNames, middleNames, lastNames, street, city, bNumber, zip);
 		

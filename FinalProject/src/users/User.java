@@ -6,6 +6,7 @@ import dataAccess.ContainerAccess;
 import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
+import supportingClasses.Security;
 
 public abstract class User {
 	
@@ -14,6 +15,7 @@ public abstract class User {
 	protected ContainerAccess databaseContainer;
 	protected boolean display;
 	protected CurrentClientInput input = new CurrentClientInput();
+	protected Security ssecurity = new Security();
 	
 	
 	public void viewClient(ClientData client){
