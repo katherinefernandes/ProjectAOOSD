@@ -29,9 +29,9 @@ Scenario: Logistic Company can view the Client information
 	Then the Client information is shown that the company name is "random", the email is "random@random.com"
 
 
-#Scenario: Logistic Company cannot view the Client information
- #Given that the logistic Company is logged in
-#	When the logistic Company decides to view the Client information
-	#And provides a Client ID "897841664511"
-	#Then the client information is not shown 
-	#And the logistic company is asked to provide a new Client ID
+Scenario: Logistic Company cannot view the Client information
+ Given that the logistic Company is logged in
+	When the logistic Company decides to view the Client information
+	And provides a Client ID "897841664511"
+	Then the client information is not shown 
+	And the logistic company is asked to provide a new Client ID
