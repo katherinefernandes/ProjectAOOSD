@@ -13,6 +13,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JProgressBar;
 import java.awt.Canvas;
 import java.awt.Label;
+import javax.swing.JSlider;
 
 public class Company_Menu_1 {
 
@@ -72,6 +73,17 @@ public class Company_Menu_1 {
 		JButton btnNewButton_3 = new JButton("Get Containter Information");
 		btnNewButton_3.setBounds(125, 126, 170, 29);
 		frame.getContentPane().add(btnNewButton_3);
+		
+		JSlider slider = new JSlider();
+		slider.setBounds(115, 205, 190, 29);
+		frame.getContentPane().add(slider);
+		
+		JTextPane txtpnYourOpinionMatters = new JTextPane();
+		txtpnYourOpinionMatters.setBackground(new Color(102, 205, 170));
+		txtpnYourOpinionMatters.setText("Your opinion matters. Rate your experience");
+		txtpnYourOpinionMatters.setEditable(false);
+		txtpnYourOpinionMatters.setBounds(79, 184, 291, 16);
+		frame.getContentPane().add(txtpnYourOpinionMatters);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
