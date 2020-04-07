@@ -46,6 +46,7 @@ public class Clien_Menu_1 {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().setBackground(new Color(102, 205, 170));
 		frame.getContentPane().setLayout(null);
 		

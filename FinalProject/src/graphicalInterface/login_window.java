@@ -79,12 +79,14 @@ public class login_window {
 		panel.setLayout(null);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Client Menu");
+		rdbtnNewRadioButton.setBackground(new Color(102, 205, 170));
 		rdbtnNewRadioButton.setBounds(0, 0, 219, 35);
 		rdbtnNewRadioButton.setSelected(true);
 		panel.add(rdbtnNewRadioButton);
 		
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Company Menu");
+		rdbtnNewRadioButton_1.setBackground(new Color(102, 205, 170));
 		rdbtnNewRadioButton_1.setBounds(219, 0, 219, 35);
 		panel.add(rdbtnNewRadioButton_1);
 		
