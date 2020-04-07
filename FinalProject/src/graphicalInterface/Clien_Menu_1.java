@@ -47,53 +47,38 @@ public class Clien_Menu_1 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(102, 205, 170));
-		SpringLayout springLayout = new SpringLayout();
-		frame.getContentPane().setLayout(springLayout);
+		frame.getContentPane().setLayout(null);
 		
 		JTextArea txtrWelcomeToThe = new JTextArea();
-		springLayout.putConstraint(SpringLayout.NORTH, txtrWelcomeToThe, 0, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, txtrWelcomeToThe, 0, SpringLayout.WEST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, txtrWelcomeToThe, 450, SpringLayout.WEST, frame.getContentPane());
+		txtrWelcomeToThe.setBounds(0, 0, 450, 32);
 		txtrWelcomeToThe.setBackground(new Color(102, 205, 170));
 		txtrWelcomeToThe.setText("    Welcome to the client menu ---  Velkommen til klientmenuen\n");
 		frame.getContentPane().add(txtrWelcomeToThe);
 		
 		JButton btnNewButton = new JButton("Get the client Information");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton, 38, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, btnNewButton, 76, SpringLayout.WEST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton, 61, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton, 354, SpringLayout.WEST, frame.getContentPane());
+		btnNewButton.setBounds(76, 38, 278, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Update the current client Information");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1, 6, SpringLayout.SOUTH, btnNewButton);
-		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_1, 0, SpringLayout.WEST, btnNewButton);
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1, -96, SpringLayout.EAST, frame.getContentPane());
+		btnNewButton_1.setBounds(76, 67, 278, 29);
 		frame.getContentPane().add(btnNewButton_1);
 		
 	    JButton btnNewButton_2 = new JButton("Add a new journey");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_2, 4, SpringLayout.SOUTH, btnNewButton_1);
-		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_2, 76, SpringLayout.WEST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_2, 33, SpringLayout.SOUTH, btnNewButton_1);
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_2, 0, SpringLayout.EAST, btnNewButton);
+	    btnNewButton_2.setBounds(76, 100, 278, 29);
 		frame.getContentPane().add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("View Internal Status of a Journey");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_3, 135, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_3, 76, SpringLayout.WEST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_3, 354, SpringLayout.WEST, frame.getContentPane());
+		btnNewButton_3.setBounds(76, 135, 278, 29);
 		frame.getContentPane().add(btnNewButton_3);
 		
 		JSlider slider = new JSlider();
-		springLayout.putConstraint(SpringLayout.NORTH, slider, 219, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, slider, 116, SpringLayout.WEST, frame.getContentPane());
+		slider.setBounds(116, 219, 190, 30);
 		slider.setPaintLabels(true);
 		slider.setToolTipText("");
 		frame.getContentPane().add(slider);
 		
 		JTextPane txtpnYourOpinionMatters = new JTextPane();
-		springLayout.putConstraint(SpringLayout.NORTH, txtpnYourOpinionMatters, 197, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, txtpnYourOpinionMatters, 76, SpringLayout.WEST, frame.getContentPane());
+		txtpnYourOpinionMatters.setBounds(76, 197, 273, 16);
 		txtpnYourOpinionMatters.setBackground(new Color(102, 205, 170));
 		txtpnYourOpinionMatters.setText("Your opinion matters. Rate your experience");
 		frame.getContentPane().add(txtpnYourOpinionMatters);

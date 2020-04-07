@@ -73,56 +73,51 @@ public class login_window {
 		frmLoginPage.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(102, 205, 170));
 		panel.setBounds(6, 6, 438, 35);
+		panel.setBackground(new Color(102, 205, 170));
 		frmLoginPage.getContentPane().add(panel);
-		panel.setLayout(new GridLayout(1, 2, 0, 0));
+		panel.setLayout(null);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Client Menu");
+		rdbtnNewRadioButton.setBounds(0, 0, 219, 35);
 		rdbtnNewRadioButton.setSelected(true);
 		panel.add(rdbtnNewRadioButton);
 		
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Company Menu");
+		rdbtnNewRadioButton_1.setBounds(219, 0, 219, 35);
 		panel.add(rdbtnNewRadioButton_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(102, 205, 170));
-	
 		panel_2.setBounds(6, 53, 438, 102);
+		panel_2.setBackground(new Color(102, 205, 170));
 		frmLoginPage.getContentPane().add(panel_2);
-		SpringLayout sl_panel_2 = new SpringLayout();
-		panel_2.setLayout(sl_panel_2);
+		panel_2.setLayout(null);
 		
 		JTextArea txtrEnterCompanyUsername = new JTextArea();
+		txtrEnterCompanyUsername.setBounds(30, 29, 40, 16);
 		txtrEnterCompanyUsername.setBackground(new Color(102, 205, 170));
 		txtrEnterCompanyUsername.setText("LogIn:");
 		panel_2.add(txtrEnterCompanyUsername);
 		
 		textField_1 = new JTextField();
+		textField_1.setBounds(128, 24, 211, 26);
 		panel_2.add(textField_1);
 		textField_1.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		sl_panel_2.putConstraint(SpringLayout.WEST, textField_1, 0, SpringLayout.WEST, passwordField);
-		sl_panel_2.putConstraint(SpringLayout.SOUTH, textField_1, -16, SpringLayout.NORTH, passwordField);
-		sl_panel_2.putConstraint(SpringLayout.EAST, textField_1, 0, SpringLayout.EAST, passwordField);
-		sl_panel_2.putConstraint(SpringLayout.SOUTH, passwordField, -10, SpringLayout.SOUTH, panel_2);
-		sl_panel_2.putConstraint(SpringLayout.EAST, passwordField, -99, SpringLayout.EAST, panel_2);
+		passwordField.setBounds(128, 66, 211, 26);
 		panel_2.add(passwordField);
 		
 		JTextArea txtrPassword = new JTextArea();
-		sl_panel_2.putConstraint(SpringLayout.WEST, txtrPassword, 10, SpringLayout.WEST, panel_2);
-		sl_panel_2.putConstraint(SpringLayout.SOUTH, txtrEnterCompanyUsername, -26, SpringLayout.NORTH, txtrPassword);
-		sl_panel_2.putConstraint(SpringLayout.EAST, txtrEnterCompanyUsername, 0, SpringLayout.EAST, txtrPassword);
-		sl_panel_2.putConstraint(SpringLayout.WEST, passwordField, 58, SpringLayout.EAST, txtrPassword);
-		sl_panel_2.putConstraint(SpringLayout.NORTH, txtrPassword, 5, SpringLayout.NORTH, passwordField);
+		txtrPassword.setBounds(10, 71, 60, 16);
 		txtrPassword.setBackground(new Color(102, 205, 170));
 		txtrPassword.setText("Password");
 		panel_2.add(txtrPassword);
 		panel_2.setVisible(false);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(6, 53, 438, 91);
 		
 		rdbtnNewRadioButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -142,7 +137,6 @@ public class login_window {
 			}
 		});
 		panel_1.setBackground(new Color(102, 205, 170));
-		panel_1.setBounds(6, 53, 438, 91);
 		frmLoginPage.getContentPane().add(panel_1);
 		SpringLayout Client = new SpringLayout();
 		panel_1.setLayout(Client);
@@ -171,9 +165,9 @@ public class login_window {
 		frmLoginPage.getContentPane().add(btnNewButton);
 		
 		JTextPane txtpnIAgreeTo = new JTextPane();
+		txtpnIAgreeTo.setBounds(99, 184, 313, 48);
 		txtpnIAgreeTo.setBackground(new Color(102, 205, 170));
 		txtpnIAgreeTo.setText("i agree to the terms and conditions and the privacy policy read the terms and conditions of use");
-		txtpnIAgreeTo.setBounds(99, 184, 313, 48);
 		frmLoginPage.getContentPane().add(txtpnIAgreeTo);
 		frmLoginPage.setBackground(new Color(32, 178, 170));
 		frmLoginPage.setFont(new Font("Dialog", Font.BOLD, 11));
