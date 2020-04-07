@@ -109,7 +109,6 @@ public class login_window {
 		sl_panel_2.putConstraint(SpringLayout.EAST, textField_1, 0, SpringLayout.EAST, passwordField);
 		sl_panel_2.putConstraint(SpringLayout.SOUTH, passwordField, -10, SpringLayout.SOUTH, panel_2);
 		sl_panel_2.putConstraint(SpringLayout.EAST, passwordField, -99, SpringLayout.EAST, panel_2);
-		passwordField.setEditable(false);
 		panel_2.add(passwordField);
 		
 		JTextArea txtrPassword = new JTextArea();
