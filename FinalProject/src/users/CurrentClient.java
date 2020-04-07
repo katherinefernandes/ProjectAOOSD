@@ -8,7 +8,6 @@ import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
-import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.InternalState;
@@ -25,7 +24,6 @@ public class CurrentClient extends User{
 		databaseContainer = new ContainerAccess();
 		containers = new activeContainers();
 		display=true;
-		input = new CurrentClientInput();
 	}
 	
 	
@@ -42,7 +40,7 @@ public class CurrentClient extends User{
 	public void updateInfoClient(Scanner s){
 		display=false;
 		this.client = input.getTheClientData(s);
-		getInformationClient(client);
+		viewClient(client);
 		switch (input.getChoiceForUpdateClient(s)) {
 		case 1: ArrayList<String> firstname = input.getFirstName(s);
 				ArrayList<String> middlename = input.getMiddleName(s);

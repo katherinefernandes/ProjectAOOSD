@@ -22,11 +22,14 @@ Feature: Update the information of the client
 
  
  
- # Scenario: Client can update its email address
-  #  Given that the Client with the ID "897841664500" is logged in
-  #  When the client chooses to update its email address 
-   # And provides the new email address "newemail@email.com"
-   # Then the current email "random@random.com" is replaced with the new email
+ Scenario: Client can update its phone number
+ 	Given that the client is logged in
+	And the ID 897841664500 it entered exists in the memory
+	When the client decides to update its phone number
+	And provides the new country code 45 which is of the valid length
+	And provides the new phone number 45670912 which is also of the valid length
+	Then the previous phone number and country code are replaced with the valid values
+	
 
   
   #Scenario: Client can update its phone number

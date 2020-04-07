@@ -19,6 +19,9 @@ public class Interface {
 		
 		do {
 			CurrentClient c = new CurrentClient();
+			//there will be a helper class/method which will ensure that the client enters a valid ID
+			//long ClientID = helperclass();
+			//CurrentClientV2 c = new CurrentClientV2(username from loginpage);
 			//interactive menu to give the user the choice
 			System.out.println("1. Get the client Information");
 			System.out.println("2. Update the current client Information");
@@ -33,7 +36,7 @@ public class Interface {
 			case 1:
 				System.out.println("Get the client Information");
 				ClientData client = input.getTheClientData(sc);
-			    c.getInformationClient(client);
+			    c.viewClient(client);
 			    break;
 			    
 			    
@@ -101,7 +104,7 @@ public class Interface {
 				
 				System.out.println("Get client Information");
 				ClientData client = input.getTheClientData(sc);
-				l.getInformationClient(client);// now l has access to this method as it is part of the user
+				l.viewClient(client);// now l has access to this method as it is part of the user
 				break;
 				
 				

@@ -22,7 +22,6 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 	public LogisticCompany() {
 		databaseContainer = new ContainerAccess();
 		validate = new ValidInput();
-		input = new CurrentClientInput();
 		display = true;
 	}
 	

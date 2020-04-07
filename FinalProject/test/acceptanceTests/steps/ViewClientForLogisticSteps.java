@@ -1,11 +1,11 @@
 package acceptanceTests.steps;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Scanner;
 
-import cucumber.api.PendingException;
+
 import dataAccess.ClientAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
@@ -16,7 +16,7 @@ import objectsData.ClientData;
 import userInterface.Login_Page;
 import users.LogisticCompany;
 
-public class ViewClientSteps {
+public class ViewClientForLogisticSteps {
 	private Login_Page loginPage = new Login_Page();
 	private Scanner s = new Scanner(System.in);
 	private ClientData client;
@@ -55,6 +55,21 @@ public class ViewClientSteps {
 		assertEquals(client.getCompanyName(),name);
 		assertEquals(client.getEmail(),email);
 	}
+	@When("provides a Client ID {long}")
+	public void providesAClientID(long ID) {
+	    // Write code here that turns the phrase above into concrete actions
+		
+		 assertThrows(ElementNotFoundException.class,()->{clientDatabase.getEntry(ID);});
+		
+	}
+
+	@Then("the client information is not shown")
+	public void theClientInformationIsNotShown() {
+	    // Write code here that turns the phrase above into concrete actions
+		assertThrows(NullPointerException.class,()->{client.getCompanyName();});
+	}
+
+
 	
 }
 

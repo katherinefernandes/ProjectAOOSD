@@ -13,9 +13,10 @@ public abstract class User {
 	protected ClientAccess databaseClient;
 	protected ContainerAccess databaseContainer;
 	protected boolean display;
-	protected CurrentClientInput input;
+	protected CurrentClientInput input = new CurrentClientInput();
 	
-	public void getInformationClient(ClientData client){
+	
+	public void viewClient(ClientData client){
 		this.client = client; //gets the ID by the user and updated the client with a clientData object
 		if (display) {
 			input.displayClientInfo(informationClient());
@@ -28,4 +29,8 @@ public abstract class User {
 		return display;
 	}
 	public abstract void viewInternalStatusOfAJourney(ContainerData container);
+	public ClientData getClient () {
+		return this.client;
+	}
+	
 }
