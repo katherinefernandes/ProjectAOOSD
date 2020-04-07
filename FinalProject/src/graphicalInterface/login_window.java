@@ -95,31 +95,31 @@ public class login_window {
 		panel_2.setLayout(sl_panel_2);
 		
 		JTextArea txtrEnterCompanyUsername = new JTextArea();
-		sl_panel_2.putConstraint(SpringLayout.NORTH, txtrEnterCompanyUsername, 10, SpringLayout.NORTH, panel_2);
-		sl_panel_2.putConstraint(SpringLayout.WEST, txtrEnterCompanyUsername, 10, SpringLayout.WEST, panel_2);
 		txtrEnterCompanyUsername.setBackground(new Color(102, 205, 170));
 		txtrEnterCompanyUsername.setText("LogIn:");
 		panel_2.add(txtrEnterCompanyUsername);
 		
 		textField_1 = new JTextField();
-		sl_panel_2.putConstraint(SpringLayout.NORTH, textField_1, -5, SpringLayout.NORTH, txtrEnterCompanyUsername);
-		sl_panel_2.putConstraint(SpringLayout.WEST, textField_1, 42, SpringLayout.EAST, txtrEnterCompanyUsername);
-		sl_panel_2.putConstraint(SpringLayout.EAST, textField_1, 253, SpringLayout.EAST, txtrEnterCompanyUsername);
 		panel_2.add(textField_1);
 		textField_1.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		sl_panel_2.putConstraint(SpringLayout.NORTH, passwordField, 12, SpringLayout.SOUTH, textField_1);
-		sl_panel_2.putConstraint(SpringLayout.WEST, passwordField, 0, SpringLayout.WEST, textField_1);
-		sl_panel_2.putConstraint(SpringLayout.EAST, passwordField, 0, SpringLayout.EAST, textField_1);
+		sl_panel_2.putConstraint(SpringLayout.WEST, textField_1, 0, SpringLayout.WEST, passwordField);
+		sl_panel_2.putConstraint(SpringLayout.SOUTH, textField_1, -16, SpringLayout.NORTH, passwordField);
+		sl_panel_2.putConstraint(SpringLayout.EAST, textField_1, 0, SpringLayout.EAST, passwordField);
+		sl_panel_2.putConstraint(SpringLayout.SOUTH, passwordField, -10, SpringLayout.SOUTH, panel_2);
+		sl_panel_2.putConstraint(SpringLayout.EAST, passwordField, -99, SpringLayout.EAST, panel_2);
 		passwordField.setEditable(false);
 		panel_2.add(passwordField);
 		
 		JTextArea txtrPassword = new JTextArea();
+		sl_panel_2.putConstraint(SpringLayout.WEST, txtrPassword, 10, SpringLayout.WEST, panel_2);
+		sl_panel_2.putConstraint(SpringLayout.SOUTH, txtrEnterCompanyUsername, -26, SpringLayout.NORTH, txtrPassword);
+		sl_panel_2.putConstraint(SpringLayout.EAST, txtrEnterCompanyUsername, 0, SpringLayout.EAST, txtrPassword);
+		sl_panel_2.putConstraint(SpringLayout.WEST, passwordField, 58, SpringLayout.EAST, txtrPassword);
+		sl_panel_2.putConstraint(SpringLayout.NORTH, txtrPassword, 5, SpringLayout.NORTH, passwordField);
 		txtrPassword.setBackground(new Color(102, 205, 170));
 		txtrPassword.setText("Password");
-		sl_panel_2.putConstraint(SpringLayout.WEST, txtrPassword, 0, SpringLayout.WEST, txtrEnterCompanyUsername);
-		sl_panel_2.putConstraint(SpringLayout.SOUTH, txtrPassword, 0, SpringLayout.SOUTH, passwordField);
 		panel_2.add(txtrPassword);
 		panel_2.setVisible(false);
 		
