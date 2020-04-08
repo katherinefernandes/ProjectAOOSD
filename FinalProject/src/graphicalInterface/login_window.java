@@ -1,65 +1,47 @@
 package graphicalInterface;
-
-import java.awt.EventQueue;
+ 
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JRadioButton;
-import javax.swing.JSplitPane;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel; 
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.UIManager;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import javax.swing.JTabbedPane;
-import javax.swing.JMenuBar;
-import net.miginfocom.swing.MigLayout;
+import java.awt.EventQueue;
+
 import javax.swing.SpringLayout;
+
+import logic.Controller;
+
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
+import javax.swing.JCheckBox; 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.DropMode;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
+import java.awt.event.MouseEvent; 
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
-public class login_window {
+public class Login_Window {
 
-	private JFrame frmLoginPage;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JPasswordField passwordField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					login_window window = new login_window();
-					window.frmLoginPage.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public JFrame frmLoginPage;
+	public JRadioButton clientMenuRdb, companyMenuRdb;
+	public JTextField IDtextField;
+	public JTextField usernameTextField;
+	public JPasswordField passwordField;
+	public JTextPane errorMessage;
+	public JCheckBox checkbox;
+	
+	private JButton EnterButton;
+	private JPanel clientPanel, companyPanel;
+    private Controller controller;
 
 	/**
 	 * Create the application.
 	 */
-	public login_window() {
+	public Login_Window(Controller controller) {
+		this.controller = controller;
 		initialize();
 	}
 
@@ -71,111 +53,201 @@ public class login_window {
 		frmLoginPage.setResizable(false);
 		frmLoginPage.getContentPane().setBackground(new Color(102, 205, 170));
 		frmLoginPage.getContentPane().setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(6, 6, 438, 35);
 		panel.setBackground(new Color(102, 205, 170));
 		frmLoginPage.getContentPane().add(panel);
 		panel.setLayout(null);
+
+		clientMenuRdb = new JRadioButton("Client Menu");
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Client Menu");
-		rdbtnNewRadioButton.setBackground(new Color(102, 205, 170));
-		rdbtnNewRadioButton.setBounds(0, 0, 219, 35);
-		rdbtnNewRadioButton.setSelected(true);
-		panel.add(rdbtnNewRadioButton);
-		
-		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Company Menu");
-		rdbtnNewRadioButton_1.setBackground(new Color(102, 205, 170));
-		rdbtnNewRadioButton_1.setBounds(219, 0, 219, 35);
-		panel.add(rdbtnNewRadioButton_1);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(6, 53, 438, 102);
-		panel_2.setBackground(new Color(102, 205, 170));
-		frmLoginPage.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
-		
+		clientMenuRdb.setBackground(new Color(102, 205, 170));
+		clientMenuRdb.setBounds(0, 0, 219, 35);
+		clientMenuRdb.setSelected(true);
+		panel.add(clientMenuRdb);
+
+		companyMenuRdb = new JRadioButton("Company Menu");
+		companyMenuRdb.setBackground(new Color(102, 205, 170));
+		companyMenuRdb.setBounds(219, 0, 219, 35);
+		panel.add(companyMenuRdb);
+
+	    companyPanel = new JPanel();
+		companyPanel.setBounds(6, 53, 438, 102);
+		companyPanel.setBackground(new Color(102, 205, 170));
+		frmLoginPage.getContentPane().add(companyPanel);
+		companyPanel.setLayout(null);
+
 		JTextArea txtrEnterCompanyUsername = new JTextArea();
 		txtrEnterCompanyUsername.setBounds(30, 29, 40, 16);
 		txtrEnterCompanyUsername.setBackground(new Color(102, 205, 170));
 		txtrEnterCompanyUsername.setText("LogIn:");
-		panel_2.add(txtrEnterCompanyUsername);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(128, 24, 211, 26);
-		panel_2.add(textField_1);
-		textField_1.setColumns(10);
-		
+		companyPanel.add(txtrEnterCompanyUsername);
+
+		usernameTextField = new JTextField();
+		usernameTextField.setBounds(128, 24, 211, 26);
+		companyPanel.add(usernameTextField);
+		usernameTextField.setColumns(10);
+
 		passwordField = new JPasswordField();
 		passwordField.setBounds(128, 66, 211, 26);
-		panel_2.add(passwordField);
-		
+		companyPanel.add(passwordField);
+
 		JTextArea txtrPassword = new JTextArea();
 		txtrPassword.setBounds(10, 71, 60, 16);
 		txtrPassword.setBackground(new Color(102, 205, 170));
 		txtrPassword.setText("Password");
-		panel_2.add(txtrPassword);
-		panel_2.setVisible(false);
+		companyPanel.add(txtrPassword);
+		companyPanel.setVisible(false);
+
+		clientPanel = new JPanel();
+		clientPanel.setBounds(6, 53, 438, 91);
+
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(6, 53, 438, 91);
 		
-		rdbtnNewRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				rdbtnNewRadioButton_1.setSelected(false);
-				panel_2.setVisible(false);
-				panel_1.setVisible(true);
-			}
-		});
-		
-		rdbtnNewRadioButton_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				rdbtnNewRadioButton.setSelected(false);
-				panel_1.setVisible(false);
-				panel_2.setVisible(true);
-			}
-		});
-		panel_1.setBackground(new Color(102, 205, 170));
-		frmLoginPage.getContentPane().add(panel_1);
-		SpringLayout Client = new SpringLayout();
-		panel_1.setLayout(Client);
-		
+		clientPanel.setBackground(new Color(102, 205, 170));
+		frmLoginPage.getContentPane().add(clientPanel);
+		SpringLayout sl_clientPanel = new SpringLayout();
+		clientPanel.setLayout(sl_clientPanel);
+
 		JTextPane txtpnEnterValidClient = new JTextPane();
-		Client.putConstraint(SpringLayout.WEST, txtpnEnterValidClient, 148, SpringLayout.WEST, panel_1);
-		Client.putConstraint(SpringLayout.SOUTH, txtpnEnterValidClient, -42, SpringLayout.SOUTH, panel_1);
+		sl_clientPanel.putConstraint(SpringLayout.WEST, txtpnEnterValidClient, 148, SpringLayout.WEST, clientPanel);
+		sl_clientPanel.putConstraint(SpringLayout.SOUTH, txtpnEnterValidClient, -42, SpringLayout.SOUTH, clientPanel);
 		txtpnEnterValidClient.setBackground(new Color(102, 205, 170));
-		panel_1.add(txtpnEnterValidClient);
+		clientPanel.add(txtpnEnterValidClient);
 		txtpnEnterValidClient.setText("Enter Valid Client ID");
+
+		IDtextField = new JTextField();
+		sl_clientPanel.putConstraint(SpringLayout.NORTH, IDtextField, 6, SpringLayout.SOUTH, txtpnEnterValidClient);
+		sl_clientPanel.putConstraint(SpringLayout.WEST, IDtextField, 70, SpringLayout.WEST, clientPanel);
+		sl_clientPanel.putConstraint(SpringLayout.SOUTH, IDtextField, -10, SpringLayout.SOUTH, clientPanel);
+		sl_clientPanel.putConstraint(SpringLayout.EAST, IDtextField, -72, SpringLayout.EAST, clientPanel);
+		clientPanel.add(IDtextField);
+		IDtextField.setColumns(10);
+
+		checkbox = new JCheckBox("");
 		
-		textField = new JTextField();
-		Client.putConstraint(SpringLayout.NORTH, textField, 6, SpringLayout.SOUTH, txtpnEnterValidClient);
-		Client.putConstraint(SpringLayout.WEST, textField, 70, SpringLayout.WEST, panel_1);
-		Client.putConstraint(SpringLayout.SOUTH, textField, -10, SpringLayout.SOUTH, panel_1);
-		Client.putConstraint(SpringLayout.EAST, textField, -72, SpringLayout.EAST, panel_1);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		checkbox.setBackground(new Color(102, 205, 170));
+		checkbox.setBounds(59, 184, 28, 48);
+		frmLoginPage.getContentPane().add(checkbox);
+
+		EnterButton = new JButton("Enter");
+	
+		EnterButton.setEnabled(false);
+		EnterButton.setBounds(167, 227, 117, 29);
+		frmLoginPage.getContentPane().add(EnterButton);
+
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("");
-		chckbxNewCheckBox.setBackground(new Color(102, 205, 170));
-		chckbxNewCheckBox.setBounds(59, 184, 28, 48);
-		frmLoginPage.getContentPane().add(chckbxNewCheckBox);
-		
-		JButton btnNewButton = new JButton("Enter");
-		btnNewButton.setBounds(167, 227, 117, 29);
-		frmLoginPage.getContentPane().add(btnNewButton);
 		
 		JTextPane txtpnIAgreeTo = new JTextPane();
 		txtpnIAgreeTo.setBounds(99, 184, 313, 48);
 		txtpnIAgreeTo.setBackground(new Color(102, 205, 170));
-		txtpnIAgreeTo.setText("i agree to the terms and conditions and the privacy policy read the terms and conditions of use");
+		txtpnIAgreeTo.setText(
+				"i agree to the terms and conditions and the privacy policy read the terms and conditions of use");
 		frmLoginPage.getContentPane().add(txtpnIAgreeTo);
+		
+		errorMessage = new JTextPane();
+		errorMessage.setEnabled(false);
+		errorMessage.setEditable(false);
+		errorMessage.setBounds(99, 40, 272, 16);
+		frmLoginPage.getContentPane().add(errorMessage);
+		errorMessage.setBackground(new Color(102, 205, 170));
+		errorMessage.setForeground(Color.RED);
+		errorMessage.setText("Something went wrong. Please try again"); 
+		errorMessage.hide();
+		
+		setEventListeners();
+		
 		frmLoginPage.setBackground(new Color(32, 178, 170));
 		frmLoginPage.setFont(new Font("Dialog", Font.BOLD, 11));
 		frmLoginPage.setTitle("Login ");
 		frmLoginPage.setBounds(100, 100, 450, 300);
 		frmLoginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	private void setEventListeners() {
+
+		checkbox.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(checkbox.isSelected()) {
+					EnterButton.setEnabled(true);
+				}
+				else EnterButton.setEnabled(false);
+ 			}
+		});
+		
+		
+		clientMenuRdb.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				errorMessage.hide();
+				if(clientMenuRdb.isSelected()) {
+					companyMenuRdb.setSelected(false);
+					companyPanel.setVisible(false);
+					clientPanel.setVisible(true);
+				} else {
+					companyMenuRdb.setSelected(true);
+					clientPanel.setVisible(false);
+					companyPanel.setVisible(true);
+				}
+ 			}
+		}); 
+
+		companyMenuRdb.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				errorMessage.hide();
+				if(companyMenuRdb.isSelected()) {
+					clientMenuRdb.setSelected(false);
+					clientPanel.setVisible(false);
+					companyPanel.setVisible(true);
+				} else {
+					clientMenuRdb.setSelected(true);
+					companyPanel.setVisible(false);
+					clientPanel.setVisible(true);
+				}
+ 			}
+		});
+		
+		EnterButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) { 
+				if(EnterButton.isEnabled()) {
+					Login();
+				}
+			}
+		});
+	}
+
+	public void Login() { 
+		if(controller.Login(this) == false) {
+			errorMessage.show(true);
+			errorMessage.setEnabled(true);
+			IDtextField.setText("");
+			usernameTextField.setText("");
+			passwordField.setText("");
+			checkbox.setSelected(false);
+		} else {
+			if(clientMenuRdb.isSelected()) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							Clien_Menu_1 window = new Clien_Menu_1(controller);
+							window.frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			} else {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							Company_Menu_1 window = new Company_Menu_1(controller);
+							window.frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}} 
 	}
 }

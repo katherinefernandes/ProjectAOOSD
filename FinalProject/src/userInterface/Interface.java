@@ -1,10 +1,12 @@
 package userInterface;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.InternalState;
+import supportingClasses.Security;
 import users.CurrentClient;
 import users.CurrentClientV2;
 import users.LogisticCompany;
@@ -133,6 +135,11 @@ public class Interface {
 	
 	private static Login_Page L = new Login_Page();
 	public static void load_Menu() {
+		Security s = new Security();
+		ArrayList<String> temp = s.getClientIDs();
+		for (int i = 0; i < temp.size(); i++) {
+			System.out.println(temp.get(i));
+		}
 		Scanner sc = new Scanner(System.in);
 		L.get_input(sc);
 		try {

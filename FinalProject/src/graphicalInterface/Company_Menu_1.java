@@ -1,44 +1,22 @@
 package graphicalInterface;
-
-import java.awt.EventQueue;
-
+ 
 import javax.swing.JFrame;
-import java.awt.Color;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
+import java.awt.Color; 
 import javax.swing.JTextPane;
-import javax.swing.JButton;
-import javax.swing.JSpinner;
-import javax.swing.JToggleButton;
-import javax.swing.JProgressBar;
-import java.awt.Canvas;
-import java.awt.Label;
+import javax.swing.JButton; 
+
+import logic.Controller; 
 import javax.swing.JSlider;
 
 public class Company_Menu_1 {
 
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Company_Menu_1 window = new Company_Menu_1();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	public JFrame frame;
+    private Controller controller;
 	/**
 	 * Create the application.
 	 */
-	public Company_Menu_1() {
+	public Company_Menu_1(Controller controller) {
+		this.controller = controller;
 		initialize();
 	}
 

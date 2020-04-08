@@ -11,33 +11,21 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SpringLayout;
+
+import logic.Controller;
+
 import javax.swing.JTextPane;
 import javax.swing.JSlider;
 
 public class Clien_Menu_1 {
 
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Clien_Menu_1 window = new Clien_Menu_1();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	public JFrame frame;
+	private Controller controller;
 	/**
 	 * Create the application.
 	 */
-	public Clien_Menu_1() {
+	public Clien_Menu_1(Controller controller) {
+		this.controller = controller;
 		initialize();
 	}
 
