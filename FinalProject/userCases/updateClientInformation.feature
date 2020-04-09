@@ -23,24 +23,22 @@ Feature: Update the information of the client
  
  
  Scenario: Client can update its phone number
- 	Given that the client is logged in
-	And the ID 897841664500 it entered exists in the memory
+ 	Given that the client enters the ID 36836570081685 that exists in the memory
 	When the client decides to update its phone number
 	And provides the new country code 45 which is of the valid length
 	And provides the new phone number 45670912 which is also of the valid length
 	Then the previous phone number and country code are replaced with the valid values
 	
-
-  
-  #Scenario: Client can update its phone number
-  	#Given that the Client with the ID "897841664500" is logged in
-  	#When the client chooses to update its phone number
-  	#And provides the new country code "45" and the new phone number "45670912"
-  	#Then the previous phone number and the country code are replaced with the new values.
-  
-  
-  #Scenario: Client tries to update someone elses information
-  # Given that the Client with the ID "897841664500" is logged in
-  # When the client chooses to update its phone number 
-  # And provides a wrong security code which does not match its ID
-   #Then the error "Not allowed" is given
+Scenario: Client can update its email number
+	Given that the client enters the ID 36836570081685 that exists in the memory
+	When the client decides to update its email
+	And provides the new email "something@new.com" which is a valid email format
+	Then the previous email is replaced with the new valid email
+	
+Scenario: Client can update its reference Person
+	Given that the client enters the ID 36836570081685 that exists in the memory
+	When the client decides to update its reference person
+	And provides the new firstname "Fiza" which is valid
+	And provides the new middlename "J" which is also valid 
+	And provides the new lastname "Azam" which is also valid
+	Then the previous reference person is replaced with the new information

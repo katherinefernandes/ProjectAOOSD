@@ -49,7 +49,7 @@ public class Login_Page {
 			x.close();
 		}
 		catch(Exception e) {
-			System.out.println("You enterent inconsistent information...try again ");
+			System.out.println("You entered inconsistent information...try again ");
 			get_input(s);				
 }	
 	}

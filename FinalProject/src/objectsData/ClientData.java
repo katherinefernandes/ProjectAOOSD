@@ -21,7 +21,7 @@ public class ClientData extends ObjectData{
 		this.address= new Address(street,house,city,zip);
 		this.activeShipment= new ArrayList<Long>();
 	}
-	public void setPhoneNumber(int country,int phone) {
+	public void setPhoneNumber(int country,long phone) {
 		this.phoneNumber= new PhoneNumber(country,phone);
 	}
 	public void setEmail(String email) {
