@@ -32,9 +32,4 @@ Feature: Register a new Client
 #	Then a unique client ID is generated 
 #	And displayed 
 	
-	
-#	Scenario: Client tries to register another client
-#	Given that the Client with the ID "897841664500" is logged in
-#	When the Client tries to register a new client "Somecompany"
-#	Then an error message "Wrong option" is generated
-	
+
