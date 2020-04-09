@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "userCases",
+		features = "userStories",
 		plugin= {"html:target/cucumber/wikipedia.html"},
 		monochrome=true,
 		snippets = SnippetType.CAMELCASE,

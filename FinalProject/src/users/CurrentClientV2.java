@@ -75,7 +75,7 @@ public class CurrentClientV2 extends User{
 			databaseClient.editEntry(client);
 			this.updatedPhone=true;
 		} catch (ElementNotFoundException e) {
-			System.out.println("Client can't be edited for some weird reason, check if client still exists in database");
+			throw new Error(e);// as the client entry can never be deleted from xml unless there is a new feature that does that then we need a new/better way to fix this
 		}
 	}
 

@@ -1,4 +1,4 @@
-import graphicalInterface.Login_Window;
+package graphicalInterface;
 import logic.Controller;
 
 public class Start {
