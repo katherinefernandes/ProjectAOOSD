@@ -177,7 +177,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 		boolean initialize = true;
 		//getInfoContainer(s); // mamuna: replacing this code by another which will update the container...
 		container = input.getContainerData(s);
-		viewInternalStatusOfAJourney(container);
+		displayContainerData(container);
 		while (initialize) {
 			System.out.println("Please enter the following numbers: \n\t1 ---------- to update the position \n\t2 ---------- to update the status \n\t3 ---------- quit ");
 			
@@ -257,7 +257,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 	}*/
 
 	@Override
-	public void viewInternalStatusOfAJourney(ContainerData container) { //mamuna added this to distinguish between input and logic and to reduce code
+	public void displayContainerData(ContainerData container) { //mamuna added this to distinguish between input and logic and to reduce code
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		System.out.println("This is the container ID: " + container.getContainerID());
 		System.out.println("Cargo: " + container.getCargo());

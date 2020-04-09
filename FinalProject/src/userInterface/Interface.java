@@ -60,7 +60,7 @@ public class Interface {
 			case 4:
 				System.out.println("View Internal Status of a Journey");
 				ContainerData container = input.getContainerData(sc);
-				c.viewInternalStatusOfAJourney(container);
+				c.displayContainerData(container);
 				break;
 				
 			case 0:
@@ -118,7 +118,7 @@ public class Interface {
 			case 4:
 				System.out.println("Get Container Information");
 				ContainerData container = input.getContainerData(sc);
-				l.viewInternalStatusOfAJourney(container);
+				l.displayContainerData(container);
 				break;
 			case 0:
 				quit = true;

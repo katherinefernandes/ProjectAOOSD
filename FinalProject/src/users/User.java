@@ -11,6 +11,7 @@ import supportingClasses.Security;
 public abstract class User {
 	
 	protected ClientData client;
+	protected ContainerData container;
 	protected ClientAccess databaseClient;
 	protected ContainerAccess databaseContainer;
 	protected boolean display;
@@ -30,7 +31,7 @@ public abstract class User {
 	public boolean getDisplay() {
 		return display;
 	}
-	public abstract void viewInternalStatusOfAJourney(ContainerData container);
+	public abstract void displayContainerData(ContainerData container);
 	public ClientData getClient () {
 		return this.client;
 	}

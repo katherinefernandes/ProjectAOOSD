@@ -98,7 +98,7 @@ public class CurrentClient extends User{
 	}
 	
 	@Override
-	public void viewInternalStatusOfAJourney(ContainerData container) {
+	public void displayContainerData(ContainerData container) {
 		input.displayInternalStatus(container);
 	
 	}

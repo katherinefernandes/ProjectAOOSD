@@ -3,6 +3,7 @@ package users;
 import java.util.ArrayList;
 
 import dataAccess.ClientAccess;
+import dataAccess.ContainerAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
@@ -12,6 +13,7 @@ public class CurrentClientV2 extends User{
 	private boolean updatedPhone;
 	private boolean updatedEmail;
 	private boolean updatedReferencePerson;
+	private boolean viewedContainer;
 	
 
 	public CurrentClientV2(long ID) {
@@ -33,8 +35,9 @@ public class CurrentClientV2 extends User{
 	}
 
 	@Override
-	public void viewInternalStatusOfAJourney(ContainerData container) {
+	public void displayContainerData(ContainerData container) {
 		// TODO Auto-generated method stub
+		// this will send the container to a display which needs to be implemented.
 		
 	}
 	
@@ -120,6 +123,39 @@ public class CurrentClientV2 extends User{
 			System.out.println("Client can't be edited for some weird reason, check if client still exists in database");
 		}
 		
+	}
+
+	public void setviewedContainer() {
+		// TODO Auto-generated method stub
+		this.viewedContainer = false;
+	}
+
+	public boolean getViewedContainer() {
+		// TODO Auto-generated method stub
+		return this.viewedContainer;
+	}
+
+	public void getContainerFromDataBase(long containerID) {
+		// TODO Auto-generated method stub
+		databaseContainer = new ContainerAccess();
+		try {
+			this.container = this.databaseContainer.getEntry(containerID);
+			this.viewedContainer = true;
+		} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e ) {
+			// TODO Auto-generated catch block
+			System.out.println("Container ID is invalid");
+			throw new Error(e);
+		}
+	}
+
+	public boolean matchJourneyID(long journeyID) {
+		// TODO Auto-generated method stub
+		return (container.getJourneyID()==journeyID);
+	}
+
+	public ContainerData viewContainer() {
+		// TODO Auto-generated method stub
+		return this.container;
 	}
 	
 
