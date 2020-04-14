@@ -1,3 +1,54 @@
+package graphicalInterface;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.Color;
+import javax.swing.JLayeredPane;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+
+public class UpdateContainer {
+
+	private JFrame ContainerFrame;
+	public  JLayeredPane layeredPane;
+	public  JPanel PositionPanel;
+	public JPanel StatusPanel;
+	JRadioButton PositionRdb,StatusRdb;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UpdateContainer window = new UpdateContainer();
+					window.ContainerFrame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public UpdateContainer() {
+		initialize();
+	}
+
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		ContainerFrame = new JFrame();
+		ContainerFrame.getContentPane().setBackground(new Color(102, 205, 170));
 		ContainerFrame.getContentPane().setLayout(null);
 		
 		layeredPane = new JLayeredPane();
