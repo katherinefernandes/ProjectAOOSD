@@ -8,8 +8,12 @@ import javax.swing.JLayeredPane;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UpdateContainer {
 
@@ -89,11 +93,57 @@ public class UpdateContainer {
 		ContainerFrame.getContentPane().add(StatusRdb);
 		ContainerFrame.setBounds(100, 100, 550, 429);
 		ContainerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-	public void switchPanels(JPanel panel) {
-		layeredPane.removeAll();
-		layeredPane.add(PositionPanel);
 		
 		
+		setEventListeners();
 	}
+//	public void switchPanels(JPanel panel) {
+//		layeredPane.removeAll();
+//		layeredPane.add(PositionPanel);
+//		layeredPane.repaint();
+//		layeredPane.validate();
+//		
+//		
+//	}
+	
+	public void setEventListeners() {
+		PositionRdb.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				PositionPanel.setVisible(true);
+				if(PositionRdb.isSelected()) {
+					StatusRdb.setSelected(false);
+					PositionPanel.setVisible(true);
+					StatusPanel.setVisible(false);
+					
+				} else {
+					StatusRdb.setSelected(true);
+					PositionPanel.setVisible(false);
+					StatusPanel.setVisible(true);
+					
+				}
+ 			}
+		}); 
+		
+		
+		StatusRdb.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(StatusRdb.isSelected()) {
+					StatusPanel.setVisible(true);
+					PositionRdb.setSelected(false);
+					
+				} else {
+					PositionRdb.setSelected(true);
+					PositionPanel.setVisible(true);
+					StatusPanel.setVisible(false);
+					
+				}
+ 			}
+		}); 
+		
+		
+		
+		
+
+	}
+	
 }
