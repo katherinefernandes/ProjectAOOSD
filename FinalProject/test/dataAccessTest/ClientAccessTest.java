@@ -11,7 +11,7 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
-public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
+public class ClientAccessTest extends EditableDataAccessTest<ClientData,ClientAccess>{
 	
 	public ClientAccessTest() {
 		super();
@@ -73,16 +73,10 @@ public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 	@Test
 	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
 		editTest(); }
-	@Test
-	public void sortTestT() throws AmbiguousElementSelectionException {
-		sortTest(); }
-	@Test
-	public void exceptionTestT() throws AmbiguousElementSelectionException {
-		exceptionTest(); }
 	
-	
+	@Override
 	protected void assertEqualData(ClientData clientX, ClientData clientY) {
-		assertEquals(clientY.getClientID(),clientX.getClientID());
+		assertEquals(clientY.getID(),clientX.getID());
 		assertEquals(clientY.getCompanyName(),clientX.getCompanyName());
 		assertEquals(clientY.getPhoneNumber().getCountryCode(),clientX.getPhoneNumber().getCountryCode());
 		assertEquals(clientY.getPhoneNumber().getPhone(),clientX.getPhoneNumber().getPhone());
@@ -105,6 +99,6 @@ public class ClientAccessTest extends DataAccessTest<ClientData,ClientAccess>{
 	}
 	
 	protected long getDataID(ClientData clientData) {
-		return clientData.getClientID();
+		return clientData.getID();
 	}
 }

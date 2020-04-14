@@ -5,119 +5,146 @@ import objectsData.*;
 import java.io.*;
 import java.util.*;
 
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
-import org.w3c.dom.*;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventFactory;
+import javax.xml.stream.events.*;
 
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 
 
-public class ClientAccess extends DataAccess<ClientData> {
+public class ClientAccess extends EditableDataAccess<ClientData> {
 	
 	
 	public ClientAccess() {
 		super("storage/activeData/clients.xml");
 	}
 	
-	
-	protected Element elementFromData(ClientData data) {
-		Element newClient = doc.createElement("Client");
-		
-		PhoneNumber phoneNumber = data.getPhoneNumber();
-		Element phoneNumberElement = doc.createElement("PhoneNumber");
-		ReferenceName name = data.getPerson();
-		Element nameElement = doc.createElement("RefrencePersonName");
-		Address address = data.getAddress();
-		Element addressElement = doc.createElement("Address");
-		List<Long> activeShipments = data.getActiveShipment();
-		Element activeShipmentsElement = doc.createElement("ActiveShipments");
-		
-		newElementWithValue(newClient, "ClientID", String.valueOf(data.getClientID()));
-		newElementWithValue(newClient, "CompanyName", data.getCompanyName());
-		
-		newElementWithValue(phoneNumberElement, "CountryCode", String.valueOf(phoneNumber.getCountryCode()));
-		newElementWithValue(phoneNumberElement, "PhoneBaseNumber", String.valueOf(phoneNumber.getPhone()));
-		newClient.appendChild(phoneNumberElement);
-		
-		newElementWithValue(newClient, "Email", data.getEmail());
-	
-		for(String firstname : name.getFirstName()) {
-			newElementWithValue(nameElement,"FirstName",firstname);
-		}	
-		for(String middleName : name.getMiddleName()) {
-			newElementWithValue(nameElement,"MiddleName",middleName);
+	@Override
+	public ClientData dataOfEvents(List<XMLEvent> events, long ID) {
+		int i = 0;
+		XMLEvent event;
+		StartElement start;
+		i = iterateUntilFound(i,events,"CompanyName");
+		String companyName = events.get(++i).asCharacters().getData();
+		i = iterateUntilFound(i,events,"CountryCode");
+		int countryCode = Integer.valueOf(events.get(++i).asCharacters().getData());
+		i = iterateUntilFound(i,events,"PhoneBaseNumber");
+		long phoneNumber = Long.valueOf(events.get(++i).asCharacters().getData());
+		i = iterateUntilFound(i,events,"Email");
+		String email = events.get(++i).asCharacters().getData();
+		ArrayList<String> firstName = new ArrayList<>();
+		ArrayList<String> middleName = new ArrayList<>();
+		ArrayList<String> lastName = new ArrayList<>();
+		i = iterateUntilFound(i,events,"FirstName");
+		while(!(((event = events.get(i)).isEndElement()) && event.asEndElement().getName().getLocalPart().equals("RefrencePersonName"))) {
+			if(event.isStartElement()) {
+				start = event.asStartElement();
+				if(start.getName().getLocalPart().equals("FirstName")) {
+					firstName.add(events.get(++i).asCharacters().getData());
+				}
+				else if(start.getName().getLocalPart().equals("MiddleName")) {
+					middleName.add(events.get(++i).asCharacters().getData());
+				}
+				else if(start.getName().getLocalPart().equals("LastName")) {
+					lastName.add(events.get(++i).asCharacters().getData());
+				}
+			}
+			i++;
 		}
-		for (String lastName: name.getLastName()) {
-			newElementWithValue(nameElement,"LastName",lastName);
+		i = iterateUntilFound(i,events,"StreetName");
+		String streetName = events.get(++i).asCharacters().getData();
+		i = iterateUntilFound(i,events,"HouseNumber");
+		int houseNumber = Integer.valueOf(events.get(++i).asCharacters().getData());
+		i = iterateUntilFound(i,events,"City");
+		String city = events.get(++i).asCharacters().getData();
+		i = iterateUntilFound(i,events,"ZipCode");
+		String zipCode = events.get(++i).asCharacters().getData();
+		i = iterateUntilFound(i,events,"ActiveShipments");
+		
+		ClientData client = new ClientData(ID, companyName, countryCode, phoneNumber, email, firstName, middleName, lastName, streetName, city, houseNumber, zipCode);
+		
+		while(!((event = events.get(i)).isEndElement() && event.asEndElement().getName().getLocalPart().equals("ActiveShipments"))) {
+			if(event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("JourneyID")) {
+				client.addActiveShipment(Long.valueOf(events.get(++i).asCharacters().getData()));
+			}
+			i++;
 		}
-		newClient.appendChild(nameElement);
-		
-		newElementWithValue(addressElement,"StreetName",address.getStreetName());
-		newElementWithValue(addressElement,"HouseNumber",String.valueOf(address.getHouseNumber()));
-		newElementWithValue(addressElement,"City",address.getCity());
-		newElementWithValue(addressElement,"ZipCode",String.valueOf(address.getZipCode()));
-		newClient.appendChild(addressElement);
-		
-		for(long journeyID : activeShipments) {
-			newElementWithValue(activeShipmentsElement,"JourneyID",String.valueOf(journeyID));
-		}
-		newClient.appendChild(activeShipmentsElement);
-		
-		return newClient;
+		return client;
 	}
 	
-	
-	protected ClientData dataFromElement(Element client) throws NumberFormatException, AmbiguousElementSelectionException, ElementNotFoundException {
-		Element addressElement = NodeMethods.singleElementFromTagName(client, "Address");
-		NodeList activeShipmentsElements = NodeMethods.singleElementFromTagName(client, "ActiveShipments").getChildNodes();
-		List<String> journeyIDStrings = NodeMethods.getValuesFromChildNodes(activeShipmentsElements);
-		
-		
-		long 			   clientID = Long.valueOf(NodeMethods.valueFromTagName(client, "ClientID"));
-		String 			   companyName = NodeMethods.valueFromTagName(client, "CompanyName");
-		int 			   countryCode = Integer.valueOf(NodeMethods.valueFromTagName(NodeMethods.singleElementFromTagName(client,"PhoneNumber"), "CountryCode"));
-		int 			   phoneNumber = Integer.valueOf(NodeMethods.valueFromTagName(NodeMethods.singleElementFromTagName(client,"PhoneNumber"), "PhoneBaseNumber"));
-		String 			   email = NodeMethods.valueFromTagName(client, "Email");
-		List<List<String>> names = getNames(client);
-		String 			   streetName = NodeMethods.valueFromTagName(addressElement, "StreetName");
-		int 			   houseNumber = Integer.valueOf(NodeMethods.valueFromTagName(addressElement, "HouseNumber"));
-		String 			   city = NodeMethods.valueFromTagName(addressElement, "City");
-		String 			   zipCode = NodeMethods.valueFromTagName(addressElement, "ZipCode");
-		
-		ClientData clientData = new ClientData(clientID, companyName, countryCode, phoneNumber, email, (ArrayList<String>) names.get(0), (ArrayList<String>) names.get(1), (ArrayList<String>) names.get(2), streetName, city, houseNumber, zipCode);
-		
-		
-		for (int i = 0; i < journeyIDStrings.size(); i++) {
-			clientData.addActiveShipment(Long.valueOf(journeyIDStrings.get(i)));
+
+	/*
+	@Override
+	public List<XMLEvent> eventsFromData(ClientData data){
+		List<XMLEvent> events = new ArrayList<>();
+		List<Attribute> ID = new ArrayList<>();
+		ID.add(eventFactory.createAttribute("ID", String.valueOf(data.getID())));
+		StartElement clientEvent = eventFactory.createStartElement("", "", "Client", ID.iterator(), new ArrayList<Namespace>().iterator());
+		events.add(clientEvent);
+		events.add(generateStart("CompanyName"));
+		events.add(generateText(data.getCompanyName()));
+		events.add(generateEnd("CompanyName"));
+		events.add(generateStart("PhoneNumber"));
+		events.add(generateStart("ContryCode"));
+		events.add(generateText(data.getPhoneNumber().getCountryCode()));
+		events.add(generateEnd("CountryCode"));
+		events.add(generateStart("PhoneBaseNumber"));
+		events.add(generateText(data.getPhoneNumber().getPhone()));
+		events.add(generateEnd("PhoneBaseNumber"));
+		events.add(generateEnd("PhoneNumber"));
+		events.add(generateStart("Email"));
+		events.add(generateText(data.getEmail()));
+		events.add(generateEnd("Email"));
+		events.add(generateStart("RefrencePersonName"));
+		ReferenceName name = data.getPerson();
+		for(String firstName : name.getFirstName()) {
+			events.add(generateStart("FirstName"));
+			events.add(generateText(firstName));
+			events.add(generateEnd("FirstName"));
 		}
+		for(String middleName : name.getFirstName()) {
+			events.add(generateStart("MiddleName"));
+			events.add(generateText(middleName));
+			events.add(generateEnd("MiddleName"));
+		}
+		for(String lastName : name.getFirstName()) {
+			events.add(generateStart("LastName"));
+			events.add(generateText(lastName));
+			events.add(generateEnd("LastName"));
+		}
+		events.add(generateEnd("RefrencePersonName"));
+		events.add(generateStart("Address"));
+		events.add(generateStart("StreetName"));
+		events.add(generateText(data.getAddress().getStreetName()));
+		events.add(generateEnd("StreetName"));
+		events.add(generateStart("HouseNumber"));
+		events.add(generateText(data.getAddress().getHouseNumber()));
+		events.add(generateEnd("HouseNumber"));
+		events.add(generateStart("City"));
+		events.add(generateText(data.getAddress().getCity()));
+		events.add(generateEnd("City"));
+		events.add(generateStart("ZipCode"));
+		events.add(generateText(data.getAddress().getZipCode()));
+		events.add(generateEnd("ZipCode"));
+		events.add(generateEnd("Address"));
+		events.add(generateStart("ActiveShipments"));
+		for(long journeyID : data.getActiveShipment()) {
+			events.add(generateStart("JourneyID"));
+			events.add(generateText(journeyID));
+			events.add(generateEnd("JourneyID"));
+		}
+		events.add(generateEnd("ActiveShipments"));
+		events.add(generateEnd("Client"));
 		
-		
-		
-		return clientData;
+		return events;
 	}
 
-	
-	private List<List<String>> getNames(Element client) throws AmbiguousElementSelectionException, ElementNotFoundException {
-		List<List<String>> names = new ArrayList<List<String>>();
+	@Override
+	protected ClientData dataOfEvents(List<XMLEvent> events) {
 		
-		Element namesElement = NodeMethods.singleElementFromTagName(client, "RefrencePersonName");
-		
-		NodeList firstNamesElements = namesElement.getElementsByTagName("FirstName");
-		NodeList middleNamesElements = namesElement.getElementsByTagName("MiddleName");
-		NodeList lastNamesElements = namesElement.getElementsByTagName("LastName");
-		List<NodeList> namesElementsList = new ArrayList<NodeList>();
-		namesElementsList.add(firstNamesElements);
-		namesElementsList.add(middleNamesElements);
-		namesElementsList.add(lastNamesElements);
-		
-		for(int i = 0; i < 3; i++) {
-			NodeList namesElements = namesElementsList.get(i);
-			names.add(NodeMethods.getValuesFromChildNodes(namesElements));
-		}
-		return names;
-	}
+		return null;
+	}*/
 
 }
 

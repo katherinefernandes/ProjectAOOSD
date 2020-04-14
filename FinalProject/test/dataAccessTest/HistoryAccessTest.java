@@ -43,18 +43,6 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryAccess
 	}
 	
 	
-	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		persistencyTest(); }
-	@Test
-	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		editTest(); }
-	@Test
-	public void sortTestT() throws AmbiguousElementSelectionException {
-		sortTest(); }
-	@Test
-	public void exceptionTestT() throws AmbiguousElementSelectionException {
-		exceptionTest(); }
 	
 	public void assertEqualData(HistoryData history1, HistoryData history2) {
 		assertTrue(history1.getTimeStamp().equals(history2.getTimeStamp()));

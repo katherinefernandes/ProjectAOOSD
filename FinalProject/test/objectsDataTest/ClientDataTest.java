@@ -25,7 +25,7 @@ public class ClientDataTest {
 	
 	@Test
 	public void testGetClientID() {
-		assertEquals((int) 31l,(int)objectTest.getClientID());
+		assertEquals((int) 31l,(int)objectTest.getID());
 	}
 
 	@Test

@@ -2,21 +2,58 @@ package dataAccess;
 
 import java.util.*;
 
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
+import objectsData.ClientData;
 import objectsData.Location;
 import objectsData.PortData;
 
-public class PortAccess extends DataAccess<PortData> {
+public class PortAccess extends EditableDataAccess<PortData> {
 	
 	public PortAccess() {
 		super("storage/activeData/ports.xml");
 	}
+
+	@Override
+	protected PortData dataOfEvents(List<XMLEvent> events, long ID) {
+		int i = 0;
+		XMLEvent event;
+		StartElement start;
+		i = iterateUntilFound(i,events,"Country");
+		String country = events.get(++i).asCharacters().getData();
+		i = iterateUntilFound(i,events,"PortName");
+		String portName = events.get(++i).asCharacters().getData();
+		i = iterateUntilFound(i,events,"Latitude");
+		float latitude = Float.valueOf(events.get(++i).asCharacters().getData());
+		i = iterateUntilFound(i,events,"Longitude");
+		float longitude = Float.valueOf(events.get(++i).asCharacters().getData());
+		PortData port = new PortData(ID, country, portName, latitude, longitude);
+		i = iterateUntilFound(i,events,"StationedContainers");
+		while(!((event = events.get(i)).isEndElement() && 
+				event.asEndElement().getName().getLocalPart().equals("StationedContainers"))) {
+			if(event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("ContainerID")) {
+				port.addStationedContainer(Long.valueOf(events.get(++i).asCharacters().getData()));
+			}
+			i++;
+		}
+		while(!((event = events.get(i)).isEndElement() && 
+				event.asEndElement().getName().getLocalPart().equals("ArrivingContainers"))) {
+			if(event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("ContainerID")) {
+				port.addArrivingContainer(Long.valueOf(events.get(++i).asCharacters().getData()));
+			}
+			i++;
+		}
+		return port;
+	}
 	
+	/*
 	protected Element elementFromData(PortData data) {
 		Element newPort = doc.createElement("Port");
 		
@@ -67,5 +104,5 @@ public class PortAccess extends DataAccess<PortData> {
 		}
 		
 		return port;
-	}
+	}*/
 }

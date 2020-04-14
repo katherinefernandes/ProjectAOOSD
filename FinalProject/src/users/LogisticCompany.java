@@ -143,13 +143,9 @@ public class LogisticCompany {
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstNames, middleNames, lastNames, street, city, bNumber, zip);
 		
 		ClientAccess clientAccess = new ClientAccess();
-		try { //Try-catch added by Simon to avoid compile errors. Changed because I added an error when you try to add client with same ID two times. Added code
-			
-			clientAccess.newEntry(newClient);//Old code
-			System.out.println("This is your ID:" + id);;
-			
-		} catch (AmbiguousElementSelectionException e) { //Added code
-			e.printStackTrace(); } //Added code
+		
+		clientAccess.newEntry(newClient);//Old code
+		System.out.println("This is your ID:" + id);
 		
 	}
 	
@@ -215,12 +211,7 @@ public class LogisticCompany {
 		}
 		
 		
-		try {
-			databaseContainer.editEntry(container);
-		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Element not found");
-		}
+		databaseContainer.editEntry(container);
 
 	}
 	
@@ -243,7 +234,7 @@ public class LogisticCompany {
 				System.out.println("Last updated: " + container.getUpdated().format(formatter ));
 				System.out.println("Arriving by: " + container.getArriveBy().format(formatter));
 				return;
-			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {
+			} catch (NumberFormatException | ElementNotFoundException e) {
 				System.out.println("Element not found");
 			}
 			

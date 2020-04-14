@@ -2,13 +2,11 @@ package dataAccess;
 
 
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.util.List;
+
+import javax.xml.stream.events.*;
 
 import org.w3c.dom.*;
-
-import exceptions.AmbiguousElementSelectionException;
-import exceptions.ElementNotFoundException;
 import objectsData.HistoryData;
 import objectsData.InternalState;
 import objectsData.Location;
@@ -18,6 +16,13 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		super("storage/activeData/history.xml");
 	}
 	
+
+	@Override
+	protected HistoryData dataOfEvents(List<XMLEvent> events, long ID) {
+		return null;
+	}
+	
+	/*
 	public Element elementFromData(HistoryData data) {
 		Element newDataPoint = doc.createElement("DataPoint");
 		newElementWithValue(newDataPoint,"TimeStamp",String.valueOf(data.getTimeStamp().toEpochSecond(ZoneOffset.UTC)));
@@ -64,7 +69,7 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		return new HistoryData(timeStamp,containerID,journeyID,clientID,destinationPortID,startPortID,cargo,temperature,atmosphere,humidity,latitude,longitude);
 	}
 	
-	/*public void newEntry(HistoryData data) {
+	public void newEntry(HistoryData data) {
 		Element newEntry = elementFromData(data);
 		LocalDateTime timeStamp = data.getTimeStamp();
 		Element root = doc.getDocumentElement();

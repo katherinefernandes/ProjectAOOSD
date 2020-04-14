@@ -59,16 +59,12 @@ public class CurrentClient {
 		case 2: updateEmail(input.inputForUpdateEmail(s)); break;
 		}
 		display=true;
-		try {
-			databaseClient.editEntry(client);
-		} catch (ElementNotFoundException e) {
-			System.out.println("Client can't be edited for some weird reason, check if client exists in database");
-		}
+		databaseClient.editEntry(client);
 	}
 	
 	public void addJourney(Scanner s) {
 		 client = input.getIDByUserInput(s);//gets the clientID
-		 long clientID = client.getClientID();
+		 long clientID = client.getID();
 		 long containerID = this.containers.assignContainer();
 		 long journeyID = new Security().generateID();
 		 //for the version one, generating a new portID as don't have the ability to get a portID by entering the port name
@@ -82,21 +78,10 @@ public class CurrentClient {
 		 LocalDateTime arriveBy = getArrivalDate();
 		 ContainerData container = new ContainerData(containerID,clientID,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,state.getTemperature(),state.getAtmosphere(),state.getHumidity(),arriveBy);
 		 
-		 try {//Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
-			databaseContainer.newEntry(container); //Old code
-			System.out.println("The container is on its way to the destination.\n You can track the changes by this ID:  "+container.getContainerID());
-		} catch (AmbiguousElementSelectionException e1) { //Added code
-			System.out.println("Couldn't add the new journey, check manually whats wrong");
-		} //Added code
+		 databaseContainer.newEntry(container); //Old code
+	     System.out.println("The container is on its way to the destination.\n You can track the changes by this ID:  "+container.getID());
 		 
-		 client.addActiveShipment(journeyID);
-		 try {
-			databaseClient.editEntry(client);
-		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Some error in editing the client with ID: "+client.getClientID());
-		}
+		 databaseClient.editEntry(client);
 		 //for the moment as I am adding a random portID to both startPortID and destinationPortID, 
 		 //I will not update the PORTDATA which needs to be done when the search by name is implemented.
 	

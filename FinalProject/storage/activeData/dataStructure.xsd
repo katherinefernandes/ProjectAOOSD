@@ -3,7 +3,6 @@
 
     <xsd:complexType name="ClientType">
     	<xsd:sequence>
-    		<xsd:element name="ClientID" type="IDType"></xsd:element>
     		<xsd:element name="CompanyName" type="CompanyNameType"></xsd:element>
     		<xsd:element name="PhoneNumber" type="PhoneNrType"></xsd:element>
     		<xsd:element name="Email" type="EmailType"></xsd:element>
@@ -11,6 +10,7 @@
     		<xsd:element name="Address" type="AddressType"></xsd:element>
     		<xsd:element name="ActiveShipments" type="JourneyIDsType"></xsd:element>
     	</xsd:sequence>
+    	<xsd:attribute name="ID" type="IDType"></xsd:attribute>
     </xsd:complexType>
 
 
@@ -59,18 +59,19 @@
 
     <xsd:complexType name="ContainerType">
     	<xsd:sequence>
-            <xsd:element name="ContainerID" type="IDType"></xsd:element>
-            <xsd:element name="ClientID" type="IDType"></xsd:element>
+    		<xsd:element name="ClientID" type="IDType"></xsd:element>
     		<xsd:element name="JourneyID" type="IDType"></xsd:element>
     		<xsd:element name="StartPortID" type="IDType"></xsd:element>
     		<xsd:element name="DestionationPortID" type="IDType"></xsd:element>
     		<xsd:element name="CurrentPosition" type="PositionType"></xsd:element>
     		<xsd:element name="Cargo" type="CargoType"></xsd:element>
-    		<xsd:element name="InternalState" type="InternalStateType">
+    		<xsd:element name="InternalState"
+    			type="InternalStateType">
     		</xsd:element>
     		<xsd:element name="Updated" type="xsd:dateTime"></xsd:element>
     		<xsd:element name="ArriveBy" type="xsd:dateTime"></xsd:element>
     	</xsd:sequence>
+    	<xsd:attribute name="ID" type="IDType"></xsd:attribute>
     </xsd:complexType>
 
     <xsd:simpleType name="CompanyNameType">
@@ -79,14 +80,17 @@
 
     <xsd:complexType name="PortType">
     	<xsd:sequence>
-    		<xsd:element name="PortID" type="IDType"></xsd:element>
     		<xsd:element name="Country" type="CountryType"></xsd:element>
     		<xsd:element name="PortName" type="PortNameType"></xsd:element>
     		<xsd:element name="Position" type="PositionType"></xsd:element>
-    		<xsd:element name="StationedContainers" type="ContainerIDsType">
+    		<xsd:element name="StationedContainers"
+    			type="ContainerIDsType">
     		</xsd:element>
-    		<xsd:element name="ArrivingContainers" type="ContainerIDsType"></xsd:element>
+    		<xsd:element name="ArrivingContainers"
+    			type="ContainerIDsType">
+    		</xsd:element>
     	</xsd:sequence>
+    	<xsd:attribute name="PortID" type="IDType"></xsd:attribute>
     </xsd:complexType>
 
     <xsd:simpleType name="CountryType">

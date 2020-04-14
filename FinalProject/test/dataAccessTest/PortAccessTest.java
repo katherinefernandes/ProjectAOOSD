@@ -12,7 +12,7 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.PortData;
 
-public class PortAccessTest extends DataAccessTest<PortData,PortAccess>{
+public class PortAccessTest extends EditableDataAccessTest<PortData,PortAccess>{
 
 	public PortAccessTest(){
 		super();
@@ -49,15 +49,9 @@ public class PortAccessTest extends DataAccessTest<PortData,PortAccess>{
 	@Test
 	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
 		editTest(); }
-	@Test
-	public void sortTestT() throws AmbiguousElementSelectionException {
-		sortTest(); }
-	@Test
-	public void exceptionTestT() throws AmbiguousElementSelectionException {
-		exceptionTest(); }
 	
 	public void assertEqualData(PortData portData1, PortData portData2) {
-		assertEquals(portData1.getPortID(),portData2.getPortID());
+		assertEquals(portData1.getID(),portData2.getID());
 		assertEquals(portData1.getCountry(),portData2.getCountry());
 		assertEquals(portData1.getPortName(),portData2.getPortName());
 		assertEquals(portData1.getPosition().getLatitude(),portData2.getPosition().getLatitude());
@@ -76,7 +70,7 @@ public class PortAccessTest extends DataAccessTest<PortData,PortAccess>{
 	}
 	
 	protected long getDataID(PortData portData) {
-		return portData.getPortID();
+		return portData.getID();
 	}
 	
 }
