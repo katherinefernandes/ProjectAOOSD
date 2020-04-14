@@ -50,7 +50,7 @@ public class ClientData extends ObjectData{
 		XMLField[] array = {companyName,phoneNumber,emailXML,nameXML,addressXML,shipments};
 		xmlFields = Arrays.asList(array);
 	}
-	public void setPhoneNumber(int country,int phone) {
+	public void setPhoneNumber(int country,long phone) {
 		this.phoneNumber= new PhoneNumber(country,phone);
 		
 		int index = indexOfTagname(xmlFields,"PhoneNumber");

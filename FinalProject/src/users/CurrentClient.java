@@ -1,13 +1,13 @@
 package users;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
-import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.InternalState;
@@ -15,35 +15,21 @@ import supportingClasses.Security;
 import supportingClasses.activeContainers;
 
 
-public class CurrentClient {
+public class CurrentClient extends User{
 
-	private ClientData client;
-	private ClientAccess databaseClient;
-	private ContainerAccess databaseContainer;
-	private boolean display;
 	private activeContainers containers;
-	private CurrentClientInput input;
 
 	public CurrentClient() {
 		databaseClient = new ClientAccess();
 		databaseContainer = new ContainerAccess();
 		containers = new activeContainers();
 		display=true;
-		input = new CurrentClientInput();
 	}
 	
-	public void getInfoClient(Scanner s){
-		client = input.getIDByUserInput(s); //gets the ID by the user and updated the client with a clientData object
-		if (display) {
-			input.displayClientInfo(infoClient());
-		}
-	}
-	private String infoClient() {
-		return "\nClient Name is: \t"+client.getCompanyName()+"\nClient Phone number is: \t"+client.getPhoneNumber().getCountryCode()+" "+client.getPhoneNumber().getPhone()+"\nClient email is: \t"+client.getEmail()+"\nClient reference person is: \t"+client.getPerson().getFirstName().toString()+" "+client.getPerson().getMiddleName().toString()+" "+client.getPerson().getLastName().toString();
-	}
+	
 
-	private void updateReferencePerson(Scanner s) {
-		client.setPerson(input.getFirstName(s), input.getMiddleName(s), input.getLastName(s));
+	private void updateReferencePerson(ArrayList<String> firstname,ArrayList<String> middlename,ArrayList<String> lastname) {
+		client.setPerson(firstname,middlename,lastname);
 	}
 	
 	
@@ -53,17 +39,21 @@ public class CurrentClient {
 	
 	public void updateInfoClient(Scanner s){
 		display=false;
-		getInfoClient(s);
+		this.client = input.getTheClientData(s);
+		viewClient(client);
 		switch (input.getChoiceForUpdateClient(s)) {
-		case 1: updateReferencePerson(s);break;
+		case 1: ArrayList<String> firstname = input.getFirstName(s);
+				ArrayList<String> middlename = input.getMiddleName(s);
+				ArrayList<String> lastname = input.getLastName(s);
+				updateReferencePerson(firstname,middlename,lastname);
+				break;
 		case 2: updateEmail(input.inputForUpdateEmail(s)); break;
 		}
 		display=true;
 		databaseClient.editEntry(client);
 	}
 	
-	public void addJourney(Scanner s) {
-		 client = input.getIDByUserInput(s);//gets the clientID
+	public void addJourney(ClientData client, String cargo, InternalState state) {
 		 long clientID = client.getID();
 		 long containerID = this.containers.assignContainer();
 		 long journeyID = new Security().generateID();
@@ -73,8 +63,6 @@ public class CurrentClient {
 		 //need to find a better solution for location..
 		 float latitude =37.75f;
 		 float longitude =-97.82f;
-		 String cargo = input.getCargoByUser(s);
-		 InternalState state = input.getTheOptimalInternalState(s);
 		 LocalDateTime arriveBy = getArrivalDate();
 		 ContainerData container = new ContainerData(containerID,clientID,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,state.getTemperature(),state.getAtmosphere(),state.getHumidity(),arriveBy);
 		 
@@ -94,10 +82,12 @@ public class CurrentClient {
 		return  LocalDateTime.of(2021, 2, 14, 18, 32);
 	}
 	
-	
-	public void viewInternalStatusOfAJourney(Scanner s) {
-		input.displayInternalStatus(input.getContainerData(s));
+	@Override
+	public void displayContainerData(ContainerData container) {
+		input.displayInternalStatus(container);
 	
 	}
+
+
 	
 }

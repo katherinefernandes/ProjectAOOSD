@@ -16,17 +16,20 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
-Feature: Title of your feature
-  I want to use this template for my feature file
 
-  @tag1
-  Scenario: Title of your scenario
-    Given I want to write a step with precondition
-    And some other precondition
-    When I complete action
-    And some other action
-    And yet another action
-    Then I validate the outcomes
-    And check more outcomes
+
+Feature: Register a new Client 
+  Description: Only the logistic company can register a new client
+
+  
+ # Scenario: Logistic Company registers a new client
+ # Given that the logistic Company is logged in
+#	When the logistic Company decides to add a new client "somecompany"
+#	And the client email is "email@some.come" 
+#	And the client phone number is "45" , "2345678" 
+#	And the reference person is "Some" "random" "person"
+#	And the address is street: "23" house number: "23" city: "Albertslund" zipcode: "2345"
+#	Then a unique client ID is generated 
+#	And displayed 
+	
 

@@ -1,25 +1,26 @@
 package supportingClassesTests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import supportingClasses.activeContainers;
 
 class activeContainersTest {
 	private activeContainers containerManager;
 	
-	@Before
-	public void activeContainersTests() {
+
+	public activeContainersTest() {
 		containerManager = new activeContainers();
 	}
 	
 	@Test
 	public void testAssignContainer() {
-		assertFalse(containerManager.getSetID(),"It should be false");
-		long containerID =containerManager.assignContainer();
-		assertTrue(containerManager.getSetID(),"It should be true");
+		boolean value = containerManager.getSetID();
+		assertFalse("this should be false",value);
+		containerManager.assignContainer();
+		assertTrue("this should be true",containerManager.getSetID());
 	}
 
 }

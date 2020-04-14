@@ -1,20 +1,29 @@
 package userInterface;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import inputFromUsers.CurrentClientInput;
+import objectsData.ClientData;
+import objectsData.ContainerData;
+import objectsData.InternalState;
+import supportingClasses.Security;
 import users.CurrentClient;
+import users.CurrentClientV2;
 import users.LogisticCompany;
 
 public class Interface {
-	
+	private static CurrentClientInput input = new CurrentClientInput();
 	public static void get_ClientMenu(Scanner sc) {
 		Boolean quit = false;
 		int Option;
 		System.out.println("+--------------------------+");
 		System.out.println("|Welcome to the Client Menu|");
 		System.out.println("+--------------------------+");
-		
+		CurrentClientV2 c2 = new CurrentClientV2(L.get_username()); 
 		do {
-			CurrentClient c = new CurrentClient();
+			CurrentClient c = new CurrentClient(); //delete later and change c to c2
+			//there will be a helper class/method which will ensure that the client enters a valid ID
+			//long ClientID = helperclass();
 			//interactive menu to give the user the choice
 			System.out.println("1. Get the client Information");
 			System.out.println("2. Update the current client Information");
@@ -28,7 +37,9 @@ public class Interface {
 			switch(Option) {
 			case 1:
 				System.out.println("Get the client Information");
-			    c.getInfoClient(sc);
+				c2.setViewClient(true);
+				c2.getViewClient();
+				c2.setViewClient(false);
 			    break;
 			    
 			    
@@ -40,12 +51,16 @@ public class Interface {
 				
 			case 3:
 				System.out.println("Add a new journey");
-				c.addJourney(sc);
+				ClientData client2 = input.getTheClientData(sc);
+				String cargo = input.getCargoByUser(sc);
+				InternalState state = input.getTheOptimalInternalState(sc);
+				c.addJourney(client2,cargo,state);
 				break;
 				
 			case 4:
 				System.out.println("View Internal Status of a Journey");
-				c.viewInternalStatusOfAJourney(sc);
+				ContainerData container = input.getContainerData(sc);
+				c.displayContainerData(container);
 				break;
 				
 			case 0:
@@ -89,9 +104,10 @@ public class Interface {
 			    
 			    
 			case 2:
-				CurrentClient c = new CurrentClient();
+				
 				System.out.println("Get client Information");
-				c.getInfoClient(sc);
+				ClientData client = input.getTheClientData(sc);
+				l.viewClient(client);// now l has access to this method as it is part of the user
 				break;
 				
 				
@@ -100,8 +116,9 @@ public class Interface {
 				l.updateContainer(sc);
 				break;
 			case 4:
-				System.out.println("Get Containter Information");
-				l.getInfoContainer(sc);
+				System.out.println("Get Container Information");
+				ContainerData container = input.getContainerData(sc);
+				l.displayContainerData(container);
 				break;
 			case 0:
 				quit = true;
@@ -116,11 +133,14 @@ public class Interface {
 		System.out.println("Exiting menu");
 	}
 	
-	
+	private static Login_Page L = new Login_Page();
 	public static void load_Menu() {
+		Security s = new Security();
+		ArrayList<String> temp = s.getClientIDs();
+		for (int i = 0; i < temp.size(); i++) {
+			System.out.println(temp.get(i));
+		}
 		Scanner sc = new Scanner(System.in);
-		Login_Page L = new Login_Page();
-		
 		L.get_input(sc);
 		try {
 //		L.get_input();
