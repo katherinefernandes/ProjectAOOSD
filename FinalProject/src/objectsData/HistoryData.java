@@ -1,6 +1,7 @@
 package objectsData;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public class HistoryData extends ObjectData {
 	private  LocalDateTime timeStamp ;
@@ -33,6 +34,9 @@ public class HistoryData extends ObjectData {
 	
 	public LocalDateTime getTimeStamp() {
 		return this.timeStamp;
+	}
+	public long getID() {
+		return timeStamp.toEpochSecond(ZoneOffset.UTC);
 	}
 	public long getContainerID() {
 		return this.containerID;

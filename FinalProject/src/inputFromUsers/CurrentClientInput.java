@@ -35,7 +35,7 @@ public class CurrentClientInput {
 			try {
 				client = databaseClient.getEntry(clientID);
 				break;
-			} catch (NumberFormatException | ElementNotFoundException| AmbiguousElementSelectionException e) {
+			} catch (NumberFormatException | ElementNotFoundException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Element not found");
 			}
@@ -162,7 +162,7 @@ public class CurrentClientInput {
 			try { //Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
 				container = databaseContainer.getEntry(containerID); //Old code
 				break;
-			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) { //Added code
+			} catch (NumberFormatException | ElementNotFoundException e) { //Added code
 				System.out.println("Container not found");
 			}
 			

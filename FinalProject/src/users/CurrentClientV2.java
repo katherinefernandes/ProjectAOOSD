@@ -22,7 +22,7 @@ public class CurrentClientV2 extends User{
 		try {
 			client = databaseClient.getEntry(ID);
 			clientIsSet = true;
-		} catch (NumberFormatException | ElementNotFoundException| AmbiguousElementSelectionException e) {
+		} catch (NumberFormatException | ElementNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Element not found");
 			clientIsSet = false;
@@ -74,12 +74,8 @@ public class CurrentClientV2 extends User{
 	public void updateClientInformation(int countryCode, long phone) {
 		// TODO Auto-generated method stub
 		this.client.setPhoneNumber(countryCode, phone);
-		try {
-			databaseClient.editEntry(client);
-			this.updatedPhone=true;
-		} catch (ElementNotFoundException e) {
-			throw new Error(e);// as the client entry can never be deleted from xml unless there is a new feature that does that then we need a new/better way to fix this
-		}
+		databaseClient.editEntry(client);
+		this.updatedPhone=true;
 	}
 
 	public void updateEmail() {
@@ -95,12 +91,8 @@ public class CurrentClientV2 extends User{
 	public void updateClientInformation(String email) {
 		// TODO Auto-generated method stub
 		this.client.setEmail(email);
-		try {
-			databaseClient.editEntry(client);
-			this.updatedEmail=true;
-		} catch (ElementNotFoundException e) {
-			System.out.println("Client can't be edited for some weird reason, check if client still exists in database");
-		}
+		databaseClient.editEntry(client);
+		this.updatedEmail=true;
 	}
 
 	public void updateReferencePerson() {
@@ -116,12 +108,8 @@ public class CurrentClientV2 extends User{
 	public void updateClientInformation(ArrayList<String> firstName, ArrayList<String> middleName, ArrayList<String> lastName) {
 		// TODO Auto-generated method stub
 		this.client.setPerson(firstName, middleName, lastName);
-		try {
-			databaseClient.editEntry(client);
-			this.updatedReferencePerson=true;
-		} catch (ElementNotFoundException e) {
-			System.out.println("Client can't be edited for some weird reason, check if client still exists in database");
-		}
+		databaseClient.editEntry(client);
+		this.updatedReferencePerson=true;
 		
 	}
 
@@ -141,7 +129,7 @@ public class CurrentClientV2 extends User{
 		try {
 			this.container = this.databaseContainer.getEntry(containerID);
 			this.viewedContainer = true;
-		} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e ) {
+		} catch (NumberFormatException | ElementNotFoundException e ) {
 			// TODO Auto-generated catch block
 			System.out.println("Container ID is invalid");
 			throw new Error(e);

@@ -147,13 +147,9 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstNames, middleNames, lastNames, street, city, bNumber, zip);
 		
 		ClientAccess clientAccess = new ClientAccess();
-		try { //Try-catch added by Simon to avoid compile errors. Changed because I added an error when you try to add client with same ID two times. Added code
-			
-			clientAccess.newEntry(newClient);//Old code
-			System.out.println("This is your ID:" + id);;
-			
-		} catch (AmbiguousElementSelectionException e) { //Added code
-			e.printStackTrace(); } //Added code
+		
+		clientAccess.newEntry(newClient);//Old code
+		System.out.println("This is your ID:" + id);
 		
 	}
 	
@@ -220,12 +216,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 		}
 		
 		
-		try {
-			databaseContainer.editEntry(container);
-		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Element not found");
-		}
+		databaseContainer.editEntry(container);
 
 	}
 	
@@ -248,7 +239,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 				System.out.println("Last updated: " + container.getUpdated().format(formatter ));
 				System.out.println("Arriving by: " + container.getArriveBy().format(formatter));
 				return;
-			} catch (NumberFormatException | ElementNotFoundException | AmbiguousElementSelectionException e) {
+			} catch (NumberFormatException | ElementNotFoundException e) {
 				System.out.println("Element not found");
 			}
 			
@@ -259,7 +250,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 	@Override
 	public void displayContainerData(ContainerData container) { //mamuna added this to distinguish between input and logic and to reduce code
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-		System.out.println("This is the container ID: " + container.getContainerID());
+		System.out.println("This is the container ID: " + container.getID());
 		System.out.println("Cargo: " + container.getCargo());
 		System.out.println("It is located at latitude " + container.getCurrentPosition().getLatitude());
 		System.out.println("and longitude " + container.getCurrentPosition().getlongitude());

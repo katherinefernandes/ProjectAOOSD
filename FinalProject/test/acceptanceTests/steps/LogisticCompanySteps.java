@@ -30,11 +30,11 @@ public class LogisticCompanySteps {
 	    // Write code here that turns the phrase above into concrete actions
 		try {
 			client = clientDatabase.getEntry(ID);
-		} catch (NumberFormatException | ElementNotFoundException| AmbiguousElementSelectionException e) {
+		} catch (NumberFormatException | ElementNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("ID not found in the database");
 		}
-		assertEquals(ID,client.getClientID());
+		assertEquals(ID,client.getID());
 	}
 	
 	@Then("the Client information is shown that the company name is {string}, the email is {string}")

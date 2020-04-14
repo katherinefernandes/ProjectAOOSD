@@ -14,7 +14,7 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 
-public class ContainerAccessTest extends DataAccessTest<ContainerData,ContainerAccess>{
+public class ContainerAccessTest extends EditableDataAccessTest<ContainerData,ContainerAccess>{
 
 	public ContainerAccessTest() {
 		super();
@@ -36,15 +36,10 @@ public class ContainerAccessTest extends DataAccessTest<ContainerData,ContainerA
 	@Test
 	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
 		editTest(); }
-	@Test
-	public void sortTestT() throws AmbiguousElementSelectionException {
-		sortTest(); }
-	@Test
-	public void exceptionTestT() throws AmbiguousElementSelectionException {
-		exceptionTest(); }
+
 	
 	public void assertEqualData(ContainerData container1, ContainerData container2) {
-		assertEquals(container1.getContainerID(),container2.getContainerID());
+		assertEquals(container1.getID(),container2.getID());
 		assertEquals(container1.getClientID(),container2.getClientID());
 		assertEquals(container1.getJourneyID(),container2.getJourneyID());
 		assertEquals(container1.getStartPortID(),container2.getStartPortID());
@@ -60,6 +55,6 @@ public class ContainerAccessTest extends DataAccessTest<ContainerData,ContainerA
 	}
 	
 	protected long getDataID(ContainerData data) {
-		return data.getContainerID();
+		return data.getID();
 	}
 }

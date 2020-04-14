@@ -16,13 +16,8 @@ public class CreatingPorts {
 		PortData port2 = new PortData(517776015757700l,"Pakistan","Gwadar",30.37f, 69.34f);
 		port2.addStationedContainer(517776015753100l);
 		port2.addStationedContainer(521664805370600l);
-		try {
-			portDataBase.newEntry(port1);
-			portDataBase.newEntry(port2);
-		} catch (AmbiguousElementSelectionException e) {
-			// TODO Auto-generated catch block
-			throw new Error(e);// will give error now as ports have been added 
-		}
+		portDataBase.newEntry(port1);
+		portDataBase.newEntry(port2);
 		
 		
 		

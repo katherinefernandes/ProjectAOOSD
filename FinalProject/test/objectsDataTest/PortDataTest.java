@@ -21,7 +21,7 @@ public class PortDataTest {
 
 	@Test
 	public void testGetPortID() {
-		assertNotSame(122900L,objectTest.getPortID());
+		assertNotSame(122900L,objectTest.getID());
 	}
 
 	@Test

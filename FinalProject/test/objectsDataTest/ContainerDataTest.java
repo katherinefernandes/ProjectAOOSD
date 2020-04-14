@@ -68,7 +68,7 @@ public class ContainerDataTest {
 
 	@Test
 	public void testGetContainerID() {
-		assertEquals(cid,objectTest.getContainerID());
+		assertEquals(cid,objectTest.getID());
 	}
 
 	@Test
