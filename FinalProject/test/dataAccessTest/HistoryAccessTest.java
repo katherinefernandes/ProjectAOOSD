@@ -42,6 +42,21 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryAccess
 		}
 	}
 	
+	@Override
+	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+		insertData(data1);
+		
+		dataAccess.flushActiveData();
+	
+		HistoryData pulledData = dataAccess.searchEntries(data1.getTimeStamp().toString()).get(0);
+		
+		assertEqualData(pulledData,data1);
+	}
+	
+	@Test
+	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+		persistencyTest();
+	}
 	
 	
 	public void assertEqualData(HistoryData history1, HistoryData history2) {

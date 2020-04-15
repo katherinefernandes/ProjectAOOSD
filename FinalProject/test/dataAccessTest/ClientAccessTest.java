@@ -11,7 +11,7 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
-public class ClientAccessTest extends EditableDataAccessTest<ClientData,ClientAccess>{
+public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,ClientAccess>{
 	
 	public ClientAccessTest() {
 		super();
@@ -75,7 +75,7 @@ public class ClientAccessTest extends EditableDataAccessTest<ClientData,ClientAc
 		editTest(); }
 	
 	@Override
-	protected void assertEqualData(ClientData clientX, ClientData clientY) {
+	protected void assertEqualData(ClientData clientY, ClientData clientX) {
 		assertEquals(clientY.getID(),clientX.getID());
 		assertEquals(clientY.getCompanyName(),clientX.getCompanyName());
 		assertEquals(clientY.getPhoneNumber().getCountryCode(),clientX.getPhoneNumber().getCountryCode());
@@ -90,12 +90,7 @@ public class ClientAccessTest extends EditableDataAccessTest<ClientData,ClientAc
 		assertEquals(clientY.getAddress().getZipCode(),clientX.getAddress().getZipCode());
 		List<Long> journeyIDsX = clientX.getActiveShipment();
 		List<Long> journeyIDsY = clientY.getActiveShipment();
-		Set<Long> journeyIDSetX = new HashSet<Long>();
-		journeyIDSetX.addAll(journeyIDsX);
-		
-		for(long journeyID : journeyIDsY) {
-			assertTrue(journeyIDSetX.contains(journeyID));
-		}
+		assertEquals(journeyIDsX,journeyIDsY);
 	}
 	
 	protected long getDataID(ClientData clientData) {

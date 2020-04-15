@@ -19,10 +19,10 @@ import org.w3c.dom.*;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 
-public class ContainerAccess extends EditableDataAccess<ContainerData> {
+public class ContainerAccess extends IdentifiedDataAccess<ContainerData> {
 	
 	public ContainerAccess() {
-		super("storage/activeData/containers.xml");
+		super("storage/activeData/containers.xml", "Container", "Containers");
 	}
 	
 	@Override

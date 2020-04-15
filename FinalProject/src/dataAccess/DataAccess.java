@@ -22,9 +22,10 @@ import exceptions.ElementNotFoundException;
 public abstract class DataAccess<T extends ObjectData> {
 	protected Schema schema;
 	protected String filePath;
+	protected String elementsName;
+	protected String collectionsName;
 	protected List<T> activeData;
 	protected List<XMLEvent> currentDatapoint;
-	protected String tagName;
 	protected boolean correctPositionFound;
 	
 	protected XMLEventFactory eventFactory;
@@ -35,13 +36,31 @@ public abstract class DataAccess<T extends ObjectData> {
 	protected File fileIn;
 	protected File fileOut;
 	
+	
+	public DataAccess(String fileName, String elementsName, String collectionsName) {
+		filePath = fileName;
+		this.elementsName = elementsName;
+		this.collectionsName = collectionsName;
+		nullifyIO();
+		eventFactory = XMLEventFactory.newInstance();
+		activeData = new ArrayList<>();
+		currentDatapoint = new ArrayList<>();
+		
+	}
+	
+	
+	public abstract void newEntry(T data);
+	
+	public abstract List<T> searchEntries(String searchWord);
+
+	public abstract void flushActiveData();
+	
+	protected abstract StartElement createStartTag(T data);
+	
 	protected List<XMLEvent> eventsFromData(T data){
 		List<XMLField> xmlFields = data.getXML();
 		List<XMLEvent> events = new ArrayList<>();
-		List<Attribute> IDList = new ArrayList<>();
-		Attribute ID = eventFactory.createAttribute(QName.valueOf("ID"), String.valueOf(data.getID()));
-		IDList.add(ID);
-		StartElement start = eventFactory.createStartElement("", "", data.getTagname(), IDList.iterator(), new ArrayList<Namespace>().iterator());
+		StartElement start = createStartTag(data);
 		events.add(start);
 		try {
 			for(XMLField field : xmlFields) {
@@ -50,144 +69,12 @@ public abstract class DataAccess<T extends ObjectData> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		EndElement end = eventFactory.createEndElement(QName.valueOf(data.getTagname()),new ArrayList<Namespace>().iterator());
+		EndElement end = eventFactory.createEndElement(QName.valueOf(elementsName),new ArrayList<Namespace>().iterator());
 		events.add(end);
 		return events ;
 	}
-	
-	protected abstract T dataOfEvents(List<XMLEvent> events, long ID);
-	
-	DataAccess(String fileName) {
-		filePath = fileName;
-		nullifyIO();
-		eventFactory = XMLEventFactory.newInstance();
-		activeData = new ArrayList<>();
-		currentDatapoint = new ArrayList<>();
-		tagName = "";
-		
-	}
-	
-	public void newEntry(T newData) {
-		long newID = newData.getID();
-		for(int i = 0; i < activeData.size(); i++) {
-			long currentID = activeData.get(i).getID();
-			if (newID <= currentID) {
-				activeData.add(i, newData);
-				if (newID == currentID) {
-					activeData.remove(i + 1);
-				}
-				return;
-			}
-		}
-		activeData.add(newData);
-	}
-	
-	public List<T> searchEntries(String searchWord) {
-		List<T> matchingEntries = new ArrayList<>();
-		for(T data : activeData) {
-			for(String value : data.dumpValues()) {
-				if(value.contains(searchWord)) {
-					matchingEntries.add(data);
-					break;
-				}
-			}
-		}
-		
-		initializeIO();
-		try {
-		Attribute IDattribute = null;
-		while(reader.hasNext()) {
-			XMLEvent event = reader.nextEvent();
-			if(event.isStartElement()) {
-				StartElement start = event.asStartElement();
-				IDattribute = start.getAttributeByName(QName.valueOf("ID"));
-				if(IDattribute != null) {
-					if(correctPositionFound) {
-						matchingEntries.add(dataOfEvents(currentDatapoint,Long.valueOf(IDattribute.getValue())));
-					}
-					if(!String.valueOf(IDattribute.getValue()).contains(searchWord)) {
-						correctPositionFound = false;
-					}
-					else {
-						correctPositionFound = true;
-					}
-					currentDatapoint = new ArrayList<>();
-				}
-			}
-			if(event.isCharacters()) {
-				Characters chars = event.asCharacters();
-				if(chars.getData().contains(searchWord)) {
-					correctPositionFound = true;
-				}
-			}
-			currentDatapoint.add(event);
-		}
-		if(correctPositionFound) {
-			matchingEntries.add(dataOfEvents(currentDatapoint,Long.valueOf(IDattribute.getValue())));
-		}
-		} catch (XMLStreamException e) {
-			closeIO();
-			e.printStackTrace();
-		}
-		closeIO();
-		return matchingEntries;
-	}
 
-	public void flushActiveData() {
-		initializeIO();
-		
-		try {
-		boolean overwrite = false;
-		writer.add(reader.nextEvent());
-		writer.add(reader.nextEvent());
-		while(reader.hasNext()) {
-			XMLEvent event = reader.nextEvent();
-			if(event.isStartElement()) {
-				StartElement start = event.asStartElement();
-				Attribute ID = start.getAttributeByName(QName.valueOf("ID"));
-				if(ID != null) {
-					overwrite = false;
-					insertDatapoint(currentDatapoint);
-					while(activeData.size() > 0 && Long.valueOf(ID.getValue()) > activeData.get(0).getID()) {						
-						insertDatapoint(eventsFromData(activeData.get(0)));
-						activeData.remove(0);
-					}
-					if(activeData.size() > 0 && Long.valueOf(ID.getValue()) == activeData.get(0).getID()) {
-						insertDatapoint(eventsFromData(activeData.get(0)));
-						activeData.remove(0);
-						overwrite = true;
-					}
-					currentDatapoint = new ArrayList<>();
-				}
-			}
-			if(!overwrite) {
-				currentDatapoint.add(event);
-			}
-		}
-		if(activeData.size() > 0) {
-			for(T dataPoint : activeData) {
-				insertDatapoint(eventsFromData(dataPoint));
-			}
-			activeData = new ArrayList<>();
-		}
-		insertDatapoint(currentDatapoint);
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
-		writeIO();
-	}
-
-	private void insertDatapoint(List<XMLEvent> Datapoint) {
-		for(XMLEvent event : Datapoint) {
-			try {
-				writer.add(event);
-			} catch (XMLStreamException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void closeIO(){
+	protected void closeIO(){
 		try {
 			fileOut.delete();
 			writer.close();
@@ -200,7 +87,7 @@ public abstract class DataAccess<T extends ObjectData> {
 		nullifyIO();
 	}
 	
-	public void writeIO() {
+	protected void writeIO() {
 		try {
 			writer.flush();
 			writer.close();
@@ -216,7 +103,7 @@ public abstract class DataAccess<T extends ObjectData> {
 		}
 	}
 
-	public void initializeIO() {
+	protected void initializeIO() {
 		try {
 			fileIn = new File(filePath);
 			fileOut = new File("temp.xml");
@@ -231,7 +118,7 @@ public abstract class DataAccess<T extends ObjectData> {
 		correctPositionFound = false;
 	}
 
-	public void nullifyIO() {
+	protected void nullifyIO() {
 		fileIn = null;
 		fileOut = null;
 		XMLEventReader reader = null;
@@ -260,7 +147,17 @@ public abstract class DataAccess<T extends ObjectData> {
 		return eventFactory.createEndElement("", "", string);
 	}
 	
-	private List<XMLEvent> fieldToEvent(List<XMLEvent> events, XMLField field) throws Exception{
+	protected void insertDatapoint(List<XMLEvent> Datapoint) {
+		for(XMLEvent event : Datapoint) {
+			try {
+				writer.add(event);
+			} catch (XMLStreamException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	protected List<XMLEvent> fieldToEvent(List<XMLEvent> events, XMLField field) throws Exception{
 		switch(field.getValueType()){
 		case 0:
 			events.add(generateStart(field.getTagName()));

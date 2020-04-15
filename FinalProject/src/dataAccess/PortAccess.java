@@ -15,10 +15,10 @@ import objectsData.ClientData;
 import objectsData.Location;
 import objectsData.PortData;
 
-public class PortAccess extends EditableDataAccess<PortData> {
+public class PortAccess extends IdentifiedDataAccess<PortData> {
 	
 	public PortAccess() {
-		super("storage/activeData/ports.xml");
+		super("storage/activeData/ports.xml","Port","Ports");
 	}
 
 	@Override

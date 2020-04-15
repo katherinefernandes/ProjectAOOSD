@@ -5,13 +5,13 @@ import java.util.*;
 import org.junit.jupiter.api.AfterEach;
 
 import dataAccess.DataAccess;
-import dataAccess.EditableDataAccess;
+import dataAccess.IdentifiedDataAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ObjectData;
 
-public abstract class EditableDataAccessTest<T extends ObjectData, A extends EditableDataAccess<T>> extends DataAccessTest<T,A>{
-	public EditableDataAccessTest() {
+public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends IdentifiedDataAccess<T>> extends DataAccessTest<T,A>{
+	public IdentifiableDataAccessTest() {
 		super();
 	}
 	
