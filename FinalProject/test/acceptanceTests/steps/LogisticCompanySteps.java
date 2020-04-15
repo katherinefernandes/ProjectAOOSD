@@ -32,7 +32,7 @@ public class LogisticCompanySteps {
 			client = clientDatabase.getEntry(ID);
 		} catch (NumberFormatException | ElementNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("ID not found in the database");
+			e.printStackTrace();
 		}
 		assertEquals(ID,client.getID());
 	}
