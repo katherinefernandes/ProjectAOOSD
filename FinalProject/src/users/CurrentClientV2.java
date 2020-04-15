@@ -144,7 +144,7 @@ public class CurrentClientV2 extends User{
 			foundContainer  = true;
 			startPort.updateStationedContainers(containerID);
 			databasePort.editEntry(startPort);
-			
+			databasePort.flushActiveData();
 		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("either port or the container not found");
@@ -167,6 +167,7 @@ public class CurrentClientV2 extends User{
 			destinationPort = databasePort.getEntry(destinationPortID);
 			destinationPort.addArrivingContainer(containerID);
 			databasePort.editEntry(destinationPort);
+			databasePort.flushActiveData();
 			return true;
 		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
