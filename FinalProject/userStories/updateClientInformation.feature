@@ -23,7 +23,7 @@ Feature: Update the information of the client
  
  
  Scenario: Client can update its phone number
- 	Given that the client enters the ID 36836570081685 that exists in the memory
+	Given that the client enters the ID 36836570081685 that exists in the memory
 	When the client decides to update its phone number
 	And provides the new country code 45 which is of the valid length
 	And provides the new phone number 45670912 which is also of the valid length

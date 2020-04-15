@@ -6,21 +6,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import supportingClasses.parseInput;
 
 class ParseInputTest {
-	private parseInput parser;
+	private static parseInput parser;
 	
-	@Before
+	@BeforeEach
 	public void parseInputTest() {
 		parser = new parseInput();
 	}
 	
 	@Test
 	public void testParsingNames() {
-		assertSame(new ArrayList<String>(Arrays.asList("muna")).size(),parseInput.parsingNames("muna").size());
+		assertSame(new ArrayList<String>(Arrays.asList("muna")).size(),parser.parsingNames("muna").size());
 	}
 
 }

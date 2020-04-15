@@ -150,34 +150,7 @@ public class CurrentClientV2Steps {
 		clientmanager.updateClientInformation(firstName,middleName,lastName);
 		assertTrue("Should be true as the information has been changed",clientmanager.getUpdatedReferencePerson());
 	}
-	@When("the client chooses to view the information of a container registered for a journey")
-	public void theClientChoosesToViewTheInformationOfAContainerRegisteredForAJourney() {
-	    // Write code here that turns the phrase above into concrete actions
-		clientmanager.setviewedContainer();
-		assertFalse("Should be false as haven't viewed container yet",clientmanager.getViewedContainer());
-	}
-
-	@When("the container with the ID {long} exists in the database")
-	public void theContainerWithTheIDExistsInTheDatabase(long containerID) {
-	    // Write code here that turns the phrase above into concrete actions
-	    clientmanager.getContainerFromDataBase(containerID);
-	    assertTrue("container has been found thus viewed..",clientmanager.getViewedContainer());
-	}
-
-	@When("the client enters the journey ID {long} which matches the journey ID of the container")
-	public void theClientEntersTheJourneyIDWhichMatchesTheJourneyIDOfTheContainer(long journeyID) {
-	    // Write code here that turns the phrase above into concrete actions
-		assertTrue("The journey IDs should match",clientmanager.matchJourneyID(journeyID));
-	}
 	
-	
-	@Then("the current location of the container, description of the cargo:{string} will be displayed for the client.")
-	public void theCurrentLocationOfTheContainerDescriptionOfTheCargoWillBeDisplayedForTheClient(String cargo) {
-	    // Write code here that turns the phrase above into concrete actions
-		ContainerData container = clientmanager.viewContainer();
-		clientmanager.displayContainerData(container);
-		assertEquals(cargo,container.getCargo());
-	}
 
 
 }
