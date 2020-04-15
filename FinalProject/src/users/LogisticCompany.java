@@ -261,4 +261,9 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 		System.out.println("Arriving by: " + container.getArriveBy().format(formatter));
 		
 	}
+
+	public void addNewClient() {
+		// TODO Auto-generated method stub
+		
+	}
 }

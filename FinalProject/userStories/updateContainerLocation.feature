@@ -17,18 +17,12 @@
 ## (Comments)
 #Sample Feature Definition Template
 
-
-Feature: Register a new Client 
-  Description: Only the logistic company can register a new client
-
-  
-Scenario: Logistic Company registers a new client
-Given the logistic Company decides to add a new client
-When the client email is "email@some.come" 
-And the client name is "client"
-And the client phone number is 45 , 2345678 
-And the reference person is "Some" "random" "person"
-And the address is street: "23" house number: 23 city: "Albertslund" zipcode: "2345"
-Then a unique client ID is generated 
-
-
+Feature: Update Container Location
+ Description: The Logistic Company should be able to update the container location.
+ 
+#Scenario: Logistic Company can register a new location for the container
+#Given that the logistic company chooses to update the location
+#When the logistic company enters the container id 747868023659900
+#And the latitude 65.4
+#And the longitude 45.85
+#Then the location for the container is updated
