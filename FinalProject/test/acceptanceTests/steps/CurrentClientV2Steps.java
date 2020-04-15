@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import io.cucumber.java.en.Given;
@@ -23,6 +24,13 @@ public class CurrentClientV2Steps {
 	private ArrayList<String> firstName =new ArrayList<String>();
 	private ArrayList<String> middleName =new ArrayList<String>();
 	private ArrayList<String> lastName =new ArrayList<String>();
+	private long startPortID;
+	private long destinationPortID;
+	private String cargo;
+	private float temperature;
+	private float pressure;
+	private float humidity;
+	private LocalDateTime arriveBy;
 	
 	@Given("that the client enters the ID {long} that exists in the memory")
 	public void theIDItEnteredExistsInTheMemory(long ID) {
@@ -149,6 +157,58 @@ public class CurrentClientV2Steps {
 		// Write code here that turns the phrase above into concrete actions
 		clientmanager.updateClientInformation(firstName,middleName,lastName);
 		assertTrue("Should be true as the information has been changed",clientmanager.getUpdatedReferencePerson());
+	}
+	
+	@When("the client provides a port name {string} from where the journey will start")
+	public void theClientProvidesAPortNameFromWhereTheJourneyWillStart(String portname) {
+	    // Write code here that turns the phrase above into concrete actions
+	    startPortID = clientmanager.getPortID(portname);
+	    assertFalse(startPortID==1l);// the startPortID would be 1 if the portname is not valid
+	    clientmanager.setFoundContainer();
+	    assertFalse(clientmanager.getFoundContainer());
+	    clientmanager.getAContainer(startPortID);
+	    assertTrue(clientmanager.getFoundContainer());
+	}
+
+	@When("provides a destination port name {string}")
+	public void providesADestinationPortName(String portname) {
+	    // Write code here that turns the phrase above into concrete actions
+		destinationPortID = clientmanager.getPortID(portname);
+		assertFalse(startPortID==1l);// the startPortID would be 1 if the portname is not valid
+		clientmanager.updateDestinationPort(destinationPortID);
+	}
+
+	@When("provides the name of the cargo {string} being transported")
+	public void providesTheNameOfTheCargoBeingTransported(String cargo) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.cargo = cargo;
+	    assertTrue(validate.validateName(cargo));
+	}
+
+	@When("provides the optimal internal state for the cargo which is {float} temperature, {float} atm pressure and {float}% humidity")
+	public void providesTheOptimalInternalStateForTheCargoWhichIsTemperatureAtmPressureAndHumidity(float temperature, float pressure, float humidity) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.temperature= temperature;
+	    this.pressure= pressure;
+	    this.humidity = humidity;
+	    //idk how to test them
+	}
+
+	@When("provides the expected arrival date which is {string}")
+	public void providesTheExpectedArrivalDateWhichIs(String date) {
+	    // Write code here that turns the phrase above into concrete actions
+		//need a method to get a proper date..
+	    arriveBy = LocalDateTime.now();
+	}
+
+	@Then("a container is registered for the journey and the client is provided with a container ID to track the journey.")
+	public void aContainerIsRegisteredForTheJourneyAndTheClientIsProvidedWithAContainerIDToTrackTheJourney() {
+	    // Write code here that turns the phrase above into concrete actions
+		clientmanager.setContainerRegistered();
+		assertFalse(clientmanager.getContainerRegistered());
+	    clientmanager.registerContainer(startPortID,destinationPortID,cargo,temperature,pressure,humidity,arriveBy);
+	    assertTrue(clientmanager.getContainerRegistered());
+	
 	}
 	
 

@@ -203,4 +203,12 @@ public class ContainerData extends ObjectData {
 		XMLField[] array = {clientIDXML,journeyIDXML,startPortIDXML,destinationPortIDXML,positionXML,cargoXML,statusXML,updatedXML,arriveByXML};
 		xmlFields = Arrays.asList(array);
 	}
+	public void setCargo(String cargo) {
+		// TODO Auto-generated method stub
+		this.cargo=cargo;
+	}
+	public void setArriveBy(LocalDateTime arriveBy2) {
+		// TODO Auto-generated method stub
+		this.arriveBy=arriveBy2;
+	}
 }
