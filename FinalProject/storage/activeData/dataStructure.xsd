@@ -90,7 +90,7 @@
     			type="ContainerIDsType">
     		</xsd:element>
     	</xsd:sequence>
-    	<xsd:attribute name="PortID" type="IDType"></xsd:attribute>
+    	<xsd:attribute name="ID" type="IDType"></xsd:attribute>
     </xsd:complexType>
 
     <xsd:simpleType name="CountryType">

@@ -83,9 +83,20 @@ public class SimulatingData {
 		e.printStackTrace();
 	}*/
 	
-	
-	
-	
+	PortData port1 = new PortData(747867434574400l,"Pakistan","Gwadar",25.11f,62.33f);
+	PortData port2 = new PortData(747867452174100l,"Denmark","Copenhagen",55.70f,12.59f);
+	PortAccess portDataBase = new PortAccess();
+	port2.addStationedContainer(747868092327300l);
+	port2.addStationedContainer(747868090565000l);
+	port2.addStationedContainer(747868090793200l);
+	port2.addStationedContainer(747868092129700l);
+	port1.addStationedContainer(747868089277800l);
+	port1.addStationedContainer(747868023659900l);
+	port1.addStationedContainer(747868089097800l);
+	port1.addStationedContainer(747868089523200l);
+	portDataBase.newEntry(port2);
+	portDataBase.newEntry(port1);
+	portDataBase.flushActiveData();
 	
 	
 	}
