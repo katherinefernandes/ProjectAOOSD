@@ -26,7 +26,7 @@ public class ClientStuff {
 	private JTextField textField_3;
 	JButton updateReferencePersonButton,updateEmail,updateInfoClientButton;
 	JButton addJourneyButton,getArrivalDate,displayContainerDataButton;
-	JPanel panel,panel_1,UpdateInfoPanel,emailPanel;
+	JPanel Buttons1Pannel,panel_1,UpdateInfoPanel,emailPanel;
 
 	/**
 	 * Launch the application.
@@ -59,36 +59,34 @@ public class ClientStuff {
 		frame.getContentPane().setBackground(new Color(95, 158, 160));
 		frame.getContentPane().setLayout(null);
 		
-		panel = new JPanel();
-		panel.setBackground(new Color(102, 205, 170));
-		panel.setBounds(6, 6, 612, 46);
-		frame.getContentPane().add(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		Buttons1Pannel = new JPanel();
+		Buttons1Pannel.setBackground(new Color(102, 205, 170));
+		Buttons1Pannel.setBounds(6, 6, 612, 46);
+		frame.getContentPane().add(Buttons1Pannel);
+		Buttons1Pannel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		updateReferencePersonButton = new JButton("Reference Person");
-		panel.add(updateReferencePersonButton);
+		Buttons1Pannel.add(updateReferencePersonButton);
 		
 		updateEmail = new JButton("Change E-mail");
-		panel.add(updateEmail);
+		Buttons1Pannel.add(updateEmail);
 		
 		updateInfoClientButton = new JButton("Update Client Info");
-		panel.add(updateInfoClientButton);
+		Buttons1Pannel.add(updateInfoClientButton);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(102, 205, 170));
 		panel_1.setBounds(6, 110, 612, 361);
 		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
+		panel_1.setLayout(new CardLayout(0, 0));
 		
 		UpdateInfoPanel = new JPanel();
 		UpdateInfoPanel.setBackground(new Color(95, 158, 160));
-		UpdateInfoPanel.setBounds(6, 6, 600, 348);
-		panel_1.add(UpdateInfoPanel);
+		panel_1.add(UpdateInfoPanel, "name_3001052783642");
 		
 		emailPanel = new JPanel();
 		emailPanel.setBackground(new Color(95, 158, 160));
-		emailPanel.setBounds(6, 6, 600, 348);
-		panel_1.add(emailPanel);
+		panel_1.add(emailPanel, "name_3001081399461");
 		emailPanel.setLayout(null);
 		
 		JTextArea txtrCurrentEmail = new JTextArea();
@@ -120,8 +118,7 @@ public class ClientStuff {
 		emailPanel.add(btnNewButton_1);
 		
 		JPanel ReferencePersonPanel = new JPanel();
-		ReferencePersonPanel.setBounds(6, 5, 600, 349);
-		panel_1.add(ReferencePersonPanel);
+		panel_1.add(ReferencePersonPanel, "name_3001107253579");
 		ReferencePersonPanel.setBackground(new Color(95, 158, 160));
 		ReferencePersonPanel.setLayout(null);
 		
@@ -164,20 +161,20 @@ public class ClientStuff {
 		btnNewButton.setBounds(277, 179, 117, 29);
 		ReferencePersonPanel.add(btnNewButton);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(102, 205, 170));
-		panel_2.setBounds(6, 64, 612, 39);
-		frame.getContentPane().add(panel_2);
-		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel Buttons2Panel = new JPanel();
+		Buttons2Panel.setBackground(new Color(102, 205, 170));
+		Buttons2Panel.setBounds(6, 64, 612, 39);
+		frame.getContentPane().add(Buttons2Panel);
+		Buttons2Panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		addJourneyButton = new JButton("Add Journey");
-		panel_2.add(addJourneyButton);
+		Buttons2Panel.add(addJourneyButton);
 		
 		getArrivalDate = new JButton("Arrival Date");
-		panel_2.add(getArrivalDate);
+		Buttons2Panel.add(getArrivalDate);
 		
 		displayContainerDataButton = new JButton("Container Data");
-		panel_2.add(displayContainerDataButton);
+		Buttons2Panel.add(displayContainerDataButton);
 		frame.setBounds(100, 100, 624, 499);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setEventListeners();
@@ -191,12 +188,14 @@ public class ClientStuff {
 				
 				
 				if(updateReferencePersonButton.isEnabled()) {
+					updateReferencePersonButton.setEnabled(true);
 					emailPanel.setVisible(false);
 					UpdateInfoPanel.setVisible(true);
 				}
 					
 					
 				if(updateEmail.isEnabled()) {
+					updateEmail.setEnabled(true);
 					emailPanel.setVisible(true);
 					UpdateInfoPanel.setVisible(false);
 
