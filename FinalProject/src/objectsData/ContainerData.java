@@ -35,15 +35,39 @@ public class ContainerData extends ObjectData {
 	}
 	public void setClientID(long clientID) {
 		this.clientID=clientID;
+		int index = indexOfTagname(xmlFields, "ClientID");
+		try {
+			xmlFields.get(index).setValue(String.valueOf(clientID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public void setJourneyID(long journeyID) {
 		this.journeyID=journeyID;
+		int index = indexOfTagname(xmlFields, "JourneyID");
+		try {
+			xmlFields.get(index).setValue(String.valueOf(journeyID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public void setStartPortID(long portID) {
 		this.startPortID=portID;
+		int index = indexOfTagname(xmlFields, "StartPortID");
+		try {
+			xmlFields.get(index).setValue(String.valueOf(portID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public void setDestinationPortID(long portID) {
 		this.destinationPortID=portID;
+		int index = indexOfTagname(xmlFields, "DestinationPortID");
+		try {
+			xmlFields.get(index).setValue(String.valueOf(portID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	////
 	

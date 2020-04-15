@@ -218,7 +218,7 @@ public class Login_Window {
 	}
 
 	public void Login() { 
-		if(controller.Login(this) == false) {
+		if(controller.Login(clientMenuRdb.isSelected(),companyMenuRdb.isSelected(),IDtextField.getText(),usernameTextField.getText(),passwordField.getPassword()) == false) {
 			errorMessage.show(true);
 			errorMessage.setEnabled(true);
 			IDtextField.setText("");
@@ -230,8 +230,9 @@ public class Login_Window {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							newClientStuff window = new newClientStuff(controller);
+							newClientStuff window = new newClientStuff(controller,IDtextField.getText());
 							window.frame.setVisible(true);
+							frmLoginPage.setVisible(false);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -241,8 +242,8 @@ public class Login_Window {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							newClientStuff window = new newClientStuff(controller);
-							window.frame.setVisible(true);
+							//newClientStuff window = new newClientStuff(controller);
+							//window.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
