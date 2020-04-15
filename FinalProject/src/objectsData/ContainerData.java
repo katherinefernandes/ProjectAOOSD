@@ -218,7 +218,7 @@ public class ContainerData extends ObjectData {
 		this.arriveBy=arriveBy2;
 		int index = indexOfTagname(xmlFields, "ArriveBy");
 		try {
-			xmlFields.get(index).setValue(arriveBy2.toString());
+			xmlFields.get(index).setValue(arriveBy2.truncatedTo(ChronoUnit.SECONDS).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
