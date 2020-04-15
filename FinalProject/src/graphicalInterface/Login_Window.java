@@ -242,8 +242,8 @@ public class Login_Window {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							//newClientStuff window = new newClientStuff(controller);
-							//window.frame.setVisible(true);
+							LogisticsMenu logistics = new LogisticsMenu(controller);
+							logistics.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

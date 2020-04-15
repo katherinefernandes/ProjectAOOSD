@@ -49,6 +49,7 @@ public class newClientStuff {
 	private JTextField textField_14;
 	private JTextField textField_15;
 	private Controller controller;
+	private JButton LogOutButton;
 //	/**
 //	 * Launch the application.
 //	 */
@@ -147,6 +148,10 @@ public class newClientStuff {
 		});
 		btnNewButton_1.setBounds(55, 154, 196, 29);
 		ButtonPanel.add(btnNewButton_1);
+		
+		LogOutButton = new JButton("Log Out");
+		LogOutButton.setBounds(55, 311, 186, 29);
+		ButtonPanel.add(LogOutButton);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
