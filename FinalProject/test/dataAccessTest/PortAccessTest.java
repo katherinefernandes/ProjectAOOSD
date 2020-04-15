@@ -12,7 +12,7 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.PortData;
 
-public class PortAccessTest extends EditableDataAccessTest<PortData,PortAccess>{
+public class PortAccessTest extends IdentifiableDataAccessTest<PortData,PortAccess>{
 
 	public PortAccessTest(){
 		super();

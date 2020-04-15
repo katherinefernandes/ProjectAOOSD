@@ -14,7 +14,7 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 
-public class ContainerAccessTest extends EditableDataAccessTest<ContainerData,ContainerAccess>{
+public class ContainerAccessTest extends IdentifiableDataAccessTest<ContainerData,ContainerAccess>{
 
 	public ContainerAccessTest() {
 		super();

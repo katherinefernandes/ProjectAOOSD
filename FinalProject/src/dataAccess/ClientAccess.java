@@ -13,11 +13,9 @@ import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 
 
-public class ClientAccess extends EditableDataAccess<ClientData> {
-	
-	
+public class ClientAccess extends IdentifiedDataAccess<ClientData> {
 	public ClientAccess() {
-		super("storage/activeData/clients.xml");
+		super("storage/activeData/clients.xml", "Client","Clients");
 	}
 	
 	@Override

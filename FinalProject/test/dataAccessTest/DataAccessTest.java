@@ -29,15 +29,7 @@ public abstract class DataAccessTest<T extends ObjectData, A extends DataAccess<
 		
 	}
 	
-	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
-		insertData(data1);
-		
-		dataAccess.flushActiveData();
-	
-		T pulledData = dataAccess.searchEntries(String.valueOf(data1.getID())).get(0);
-		
-		assertEqualData(pulledData,data1);
-	}
+	public abstract void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException;
 	
 	public void insertData(T data) throws AmbiguousElementSelectionException {
 		toBeDeleted.add(data.getID());
