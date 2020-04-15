@@ -49,6 +49,7 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 		initializeIO();
 		try {
 		Attribute IDattribute = null;
+		long currentID = 0L;
 		while(reader.hasNext()) {
 			XMLEvent event = reader.nextEvent();
 			if(event.isStartElement()) {
@@ -56,7 +57,7 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 				IDattribute = start.getAttributeByName(QName.valueOf("ID"));
 				if(IDattribute != null) {
 					if(correctPositionFound) {
-						matchingEntries.add(dataOfEvents(currentDatapoint,Long.valueOf(IDattribute.getValue())));
+						matchingEntries.add(dataOfEvents(currentDatapoint,currentID));
 					}
 					if(!String.valueOf(IDattribute.getValue()).contains(searchWord)) {
 						correctPositionFound = false;
@@ -65,6 +66,7 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 						correctPositionFound = true;
 					}
 					currentDatapoint = new ArrayList<>();
+					currentID = Long.valueOf(IDattribute.getValue());
 				}
 			}
 			if(event.isCharacters()) {
@@ -76,7 +78,7 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 			currentDatapoint.add(event);
 		}
 		if(correctPositionFound) {
-			matchingEntries.add(dataOfEvents(currentDatapoint,Long.valueOf(IDattribute.getValue())));
+			matchingEntries.add(dataOfEvents(currentDatapoint,currentID));
 		}
 		} catch (XMLStreamException e) {
 			closeIO();
