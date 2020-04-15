@@ -29,9 +29,9 @@ public class newClientStuff {
 	JLayeredPane layeredPane;
 	private JTextArea txtrName;
 	private JTextArea txtrLastName;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField firstnametext;
+	private JTextField middlenametext;
+	private JTextField lastnametext;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JPanel PhonePanel;
@@ -183,22 +183,29 @@ public class newClientStuff {
 		txtrLastName.setBounds(76, 182, 99, 16);
 		referencePanel.add(txtrLastName);
 		
-		textField = new JTextField();
-		textField.setBounds(245, 86, 180, 26);
-		referencePanel.add(textField);
-		textField.setColumns(10);
+		firstnametext = new JTextField();
+		firstnametext.setBounds(245, 86, 180, 26);
+		referencePanel.add(firstnametext);
+		firstnametext.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(245, 134, 180, 26);
-		referencePanel.add(textField_1);
-		textField_1.setColumns(10);
+		middlenametext = new JTextField();
+		middlenametext.setBounds(245, 134, 180, 26);
+		referencePanel.add(middlenametext);
+		middlenametext.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(245, 179, 180, 26);
-		referencePanel.add(textField_2);
-		textField_2.setColumns(10);
+		lastnametext = new JTextField();
+		lastnametext.setBounds(245, 179, 180, 26);
+		referencePanel.add(lastnametext);
+		lastnametext.setColumns(10);
 		
 		JButton Save1 = new JButton("Save");
+		Save1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveReferencePerson();
+				switchPanels(referencePanel);
+				
+			}
+		});
 		Save1.setBounds(308, 244, 117, 29);
 		referencePanel.add(Save1);
 		
@@ -422,6 +429,10 @@ public class newClientStuff {
 		textField_15.setBounds(206, 82, 199, 26);
 		DataPanel.add(textField_15);
 		textField_15.setColumns(10);
+		
+		JButton Enterbutton = new JButton("Enter");
+		Enterbutton.setBounds(288, 120, 117, 29);
+		DataPanel.add(Enterbutton);
 	}
 	
 	public void switchPanels(JPanel panel) {
