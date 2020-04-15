@@ -3,6 +3,7 @@ package users;
 
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
+import dataAccess.PortAccess;
 import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -14,6 +15,7 @@ public abstract class User {
 	protected ContainerData container;
 	protected ClientAccess databaseClient;
 	protected ContainerAccess databaseContainer;
+	protected PortAccess databasePort;
 	protected boolean display;
 	protected CurrentClientInput input = new CurrentClientInput();
 	protected Security ssecurity = new Security();
