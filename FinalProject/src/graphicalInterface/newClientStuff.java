@@ -10,6 +10,9 @@ import java.awt.CardLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 import javax.swing.text.LayeredHighlighter;
+
+import logic.Controller;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -43,32 +46,38 @@ public class newClientStuff {
 	private JTextField textField_13;
 	private JTextField textField_14;
 	private JTextField textField_15;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					newClientStuff window = new newClientStuff();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public newClientStuff() {
+	private Controller controller;
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					newClientStuff window = new newClientStuff();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+//
+//	/**
+//	 * Create the application.
+//	 */
+//	public newClientStuff() {
+//		initialize();
+//	}
+//
+//	/**
+//	 * Initialize the contents of the frame.
+//	 */
+	
+	public newClientStuff(Controller controller) {
+		this.controller = controller;
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 874, 500);
