@@ -23,6 +23,8 @@ import javax.swing.JRadioButton;
 
 public class newClientStuff {
 
+	private long clientID;
+	
 	public JFrame frame;
 	JButton emailButton,AddJourneyButton,ArrivalButton,ReferencepersonButton,ContainerButton;
 	JPanel ButtonPanel,panel_1,referencePanel,emailPanel,JourneyPanel,ArrivalPanel,DataPanel;
@@ -74,11 +76,13 @@ public class newClientStuff {
 //	 * Initialize the contents of the frame.
 //	 */
 	
-	public newClientStuff(Controller controller) {
+	public newClientStuff(Controller controller, String clientID) {
 		this.controller = controller;
+		this.clientID = Long.valueOf(clientID);
 		initialize();
 	}
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 874, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -201,9 +205,10 @@ public class newClientStuff {
 		JButton Save1 = new JButton("Save");
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveReferencePerson();
-				switchPanels(referencePanel);
-				
+				controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText(),clientID);
+				firstnametext.setText("");
+				middlenametext.setText("");
+				lastnametext.setText("");
 			}
 		});
 		Save1.setBounds(308, 244, 117, 29);
