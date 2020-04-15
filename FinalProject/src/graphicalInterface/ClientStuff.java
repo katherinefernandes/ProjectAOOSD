@@ -185,40 +185,46 @@ public class ClientStuff {
 	
 	
 	public void setEventListeners() {
+
 		updateReferencePersonButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(ChangeEvent e) {
 				
 				
-				if(updateReferencePersonButton.isSelected()) {
+				if(updateReferencePersonButton.isEnabled()) {
 					emailPanel.setVisible(false);
 					UpdateInfoPanel.setVisible(true);
 				}
 					
 					
-				else {
-					emailPanel.setVisible(false);
+				if(updateEmail.isEnabled()) {
+					emailPanel.setVisible(true);
 					UpdateInfoPanel.setVisible(false);
 
 				
 					
 				}
- 			}
-		}); 
-		
-		
-		updateEmail.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(ChangeEvent e) {
-				if(updateEmail.isSelected()) {
-					UpdateInfoPanel.setVisible(false);
-					emailPanel.setVisible(true);
-					
-				} else {
+				else {
 					UpdateInfoPanel.setVisible(false);
 					emailPanel.setVisible(false);
-					
+	
 				}
  			}
 		}); 
+		
+		
+//		updateEmail.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(ChangeEvent e) {
+//				if(updateEmail.isEnabled()) {
+//					UpdateInfoPanel.setVisible(false);
+//					emailPanel.setVisible(true);
+//					
+//				} else {
+//					UpdateInfoPanel.setVisible(false);
+//					emailPanel.setVisible(false);
+//					
+//				}
+// 			}
+//		}); 
 		
 }
 }
