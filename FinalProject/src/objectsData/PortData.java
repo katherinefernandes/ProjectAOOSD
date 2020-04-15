@@ -66,4 +66,9 @@ public class PortData extends ObjectData{
 			e.printStackTrace();
 		}
 	}
+	public void updateStationedContainers(long containerID) {
+		// TODO Auto-generated method stub
+		this.stationedContainers.remove(containerID);
+		
+	}
 }

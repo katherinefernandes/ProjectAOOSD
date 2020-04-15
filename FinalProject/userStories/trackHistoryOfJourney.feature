@@ -29,11 +29,10 @@ Feature: Track the history of the Journey
 	#Then the internal status of the container is updated and the changes are displayed to the company
 	
 	#Scenario: The client should be able to view the internal status of the container
-	#Given that the client enters the ID 521601819167600 that exists in the memory
+	#Given that the client enters the ID 1736101972072900 that exists in the memory
 	#When the client chooses to view the internal status of a container which is on a journey
-	#And the container with the ID 36941951964596 exists in the database
-  #And the client enters the journey ID 36941951970869 which matches the journey ID of the container
-  #Then the client can view the internal status of the container.
+	#And the container with the ID 768780574981500 exists in the database
+ 	#Then the client can view the internal status of the container.
 
 
 

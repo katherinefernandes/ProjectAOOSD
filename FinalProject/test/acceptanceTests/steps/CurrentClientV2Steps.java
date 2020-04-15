@@ -8,10 +8,11 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import dataAccess.ContainerAccess;
+import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import objectsData.ContainerData;
 import supportingClasses.ValidInput;
 import users.CurrentClientV2;
 
@@ -208,7 +209,24 @@ public class CurrentClientV2Steps {
 		assertFalse(clientmanager.getContainerRegistered());
 	    clientmanager.registerContainer(startPortID,destinationPortID,cargo,temperature,pressure,humidity,arriveBy);
 	    assertTrue(clientmanager.getContainerRegistered());
-	
+	    
+	}
+	@When("the client chooses to view the internal status of a container which is on a journey")
+	public void theClientChoosesToViewTheInternalStatusOfAContainerWhichIsOnAJourney() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new cucumber.api.PendingException();
+	}
+
+	@When("the container with the ID {int} exists in the database")
+	public void theContainerWithTheIDExistsInTheDatabase(Integer int1) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new cucumber.api.PendingException();
+	}
+
+	@Then("the client can view the internal status of the container.")
+	public void theClientCanViewTheInternalStatusOfTheContainer() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new cucumber.api.PendingException();
 	}
 	
 

@@ -27,7 +27,7 @@ public class ContainerData extends ObjectData {
 		this.startPortID=portID;
 		this.destinationPortID=portID;
 		this.currentPosition= new Location(latitude,longitude);
-		this.cargo="";
+		this.cargo="none";
 		this.status=new InternalState(1f,35f,75f);
 		this.updated=LocalDateTime.now(); 
 		this.arriveBy=LocalDateTime.now(); 

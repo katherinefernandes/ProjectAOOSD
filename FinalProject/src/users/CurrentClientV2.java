@@ -7,7 +7,6 @@ import java.util.List;
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import dataAccess.PortAccess;
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 import objectsData.PortData;
@@ -33,9 +32,10 @@ public class CurrentClientV2 extends User{
 			clientIsSet = true;
 		} catch (NumberFormatException | ElementNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Element not found");
+			System.out.println("client is not found");
 			clientIsSet = false;
 			//e.printStackTrace();
+		
 		}
 		this.display=false;
 	}
@@ -127,8 +127,6 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method 
 		List<PortData> listOfPorts = databasePort.searchEntries(portname);
 		if (listOfPorts.size()>0) {
-			System.out.println(listOfPorts.get(0).getPortName());
-			System.out.println(listOfPorts.get(0).getID());
 			return listOfPorts.get(0).getID();
 		} 
 		else {
@@ -141,10 +139,10 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method stub
 		try {
 			startPort = databasePort.getEntry(startPortID);
-			containerID = startPort.getStationedContainers().remove(0);
-			System.out.println(containerID);
+			containerID = startPort.getStationedContainers().get(0);
 			container = databaseContainer.getEntry(containerID);
 			foundContainer  = true;
+			startPort.updateStationedContainers(containerID);
 			databasePort.editEntry(startPort);
 			
 		} catch (ElementNotFoundException e) {
@@ -187,8 +185,9 @@ public class CurrentClientV2 extends User{
 		container.setStatus(pressure, temperature, humidity);
 		container.setArriveBy(arriveBy);
 		databaseContainer.editEntry(container);
-		this.containerRegistered=true;
 		databaseContainer.flushActiveData();
+		System.out.println("container edited: "+container.getID());
+		this.containerRegistered=true;//only in the active data.. not in xml
 		
 	}
 
