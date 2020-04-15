@@ -11,6 +11,7 @@ import objectsData.ContainerData;
 
 public class ContainerDataTest {
 	private ContainerData objectTest;
+	private ContainerData objectTest2;
 	private long cid =78l;
 	private long clid=87l;
 	private long jid=74l;
@@ -29,7 +30,7 @@ public class ContainerDataTest {
 	public void testContainerData() {
 		
 		objectTest = new ContainerData( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, arriveby);
-	 
+		objectTest2 = new ContainerData(cid,spid, lat, lon);
 		
 	}
 	
@@ -74,21 +75,36 @@ public class ContainerDataTest {
 	@Test
 	public void testGetJourneyID() {
 		assertEquals(jid,objectTest.getJourneyID());
+		assertEquals(0l,objectTest2.getJourneyID());
+		objectTest2.setJourneyID(jid);
+		assertEquals(jid,objectTest2.getJourneyID());
 	}
 
 	@Test
 	public void testGetClientID() {
 		assertEquals(clid,objectTest.getClientID());
+		assertEquals(0l,objectTest2.getClientID());
+		objectTest2.setClientID(clid);
+		assertEquals(clid,objectTest2.getClientID());
 	}
 
 	@Test
 	public void testGetDestinationPortID() {
 		assertEquals(dpid,objectTest.getDestinationPortID());
+		assertEquals(spid,objectTest2.getDestinationPortID());
+		objectTest2.setDestinationPortID(dpid);
+		assertEquals(dpid,objectTest2.getDestinationPortID());
 	}
 
 	@Test
 	public void testGetStartPortID() {
 		assertEquals(spid,objectTest.getStartPortID());
+		assertEquals(spid,objectTest2.getStartPortID());
+		objectTest2.setStartPortID(dpid);
+		assertEquals(dpid,objectTest2.getStartPortID());
+		
 	}
+	
+	
 
 }

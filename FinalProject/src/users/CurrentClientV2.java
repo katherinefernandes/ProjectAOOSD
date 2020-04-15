@@ -113,38 +113,6 @@ public class CurrentClientV2 extends User{
 		
 	}
 
-	public void setviewedContainer() {
-		// TODO Auto-generated method stub
-		this.viewedContainer = false;
-	}
-
-	public boolean getViewedContainer() {
-		// TODO Auto-generated method stub
-		return this.viewedContainer;
-	}
-
-	public void getContainerFromDataBase(long containerID) {
-		// TODO Auto-generated method stub
-		databaseContainer = new ContainerAccess();
-		try {
-			this.container = this.databaseContainer.getEntry(containerID);
-			this.viewedContainer = true;
-		} catch (NumberFormatException | ElementNotFoundException e ) {
-			// TODO Auto-generated catch block
-			System.out.println("Container ID is invalid");
-			throw new Error(e);
-		}
-	}
-
-	public boolean matchJourneyID(long journeyID) {
-		// TODO Auto-generated method stub
-		return (container.getJourneyID()==journeyID);
-	}
-
-	public ContainerData viewContainer() {
-		// TODO Auto-generated method stub
-		return this.container;
-	}
 	
 
 }

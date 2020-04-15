@@ -17,7 +17,37 @@ public class ContainerData extends ObjectData {
 	private InternalState status;
 	private LocalDateTime updated;
 	private LocalDateTime arriveBy;
+	// new codeeee
+	//overloaded constructor
+	public ContainerData(long containerID, long portID, float latitude, float longitude) {
+		this.tagName = "Container";
+		this.containerID=containerID;
+		this.clientID=0l;
+		this.journeyID=0l;
+		this.startPortID=portID;
+		this.destinationPortID=portID;
+		this.currentPosition= new Location(latitude,longitude);
+		this.cargo="";
+		this.status=new InternalState(1f,35f,75f);
+		this.updated=LocalDateTime.now(); 
+		this.arriveBy=LocalDateTime.now(); 
+		setXMLFields();
+	}
+	public void setClientID(long clientID) {
+		this.clientID=clientID;
+	}
+	public void setJourneyID(long journeyID) {
+		this.journeyID=journeyID;
+	}
+	public void setStartPortID(long portID) {
+		this.startPortID=portID;
+	}
+	public void setDestinationPortID(long portID) {
+		this.destinationPortID=portID;
+	}
+	////
 	
+
 	public ContainerData(long containerID, long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime arriveBy) {
 		this.tagName = "Container";
 		this.containerID=containerID;

@@ -2,7 +2,7 @@
 <xsd:schema elementFormDefault="qualified" targetNamespace="urn:Schema-Namespace" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:Schema-Namespace">
 
     <xsd:complexType name="ClientType">
-    	<xsd:sequence>
+    	<xsd:sequence>
     		<xsd:element name="CompanyName" type="CompanyNameType"></xsd:element>
     		<xsd:element name="PhoneNumber" type="PhoneNrType"></xsd:element>
     		<xsd:element name="Email" type="EmailType"></xsd:element>
@@ -58,18 +58,18 @@
     </xsd:complexType>
 
     <xsd:complexType name="ContainerType">
-    	<xsd:sequence>
+    	<xsd:sequence>
     		<xsd:element name="ClientID" type="IDType"></xsd:element>
     		<xsd:element name="JourneyID" type="IDType"></xsd:element>
     		<xsd:element name="StartPortID" type="IDType"></xsd:element>
-    		<xsd:element name="DestionationPortID" type="IDType"></xsd:element>
+    		<xsd:element name="DestinationPortID" type="IDType"></xsd:element>
     		<xsd:element name="CurrentPosition" type="PositionType"></xsd:element>
     		<xsd:element name="Cargo" type="CargoType"></xsd:element>
     		<xsd:element name="InternalState"
     			type="InternalStateType">
     		</xsd:element>
-    		<xsd:element name="Updated" type="xsd:dateTime"></xsd:element>
-    		<xsd:element name="ArriveBy" type="xsd:dateTime"></xsd:element>
+    		<xsd:element name="Updated" type="xsd:string"></xsd:element>
+    		<xsd:element name="ArriveBy" type="xsd:string"></xsd:element>
     	</xsd:sequence>
     	<xsd:attribute name="ID" type="IDType"></xsd:attribute>
     </xsd:complexType>
@@ -79,7 +79,7 @@
     </xsd:simpleType>
 
     <xsd:complexType name="PortType">
-    	<xsd:sequence>
+    	<xsd:sequence>
     		<xsd:element name="Country" type="CountryType"></xsd:element>
     		<xsd:element name="PortName" type="PortNameType"></xsd:element>
     		<xsd:element name="Position" type="PositionType"></xsd:element>
@@ -90,7 +90,7 @@
     			type="ContainerIDsType">
     		</xsd:element>
     	</xsd:sequence>
-    	<xsd:attribute name="PortID" type="IDType"></xsd:attribute>
+    	<xsd:attribute name="ID" type="IDType"></xsd:attribute>
     </xsd:complexType>
 
     <xsd:simpleType name="CountryType">
@@ -138,7 +138,7 @@
 
     <xsd:complexType name="DataPointType">
     	<xsd:sequence>
-    		<xsd:element name="TimeStamp" type="xsd:long"></xsd:element>
+    		<xsd:element name="TimeStamp" type="xsd:string"></xsd:element>
     		<xsd:element name="ContainerID" type="IDType"></xsd:element>
     		<xsd:element name="JourneyID" type="IDType"></xsd:element>
     		<xsd:element name="ClientID" type="IDType"></xsd:element>
