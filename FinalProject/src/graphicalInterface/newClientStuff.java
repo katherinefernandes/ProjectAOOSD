@@ -23,7 +23,7 @@ import javax.swing.JRadioButton;
 
 public class newClientStuff {
 
-	private JFrame frame;
+	public JFrame frame;
 	JButton emailButton,AddJourneyButton,ArrivalButton,ReferencepersonButton,ContainerButton;
 	JPanel ButtonPanel,panel_1,referencePanel,emailPanel,JourneyPanel,ArrivalPanel,DataPanel;
 	JLayeredPane layeredPane;
