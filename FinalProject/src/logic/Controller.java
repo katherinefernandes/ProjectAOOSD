@@ -33,4 +33,9 @@ public class Controller {
 		} else
 			return false;
 	}
+
+	public void saveReferencePerson() {
+		// TODO Auto-generated method stub
+		
+	}
 }

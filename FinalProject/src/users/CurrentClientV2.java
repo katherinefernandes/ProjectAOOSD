@@ -35,6 +35,7 @@ public class CurrentClientV2 extends User{
 			// TODO Auto-generated catch block
 			System.out.println("Element not found");
 			clientIsSet = false;
+			//e.printStackTrace();
 		}
 		this.display=false;
 	}
@@ -141,6 +142,7 @@ public class CurrentClientV2 extends User{
 		try {
 			startPort = databasePort.getEntry(startPortID);
 			containerID = startPort.getStationedContainers().remove(0);
+			System.out.println(containerID);
 			container = databaseContainer.getEntry(containerID);
 			foundContainer  = true;
 			databasePort.editEntry(startPort);
