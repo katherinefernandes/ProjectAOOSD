@@ -69,6 +69,16 @@ public class PortData extends ObjectData{
 	public void updateStationedContainers(long containerID) {
 		// TODO Auto-generated method stub
 		this.stationedContainers.remove(containerID);
-		
+		List<String> values = new ArrayList<>();
+		for(long container : stationedContainers) {
+			values.add(String.valueOf(container));
+		}
+		int index = indexOfTagname(xmlFields,"StationedContainers");
+		try {
+			xmlFields.get(index).setValues(values, "ContainerID");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -206,9 +206,21 @@ public class ContainerData extends ObjectData {
 	public void setCargo(String cargo) {
 		// TODO Auto-generated method stub
 		this.cargo=cargo;
+		int index = indexOfTagname(xmlFields, "Cargo");
+		try {
+			xmlFields.get(index).setValue(String.valueOf(cargo));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public void setArriveBy(LocalDateTime arriveBy2) {
 		// TODO Auto-generated method stub
 		this.arriveBy=arriveBy2;
+		int index = indexOfTagname(xmlFields, "ArriveBy");
+		try {
+			xmlFields.get(index).setValue(arriveBy2.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
