@@ -23,6 +23,8 @@ public class CurrentClientV2Steps {
 	private ArrayList<String> firstName =new ArrayList<String>();
 	private ArrayList<String> middleName =new ArrayList<String>();
 	private ArrayList<String> lastName =new ArrayList<String>();
+	private long startPortID;
+	private long destinationPortID;
 	
 	@Given("that the client enters the ID {long} that exists in the memory")
 	public void theIDItEnteredExistsInTheMemory(long ID) {
@@ -149,6 +151,42 @@ public class CurrentClientV2Steps {
 		// Write code here that turns the phrase above into concrete actions
 		clientmanager.updateClientInformation(firstName,middleName,lastName);
 		assertTrue("Should be true as the information has been changed",clientmanager.getUpdatedReferencePerson());
+	}
+	
+	@When("the client provides a port name {string} from where the journey will start")
+	public void theClientProvidesAPortNameFromWhereTheJourneyWillStart(String portname) {
+	    // Write code here that turns the phrase above into concrete actions
+	    startPortID = clientmanager.getPortID(portname);
+	}
+
+	@When("provides a destination port name {string}")
+	public void providesADestinationPortName(String portname) {
+	    // Write code here that turns the phrase above into concrete actions
+		destinationPortID = clientmanager.getPortID(portname);
+	}
+
+	@When("provides the name of the cargo {string} being transported")
+	public void providesTheNameOfTheCargoBeingTransported(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new cucumber.api.PendingException();
+	}
+
+	@When("provides the optimal internal state for the cargo which is {double} temperature, {double} atm pressure and {double}% humidity")
+	public void providesTheOptimalInternalStateForTheCargoWhichIsTemperatureAtmPressureAndHumidity(Double double1, Double double2, Double double3) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new cucumber.api.PendingException();
+	}
+
+	@When("provides the expected arrival date which is {string}")
+	public void providesTheExpectedArrivalDateWhichIs(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new cucumber.api.PendingException();
+	}
+
+	@Then("a container is registered for the journey and the client is provided with a container ID to track the journey.")
+	public void aContainerIsRegisteredForTheJourneyAndTheClientIsProvidedWithAContainerIDToTrackTheJourney() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new cucumber.api.PendingException();
 	}
 	
 

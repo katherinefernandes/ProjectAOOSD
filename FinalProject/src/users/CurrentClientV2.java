@@ -1,24 +1,27 @@
 package users;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
+import dataAccess.PortAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
+import objectsData.PortData;
 
 public class CurrentClientV2 extends User{
 	private boolean clientIsSet;
 	private boolean updatedPhone;
 	private boolean updatedEmail;
 	private boolean updatedReferencePerson;
-	private boolean viewedContainer;
 	
 
 	public CurrentClientV2(long ID) {
 		// TODO Auto-generated constructor stub
 		databaseClient = new ClientAccess();
+		databasePort = new PortAccess();
 		try {
 			client = databaseClient.getEntry(ID);
 			clientIsSet = true;
@@ -110,6 +113,20 @@ public class CurrentClientV2 extends User{
 		this.client.setPerson(firstName, middleName, lastName);
 		databaseClient.editEntry(client);
 		this.updatedReferencePerson=true;
+		
+	}
+
+	public long getPortID(String portname) {
+		// TODO Auto-generated method 
+		List<PortData> listOfPorts = databasePort.searchEntries(portname);
+		if (listOfPorts.size()>0) {
+			System.out.println(listOfPorts.get(0).getPortName());
+			System.out.println(listOfPorts.get(0).getID());
+			return listOfPorts.get(0).getID();
+		} 
+		else {
+			return 1l;
+		}
 		
 	}
 
