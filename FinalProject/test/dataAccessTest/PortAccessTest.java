@@ -18,19 +18,19 @@ public class PortAccessTest extends IdentifiableDataAccessTest<PortData,PortAcce
 		super();
 		dataAccess = new PortAccess();
 		
-		data1 = new PortData(92198289L, "Denmark", "Nordhavn", 55F, 64.2F);
+		data1 = new PortData(4223372036854775807L, "Denmark", "Nordhavn", 55F, 64.2F);
 		data1.addArrivingContainer(871872L);
 		data1.addStationedContainer(18247182L);
 		
 		data2 = new PortData(73827291L, "China", "Bejing main port", 100.F,43.2F);
 		data2.addStationedContainer(298392831L);
 		
-		data1_v2 = new PortData(92198289L, "Denmark", "Nordhavn", 55F, 64.2F);
+		data1_v2 = new PortData(4223372036854775807L, "Denmark", "Nordhavn", 55F, 64.2F);
 		
 		data1_v2.addStationedContainer(871872L);
 		
 		for(int i = 0; i < 20; i++) {
-			long ID = random.nextLong();
+			long ID = Math.abs(random.nextLong());
 			PortData newPort = new PortData(ID,"a","a",1F,1F);
 			for(int j = 0; j < random.nextInt(6); j++) {
 				if(random.nextBoolean()) {

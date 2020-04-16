@@ -179,8 +179,8 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 			}
 		}
 		if(correctPositionFound) { //If this was true then the last element was deleted as well as end tag
-			writer.add(eventFactory.createEndElement("", "", collectionsName));
-			writer.add(eventFactory.createEndDocument());
+			writer.add((XMLEvent) eventFactory.createEndElement("", "", collectionsName));
+			writer.add((XMLEvent) eventFactory.createEndDocument());
 		}
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
@@ -194,6 +194,7 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 		
 		try {
 		boolean overwrite = false;
+		currentDatapoint = new ArrayList<>();
 		writer.add(reader.nextEvent());
 		writer.add(reader.nextEvent());
 		while(reader.hasNext()) {
@@ -227,8 +228,8 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 			activeData = new ArrayList<>();
 		}
 		if(overwrite) {
-			currentDatapoint.add(eventFactory.createEndElement("", "", collectionsName));
-			currentDatapoint.add(eventFactory.createEndDocument());
+			currentDatapoint.add((XMLEvent) eventFactory.createEndElement("", "", collectionsName));
+			currentDatapoint.add((XMLEvent) eventFactory.createEndDocument());
 		}
 		insertDatapoint(currentDatapoint);
 		

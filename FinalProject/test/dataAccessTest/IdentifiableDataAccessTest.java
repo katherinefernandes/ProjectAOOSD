@@ -16,7 +16,11 @@ public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends
 	}
 	
 	public void editTest() throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
+		for(T data : sortTestData) {
+			insertData(data);
+		}
 		insertData(data1);
+		dataAccess.flushActiveData();
 		dataAccess.editEntry(data1_v2);
 		dataAccess.flushActiveData();
 		T pulledData = dataAccess.getEntry(getDataID(data1));
