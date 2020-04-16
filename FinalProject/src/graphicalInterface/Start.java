@@ -7,6 +7,7 @@ public class Start {
 		Controller controller = new Controller();
 		Login_Window window = new Login_Window(controller);
 		window.frmLoginPage.setVisible(true);
+		
 	}
 
 }

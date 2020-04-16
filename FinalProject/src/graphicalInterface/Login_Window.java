@@ -51,36 +51,36 @@ public class Login_Window {
 	private void initialize() {
 		frmLoginPage = new JFrame();
 		frmLoginPage.setResizable(false);
-		frmLoginPage.getContentPane().setBackground(new Color(102, 205, 170));
+		frmLoginPage.getContentPane().setBackground(new Color(95, 158, 160));
 		frmLoginPage.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(6, 6, 438, 35);
-		panel.setBackground(new Color(102, 205, 170));
+		panel.setBackground(new Color(95, 158, 160));
 		frmLoginPage.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		clientMenuRdb = new JRadioButton("Client Menu");
 		
-		clientMenuRdb.setBackground(new Color(102, 205, 170));
+		clientMenuRdb.setBackground(new Color(95, 158, 160));
 		clientMenuRdb.setBounds(0, 0, 219, 35);
 		clientMenuRdb.setSelected(true);
 		panel.add(clientMenuRdb);
 
 		companyMenuRdb = new JRadioButton("Company Menu");
-		companyMenuRdb.setBackground(new Color(102, 205, 170));
+		companyMenuRdb.setBackground(new Color(95, 158, 160));
 		companyMenuRdb.setBounds(219, 0, 219, 35);
 		panel.add(companyMenuRdb);
 
 	    companyPanel = new JPanel();
 		companyPanel.setBounds(6, 53, 438, 102);
-		companyPanel.setBackground(new Color(102, 205, 170));
+		companyPanel.setBackground(new Color(95, 158, 160));
 		frmLoginPage.getContentPane().add(companyPanel);
 		companyPanel.setLayout(null);
 
 		JTextArea txtrEnterCompanyUsername = new JTextArea();
 		txtrEnterCompanyUsername.setBounds(30, 29, 40, 16);
-		txtrEnterCompanyUsername.setBackground(new Color(102, 205, 170));
+		txtrEnterCompanyUsername.setBackground(new Color(95, 158, 160));
 		txtrEnterCompanyUsername.setText("LogIn:");
 		companyPanel.add(txtrEnterCompanyUsername);
 
@@ -95,7 +95,7 @@ public class Login_Window {
 
 		JTextArea txtrPassword = new JTextArea();
 		txtrPassword.setBounds(10, 71, 60, 16);
-		txtrPassword.setBackground(new Color(102, 205, 170));
+		txtrPassword.setBackground(new Color(95, 158, 160));
 		txtrPassword.setText("Password");
 		companyPanel.add(txtrPassword);
 		companyPanel.setVisible(false);
@@ -105,7 +105,7 @@ public class Login_Window {
 
 		
 		
-		clientPanel.setBackground(new Color(102, 205, 170));
+		clientPanel.setBackground(new Color(95, 158, 160));
 		frmLoginPage.getContentPane().add(clientPanel);
 		SpringLayout sl_clientPanel = new SpringLayout();
 		clientPanel.setLayout(sl_clientPanel);
@@ -113,7 +113,7 @@ public class Login_Window {
 		JTextPane txtpnEnterValidClient = new JTextPane();
 		sl_clientPanel.putConstraint(SpringLayout.WEST, txtpnEnterValidClient, 148, SpringLayout.WEST, clientPanel);
 		sl_clientPanel.putConstraint(SpringLayout.SOUTH, txtpnEnterValidClient, -42, SpringLayout.SOUTH, clientPanel);
-		txtpnEnterValidClient.setBackground(new Color(102, 205, 170));
+		txtpnEnterValidClient.setBackground(new Color(95, 158, 160));
 		clientPanel.add(txtpnEnterValidClient);
 		txtpnEnterValidClient.setText("Enter Valid Client ID");
 
@@ -127,7 +127,7 @@ public class Login_Window {
 
 		checkbox = new JCheckBox("");
 		
-		checkbox.setBackground(new Color(102, 205, 170));
+		checkbox.setBackground(new Color(95, 158, 160));
 		checkbox.setBounds(59, 184, 28, 48);
 		frmLoginPage.getContentPane().add(checkbox);
 
@@ -141,7 +141,7 @@ public class Login_Window {
 		
 		JTextPane txtpnIAgreeTo = new JTextPane();
 		txtpnIAgreeTo.setBounds(99, 184, 313, 48);
-		txtpnIAgreeTo.setBackground(new Color(102, 205, 170));
+		txtpnIAgreeTo.setBackground(new Color(95, 158, 160));
 		txtpnIAgreeTo.setText(
 				"i agree to the terms and conditions and the privacy policy read the terms and conditions of use");
 		frmLoginPage.getContentPane().add(txtpnIAgreeTo);
@@ -151,14 +151,14 @@ public class Login_Window {
 		errorMessage.setEditable(false);
 		errorMessage.setBounds(99, 40, 272, 16);
 		frmLoginPage.getContentPane().add(errorMessage);
-		errorMessage.setBackground(new Color(102, 205, 170));
+		errorMessage.setBackground(new Color(95, 158, 160));
 		errorMessage.setForeground(Color.RED);
 		errorMessage.setText("Something went wrong. Please try again"); 
 		errorMessage.hide();
 		
 		setEventListeners();
 		
-		frmLoginPage.setBackground(new Color(32, 178, 170));
+		frmLoginPage.setBackground(new Color(95, 158, 160));
 		frmLoginPage.setFont(new Font("Dialog", Font.BOLD, 11));
 		frmLoginPage.setTitle("Login ");
 		frmLoginPage.setBounds(100, 100, 450, 300);
@@ -242,8 +242,8 @@ public class Login_Window {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							//newClientStuff window = new newClientStuff(controller);
-							//window.frame.setVisible(true);
+							LogisticsMenu logistics = new LogisticsMenu(controller);
+							logistics.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
