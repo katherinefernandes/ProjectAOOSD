@@ -15,25 +15,13 @@ public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends
 		super();
 	}
 	
-	public void editTest() throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
-		for(T data : sortTestData) {
-			insertData(data);
-		}
-		insertData(data1);
-		dataAccess.flushActiveData();
-		dataAccess.editEntry(data1_v2);
-		dataAccess.flushActiveData();
-		T pulledData = dataAccess.getEntry(getDataID(data1));
-		
-		assertEqualData(pulledData,data1_v2);
-	}
-	
 	@Override
 	@AfterEach
 	public void cleanUp() {
 		for(long id : toBeDeleted) {
 			dataAccess.deleteEntry(id);
 		}
+		toBeDeleted = new ArrayList<>();
 	}
 	
 	@Override
@@ -45,5 +33,18 @@ public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends
 		T pulledData = dataAccess.getEntry(getDataID(data1));
 		
 		assertEqualData(pulledData,data1);
+	}
+	
+	public void editTest() throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
+		for(T data : sortTestData) {
+			insertData(data);
+		}
+		insertData(data1);
+		dataAccess.flushActiveData();
+		dataAccess.editEntry(data1_v2);
+		dataAccess.flushActiveData();
+		T pulledData = dataAccess.getEntry(getDataID(data1));
+		
+		assertEqualData(pulledData,data1_v2);
 	}
 }
