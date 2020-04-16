@@ -184,7 +184,6 @@ public class CurrentClientV2 extends User{
 		container.setJourneyID(ssecurity.generateID());
 		databaseContainer.editEntry(container);
 		databaseContainer.flushActiveData();
-		System.out.println("container edited: "+container.getID()+"The jounrey ID is: "+container.getJourneyID());
 		this.containerRegistered=true;//only in the active data.. not in xml
 		client.addActiveShipment(container.getJourneyID());
 		databaseClient.editEntry(client);
@@ -244,6 +243,13 @@ public class CurrentClientV2 extends User{
 		}
 		return containers;
 	}
+	public ContainerData getContainersByActiveJourneyIDs(long journeyID) {
+		// TODO Auto-generated method stub
+		String JourneyIDInString = Long.toString(journeyID);
+		
+		return databaseContainer.searchEntries(JourneyIDInString).get(0);
+	}
+	
 
 	public ArrayList<ContainerData> filterContainersByStartPortID(long startPortID) {
 		// TODO Auto-generated method stub

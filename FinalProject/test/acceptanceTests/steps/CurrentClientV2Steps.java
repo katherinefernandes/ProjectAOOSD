@@ -268,6 +268,19 @@ public class CurrentClientV2Steps {
 			assertEquals(containersInJourney.get(i).getCargo(),cargo);
 		}
 	}
+	@When("the client chooses to view the internal status of a container with the journeyID {long}")
+	public void theClientChoosesToViewTheInternalStatusOfAContainerWithTheJourneyID(long journeyID) {
+	    // Write code here that turns the phrase above into concrete actions
+	    container = clientmanager.getContainersByActiveJourneyIDs(journeyID);
+	}
+
+	@Then("the client can view the current internal status of the container which is temperature {float}, pressure {float}, humidity level {float}")
+	public void theClientCanViewTheCurrentInternalStatusOfTheContainerWhichIsTemperaturePressureHumidityLevel(float temperature, float pressure, float humidity) {
+	    // Write code here that turns the phrase above into concrete actions
+	    assertEquals((int)container.getInternalStatus().getTemperature(),(int)temperature);
+	    assertEquals((int)container.getInternalStatus().getAtmosphere(),(int)pressure);
+	    assertSame((int)container.getInternalStatus().getHumidity(),(int)humidity);
+	}
 
 }
 
