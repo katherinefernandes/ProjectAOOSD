@@ -62,8 +62,10 @@ public class SimulatingData {
 	port1.addStationedContainer(container3.getID());
 	port1.addStationedContainer(container2.getID());
 	port1.addStationedContainer(container1.getID());
+	PortData port3 = new PortData(IDgenerator.generateID(),"Singapore","Keppel",1.26f,103.83f);
 	portDataBase.newEntry(port2);
 	portDataBase.newEntry(port1);
+	portDataBase.newEntry(port3);
 	portDataBase.flushActiveData();
 	containerDataBase.flushActiveData();
 	

@@ -139,12 +139,17 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method stub
 		try {
 			startPort = databasePort.getEntry(startPortID);
-			containerID = startPort.getStationedContainers().get(0);
-			container = databaseContainer.getEntry(containerID);
-			foundContainer  = true;
-			startPort.updateStationedContainers(containerID);
-			databasePort.editEntry(startPort);
-			databasePort.flushActiveData();
+			if (startPort.getStationedContainers().size()>0) {
+				containerID = startPort.getStationedContainers().get(0);
+				container = databaseContainer.getEntry(containerID);
+				foundContainer  = true;
+				startPort.updateStationedContainers(containerID);
+				databasePort.editEntry(startPort);
+				databasePort.flushActiveData();
+			}else {
+				createANewContainer(startPortID);
+				
+			}
 		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("either port or the container not found");
@@ -203,6 +208,19 @@ public class CurrentClientV2 extends User{
 	public void setContainerRegistered() {
 		// TODO Auto-generated method stub
 		this.containerRegistered=false;
+	}
+
+	private void createANewContainer(long startPortID)  {
+		// TODO Auto-generated method stub
+		
+		container = new ContainerData(this.ssecurity.generateID(),startPortID,startPort.getPosition().getLatitude(),startPort.getPosition().getlongitude());
+		containerID = container.getID();
+		startPort.addStationedContainer(containerID);
+		databasePort.editEntry(startPort);
+		databaseContainer.newEntry(container);
+		databaseContainer.flushActiveData();
+		databasePort.flushActiveData();
+		this.foundContainer=true;
 	}
 
 	
