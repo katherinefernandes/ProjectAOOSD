@@ -150,7 +150,7 @@ public class newClientStuff {
 		ButtonPanel.add(btnNewButton_1);
 		
 		LogOutButton = new JButton("Log Out");
-		LogOutButton.setBounds(55, 311, 186, 29);
+		LogOutButton.setBounds(55, 311, 196, 29);
 		ButtonPanel.add(LogOutButton);
 		
 		panel_1 = new JPanel();
