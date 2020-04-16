@@ -33,6 +33,9 @@ public class LogisticCompanySteps {
 	private int houseNumber;
 	private String city;
 	private String postCode;
+	private long containerid;
+	private float latitude;
+	private float longitude;
 	
 	@Given("the logistic Company decides to view the Client information")
 	public void the_logistic_Company_decides_to_view_the_Client_information(){
@@ -143,6 +146,42 @@ public class LogisticCompanySteps {
 	    // Write code here that turns the phrase above into concrete actions
 		logistic.addClient(email, name, countryCode, phone, firstName, middleName, lastName, street, city, postCode, houseNumber);
 		assertTrue(logistic.getAddNewClient());
+	}
+	
+	@Given("that the logistic company chooses to update the location")
+	public void thatTheLogisticCompanyChoosesToUpdateTheLocation() {
+	    // Write code here that turns the phrase above into concrete actions
+		logistic.setUpdatedLocation();
+	    assertFalse("Updated location should be set to false",logistic.getUpdatedLocation());
+	    
+	}
+
+	@When("the logistic company enters the container id {long}")
+	public void theLogisticCompanyEntersTheContainerId(long id) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.containerid = id;
+	    assertTrue(logistic.getContainerIsSet(id));
+	}
+
+	@When("the latitude {float}")
+	public void theLatitude(float double1) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.latitude = double1;
+	    assertTrue(validate.validateLocation(double1));
+	}
+
+	@When("the longitude {float}")
+	public void theLongitude(float double1) {
+	    // Write code here that turns the phrase above into concrete actions
+		this.longitude = double1;
+		assertTrue(validate.validateLocation(double1));
+	}
+
+	@Then("the location for the container is updated")
+	public void theLocationForTheContainerIsUpdated() {
+	    // Write code here that turns the phrase above into concrete actions
+	    logistic.updateLocation(longitude, latitude);
+	    assertTrue("Updated location should be true now",logistic.getUpdatedLocation());
 	}
 }
 
