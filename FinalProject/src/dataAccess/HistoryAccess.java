@@ -107,8 +107,6 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 	
 	private HistoryData dataOfEvents(List<XMLEvent> events) {
 		int i = 0;
-		XMLEvent event;
-		StartElement start;
 		i = iterateUntilFound(i,events,"TimeStamp");
 		LocalDateTime timeStamp = LocalDateTime.parse(events.get(++i).asCharacters().getData());
 		i = iterateUntilFound(i,events,"ContainerID");
@@ -138,6 +136,17 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		
 		return historyData;
 	}
-	
-	//TODO Wipe 
+
+	public void wipeHistory() {
+		initializeIO();
+		try {
+			writer.add(reader.nextEvent());
+			writer.add(reader.nextEvent());
+			writer.add(eventFactory.createEndElement("", "", collectionsName));
+			writer.add(eventFactory.createEndDocument());
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}
+		writeIO();
+	}
 }

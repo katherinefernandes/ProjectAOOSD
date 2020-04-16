@@ -25,9 +25,7 @@ public abstract class DataAccessTest<T extends ObjectData, A extends DataAccess<
 	}
 	
 	@AfterEach
-	public void cleanUp() {
-		
-	}
+	public abstract void cleanUp();
 	
 	public abstract void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException;
 	

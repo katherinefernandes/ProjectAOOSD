@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import dataAccess.HistoryAccess;
@@ -18,13 +20,11 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryAccess
 	public HistoryAccessTest() {
 		super();
 		dataAccess = new HistoryAccess();
-		data1 = new HistoryData(LocalDateTime.of(2020, 3, 4, 14, 29, 14), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
+		data1 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
+		data1_v2 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
 		data2 = new HistoryData(LocalDateTime.of(2020, 3, 1, 13, 12, 14), 124321L, 123819L, 9173284L, 12839L, 1923819L, "crab", 24.F, 104.F, 90F, 112.F, 33.F);
-		data1_v2 = new HistoryData(LocalDateTime.of(2020, 3, 4, 14, 29, 14), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
-
 		for(int i = 0; i < 40; i++) {
-			LocalDateTime timeStamp = LocalDateTime.of(2020, random.nextInt(12) + 1,
-					random.nextInt(28) + 1, random.nextInt(24), random.nextInt(60), random.nextInt(60));
+			LocalDateTime timeStamp = LocalDateTime.now();
 			long containerID = random.nextLong();
 			long journeyID = random.nextLong();
 			long clientID = random.nextLong();
@@ -40,17 +40,29 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryAccess
 					destinationPortID,startPortID,cargo,temperature,atmosphere,humidity,latitude,longitude);
 			sortTestData.add(dataPoint);
 		}
+		
+		
+	}
+	
+	@Override
+	@AfterEach
+	public void cleanUp() {
+		dataAccess.wipeHistory();
+		toBeDeleted = new ArrayList<>();
 	}
 	
 	@Override
 	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
 		insertData(data1);
-		
+		insertData(data1_v2);
 		dataAccess.flushActiveData();
+		insertData(data2);
+		for(HistoryData data : sortTestData) {
+			insertData(data);
+		}
 	
-		HistoryData pulledData = dataAccess.searchEntries(data1.getTimeStamp().toString()).get(0);
-		
-		assertEqualData(pulledData,data1);
+		HistoryData pulledData = dataAccess.searchEntries(data2.getTimeStamp().toString()).get(0);
+		assertEqualData(pulledData,data2);
 	}
 	
 	@Test
