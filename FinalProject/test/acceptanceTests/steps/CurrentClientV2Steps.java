@@ -211,23 +211,8 @@ public class CurrentClientV2Steps {
 	    assertTrue(clientmanager.getContainerRegistered());
 	    
 	}
-	@When("the client chooses to view the internal status of a container which is on a journey")
-	public void theClientChoosesToViewTheInternalStatusOfAContainerWhichIsOnAJourney() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
-	}
+	
 
-	@When("the container with the ID {int} exists in the database")
-	public void theContainerWithTheIDExistsInTheDatabase(Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
-	}
-
-	@Then("the client can view the internal status of the container.")
-	public void theClientCanViewTheInternalStatusOfTheContainer() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
-	}
 	
 
 
