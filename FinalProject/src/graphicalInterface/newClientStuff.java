@@ -26,8 +26,8 @@ public class newClientStuff {
 	private long clientID;
 	
 	public JFrame frame;
-	JButton emailButton,AddJourneyButton,ArrivalButton,ReferencepersonButton,ContainerButton;
-	JPanel ButtonPanel,panel_1,referencePanel,emailPanel,JourneyPanel,ArrivalPanel,DataPanel;
+	JButton emailButton,AddJourneyButton,ReferencepersonButton,ContainerButton;
+	JPanel ButtonPanel,panel_1,referencePanel,emailPanel,JourneyPanel,DataPanel;
 	JLayeredPane layeredPane;
 	private JTextArea txtrName;
 	private JTextArea txtrLastName;
@@ -39,7 +39,6 @@ public class newClientStuff {
 	private JPanel PhonePanel;
 	private JTextField textField_5;
 	private JTextField textField_6;
-	private JTextField textField_7;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_10;
@@ -47,9 +46,14 @@ public class newClientStuff {
 	private JTextField textField_12;
 	private JTextField textField_13;
 	private JTextField textField_14;
-	private JTextField textField_15;
+	private JTextField containterIDsearch;
 	private Controller controller;
 	private JButton LogOutButton;
+	private JTextArea txtrCountryCode;
+	private JTextField textField;
+	private JTextField JourneyIDsearch;
+	private JTextField CargoIDsearch;
+	private JTextField PortNamesearch;
 //	/**
 //	 * Launch the application.
 //	 */
@@ -113,15 +117,6 @@ public class newClientStuff {
 		AddJourneyButton.setBounds(55, 195, 196, 29);
 		ButtonPanel.add(AddJourneyButton);
 		
-		ArrivalButton = new JButton("Arrival Date");
-		ArrivalButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchPanels(ArrivalPanel);
-			}
-		});
-		ArrivalButton.setBounds(55, 236, 196, 29);
-		ButtonPanel.add(ArrivalButton);
-		
 		ReferencepersonButton = new JButton("Reference Person");
 		ReferencepersonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +132,7 @@ public class newClientStuff {
 				switchPanels(DataPanel);
 			}
 		});
-		ContainerButton.setBounds(55, 270, 196, 29);
+		ContainerButton.setBounds(55, 236, 196, 29);
 		ButtonPanel.add(ContainerButton);
 		
 		JButton btnNewButton_1 = new JButton("Phone Number");
@@ -150,7 +145,7 @@ public class newClientStuff {
 		ButtonPanel.add(btnNewButton_1);
 		
 		LogOutButton = new JButton("Log Out");
-		LogOutButton.setBounds(55, 311, 196, 29);
+		LogOutButton.setBounds(55, 273, 196, 29);
 		ButtonPanel.add(LogOutButton);
 		
 		panel_1 = new JPanel();
@@ -276,7 +271,7 @@ public class newClientStuff {
 		PhonePanel.add(txtrNewPhoneNumber);
 		
 		JButton btnNewButton_2 = new JButton("Save");
-		btnNewButton_2.setBounds(372, 199, 117, 29);
+		btnNewButton_2.setBounds(372, 222, 117, 29);
 		PhonePanel.add(btnNewButton_2);
 		
 		textField_5 = new JTextField();
@@ -289,18 +284,23 @@ public class newClientStuff {
 		PhonePanel.add(textField_6);
 		textField_6.setColumns(10);
 		
+		txtrCountryCode = new JTextArea();
+		txtrCountryCode.setText("Country Code:");
+		txtrCountryCode.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCountryCode.setEditable(false);
+		txtrCountryCode.setBackground(new Color(95, 158, 160));
+		txtrCountryCode.setBounds(94, 188, 168, 23);
+		PhonePanel.add(txtrCountryCode);
+		
+		textField = new JTextField();
+		textField.setBounds(291, 185, 198, 26);
+		PhonePanel.add(textField);
+		textField.setColumns(10);
+		
 		JourneyPanel = new JPanel();
 		JourneyPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(JourneyPanel, "name_7881573753337");
 		JourneyPanel.setLayout(null);
-		
-		JTextArea txtrJourney = new JTextArea();
-		txtrJourney.setBackground(new Color(95, 158, 160));
-		txtrJourney.setEditable(false);
-		txtrJourney.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		txtrJourney.setBounds(84, 108, 83, 16);
-		txtrJourney.setText("Enter ID:");
-		JourneyPanel.add(txtrJourney);
 		
 		JTextArea txtrStartPort = new JTextArea();
 		txtrStartPort.setText("Destination Port:");
@@ -358,11 +358,6 @@ public class newClientStuff {
 		txtrArriveBy.setBounds(84, 367, 128, 30);
 		JourneyPanel.add(txtrArriveBy);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(295, 105, 179, 26);
-		JourneyPanel.add(textField_7);
-		textField_7.setColumns(10);
-		
 		textField_8 = new JTextField();
 		textField_8.setBounds(295, 147, 179, 26);
 		JourneyPanel.add(textField_8);
@@ -402,26 +397,6 @@ public class newClientStuff {
 		btnNewButton_3.setBounds(358, 408, 117, 29);
 		JourneyPanel.add(btnNewButton_3);
 		
-		ArrivalPanel = new JPanel();
-		ArrivalPanel.setBackground(new Color(95, 158, 160));
-		layeredPane.add(ArrivalPanel, "name_7922511904851");
-		ArrivalPanel.setLayout(null);
-		
-		JTextArea txtrArrivalDate = new JTextArea();
-		txtrArrivalDate.setBounds(69, 121, 124, 19);
-		txtrArrivalDate.setText("Arrival date:");
-		txtrArrivalDate.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		txtrArrivalDate.setEditable(false);
-		txtrArrivalDate.setBackground(new Color(95, 158, 160));
-		ArrivalPanel.add(txtrArrivalDate);
-		
-		JTextArea ArrivalDateTextUpdate = new JTextArea();
-		ArrivalDateTextUpdate.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		ArrivalDateTextUpdate.setEditable(false);
-		ArrivalDateTextUpdate.setBackground(new Color(95, 158, 160));
-		ArrivalDateTextUpdate.setBounds(239, 123, 162, 16);
-		ArrivalPanel.add(ArrivalDateTextUpdate);
-		
 		DataPanel = new JPanel();
 		DataPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(DataPanel, "name_7969757405032");
@@ -435,14 +410,61 @@ public class newClientStuff {
 		txtrContainerId.setBackground(new Color(95, 158, 160));
 		DataPanel.add(txtrContainerId);
 		
-		textField_15 = new JTextField();
-		textField_15.setBounds(206, 82, 199, 26);
-		DataPanel.add(textField_15);
-		textField_15.setColumns(10);
+		containterIDsearch = new JTextField();
+		containterIDsearch.setBounds(206, 82, 199, 26);
+		DataPanel.add(containterIDsearch);
+		containterIDsearch.setColumns(10);
 		
 		JButton Enterbutton = new JButton("Enter");
-		Enterbutton.setBounds(288, 120, 117, 29);
+		Enterbutton.setBounds(289, 279, 117, 29);
 		DataPanel.add(Enterbutton);
+		
+		JTextArea txtrJourneyId = new JTextArea();
+		txtrJourneyId.setText("Journey ID");
+		txtrJourneyId.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrJourneyId.setEditable(false);
+		txtrJourneyId.setBackground(new Color(95, 158, 160));
+		txtrJourneyId.setBounds(66, 130, 95, 19);
+		DataPanel.add(txtrJourneyId);
+		
+		JTextArea txtrCargo_1 = new JTextArea();
+		txtrCargo_1.setText("Cargo :");
+		txtrCargo_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCargo_1.setEditable(false);
+		txtrCargo_1.setBackground(new Color(95, 158, 160));
+		txtrCargo_1.setBounds(66, 177, 95, 19);
+		DataPanel.add(txtrCargo_1);
+		
+		JTextArea txtrPortName = new JTextArea();
+		txtrPortName.setText("Port Name:");
+		txtrPortName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrPortName.setEditable(false);
+		txtrPortName.setBackground(new Color(95, 158, 160));
+		txtrPortName.setBounds(66, 220, 95, 19);
+		DataPanel.add(txtrPortName);
+		
+		JourneyIDsearch = new JTextField();
+		JourneyIDsearch.setColumns(10);
+		JourneyIDsearch.setBounds(206, 127, 199, 26);
+		DataPanel.add(JourneyIDsearch);
+		
+		CargoIDsearch = new JTextField();
+		CargoIDsearch.setColumns(10);
+		CargoIDsearch.setBounds(206, 174, 199, 26);
+		DataPanel.add(CargoIDsearch);
+		
+		PortNamesearch = new JTextField();
+		PortNamesearch.setColumns(10);
+		PortNamesearch.setBounds(206, 217, 199, 26);
+		DataPanel.add(PortNamesearch);
+		
+		JTextArea txtrSearchByOne = new JTextArea();
+		txtrSearchByOne.setText("Search by one of the following criteria:");
+		txtrSearchByOne.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrSearchByOne.setEditable(false);
+		txtrSearchByOne.setBackground(new Color(95, 158, 160));
+		txtrSearchByOne.setBounds(151, 30, 320, 19);
+		DataPanel.add(txtrSearchByOne);
 	}
 	
 	public void switchPanels(JPanel panel) {

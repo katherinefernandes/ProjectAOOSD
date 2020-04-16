@@ -59,5 +59,8 @@ public class Controller {
 		oldClient.setPerson(firstNameList,middleNameList,lastNameList);
 		clientAccess.editEntry(oldClient);
 		clientAccess.flushActiveData();
+		
+		
+		
 	}
 }
