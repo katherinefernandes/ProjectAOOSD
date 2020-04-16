@@ -14,6 +14,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import objectsData.ClientData;
+import objectsData.ContainerData;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import users.CurrentClientV2;
@@ -35,6 +36,7 @@ public class CurrentClientV2Steps {
 	private float pressure;
 	private float humidity;
 	private LocalDateTime arriveBy;
+	private ContainerData container;
 	
 	@Given("that the client enters the ID {long} that exists in the memory")
 	public void theIDItEnteredExistsInTheMemory(long ID) {
@@ -211,6 +213,29 @@ public class CurrentClientV2Steps {
 	    
 	}
 	
+	@When("the client enters the container the ID {long} that exists in the database")
+	public void theClientEntersTheContainerTheIDThatExistsInTheDatabase(long containerID) {
+	    // Write code here that turns the phrase above into concrete actions
+		clientmanager.setFoundContainer();
+		assertFalse(clientmanager.getFoundContainer());
+	    clientmanager.getContainer(containerID);
+	    assertTrue(clientmanager.getFoundContainer());
+	}
+
+	@Then("the current location of the container is {float} latitude and {float} longitude, it contains the cargo:{string}")
+	public void theCurrentLocationOfTheContainerIsLatitudeAndLongitudeItContainsTheCargo(float latitude, float longitude, String cargo) {
+	    // Write code here that turns the phrase above into concrete actions
+		container = clientmanager.viewContainer();
+		assertTrue(container.getCurrentPosition().getLatitude()==latitude);
+		assertTrue(container.getCurrentPosition().getlongitude()==longitude);
+		assertTrue(container.getCargo().equals(cargo));
+	}
+
+	@Then("it will arrive by the year {int} month {int} day {int} hour {int} minute {int}")
+	public void itWillArriveByTheYearMonthDayHourMinute(int year, int month, int day, int hour, int minute) {
+	    // Write code here that turns the phrase above into concrete actions
+	    assertTrue(container.getArriveBy().equals(LocalDateTime.of(year, month, day, hour, minute)));
+	}
 
 	
 

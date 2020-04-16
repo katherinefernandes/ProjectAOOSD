@@ -212,6 +212,23 @@ public class CurrentClientV2 extends User{
 		getAContainer(startPortID);
 	}
 
+	public void getContainer(long containerID) {
+		// TODO Auto-generated method stub
+		try {
+			container = databaseContainer.getEntry(containerID);
+			this.foundContainer = true;
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public ContainerData viewContainer() {
+		// TODO Auto-generated method stub
+		return this.container;
+	}
+
 	
 
 }
