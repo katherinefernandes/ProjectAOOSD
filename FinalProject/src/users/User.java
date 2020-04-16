@@ -5,12 +5,11 @@ import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
-import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import supportingClasses.Security;
 
-public abstract class User {
+public  class User {
 	
 	protected ClientData client;
 	protected ContainerData container;
@@ -32,7 +31,6 @@ public abstract class User {
 		return this.client;
 	}
 	
-	public abstract void displayContainerData(ContainerData container);
 	
 	public void getClient (long clientID) {
 		try {

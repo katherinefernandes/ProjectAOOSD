@@ -228,8 +228,8 @@ public class CurrentClientV2Steps {
 	public void theCurrentLocationOfTheContainerIsLatitudeAndLongitudeItContainsTheCargo(float latitude, float longitude, String cargo) {
 	    // Write code here that turns the phrase above into concrete actions
 		container = clientmanager.viewContainer();
-		assertTrue(container.getCurrentPosition().getLatitude()==latitude);
-		assertTrue(container.getCurrentPosition().getlongitude()==longitude);
+		assertEquals((int)container.getCurrentPosition().getLatitude(),(int)latitude);
+		assertEquals((int)container.getCurrentPosition().getlongitude(),(int)longitude);
 		assertTrue(container.getCargo().equals(cargo));
 	}
 

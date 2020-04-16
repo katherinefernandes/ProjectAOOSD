@@ -47,12 +47,6 @@ public class CurrentClientV2 extends User{
 		return this.clientIsSet;
 	}
 
-	@Override
-	public void displayContainerData(ContainerData container) {
-		// TODO Auto-generated method stub
-		// this will send the container to a display which needs to be implemented.
-		
-	}
 	
 	public void getClient() {
 		setClient = true;
@@ -266,7 +260,7 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method stub
 		ArrayList<ContainerData> containersInJourney = getContainersByActiveJourneyIDs();
 		for (int i=0;i<containersInJourney.size();i++) {
-			if (containersInJourney.get(i).getCargo()!=cargo) {
+			if (!containersInJourney.get(i).getCargo().equals(cargo)) {
 				containersInJourney.remove(i);
 			}
 		}

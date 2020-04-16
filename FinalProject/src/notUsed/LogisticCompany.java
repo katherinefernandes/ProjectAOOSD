@@ -1,4 +1,4 @@
-package users;
+package notUsed;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,18 +7,17 @@ import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
-import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import supportingClasses.Security;
 import supportingClasses.parseInput;
+import users.User;
 import supportingClasses.ValidInput; 
 
 public class LogisticCompany extends User{// Mamuna I have created a User class which will contain abstract methods or common methods such has getinformationclient or getinformationjourney
 	private ContainerData container;
 	private ContainerAccess databaseContainer;
 	private ValidInput validate;
-	private CurrentClientInput input;// using this to set a new container 
 	public LogisticCompany() {
 		databaseContainer = new ContainerAccess();
 		validate = new ValidInput();
@@ -172,7 +171,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 		int choice;
 		boolean initialize = true;
 		//getInfoContainer(s); // mamuna: replacing this code by another which will update the container...
-		container = input.getContainerData(s);
+	//	container = input.getContainerData(s);
 		displayContainerData(container);
 		while (initialize) {
 			System.out.println("Please enter the following numbers: \n\t1 ---------- to update the position \n\t2 ---------- to update the status \n\t3 ---------- quit ");
@@ -247,7 +246,7 @@ public class LogisticCompany extends User{// Mamuna I have created a User class 
 		}
 	}*/
 
-	@Override
+	
 	public void displayContainerData(ContainerData container) { //mamuna added this to distinguish between input and logic and to reduce code
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		System.out.println("This is the container ID: " + container.getID());

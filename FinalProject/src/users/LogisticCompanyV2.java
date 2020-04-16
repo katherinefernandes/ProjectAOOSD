@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import exceptions.ElementNotFoundException;
-import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import supportingClasses.ValidInput;
 
 public class LogisticCompanyV2 extends User{
 	private ValidInput validate;
-	private CurrentClientInput input;// using this to set a new container 
 	private boolean addNewClient;
 	private boolean updatedLocation;
 	public LogisticCompanyV2() {
@@ -32,11 +30,7 @@ public class LogisticCompanyV2 extends User{
 		return updatedLocation;
 	}
 	
-	@Override
-	public void displayContainerData(ContainerData container) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	public boolean getContainerIsSet(long s) {
 		try { //Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
