@@ -26,13 +26,12 @@ Feature: Find a journey
   Then the current location of the container is 26.11 latitude and 74.33 longitude, it contains the cargo:"snacks" 
   And it will arrive by the year 2020 month 06 day 23 hour 12 minute 0
   
- 	#Scenario: Client would like to find all their journey departing from a particular port
- 	#Given that the client enters the ID 521601819167600 that exists in the memory
- 	#When the client chooses to view the information of all containers standby at a port 
- 	#And the client provides the port name "Gwadar"
- 	#Then the client can view all the information for all the containers registered by the client 
+ 	Scenario: Client can track the containers starting journey from a Port
+ 	Given that the client enters the ID 897841664500 that exists in the memory
+ 	When the client provides the port name "Gwadar"
+ 	Then the client can view all the information for all his containers starting journey from that Port
  	
- 	#Scenario: Client would like to find all the containers in a journey containing a particular cargo 
- 	#Given that the client enters the ID 521601819167600 that exists in the memory
- 	#When the client chooses to view the information of all containers transporting "Rice" 
- 	#Then the client can view all the information for all those containers at different ports
+ 	Scenario: Client can track the containers containing a particular cargo
+ 	Given that the client enters the ID 14618447211200 that exists in the memory
+ 	When the client provides the cargo type "fish"
+ 	Then the client can view all the information for all those containers 

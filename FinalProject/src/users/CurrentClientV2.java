@@ -21,6 +21,8 @@ public class CurrentClientV2 extends User{
 	private boolean foundContainer = false;
 	private long containerID;
 	private boolean containerRegistered;
+	private ArrayList<Long> ActiveJourneys;
+	
 
 	public CurrentClientV2(long ID) {
 		// TODO Auto-generated constructor stub
@@ -173,6 +175,7 @@ public class CurrentClientV2 extends User{
 	public void registerContainer(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, LocalDateTime arriveBy) {
 		// TODO Auto-generated method stub
+		container.setClientID(client.getID());
 		container.setStartPortID(startPortID);
 		container.setDestinationPortID(destinationPortID);
 		container.setCargo(cargo);
@@ -228,6 +231,45 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method stub
 		return this.container;
 	}
+
+	public ArrayList<ContainerData> getContainersByActiveJourneyIDs() {
+		// TODO Auto-generated method stub
+		ArrayList<ContainerData> containers = new ArrayList<ContainerData>();
+		List<ContainerData> containerExtractedByDataBase;
+		this.ActiveJourneys=client.getActiveShipment();
+		for(int i=0;i<this.ActiveJourneys.size();i++) {
+			String journeyIDInString = this.ActiveJourneys.get(i).toString();
+			containerExtractedByDataBase = databaseContainer.searchEntries(journeyIDInString);
+			containers.add(containerExtractedByDataBase.get(0));
+		}
+		return containers;
+	}
+
+	public ArrayList<ContainerData> filterContainersByStartPortID(long startPortID) {
+		// TODO Auto-generated method stub
+		ArrayList<ContainerData> containersInJourney = getContainersByActiveJourneyIDs();
+		for (int i=0;i<containersInJourney.size();i++) {
+			if (containersInJourney.get(i).getStartPortID()!=startPortID) {
+				containersInJourney.remove(i);
+			}
+		}
+		return containersInJourney;
+	}
+
+	public ArrayList<ContainerData> filterContainersByCargo(String cargo) {
+		// TODO Auto-generated method stub
+		ArrayList<ContainerData> containersInJourney = getContainersByActiveJourneyIDs();
+		for (int i=0;i<containersInJourney.size();i++) {
+			if (containersInJourney.get(i).getCargo()!=cargo) {
+				containersInJourney.remove(i);
+			}
+		}
+		return containersInJourney;
+	}
+
+	
+
+	
 
 	
 

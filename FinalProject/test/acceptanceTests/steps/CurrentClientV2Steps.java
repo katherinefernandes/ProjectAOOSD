@@ -2,6 +2,7 @@ package acceptanceTests.steps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -37,6 +38,7 @@ public class CurrentClientV2Steps {
 	private float humidity;
 	private LocalDateTime arriveBy;
 	private ContainerData container;
+	private ArrayList<ContainerData> containersInJourney;
 	
 	@Given("that the client enters the ID {long} that exists in the memory")
 	public void theIDItEnteredExistsInTheMemory(long ID) {
@@ -165,7 +167,7 @@ public class CurrentClientV2Steps {
 	public void theClientProvidesAPortNameFromWhereTheJourneyWillStart(String portname) {
 	    // Write code here that turns the phrase above into concrete actions
 	    startPortID = clientmanager.getPortID(portname);
-	    assertFalse(startPortID==1l);// the startPortID would be 1 if the portname is not valid
+	    assertNotEquals(startPortID,1l);// the startPortID would be 1 if the portname is not valid
 	    clientmanager.setFoundContainer();
 	    assertFalse(clientmanager.getFoundContainer());
 	    clientmanager.getAContainer(startPortID);
@@ -176,7 +178,7 @@ public class CurrentClientV2Steps {
 	public void providesADestinationPortName(String portname) {
 	    // Write code here that turns the phrase above into concrete actions
 		destinationPortID = clientmanager.getPortID(portname);
-		assertFalse(startPortID==1l);// the startPortID would be 1 if the portname is not valid
+		assertNotEquals(destinationPortID,1l);// the startPortID would be 1 if the portname is not valid
 		clientmanager.updateDestinationPort(destinationPortID);
 	}
 
@@ -237,8 +239,35 @@ public class CurrentClientV2Steps {
 	    assertTrue(container.getArriveBy().equals(LocalDateTime.of(year, month, day, hour, minute)));
 	}
 
-	
+	@When("the client provides the port name {string}")
+	public void theClientProvidesThePortName(String portname) {
+	    // Write code here that turns the phrase above into concrete actions
+	    startPortID = clientmanager.getPortID(portname);
+	    assertNotEquals(startPortID,1l);
+	}
 
+	@Then("the client can view all the information for all his containers starting journey from that Port")
+	public void theClientCanViewAllTheInformationForAllHisContainersStartingJourneyFromThatPort() {
+	    // Write code here that turns the phrase above into concrete actions
+		containersInJourney = clientmanager.filterContainersByStartPortID(startPortID);
+		for (int i=0;i<containersInJourney.size();i++) {
+			assertEquals(containersInJourney.get(i).getStartPortID(),startPortID);
+		}
+	}
+	@When("the client provides the cargo type {string}")
+	public void theClientProvidesTheCargoType(String cargo) {
+	    // Write code here that turns the phrase above into concrete actions
+		this.cargo=cargo;
+		containersInJourney = clientmanager.filterContainersByCargo(cargo);
+	}
+
+	@Then("the client can view all the information for all those containers")
+	public void theClientCanViewAllTheInformationForAllThoseContainers() {
+	    // Write code here that turns the phrase above into concrete actions
+		for (int i=0;i<containersInJourney.size();i++) {
+			assertEquals(containersInJourney.get(i).getCargo(),cargo);
+		}
+	}
 
 }
 
