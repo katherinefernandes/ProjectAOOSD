@@ -194,6 +194,7 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 		
 		try {
 		boolean overwrite = false;
+		EndElement end;
 		currentDatapoint = new ArrayList<>();
 		writer.add(reader.nextEvent());
 		writer.add(reader.nextEvent());
@@ -204,9 +205,8 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 				Attribute ID = start.getAttributeByName(QName.valueOf("ID"));
 				if(ID != null) {
 					overwrite = false;
-					insertDatapoint(currentDatapoint);
 					while(activeData.size() > 0 && Long.valueOf(ID.getValue()) > activeData.get(0).getID()) {						
-						insertDatapoint(eventsFromData(activeData.get(activeData.size()-1)));
+						insertDatapoint(eventsFromData(activeData.get(0)));
 						activeData.remove(0);
 					}
 					if(activeData.size() > 0 && Long.valueOf(ID.getValue()) == activeData.get(0).getID()) {
@@ -214,22 +214,22 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 						activeData.remove(0);
 						overwrite = true;
 					}
-					currentDatapoint = new ArrayList<>();
 				}
 			}
-			if(!overwrite) {
-				currentDatapoint.add(event);
+			currentDatapoint.add(event);
+			if(event.isEndElement() && event.asEndElement().getName().getLocalPart().equals(elementsName)){
+				if(!overwrite) {
+					insertDatapoint(currentDatapoint);
+				}
+				currentDatapoint = new ArrayList<>();
 			}
+			
 		}
 		if(activeData.size() > 0) {
 			for(T dataPoint : activeData) {
 				insertDatapoint(eventsFromData(dataPoint));
 			}
 			activeData = new ArrayList<>();
-		}
-		if(overwrite) {
-			currentDatapoint.add((XMLEvent) eventFactory.createEndElement("", "", collectionsName));
-			currentDatapoint.add((XMLEvent) eventFactory.createEndDocument());
 		}
 		insertDatapoint(currentDatapoint);
 		
