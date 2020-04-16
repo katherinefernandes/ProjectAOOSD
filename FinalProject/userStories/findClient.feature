@@ -23,15 +23,15 @@ Feature: Get Client information
 	
 	
 Scenario: Logistic Company can view the Client information
-	Given the logistic Company decides to view the Client information
-	When the logistic Company provides the client ID 897841664500
+	Given the logistic Company enters the Client ID 897841664500
+	When the Client ID is present in the database
 	Then the Client information is shown that the company name is "random", the email is "random@random.com"
 
 
 Scenario: Logistic Company cannot view the Client information
-  Given the logistic Company decides to view the Client information
-	When the logistic Company provides a Client ID 897841664590
-	Then the client information is not shown as the ID is not valid 
+  Given the logistic Company enters the Client ID 897841664590
+  When the Client ID is not present in the database
+	Then the client information is not shown as that client doesnot exist
 
 Scenario: Client can view its own information
 	Given that the client enters the ID 897841664500 that exists in the memory

@@ -37,9 +37,9 @@ public class Interface {
 			switch(Option) {
 			case 1:
 				System.out.println("Get the client Information");
-				c2.setViewClient(true);
-				c2.getViewClient();
-				c2.setViewClient(false);
+				//c2.setViewClient(true);
+			//	c2.getViewClient();
+			//	c2.setViewClient(false);
 			    break;
 			    
 			    
@@ -107,7 +107,7 @@ public class Interface {
 				
 				System.out.println("Get client Information");
 				ClientData client = input.getTheClientData(sc);
-				l.viewClient(client);// now l has access to this method as it is part of the user
+				//l.viewClient(client);// now l has access to this method as it is part of the user
 				break;
 				
 				

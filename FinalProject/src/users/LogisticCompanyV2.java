@@ -11,15 +11,14 @@ import objectsData.ContainerData;
 import supportingClasses.ValidInput;
 
 public class LogisticCompanyV2 extends User{
-	private ContainerData container;
-	private ContainerAccess databaseContainer;
 	private ValidInput validate;
 	private CurrentClientInput input;// using this to set a new container 
 	private boolean addNewClient;
 	private boolean updatedLocation;
 	public LogisticCompanyV2() {
-		databaseContainer = new ContainerAccess();
-		databaseClient = new ClientAccess();
+	//	databaseContainer = new ContainerAccess();
+	//	databaseClient = new ClientAccess();
+		super();
 		validate = new ValidInput();
 		display = true;
 		

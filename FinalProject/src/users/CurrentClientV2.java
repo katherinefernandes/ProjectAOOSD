@@ -24,9 +24,10 @@ public class CurrentClientV2 extends User{
 
 	public CurrentClientV2(long ID) {
 		// TODO Auto-generated constructor stub
-		databaseClient = new ClientAccess();
-		databasePort = new PortAccess();
-		databaseContainer = new ContainerAccess();
+		//databaseClient = new ClientAccess();
+		//databasePort = new PortAccess();
+		//databaseContainer = new ContainerAccess();
+		super();
 		try {
 			client = databaseClient.getEntry(ID);
 			clientIsSet = true;
@@ -51,24 +52,11 @@ public class CurrentClientV2 extends User{
 		
 	}
 	
-	public boolean viewClient() {
-		if (display) {
-			viewClient(client);
-			return true;
-		}
-		return false;
+	public void getClient() {
+		setClient = true;
+		display=true;
+		
 	}
-
-	public boolean getViewClient() {
-		// TODO Auto-generated method stub
-		return this.display;
-	}
-
-	public void setViewClient(boolean changeDisplay) {
-		// TODO Auto-generated method stub
-		this.display=changeDisplay;
-	}
-
 	
 
 	public void updatePhone() {
@@ -221,6 +209,7 @@ public class CurrentClientV2 extends User{
 		databaseContainer.flushActiveData();
 		databasePort.flushActiveData();
 		this.foundContainer=true;
+		getAContainer(startPortID);
 	}
 
 	

@@ -4,6 +4,7 @@ package users;
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import dataAccess.PortAccess;
+import exceptions.ElementNotFoundException;
 import inputFromUsers.CurrentClientInput;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -17,25 +18,40 @@ public abstract class User {
 	protected ContainerAccess databaseContainer;
 	protected PortAccess databasePort;
 	protected boolean display;
-	protected CurrentClientInput input = new CurrentClientInput();
 	protected Security ssecurity = new Security();
+	protected boolean setClient;
 	
+	public User() {
+		  databaseClient = new ClientAccess();
+		 databaseContainer = new ContainerAccess();
+		 databasePort = new PortAccess();
+		 this.setClient=false;
+	}
 	
-	public void viewClient(ClientData client){
-		this.client = client; //gets the ID by the user and updated the client with a clientData object
-		if (display) {
-			input.displayClientInfo(informationClient());
-		}
-	}
-	private String informationClient() {
-		return "\nClient Name is: \t"+client.getCompanyName()+"\nClient Phone number is: \t"+client.getPhoneNumber().getCountryCode()+" "+client.getPhoneNumber().getPhone()+"\nClient email is: \t"+client.getEmail()+"\nClient reference person is: \t"+client.getPerson().getFirstName().toString()+" "+client.getPerson().getMiddleName().toString()+" "+client.getPerson().getLastName().toString();
-	}
-	public boolean getDisplay() {
-		return display;
-	}
-	public abstract void displayContainerData(ContainerData container);
-	public ClientData getClient () {
+	public ClientData viewClient(){
 		return this.client;
 	}
+	
+	public abstract void displayContainerData(ContainerData container);
+	
+	public void getClient (long clientID) {
+		try {
+			client = databaseClient.getEntry(clientID);
+			setClient = true;
+			display=true;
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("client not found  "+clientID);
+			this.display=false;
+		}
+	}
+	
+	public boolean getSetClient() {
+		return this.setClient;
+	}
+	public boolean getDisplay() {
+		return this.display;
+	}
+	
 	
 }

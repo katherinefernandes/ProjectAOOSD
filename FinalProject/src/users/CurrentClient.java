@@ -38,19 +38,7 @@ public class CurrentClient extends User{
 	}
 	
 	public void updateInfoClient(Scanner s){
-		display=false;
-		this.client = input.getTheClientData(s);
-		viewClient(client);
-		switch (input.getChoiceForUpdateClient(s)) {
-		case 1: ArrayList<String> firstname = input.getFirstName(s);
-				ArrayList<String> middlename = input.getMiddleName(s);
-				ArrayList<String> lastname = input.getLastName(s);
-				updateReferencePerson(firstname,middlename,lastname);
-				break;
-		case 2: updateEmail(input.inputForUpdateEmail(s)); break;
-		}
-		display=true;
-		databaseClient.editEntry(client);
+		
 	}
 	
 	public void addJourney(ClientData client, String cargo, InternalState state) {
@@ -84,7 +72,6 @@ public class CurrentClient extends User{
 	
 	@Override
 	public void displayContainerData(ContainerData container) {
-		input.displayInternalStatus(container);
 	
 	}
 

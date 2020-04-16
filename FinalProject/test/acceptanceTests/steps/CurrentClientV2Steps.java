@@ -13,11 +13,14 @@ import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import objectsData.ClientData;
 import supportingClasses.ValidInput;
+import supportingClasses.parseInput;
 import users.CurrentClientV2;
 
 public class CurrentClientV2Steps {
 	private CurrentClientV2 clientmanager;
+	private ClientData client;
 	private int countryCode;
 	private long phone;
 	private ValidInput validate =new ValidInput();
@@ -43,34 +46,30 @@ public class CurrentClientV2Steps {
 	@When("the client decides to view the client information")
 	public void theClientDecidesToViewTheClientInformation() {
 	    // Write code here that turns the phrase above into concrete actions
-		assertFalse("Should be false",clientmanager.getViewClient());
-	    clientmanager.setViewClient(true);
-	    assertTrue("Should be true as client has chosen to view its info",clientmanager.getViewClient());
-	    
+	    clientmanager.getClient();
+	    assertTrue(clientmanager.getSetClient());
 	}
-	
+
 	@Then("the client information is shown that the company name is {string}, the email is {string}")
 	public void theClientInformationIsShownThatTheCompanyNameIsTheEmailIs(String name, String email) {
 	    // Write code here that turns the phrase above into concrete actions
-		assertTrue(clientmanager.viewClient());
-		assertEquals(name,clientmanager.getClient().getCompanyName());
-		assertEquals(email,clientmanager.getClient().getEmail());
-		
+	    client = clientmanager.viewClient();
+	    assertTrue(client.getCompanyName().equals(name));
+	    assertTrue(client.getEmail().equals(email));
 	}
-	
 
 	@Then("the phonenumber is countrycode {int} phone {long}")
-	public void thePhonenumberIsCountrycodePhone(int countrycode, long phone) {
+	public void thePhonenumberIsCountrycodePhone(int cc, long phone) {
 	    // Write code here that turns the phrase above into concrete actions
-		assertEquals(phone,clientmanager.getClient().getPhoneNumber().getPhone());
-		assertSame(countrycode,clientmanager.getClient().getPhoneNumber().getCountryCode());
+	    assertEquals(client.getPhoneNumber().getCountryCode(),cc);
+	    assertEquals(client.getPhoneNumber().getPhone(),phone);
 	}
-	
+
 	@Then("the reference person is firstname {string} lastname {string}")
 	public void theReferencePersonIsFirstnameLastname(String firstname, String lastname) {
 	    // Write code here that turns the phrase above into concrete actions
-		assertTrue(clientmanager.getClient().getPerson().getFirstName().contains(firstname));
-		assertTrue(clientmanager.getClient().getPerson().getLastName().contains(lastname));
+	    assertEquals(parseInput.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
+	    assertEquals(parseInput.parsingNames(lastname).size(),client.getPerson().getLastName().size());
 	}
 	
 
