@@ -185,11 +185,14 @@ public class CurrentClientV2 extends User{
 		container.setCargo(cargo);
 		container.setStatus(pressure, temperature, humidity);
 		container.setArriveBy(arriveBy);
+		container.setJourneyID(ssecurity.generateID());
 		databaseContainer.editEntry(container);
 		databaseContainer.flushActiveData();
-		System.out.println("container edited: "+container.getID());
+		System.out.println("container edited: "+container.getID()+"The jounrey ID is: "+container.getJourneyID());
 		this.containerRegistered=true;//only in the active data.. not in xml
-		
+		client.addActiveShipment(container.getJourneyID());
+		databaseClient.editEntry(client);
+		databaseClient.flushActiveData();
 	}
 
 	public boolean getContainerRegistered() {

@@ -26,7 +26,7 @@ Feature: Track the history of the Journey
 	#And the temperature value 38.0
 	#And the humidity level value 98.0% 
 	#And the pressure value 1atm
-	#Then the internal status of the container is updated and the changes are displayed to the company
+	#Then the internal status of the container is updated
 	
 	#Scenario: The client should be able to view the internal status of the container
 	#Given that the client enters the ID 1736101972072900 that exists in the memory

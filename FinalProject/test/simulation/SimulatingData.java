@@ -27,8 +27,10 @@ public class SimulatingData {
 	firstname.add("firstsecondname");
 	middlename.add("middlename");
 	ClientData client2 = new ClientData(36836570081685l,"company",92,23789,"email@eh.com",firstname,middlename,lastname,"g11/2","Islamabad",59,"2620");
+	ClientData client3 = new ClientData(828300261636100l,"Companyname",98,23457890l,"company@email.com",firstname,middlename,lastname,"somestreet","somecity",89,"23890");
 	clientDataBase.newEntry(client1);
 	clientDataBase.newEntry(client2);
+	clientDataBase.newEntry(client3);
 	clientDataBase.flushActiveData();
 	Security IDgenerator = new Security();
 	PortData port1 = new PortData(IDgenerator.generateID(),"Pakistan","Gwadar",25.11f,62.33f);
@@ -41,8 +43,8 @@ public class SimulatingData {
 	ContainerData container4 = new ContainerData(IDgenerator.generateID(),port1.getID(),25.11f,62.33f);
 	ContainerData container5 = new ContainerData(IDgenerator.generateID(),port2.getID(),55.70f,12.59f);
 	ContainerData container6 = new ContainerData(IDgenerator.generateID(),port2.getID(),55.70f,12.59f);
-	ContainerData container7 = new ContainerData(IDgenerator.generateID(),port2.getID(),55.70f,12.59f);
-	ContainerData container8 = new ContainerData(IDgenerator.generateID(),port2.getID(),55.70f,12.59f);
+	ContainerData container7 = new ContainerData(73013416799200l,port2.getID(),55.70f,12.59f);
+	ContainerData container8 = new ContainerData(521664805370600l,port2.getID(),55.70f,12.59f);
 	containerDataBase.newEntry(container1);
 	containerDataBase.newEntry(container2);
 	containerDataBase.newEntry(container3);
