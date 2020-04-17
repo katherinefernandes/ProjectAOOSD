@@ -8,6 +8,7 @@ import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
+import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
 
@@ -21,12 +22,15 @@ public class CurrentClientV2 extends User{
 	private boolean foundContainer = false;
 	private long containerID;
 	private boolean containerRegistered;
+	private ArrayList<Long> ActiveJourneys;
+	
 
 	public CurrentClientV2(long ID) {
 		// TODO Auto-generated constructor stub
-		databaseClient = new ClientAccess();
-		databasePort = new PortAccess();
-		databaseContainer = new ContainerAccess();
+		//databaseClient = new ClientAccess();
+		//databasePort = new PortAccess();
+		//databaseContainer = new ContainerAccess();
+		super();
 		try {
 			client = databaseClient.getEntry(ID);
 			clientIsSet = true;
@@ -44,31 +48,12 @@ public class CurrentClientV2 extends User{
 		return this.clientIsSet;
 	}
 
-	@Override
-	public void displayContainerData(ContainerData container) {
-		// TODO Auto-generated method stub
-		// this will send the container to a display which needs to be implemented.
+	
+	public void getClient() {
+		setClient = true;
+		display=true;
 		
 	}
-	
-	public boolean viewClient() {
-		if (display) {
-			viewClient(client);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean getViewClient() {
-		// TODO Auto-generated method stub
-		return this.display;
-	}
-
-	public void setViewClient(boolean changeDisplay) {
-		// TODO Auto-generated method stub
-		this.display=changeDisplay;
-	}
-
 	
 
 	public void updatePhone() {
@@ -185,6 +170,7 @@ public class CurrentClientV2 extends User{
 	public void registerContainer(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, LocalDateTime arriveBy) {
 		// TODO Auto-generated method stub
+		container.setClientID(client.getID());
 		container.setStartPortID(startPortID);
 		container.setDestinationPortID(destinationPortID);
 		container.setCargo(cargo);
@@ -193,7 +179,6 @@ public class CurrentClientV2 extends User{
 		container.setJourneyID(ssecurity.generateID());
 		databaseContainer.editEntry(container);
 		databaseContainer.flushActiveData();
-		System.out.println("container edited: "+container.getID()+"The jounrey ID is: "+container.getJourneyID());
 		this.containerRegistered=true;//only in the active data.. not in xml
 		client.addActiveShipment(container.getJourneyID());
 		databaseClient.editEntry(client);
@@ -221,7 +206,69 @@ public class CurrentClientV2 extends User{
 		databaseContainer.flushActiveData();
 		databasePort.flushActiveData();
 		this.foundContainer=true;
+		getAContainer(startPortID);
 	}
+
+	public void getContainer(long containerID) {
+		// TODO Auto-generated method stub
+		try {
+			container = databaseContainer.getEntry(containerID);
+			this.foundContainer = true;
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public ContainerData viewContainer() {
+		// TODO Auto-generated method stub
+		return this.container;
+	}
+
+	public ArrayList<ContainerData> getContainersByActiveJourneyIDs() {
+		// TODO Auto-generated method stub
+		ArrayList<ContainerData> containers = new ArrayList<ContainerData>();
+		List<ContainerData> containerExtractedByDataBase;
+		this.ActiveJourneys=client.getActiveShipment();
+		for(int i=0;i<this.ActiveJourneys.size();i++) {
+			String journeyIDInString = this.ActiveJourneys.get(i).toString();
+			containerExtractedByDataBase = databaseContainer.searchEntries(journeyIDInString);
+			containers.add(containerExtractedByDataBase.get(0));
+		}
+		return containers;
+	}
+	public ContainerData getContainersByActiveJourneyIDs(long journeyID) {
+		// TODO Auto-generated method stub
+		String JourneyIDInString = Long.toString(journeyID);
+		
+		return databaseContainer.searchEntries(JourneyIDInString).get(0);
+	}
+	
+
+	public ArrayList<ContainerData> filterContainersByStartPortID(long startPortID) {
+		// TODO Auto-generated method stub
+		ArrayList<ContainerData> containersInJourney = getContainersByActiveJourneyIDs();
+		for (int i=0;i<containersInJourney.size();i++) {
+			if (containersInJourney.get(i).getStartPortID()!=startPortID) {
+				containersInJourney.remove(i);
+			}
+		}
+		return containersInJourney;
+	}
+
+	public ArrayList<ContainerData> filterContainersByCargo(String cargo) {
+		// TODO Auto-generated method stub
+		ArrayList<ContainerData> containersInJourney = getContainersByActiveJourneyIDs();
+		for (int i=0;i<containersInJourney.size();i++) {
+			if (!containersInJourney.get(i).getCargo().equals(cargo)) {
+				containersInJourney.remove(i);
+			}
+		}
+		return containersInJourney;
+	}
+
+	
 
 	
 

@@ -2,6 +2,7 @@ package acceptanceTests.steps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -13,11 +14,15 @@ import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import objectsData.ClientData;
+import objectsData.ContainerData;
 import supportingClasses.ValidInput;
+import supportingClasses.parseInput;
 import users.CurrentClientV2;
 
 public class CurrentClientV2Steps {
 	private CurrentClientV2 clientmanager;
+	private ClientData client;
 	private int countryCode;
 	private long phone;
 	private ValidInput validate =new ValidInput();
@@ -32,6 +37,8 @@ public class CurrentClientV2Steps {
 	private float pressure;
 	private float humidity;
 	private LocalDateTime arriveBy;
+	private ContainerData container;
+	private ArrayList<ContainerData> containersInJourney;
 	
 	@Given("that the client enters the ID {long} that exists in the memory")
 	public void theIDItEnteredExistsInTheMemory(long ID) {
@@ -43,34 +50,30 @@ public class CurrentClientV2Steps {
 	@When("the client decides to view the client information")
 	public void theClientDecidesToViewTheClientInformation() {
 	    // Write code here that turns the phrase above into concrete actions
-		assertFalse("Should be false",clientmanager.getViewClient());
-	    clientmanager.setViewClient(true);
-	    assertTrue("Should be true as client has chosen to view its info",clientmanager.getViewClient());
-	    
+	    clientmanager.getClient();
+	    assertTrue(clientmanager.getSetClient());
 	}
-	
+
 	@Then("the client information is shown that the company name is {string}, the email is {string}")
 	public void theClientInformationIsShownThatTheCompanyNameIsTheEmailIs(String name, String email) {
 	    // Write code here that turns the phrase above into concrete actions
-		assertTrue(clientmanager.viewClient());
-		assertEquals(name,clientmanager.getClient().getCompanyName());
-		assertEquals(email,clientmanager.getClient().getEmail());
-		
+	    client = clientmanager.viewClient();
+	    assertTrue(client.getCompanyName().equals(name));
+	    assertTrue(client.getEmail().equals(email));
 	}
-	
 
 	@Then("the phonenumber is countrycode {int} phone {long}")
-	public void thePhonenumberIsCountrycodePhone(int countrycode, long phone) {
+	public void thePhonenumberIsCountrycodePhone(int cc, long phone) {
 	    // Write code here that turns the phrase above into concrete actions
-		assertEquals(phone,clientmanager.getClient().getPhoneNumber().getPhone());
-		assertSame(countrycode,clientmanager.getClient().getPhoneNumber().getCountryCode());
+	    assertEquals(client.getPhoneNumber().getCountryCode(),cc);
+	    assertEquals(client.getPhoneNumber().getPhone(),phone);
 	}
-	
+
 	@Then("the reference person is firstname {string} lastname {string}")
 	public void theReferencePersonIsFirstnameLastname(String firstname, String lastname) {
 	    // Write code here that turns the phrase above into concrete actions
-		assertTrue(clientmanager.getClient().getPerson().getFirstName().contains(firstname));
-		assertTrue(clientmanager.getClient().getPerson().getLastName().contains(lastname));
+	    assertEquals(parseInput.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
+	    assertEquals(parseInput.parsingNames(lastname).size(),client.getPerson().getLastName().size());
 	}
 	
 
@@ -164,7 +167,7 @@ public class CurrentClientV2Steps {
 	public void theClientProvidesAPortNameFromWhereTheJourneyWillStart(String portname) {
 	    // Write code here that turns the phrase above into concrete actions
 	    startPortID = clientmanager.getPortID(portname);
-	    assertFalse(startPortID==1l);// the startPortID would be 1 if the portname is not valid
+	    assertNotEquals(startPortID,1l);// the startPortID would be 1 if the portname is not valid
 	    clientmanager.setFoundContainer();
 	    assertFalse(clientmanager.getFoundContainer());
 	    clientmanager.getAContainer(startPortID);
@@ -175,7 +178,7 @@ public class CurrentClientV2Steps {
 	public void providesADestinationPortName(String portname) {
 	    // Write code here that turns the phrase above into concrete actions
 		destinationPortID = clientmanager.getPortID(portname);
-		assertFalse(startPortID==1l);// the startPortID would be 1 if the portname is not valid
+		assertNotEquals(destinationPortID,1l);// the startPortID would be 1 if the portname is not valid
 		clientmanager.updateDestinationPort(destinationPortID);
 	}
 
@@ -212,9 +215,72 @@ public class CurrentClientV2Steps {
 	    
 	}
 	
+	@When("the client enters the container the ID {long} that exists in the database")
+	public void theClientEntersTheContainerTheIDThatExistsInTheDatabase(long containerID) {
+	    // Write code here that turns the phrase above into concrete actions
+		clientmanager.setFoundContainer();
+		assertFalse(clientmanager.getFoundContainer());
+	    clientmanager.getContainer(containerID);
+	    assertTrue(clientmanager.getFoundContainer());
+	}
 
-	
+	@Then("the current location of the container is {float} latitude and {float} longitude, it contains the cargo:{string}")
+	public void theCurrentLocationOfTheContainerIsLatitudeAndLongitudeItContainsTheCargo(float latitude, float longitude, String cargo) {
+	    // Write code here that turns the phrase above into concrete actions
+		container = clientmanager.viewContainer();
+		assertEquals((int)container.getCurrentPosition().getLatitude(),(int)latitude);
+		assertEquals((int)container.getCurrentPosition().getlongitude(),(int)longitude);
+		assertTrue(container.getCargo().equals(cargo));
+	}
 
+	@Then("it will arrive by the year {int} month {int} day {int} hour {int} minute {int}")
+	public void itWillArriveByTheYearMonthDayHourMinute(int year, int month, int day, int hour, int minute) {
+	    // Write code here that turns the phrase above into concrete actions
+	    assertTrue(container.getArriveBy().equals(LocalDateTime.of(year, month, day, hour, minute)));
+	}
+
+	@When("the client provides the port name {string}")
+	public void theClientProvidesThePortName(String portname) {
+	    // Write code here that turns the phrase above into concrete actions
+	    startPortID = clientmanager.getPortID(portname);
+	    assertNotEquals(startPortID,1l);
+	}
+
+	@Then("the client can view all the information for all his containers starting journey from that Port")
+	public void theClientCanViewAllTheInformationForAllHisContainersStartingJourneyFromThatPort() {
+	    // Write code here that turns the phrase above into concrete actions
+		containersInJourney = clientmanager.filterContainersByStartPortID(startPortID);
+		for (int i=0;i<containersInJourney.size();i++) {
+			assertEquals(containersInJourney.get(i).getStartPortID(),startPortID);
+		}
+	}
+	@When("the client provides the cargo type {string}")
+	public void theClientProvidesTheCargoType(String cargo) {
+	    // Write code here that turns the phrase above into concrete actions
+		this.cargo=cargo;
+		containersInJourney = clientmanager.filterContainersByCargo(cargo);
+	}
+
+	@Then("the client can view all the information for all those containers")
+	public void theClientCanViewAllTheInformationForAllThoseContainers() {
+	    // Write code here that turns the phrase above into concrete actions
+		for (int i=0;i<containersInJourney.size();i++) {
+			assertEquals(containersInJourney.get(i).getCargo(),cargo);
+		}
+	}
+	@When("the client chooses to view the internal status of a container with the journeyID {long}")
+	public void theClientChoosesToViewTheInternalStatusOfAContainerWithTheJourneyID(long journeyID) {
+	    // Write code here that turns the phrase above into concrete actions
+	    container = clientmanager.getContainersByActiveJourneyIDs(journeyID);
+	}
+
+	@Then("the client can view the current internal status of the container which is temperature {float}, pressure {float}, humidity level {float}")
+	public void theClientCanViewTheCurrentInternalStatusOfTheContainerWhichIsTemperaturePressureHumidityLevel(float temperature, float pressure, float humidity) {
+	    // Write code here that turns the phrase above into concrete actions
+	    assertEquals((int)container.getInternalStatus().getTemperature(),(int)temperature);
+	    assertEquals((int)container.getInternalStatus().getAtmosphere(),(int)pressure);
+	    assertSame((int)container.getInternalStatus().getHumidity(),(int)humidity);
+	}
 
 }
 

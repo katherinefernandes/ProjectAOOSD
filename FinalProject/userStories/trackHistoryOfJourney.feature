@@ -28,11 +28,10 @@ Feature: Track the history of the Journey
 	#And the pressure value 1atm
 	#Then the internal status of the container is updated
 	
-	#Scenario: The client should be able to view the internal status of the container
-	#Given that the client enters the ID 1736101972072900 that exists in the memory
-	#When the client chooses to view the internal status of a container which is on a journey
-	#And the container with the ID 768780574981500 exists in the database
- 	#Then the client can view the internal status of the container.
+	Scenario: The client should be able to view the internal status of the container
+	Given that the client enters the ID 14618447211200 that exists in the memory
+	When the client chooses to view the internal status of a container with the journeyID 17027135462300
+ 	Then the client can view the current internal status of the container which is temperature 0.0, pressure 1.0, humidity level 20.0
 
 
 
