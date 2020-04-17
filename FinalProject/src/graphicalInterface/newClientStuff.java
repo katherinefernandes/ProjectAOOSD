@@ -37,7 +37,7 @@ public class newClientStuff {
 	private JTextField lastnametext;
 	private JTextField textField_4;
 	private JPanel PhonePanel;
-	private JTextField textField_6;
+	private JTextField newPhoneNumberText;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_10;
@@ -49,7 +49,7 @@ public class newClientStuff {
 	private ClientController controller;
 	private JButton LogOutButton;
 	private JTextArea txtrCountryCode;
-	private JTextField textField;
+	private JTextField countryCodeTextField;
 	private JTextField JourneyIDsearch;
 	private JTextField CargoIDsearch;
 	private JTextField PortNamesearch;
@@ -214,6 +214,11 @@ public class newClientStuff {
 		textField_4.setColumns(10);
 		
 		JButton saveEmailButton = new JButton("Save");
+		saveEmailButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+			}
+		});
 		saveEmailButton.setBounds(357, 223, 117, 29);
 		emailPanel.add(saveEmailButton);
 		
@@ -245,13 +250,20 @@ public class newClientStuff {
 		PhonePanel.add(txtrNewPhoneNumber);
 		
 		JButton savePhoneButton = new JButton("Save");
+		savePhoneButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
+				clearPhoneFields(countryCodeTextField,newPhoneNumberText);
+				
+			}
+		});
 		savePhoneButton.setBounds(372, 222, 117, 29);
 		PhonePanel.add(savePhoneButton);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(291, 136, 198, 26);
-		PhonePanel.add(textField_6);
-		textField_6.setColumns(10);
+		newPhoneNumberText = new JTextField();
+		newPhoneNumberText.setBounds(291, 136, 198, 26);
+		PhonePanel.add(newPhoneNumberText);
+		newPhoneNumberText.setColumns(10);
 		
 		txtrCountryCode = new JTextArea();
 		txtrCountryCode.setText("Country Code:");
@@ -261,10 +273,10 @@ public class newClientStuff {
 		txtrCountryCode.setBounds(94, 188, 168, 23);
 		PhonePanel.add(txtrCountryCode);
 		
-		textField = new JTextField();
-		textField.setBounds(291, 185, 198, 26);
-		PhonePanel.add(textField);
-		textField.setColumns(10);
+		countryCodeTextField = new JTextField();
+		countryCodeTextField.setBounds(291, 185, 198, 26);
+		PhonePanel.add(countryCodeTextField);
+		countryCodeTextField.setColumns(10);
 		
 		CurrentPhoneNumberTextArea = new JTextArea();
 		CurrentPhoneNumberTextArea.setEditable(false);
@@ -456,4 +468,9 @@ public class newClientStuff {
 		}
 	
 }
+	public void clearPhoneFields(JTextField...fields) {
+		for(JTextField field : fields) {
+			field.setText("");
+		}
+	}
 }
