@@ -7,7 +7,6 @@ import java.util.*;
 import org.junit.jupiter.api.Test;
 
 import dataAccess.ClientAccess;
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
@@ -68,10 +67,10 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,Clie
 	}
 	
 	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
 		persistencyTest(); }
 	@Test
-	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void editTestT() throws NumberFormatException, ElementNotFoundException {
 		editTest(); }
 	
 	@Override

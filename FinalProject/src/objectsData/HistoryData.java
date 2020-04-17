@@ -63,9 +63,6 @@ public class HistoryData extends ObjectData {
 	public LocalDateTime getTimeStamp() {
 		return this.timeStamp;
 	}
-	public long getID() {
-		return timeStamp.toEpochSecond(ZoneOffset.UTC);
-	}
 	public long getContainerID() {
 		return this.containerID;
 	}

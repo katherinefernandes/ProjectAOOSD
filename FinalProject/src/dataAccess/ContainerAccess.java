@@ -16,7 +16,6 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 
 public class ContainerAccess extends IdentifiedDataAccess<ContainerData> {
@@ -26,7 +25,7 @@ public class ContainerAccess extends IdentifiedDataAccess<ContainerData> {
 	}
 	
 	@Override
-	public ContainerData dataOfEvents(List<XMLEvent> events, long ID) {
+	public ContainerData dataFromEvents(List<XMLEvent> events, long ID) {
 		int i = 0;
 		XMLEvent event;
 		StartElement start;

@@ -9,7 +9,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.Location;
@@ -22,7 +21,7 @@ public class PortAccess extends IdentifiedDataAccess<PortData> {
 	}
 
 	@Override
-	protected PortData dataOfEvents(List<XMLEvent> events, long ID) {
+	protected PortData dataFromEvents(List<XMLEvent> events, long ID) {
 		int i = 0;
 		XMLEvent event;
 		StartElement start;

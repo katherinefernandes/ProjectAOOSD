@@ -1,7 +1,5 @@
 package dataAccess;
 
-
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -15,50 +13,43 @@ import objectsData.InternalState;
 import objectsData.Location;
 
 public class HistoryAccess extends DataAccess<HistoryData> {
+	private ActiveData<HistoryData> activeData;
 	public HistoryAccess() {
 		super("storage/activeData/history.xml","DataPoint","History");
+		activeData = new ActiveData<>();
 	}
 
 	@Override
 	public void newEntry(HistoryData data) {
-		activeData.add(data);
+		activeData.storeNewData(data);
 	}
 
 	@Override
 	public List<HistoryData> searchEntries(String searchWord) {
-		correctPositionFound = false;
-		List<HistoryData> matchingEntries = new ArrayList<>();
-		for(HistoryData dataPoint : activeData) {
-			for(String value : dataPoint.dumpValues()) {
-				correctPositionFound = correctPositionFound || value.contains(searchWord);
-			}
-			if(correctPositionFound) {
-				matchingEntries.add(dataPoint);
-			}
-			correctPositionFound = false;
-		}
+		boolean correctPositionFound = false;
+		List<HistoryData> matchingEntries = activeData.searchThroughData(searchWord);
 		
 		initializeIO();
+		List<XMLEvent> currentDatapoint = new ArrayList<>();
 		
 		try {
 			
 		reader.nextEvent();
 		reader.nextEvent();
-		currentDatapoint = new ArrayList<>();
 		while(reader.hasNext()) {
 			XMLEvent event = reader.nextEvent();
 			if(event.isEndElement()) {
 				EndElement end = event.asEndElement();
 				if(end.getName().getLocalPart().equals(elementsName)) {
 					if(correctPositionFound) {
-						matchingEntries.add(dataOfEvents(currentDatapoint));
+						matchingEntries.add(dataFromEvents(currentDatapoint));
 					}
 					currentDatapoint = new ArrayList<>();
 					correctPositionFound = false;
 				}
 				if(end.getName().getLocalPart().equals(collectionsName)) {
 					if(correctPositionFound) {
-						matchingEntries.add(dataOfEvents(currentDatapoint));
+						matchingEntries.add(dataFromEvents(currentDatapoint));
 					}
 					break;
 				}
@@ -70,11 +61,11 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 			currentDatapoint.add(event);
 		}			
 		} catch (XMLStreamException e) {
-			closeIO();
+			finishReadIO();
 			e.printStackTrace();
 		}
 			
-		closeIO();
+		finishReadIO();
 		return matchingEntries;
 	}
 
@@ -87,8 +78,9 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
-		for(HistoryData dataPoint : activeData) {
-			insertDatapoint(eventsFromData(dataPoint));
+		while(!activeData.isEmpty()) {
+			insertDatapoint(eventsFromData(activeData.getDataAtIndex(0)));
+			activeData.removeDataAtIndex(0);
 		}
 		try {
 			while(reader.hasNext()) {
@@ -97,7 +89,21 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
-		writeIO();
+		finishWriteIO();
+	}
+	
+	public void wipeHistory() {
+		activeData.wipeAllData();
+		initializeIO();
+		try {
+			writer.add(reader.nextEvent());
+			writer.add(reader.nextEvent());
+			writer.add(eventFactory.createEndElement("", "", collectionsName));
+			writer.add(eventFactory.createEndDocument());
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}
+		finishWriteIO();
 	}
 
 	@Override
@@ -105,7 +111,7 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		return eventFactory.createStartElement("", "", elementsName);
 	}
 	
-	private HistoryData dataOfEvents(List<XMLEvent> events) {
+	private HistoryData dataFromEvents(List<XMLEvent> events) {
 		int i = 0;
 		i = iterateUntilFound(i,events,"TimeStamp");
 		LocalDateTime timeStamp = LocalDateTime.parse(events.get(++i).asCharacters().getData());
@@ -135,18 +141,5 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		HistoryData historyData = new HistoryData(timeStamp, containerID, journeyID, clientID, destinationPortID, startPortID, cargo, temperature, atmosphere, humidity, latitude, longitude);
 		
 		return historyData;
-	}
-
-	public void wipeHistory() {
-		initializeIO();
-		try {
-			writer.add(reader.nextEvent());
-			writer.add(reader.nextEvent());
-			writer.add(eventFactory.createEndElement("", "", collectionsName));
-			writer.add(eventFactory.createEndDocument());
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
-		writeIO();
 	}
 }

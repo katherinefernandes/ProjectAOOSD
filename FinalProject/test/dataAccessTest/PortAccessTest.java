@@ -8,7 +8,6 @@ import java.util.*;
 import org.junit.jupiter.api.Test;
 
 import dataAccess.PortAccess;
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.PortData;
 
@@ -44,11 +43,11 @@ public class PortAccessTest extends IdentifiableDataAccessTest<PortData,PortAcce
 	}
 	
 	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
 		persistencyTest(); 
 		 }
 	@Test
-	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void editTestT() throws NumberFormatException, ElementNotFoundException {
 		editTest(); }
 	
 	public void assertEqualData(PortData portData1, PortData portData2) {

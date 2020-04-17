@@ -2,8 +2,7 @@ package objectsData;
 
 import java.util.*;
 
-public class PortData extends ObjectData{
-	private long portID;
+public class PortData extends IdentifiableData{
 	private String country;
 	private String portName;
 	private Location position;
@@ -12,7 +11,7 @@ public class PortData extends ObjectData{
 	
 	public PortData(long pid, String country, String portname, float lat, float lon) {
 		this.tagName = "Port";
-		this.portID=pid;
+		this.ID=pid;
 		this.country=country;
 		this.portName=portname;
 		this.position= new Location(lat,lon);
@@ -29,9 +28,6 @@ public class PortData extends ObjectData{
 		
 		XMLField[] array = {countryXML,portNameXML,positionXML,stationedContainersXML,arrivingContainersXML};
 		xmlFields = Arrays.asList(array);
-	}
-	public long getID() {
-		return this.portID;
 	}
 	public String getCountry() {
 		return this.country;

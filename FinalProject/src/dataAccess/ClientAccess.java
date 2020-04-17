@@ -9,7 +9,6 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.events.*;
 
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 
 
@@ -19,7 +18,7 @@ public class ClientAccess extends IdentifiedDataAccess<ClientData> {
 	}
 	
 	@Override
-	public ClientData dataOfEvents(List<XMLEvent> events, long ID) {
+	protected ClientData dataFromEvents(List<XMLEvent> events, long ID) {
 		int i = 0;
 		XMLEvent event;
 		StartElement start;

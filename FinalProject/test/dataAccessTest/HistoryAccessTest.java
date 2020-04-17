@@ -11,7 +11,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import dataAccess.HistoryAccess;
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.HistoryData;
 
@@ -52,7 +51,7 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryAccess
 	}
 	
 	@Override
-	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
 		insertData(data1);
 		insertData(data1_v2);
 		dataAccess.flushActiveData();
@@ -60,13 +59,14 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryAccess
 		for(HistoryData data : sortTestData) {
 			insertData(data);
 		}
+		dataAccess.flushActiveData();
 	
 		HistoryData pulledData = dataAccess.searchEntries(data2.getTimeStamp().toString()).get(0);
 		assertEqualData(pulledData,data2);
 	}
 	
 	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
 		persistencyTest();
 	}
 	

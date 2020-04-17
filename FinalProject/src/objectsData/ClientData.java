@@ -2,7 +2,7 @@ package objectsData;
 
 import java.util.*;
 
-public class ClientData extends ObjectData{
+public class ClientData extends IdentifiableData{
 	private long clientID;
 	private String companyName;
 	private PhoneNumber phoneNumber;
@@ -13,7 +13,8 @@ public class ClientData extends ObjectData{
 
 	
 	public ClientData(long cid, String companyname, int country, long phone, String email, ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln, String street, String city, int house, String zip) {
-		this.clientID=cid;
+		this.tagName = "Client";
+		this.ID=cid;
 		this.companyName=companyname;
 		this.phoneNumber= new PhoneNumber(country,phone);
 		this.email= email;
@@ -98,9 +99,6 @@ public class ClientData extends ObjectData{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	public long getID() {
-		return this.clientID;
 	}
 	public String getCompanyName() {
 		return this.companyName;

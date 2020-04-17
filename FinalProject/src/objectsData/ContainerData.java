@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ContainerData extends ObjectData {
+public class ContainerData extends IdentifiableData {
 	private long containerID;
 	private long clientID;
 	private long journeyID;
@@ -21,7 +21,7 @@ public class ContainerData extends ObjectData {
 	//overloaded constructor
 	public ContainerData(long containerID, long portID, float latitude, float longitude) {
 		this.tagName = "Container";
-		this.containerID=containerID;
+		this.ID=containerID;
 		this.clientID=0l;
 		this.journeyID=0l;
 		this.startPortID=portID;
@@ -74,6 +74,7 @@ public class ContainerData extends ObjectData {
 
 	public ContainerData(long containerID, long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime arriveBy) {
 		this.tagName = "Container";
+		this.ID = containerID;
 		this.containerID=containerID;
 		this.clientID=clientID;
 		this.journeyID=journeyID;
@@ -160,9 +161,6 @@ public class ContainerData extends ObjectData {
 		return this.arriveBy;
 	}
 	
-	public long getID() {
-		return this.containerID;
-	}
 	public long getJourneyID() {
 		return this.journeyID;
 	} 

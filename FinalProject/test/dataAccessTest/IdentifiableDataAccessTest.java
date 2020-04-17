@@ -6,11 +6,11 @@ import org.junit.jupiter.api.AfterEach;
 
 import dataAccess.DataAccess;
 import dataAccess.IdentifiedDataAccess;
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
+import objectsData.IdentifiableData;
 import objectsData.ObjectData;
 
-public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends IdentifiedDataAccess<T>> extends DataAccessTest<T,A>{
+public abstract class IdentifiableDataAccessTest<T extends IdentifiableData, A extends IdentifiedDataAccess<T>> extends DataAccessTest<T,A>{
 	public IdentifiableDataAccessTest() {
 		super();
 	}
@@ -25,7 +25,13 @@ public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends
 	}
 	
 	@Override
-	public void persistencyTest() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void insertData(T data) {
+		super.insertData(data);
+		toBeDeleted.add(data.getID());
+	}
+	
+	@Override
+	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
 		insertData(data1);
 		
 		dataAccess.flushActiveData();
@@ -35,7 +41,7 @@ public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends
 		assertEqualData(pulledData,data1);
 	}
 	
-	public void editTest() throws ElementNotFoundException, NumberFormatException, AmbiguousElementSelectionException {
+	public void editTest() throws ElementNotFoundException, NumberFormatException {
 		for(T data : sortTestData) {
 			insertData(data);
 		}
@@ -46,5 +52,9 @@ public abstract class IdentifiableDataAccessTest<T extends ObjectData, A extends
 		T pulledData = dataAccess.getEntry(getDataID(data1));
 		
 		assertEqualData(pulledData,data1_v2);
+	}
+	
+	protected long getDataID(T data) {
+		return data.getID();
 	}
 }

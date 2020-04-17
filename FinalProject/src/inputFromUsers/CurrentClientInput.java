@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;

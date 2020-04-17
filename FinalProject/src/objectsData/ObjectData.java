@@ -3,13 +3,10 @@ package objectsData;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.stream.events.XMLEvent;
 
-public abstract class ObjectData{
+public abstract class ObjectData implements ObjectDataInterface{
 	protected List<XMLField> xmlFields;
 	protected String tagName;
-	
-	public abstract long getID();
 	
 	public List<String> dumpValues(){
 		List<String> values = new ArrayList<>();
@@ -21,6 +18,15 @@ public abstract class ObjectData{
 			e.printStackTrace();
 		}
 		return values;
+	}
+	
+	public boolean valuesContainSearchWord(String searchWord) {
+		for(String value : dumpValues()) {
+			if(value.contains(searchWord)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	protected int indexOfTagname(List<XMLField> fields, String tagname) {

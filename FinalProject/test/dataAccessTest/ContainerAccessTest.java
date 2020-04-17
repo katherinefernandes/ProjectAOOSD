@@ -10,7 +10,6 @@ import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.Test;
 
 import dataAccess.ContainerAccess;
-import exceptions.AmbiguousElementSelectionException;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 
@@ -31,10 +30,10 @@ public class ContainerAccessTest extends IdentifiableDataAccessTest<ContainerDat
 	}
 	
 	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
 		persistencyTest(); }
 	//@Test
-	public void editTestT() throws NumberFormatException, ElementNotFoundException, AmbiguousElementSelectionException {
+	public void editTestT() throws NumberFormatException, ElementNotFoundException {
 		editTest(); }
 
 	

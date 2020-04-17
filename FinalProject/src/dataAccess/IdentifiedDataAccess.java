@@ -8,45 +8,32 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.*;
 
 import exceptions.ElementNotFoundException;
+import objectsData.IdentifiableData;
 import objectsData.ObjectData;
 
-public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAccess<T> {
+public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends DataAccess<T> {
+	private ActiveIdentifiableData<T> activeData;
 	
 	public IdentifiedDataAccess(String filename, String elementsName, String collectionName) {
 		super(filename, elementsName, collectionName);
+		activeData = new ActiveIdentifiableData<>();
 	}
 	
-	protected abstract T dataOfEvents(List<XMLEvent> events, long ID);
+	protected abstract T dataFromEvents(List<XMLEvent> events, long ID);
 	
 	@Override
 	public void newEntry(T newData) {
-		long newID = newData.getID();
-		for(int i = 0; i < activeData.size(); i++) {
-			long currentID = activeData.get(i).getID();
-			if (newID <= currentID) {
-				activeData.add(i, newData);
-				if (newID == currentID) {
-					activeData.remove(i + 1);
-				}
-				return;
-			}
-		}
-		activeData.add(newData);
+		activeData.storeNewData(newData);
 	}
-	
+
+
 	@Override
 	public List<T> searchEntries(String searchWord) {
-		List<T> matchingEntries = new ArrayList<>();
-		for(T data : activeData) {
-			for(String value : data.dumpValues()) {
-				if(value.contains(searchWord)) {
-					matchingEntries.add(data);
-					break;
-				}
-			}
-		}
+		List<T> matchingEntries = activeData.searchThroughData(searchWord);
 		
 		initializeIO();
+		boolean correctPositionFound = false;
+		List<XMLEvent> currentDatapoint = new ArrayList<>();
 		try {
 		Attribute IDattribute = null;
 		long currentID = 0L;
@@ -57,14 +44,11 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 				IDattribute = start.getAttributeByName(QName.valueOf("ID"));
 				if(IDattribute != null) {
 					if(correctPositionFound) {
-						matchingEntries.add(dataOfEvents(currentDatapoint,currentID));
+						matchingEntries.add(dataFromEvents(currentDatapoint,currentID));
 					}
-					if(!String.valueOf(IDattribute.getValue()).contains(searchWord)) {
-						correctPositionFound = false;
-					}
-					else {
-						correctPositionFound = true;
-					}
+					
+					correctPositionFound = searchWordIsInID(searchWord, IDattribute);
+					
 					currentDatapoint = new ArrayList<>();
 					currentID = Long.valueOf(IDattribute.getValue());
 				}
@@ -78,88 +62,40 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 			currentDatapoint.add(event);
 		}
 		if(correctPositionFound) {
-			matchingEntries.add(dataOfEvents(currentDatapoint,currentID));
+			matchingEntries.add(dataFromEvents(currentDatapoint,currentID));
 		}
 		} catch (XMLStreamException e) {
-			closeIO();
+			finishReadIO();
 			e.printStackTrace();
 		}
-		closeIO();
+		finishReadIO();
 		return matchingEntries;
 	}
+
+	private boolean searchWordIsInID(String searchWord, Attribute IDattribute) {
+		return IDattribute.getValue().contains(searchWord);
+	}
 	
-	//TODO has become deprecated, to be deleted
 	public T getEntry(long ID) throws ElementNotFoundException {
-		for(T data : activeData) {
-			long dataID = data.getID();
-			if(dataID == ID) {
-				return data;
-			}
-			if(dataID > ID) {
-				break;
-			}
+		List<T> matchingEntries = searchEntries(String.valueOf(ID));
+		if(matchingEntries.size() == 0) {
+			throw new ElementNotFoundException("Given element could not be found in database");
 		}
-		
-		initializeIO();
-		try {
-		correctPositionFound = false;
-		long IDvalue = 0L;
-		while(reader.hasNext()) {
-			XMLEvent event = reader.nextEvent();
-			if(event.isStartElement()) {
-				StartElement start = event.asStartElement();
-				Attribute IDattribute = start.getAttributeByName(QName.valueOf("ID"));
-				if(IDattribute != null) {
-					if(correctPositionFound) {
-						closeIO();
-						return dataOfEvents(currentDatapoint, IDvalue); 
-					}
-					IDvalue = Long.valueOf(IDattribute.getValue());
-					
-					if(ID < IDvalue) {
-						break;
-					}
-					if(ID == IDvalue) {
-						correctPositionFound = true;
-					}
-					
-					currentDatapoint = new ArrayList<>();
-				}
-			}
-			currentDatapoint.add(event);
-		}
-		if(correctPositionFound) {
-			closeIO();
-			return dataOfEvents(currentDatapoint, IDvalue); 
-		}
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
-		
-		closeIO();
-		throw new ElementNotFoundException("Element with given ID was not found");
+		return matchingEntries.get(0);
 	}
 	
 	public void editEntry(T data) {
+		//Might implement checks for whether entry exists
 		newEntry(data);
 	}
 	
 	public void deleteEntry(long ID) {
-		for(int i = 0; i < activeData.size(); i++) {
-			long currentID = activeData.get(i).getID();
-			if(currentID == ID) {
-				activeData.remove(i);
-				break;
-			}
-			if(currentID > ID) {
-				break;
-			}
-		}
+		activeData.removeDataWithID(ID);
 		
 		initializeIO();
+		boolean correctPositionFound = false;
 		
 		try {
-		correctPositionFound = false;
 		XMLEvent event = null;
 		while(reader.hasNext()) {
 			event = reader.nextEvent();
@@ -185,17 +121,16 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
-		writeIO();
+		finishWriteIO();
 	}
 	
 	@Override
 	public void flushActiveData() {
 		initializeIO();
+		boolean overwrite = false;
+		List<XMLEvent> currentDatapoint = new ArrayList<>();
 		
 		try {
-		boolean overwrite = false;
-		EndElement end;
-		currentDatapoint = new ArrayList<>();
 		writer.add(reader.nextEvent());
 		writer.add(reader.nextEvent());
 		while(reader.hasNext()) {
@@ -205,13 +140,13 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 				Attribute ID = start.getAttributeByName(QName.valueOf("ID"));
 				if(ID != null) {
 					overwrite = false;
-					while(activeData.size() > 0 && Long.valueOf(ID.getValue()) > activeData.get(0).getID()) {						
-						insertDatapoint(eventsFromData(activeData.get(0)));
-						activeData.remove(0);
+					while(!activeData.isEmpty() && Long.valueOf(ID.getValue()) > activeData.getDataAtIndex(0).getID()) {						
+						insertDatapoint(eventsFromData(activeData.getDataAtIndex(0)));
+						activeData.removeDataAtIndex(0);
 					}
-					if(activeData.size() > 0 && Long.valueOf(ID.getValue()) == activeData.get(0).getID()) {
-						insertDatapoint(eventsFromData(activeData.get(0)));
-						activeData.remove(0);
+					if(!activeData.isEmpty() && Long.valueOf(ID.getValue()) == activeData.getDataAtIndex(0).getID()) {
+						insertDatapoint(eventsFromData(activeData.getDataAtIndex(0)));
+						activeData.removeDataAtIndex(0);
 						overwrite = true;
 					}
 				}
@@ -225,18 +160,16 @@ public abstract class IdentifiedDataAccess<T extends ObjectData> extends DataAcc
 			}
 			
 		}
-		if(activeData.size() > 0) {
-			for(T dataPoint : activeData) {
-				insertDatapoint(eventsFromData(dataPoint));
-			}
-			activeData = new ArrayList<>();
+		while(!activeData.isEmpty()) {
+			insertDatapoint(eventsFromData(activeData.getDataAtIndex(0)));
+			activeData.removeDataAtIndex(0);
 		}
 		insertDatapoint(currentDatapoint);
 		
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
-		writeIO();
+		finishWriteIO();
 	}
 	
 	@Override
