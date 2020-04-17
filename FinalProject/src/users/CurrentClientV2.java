@@ -8,6 +8,7 @@ import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
 import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
+import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
 
@@ -266,8 +267,6 @@ public class CurrentClientV2 extends User{
 		}
 		return containersInJourney;
 	}
-
-	
 
 	
 

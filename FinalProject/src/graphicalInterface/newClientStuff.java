@@ -34,10 +34,8 @@ public class newClientStuff {
 	private JTextField firstnametext;
 	private JTextField middlenametext;
 	private JTextField lastnametext;
-	private JTextField textField_3;
 	private JTextField textField_4;
 	private JPanel PhonePanel;
-	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_8;
 	private JTextField textField_9;
@@ -54,36 +52,12 @@ public class newClientStuff {
 	private JTextField JourneyIDsearch;
 	private JTextField CargoIDsearch;
 	private JTextField PortNamesearch;
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					newClientStuff window = new newClientStuff();
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-//
-//	/**
-//	 * Create the application.
-//	 */
-//	public newClientStuff() {
-//		initialize();
-//	}
-//
-//	/**
-//	 * Initialize the contents of the frame.
-//	 */
+	private JTextArea CurrentEmailTextField;
+	private JTextArea CurrentPhoneNumberTextArea;
+
 	
-	public newClientStuff(Controller controller, String clientID) {
+	public newClientStuff(Controller controller) {
 		this.controller = controller;
-		this.clientID = Long.valueOf(clientID);
 		initialize();
 	}
 	private void initialize() {
@@ -205,10 +179,8 @@ public class newClientStuff {
 		JButton Save1 = new JButton("Save");
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText(),clientID);
-				firstnametext.setText("");
-				middlenametext.setText("");
-				lastnametext.setText("");
+				controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
+				clearNameFields(firstnametext,middlenametext,lastnametext);
 			}
 		});
 		Save1.setBounds(308, 244, 117, 29);
@@ -235,11 +207,6 @@ public class newClientStuff {
 		txtrNewEmail.setBounds(82, 145, 118, 16);
 		emailPanel.add(txtrNewEmail);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(267, 94, 210, 26);
-		emailPanel.add(textField_3);
-		textField_3.setColumns(10);
-		
 		textField_4 = new JTextField();
 		textField_4.setBounds(267, 140, 210, 26);
 		emailPanel.add(textField_4);
@@ -248,6 +215,12 @@ public class newClientStuff {
 		JButton btnNewButton = new JButton("Save");
 		btnNewButton.setBounds(357, 223, 117, 29);
 		emailPanel.add(btnNewButton);
+		
+		CurrentEmailTextField = new JTextArea();
+		CurrentEmailTextField.setBackground(new Color(95, 158, 160));
+		CurrentEmailTextField.setEditable(false);
+		CurrentEmailTextField.setBounds(267, 99, 129, 16);
+		emailPanel.add(CurrentEmailTextField);
 		
 		PhonePanel = new JPanel();
 		PhonePanel.setBackground(new Color(95, 158, 160));
@@ -274,11 +247,6 @@ public class newClientStuff {
 		btnNewButton_2.setBounds(372, 222, 117, 29);
 		PhonePanel.add(btnNewButton_2);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(291, 85, 198, 26);
-		PhonePanel.add(textField_5);
-		textField_5.setColumns(10);
-		
 		textField_6 = new JTextField();
 		textField_6.setBounds(291, 136, 198, 26);
 		PhonePanel.add(textField_6);
@@ -296,6 +264,12 @@ public class newClientStuff {
 		textField.setBounds(291, 185, 198, 26);
 		PhonePanel.add(textField);
 		textField.setColumns(10);
+		
+		CurrentPhoneNumberTextArea = new JTextArea();
+		CurrentPhoneNumberTextArea.setEditable(false);
+		CurrentPhoneNumberTextArea.setBackground(new Color(95, 158, 160));
+		CurrentPhoneNumberTextArea.setBounds(292, 90, 197, 16);
+		PhonePanel.add(CurrentPhoneNumberTextArea);
 		
 		JourneyPanel = new JPanel();
 		JourneyPanel.setBackground(new Color(95, 158, 160));
@@ -474,4 +448,11 @@ public class newClientStuff {
 		layeredPane.revalidate();
 		
 	}
+	
+	public void clearNameFields(JTextField...fields) {
+		for(JTextField field : fields) {
+			field.setText("");
+		}
+	
+}
 }

@@ -230,7 +230,7 @@ public class Login_Window {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							newClientStuff window = new newClientStuff(controller,IDtextField.getText());
+							newClientStuff window = new newClientStuff(controller);
 							window.frame.setVisible(true);
 							frmLoginPage.setVisible(false);
 						} catch (Exception e) {
