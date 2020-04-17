@@ -55,6 +55,8 @@ public class newClientStuff {
 	private JTextField PortNamesearch;
 	private JTextArea CurrentEmailTextField;
 	private JTextArea CurrentPhoneNumberTextArea;
+	private JTextArea InvalidNameError;
+	private JTextArea InvalidEmailError, PhoneError;
 
 	
 	public newClientStuff(ClientController controller) {
@@ -187,6 +189,15 @@ public class newClientStuff {
 		Save1.setBounds(308, 244, 117, 29);
 		referencePanel.add(Save1);
 		
+		InvalidNameError = new JTextArea();
+		InvalidNameError.setForeground(new Color(220, 20, 60));
+		InvalidNameError.setText("Invalid Input. Please enter valid information");
+		InvalidNameError.setEditable(false);
+		InvalidNameError.setBackground(new Color(95, 158, 160));
+		InvalidNameError.setBounds(219, 48, 313, 16);
+		//referencePanel.add(InvalidNameError);
+		
+		
 		emailPanel = new JPanel();
 		emailPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(emailPanel, "name_7578041274086");
@@ -230,6 +241,14 @@ public class newClientStuff {
 		CurrentEmailTextField.setEditable(false);
 		CurrentEmailTextField.setBounds(267, 99, 129, 16);
 		emailPanel.add(CurrentEmailTextField);
+		
+		InvalidEmailError = new JTextArea();
+		InvalidEmailError.setBackground(new Color(95, 158, 160));
+		InvalidEmailError.setEditable(false);
+		InvalidEmailError.setText("Invalid email. Please try again");
+		InvalidEmailError.setForeground(new Color(220, 20, 60));
+		InvalidEmailError.setBounds(267, 46, 195, 16);
+		
 		
 		PhonePanel = new JPanel();
 		PhonePanel.setBackground(new Color(95, 158, 160));
@@ -286,6 +305,14 @@ public class newClientStuff {
 		CurrentPhoneNumberTextArea.setBackground(new Color(95, 158, 160));
 		CurrentPhoneNumberTextArea.setBounds(292, 90, 197, 16);
 		PhonePanel.add(CurrentPhoneNumberTextArea);
+		
+		PhoneError = new JTextArea();
+		PhoneError.setForeground(new Color(220, 20, 60));
+		PhoneError.setText("Invalid Phone Number");
+		PhoneError.setBackground(new Color(95, 158, 160));
+		PhoneError.setEditable(false);
+		PhoneError.setBounds(315, 55, 239, 16);
+		
 		
 		JourneyPanel = new JPanel();
 		JourneyPanel.setBackground(new Color(95, 158, 160));
@@ -481,5 +508,18 @@ public class newClientStuff {
 		for(JTextField field : fields) {
 			field.setText("");
 		}
+	}
+	
+	public void displayNameError() {
+		//InvalidNameError.setVisible(true);
+		referencePanel.add(InvalidNameError);
+	}
+	
+	public void displayEmailError() {
+		emailPanel.add(InvalidEmailError);
+	}
+	
+	public void displyPhoneError() {
+		PhonePanel.add(PhoneError);
 	}
 }
