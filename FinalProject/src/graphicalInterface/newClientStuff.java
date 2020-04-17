@@ -35,7 +35,7 @@ public class newClientStuff {
 	private JTextField firstnametext;
 	private JTextField middlenametext;
 	private JTextField lastnametext;
-	private JTextField textField_4;
+	private JTextField EmailTextField;
 	private JPanel PhonePanel;
 	private JTextField newPhoneNumberText;
 	private JTextField textField_8;
@@ -208,14 +208,17 @@ public class newClientStuff {
 		txtrNewEmail.setBounds(82, 145, 118, 16);
 		emailPanel.add(txtrNewEmail);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(267, 140, 210, 26);
-		emailPanel.add(textField_4);
-		textField_4.setColumns(10);
+		EmailTextField = new JTextField();
+		EmailTextField.setBounds(267, 140, 210, 26);
+		emailPanel.add(EmailTextField);
+		EmailTextField.setColumns(10);
 		
 		JButton saveEmailButton = new JButton("Save");
 		saveEmailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.saveEmail(EmailTextField.getText());
+				clearEmailFields(EmailTextField);
+				
 		
 			}
 		});
@@ -469,6 +472,12 @@ public class newClientStuff {
 	
 }
 	public void clearPhoneFields(JTextField...fields) {
+		for(JTextField field : fields) {
+			field.setText("");
+		}
+	}
+	
+	public void clearEmailFields(JTextField...fields) {
 		for(JTextField field : fields) {
 			field.setText("");
 		}
