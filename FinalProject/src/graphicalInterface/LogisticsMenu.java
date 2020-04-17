@@ -12,7 +12,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import logic.Controller;
+import logic.LoginController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,9 +25,9 @@ public class LogisticsMenu {
     public JPanel panel,panel_1,ContainePositionrPanel,newClientPanel,ContainerInfoPanel,StatusPanel;
     public JButton newClientButton,getInfoButton,UpdateContainerButton,getContainerButton,logoutButton;
     public JLayeredPane layeredPane;
-    private Controller controller;
+    private LoginController controller;
     
-    public LogisticsMenu(Controller controller) {
+    public LogisticsMenu(LoginController controller) {
 		this.controller = controller;
 		initialize();
 	}

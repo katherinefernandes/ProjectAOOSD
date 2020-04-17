@@ -11,7 +11,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 import javax.swing.text.LayeredHighlighter;
 
-import logic.Controller;
+import logic.ClientController;
+import logic.LoginController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -45,7 +46,7 @@ public class newClientStuff {
 	private JTextField textField_13;
 	private JTextField textField_14;
 	private JTextField containterIDsearch;
-	private Controller controller;
+	private ClientController controller;
 	private JButton LogOutButton;
 	private JTextArea txtrCountryCode;
 	private JTextField textField;
@@ -56,7 +57,7 @@ public class newClientStuff {
 	private JTextArea CurrentPhoneNumberTextArea;
 
 	
-	public newClientStuff(Controller controller) {
+	public newClientStuff(ClientController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -212,9 +213,9 @@ public class newClientStuff {
 		emailPanel.add(textField_4);
 		textField_4.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Save");
-		btnNewButton.setBounds(357, 223, 117, 29);
-		emailPanel.add(btnNewButton);
+		JButton saveEmailButton = new JButton("Save");
+		saveEmailButton.setBounds(357, 223, 117, 29);
+		emailPanel.add(saveEmailButton);
 		
 		CurrentEmailTextField = new JTextArea();
 		CurrentEmailTextField.setBackground(new Color(95, 158, 160));
@@ -243,9 +244,9 @@ public class newClientStuff {
 		txtrNewPhoneNumber.setBounds(94, 139, 168, 16);
 		PhonePanel.add(txtrNewPhoneNumber);
 		
-		JButton btnNewButton_2 = new JButton("Save");
-		btnNewButton_2.setBounds(372, 222, 117, 29);
-		PhonePanel.add(btnNewButton_2);
+		JButton savePhoneButton = new JButton("Save");
+		savePhoneButton.setBounds(372, 222, 117, 29);
+		PhonePanel.add(savePhoneButton);
 		
 		textField_6 = new JTextField();
 		textField_6.setBounds(291, 136, 198, 26);

@@ -1,44 +1,16 @@
 package logic;
- 
-import java.util.*;
 
-import dataAccess.*;
-import exceptions.ElementNotFoundException;
-import objectsData.ClientData;
-import supportingClasses.Security;
+import java.util.ArrayList;
+
 import users.CurrentClientV2;
 
-public class Controller {
-	private String companyUsername = "admin";
-	private String companyPassword = "admin";
-	private ArrayList<String> clientIDs;
+public class ClientController {
+	private long clientID;
 	private CurrentClientV2 currentClient;
-
-	public Controller() {
-		Security s = new Security();
-		clientIDs = s.getClientIDs();
-		
+	public ClientController(String clientID){
+		this.clientID = Long.valueOf(clientID);
+		currentClient = new CurrentClientV2(this.clientID);
 	}
-
-	public boolean Login(boolean isClient,boolean isCompany,String clientID,String companyUserNameIN,char[] companyPasswordIN) { 
-		if (isClient) {
-			if (clientIDs.contains(clientID)) {
-				System.out.println("textfield in window: " +  clientID);
-				initializeCurrentClient(Long.valueOf(clientID));
-				
-				return true;
-			} else
-				return false;
-		} else if (isCompany) {
-			if (companyUserNameIN.equals(companyUsername)
-					&& Arrays.equals(companyPasswordIN, companyPassword.toCharArray())) {
-				return true;
-			} else
-				return false;
-		} else
-			return false;
-	}
-
 	public void saveReferencePerson(String firstName, String middleName, String lastName) {
 		ArrayList<String> firstNameList = new ArrayList<>();
 		ArrayList<String> middleNameList = new ArrayList<>();
@@ -74,6 +46,5 @@ public class Controller {
 		currentClient.updateClientInformation(email);
 		
 	}
-	
-	
+
 }

@@ -9,7 +9,7 @@ import java.awt.EventQueue;
 
 import javax.swing.SpringLayout;
 
-import logic.Controller;
+import logic.LoginController;
 
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
@@ -25,7 +25,7 @@ import javax.swing.event.ChangeEvent;
 
 public class Login_Window {
 
-	public JFrame frmLoginPage;
+	private JFrame frmLoginPage;
 	public JRadioButton clientMenuRdb, companyMenuRdb;
 	public JTextField IDtextField;
 	public JTextField usernameTextField;
@@ -35,12 +35,12 @@ public class Login_Window {
 	
 	private JButton EnterButton;
 	private JPanel clientPanel, companyPanel;
-    private Controller controller;
+    private LoginController controller;
 
 	/**
 	 * Create the application.
 	 */
-	public Login_Window(Controller controller) {
+	public Login_Window(LoginController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -210,45 +210,40 @@ public class Login_Window {
 		EnterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) { 
-				if(EnterButton.isEnabled()) {
-					Login();
-				}
+				controller.loginButtonPressed(EnterButton.isEnabled());
 			}
 		});
 	}
 
-	public void Login() { 
-		if(controller.Login(clientMenuRdb.isSelected(),companyMenuRdb.isSelected(),IDtextField.getText(),usernameTextField.getText(),passwordField.getPassword()) == false) {
-			errorMessage.show(true);
-			errorMessage.setEnabled(true);
-			IDtextField.setText("");
-			usernameTextField.setText("");
-			passwordField.setText("");
-			checkbox.setSelected(false);
-		} else {
-			if(clientMenuRdb.isSelected()) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							newClientStuff window = new newClientStuff(controller);
-							window.frame.setVisible(true);
-							frmLoginPage.setVisible(false);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			} else {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							LogisticsMenu logistics = new LogisticsMenu(controller);
-							logistics.frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}} 
+	public boolean isClientButtonChecked() {
+		return clientMenuRdb.isSelected();
+	}
+
+	public String getClientInput() {	
+		return IDtextField.getText();
+	}
+	
+	public String getCompanyUsername() {
+		return usernameTextField.getText();
+	}
+	
+	public char[] getComapnyPassword() {
+		return passwordField.getPassword();
+	}
+	
+	public void invalidInput() {
+		errorMessage.show(true);
+		errorMessage.setEnabled(true);
+		IDtextField.setText("");
+		usernameTextField.setText("");
+		passwordField.setText("");
+		checkbox.setSelected(false);
+	}
+	public void openFrame() {
+		frmLoginPage.setVisible(true);
+	}
+	
+	public void closeFrame() {
+		frmLoginPage.setVisible(false);
 	}
 }
