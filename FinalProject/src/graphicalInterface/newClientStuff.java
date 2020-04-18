@@ -76,7 +76,8 @@ public class newClientStuff {
 	private JTextArea viewActiveShipmentsTextField;
 	private JTextArea txtrCurrentLocation;
 	private JTextArea currentLocationTextField;
-
+	private JTextArea noContainerError;
+	private JTextArea txtrSearchByOne; 
 	
 	public newClientStuff(ClientController controller) {
 		this.controller = controller;
@@ -652,7 +653,26 @@ public class newClientStuff {
 		JButton Enterbutton = new JButton("Enter");
 		Enterbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switchPanels(viewContainerPanel);
+				noContainerError.setVisible(false);
+				boolean checkMessage=false;
+				if (!containterIDsearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByContainerID(containterIDsearch.getText());
+				} 
+				if(!checkMessage&&!JourneyIDsearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByJourneyID(JourneyIDsearch.getText());
+				}
+				if(!checkMessage&&!CargoIDsearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByCargo(CargoIDsearch.getText());
+				}
+				if(!checkMessage&&!PortNamesearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByPortName(PortNamesearch.getText());
+				}
+				if(checkMessage) {
+					noContainerError.setVisible(false);
+					switchPanels(viewContainerPanel);
+				}else {
+					noContainerError.setVisible(true);
+				}
 			}
 		});
 		Enterbutton.setBounds(289, 279, 117, 29);
@@ -697,15 +717,15 @@ public class newClientStuff {
 		PortNamesearch.setBounds(206, 217, 199, 26);
 		DataPanel.add(PortNamesearch);
 		
-		JTextArea txtrSearchByOne = new JTextArea();
-		txtrSearchByOne.setText("Search by one of the following criteria:");
+		txtrSearchByOne = new JTextArea();
+		txtrSearchByOne.setText("Search by one of the following criteria. Remember that priority will be given to the topmost field correctly entered.");
 		txtrSearchByOne.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrSearchByOne.setEditable(false);
 		txtrSearchByOne.setBackground(new Color(95, 158, 160));
 		txtrSearchByOne.setBounds(151, 30, 320, 19);
 		DataPanel.add(txtrSearchByOne);
 		
-		JTextArea noContainerError = new JTextArea();
+		noContainerError = new JTextArea();
 		noContainerError.setForeground(new Color(255, 0, 0));
 		noContainerError.setText("Container not found.");
 		noContainerError.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -713,6 +733,7 @@ public class newClientStuff {
 		noContainerError.setBackground(new Color(95, 158, 160));
 		noContainerError.setBounds(221, 321, 156, 19);
 		DataPanel.add(noContainerError);
+		noContainerError.setVisible(false);
 		
 		ViewInfoPanel = new JPanel();
 		ViewInfoPanel.setBackground(new Color(95, 158, 160));

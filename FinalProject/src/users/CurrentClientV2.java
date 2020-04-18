@@ -27,9 +27,6 @@ public class CurrentClientV2 extends User{
 
 	public CurrentClientV2(long ID) {
 		// TODO Auto-generated constructor stub
-		//databaseClient = new ClientAccess();
-		//databasePort = new PortAccess();
-		//databaseContainer = new ContainerAccess();
 		super();
 		try {
 			client = databaseClient.getEntry(ID);
@@ -219,6 +216,7 @@ public class CurrentClientV2 extends User{
 			this.foundContainer = true;
 		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("The container is not found in database");
 			e.printStackTrace();
 		}
 		
@@ -241,10 +239,10 @@ public class CurrentClientV2 extends User{
 		}
 		return containers;
 	}
+	
 	public ContainerData getContainersByActiveJourneyIDs(long journeyID) {
 		// TODO Auto-generated method stub
 		String JourneyIDInString = Long.toString(journeyID);
-		
 		return databaseContainer.searchEntries(JourneyIDInString).get(0);
 	}
 	

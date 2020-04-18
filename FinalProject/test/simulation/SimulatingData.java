@@ -32,6 +32,9 @@ public class SimulatingData {
 	clientDataBase.newEntry(client3);
 	clientDataBase.flushActiveData();
 	Security IDgenerator = new Security();
+	IDgenerator.saveClientID(897841664500l);
+	IDgenerator.saveClientID(36836570081685l);
+	IDgenerator.saveClientID(828300261636100l);
 	PortData port1 = new PortData(IDgenerator.generateID(),"Pakistan","Gwadar",25.11f,62.33f);
 	PortData port2 = new PortData(IDgenerator.generateID(),"Denmark","Copenhagen",55.70f,12.59f);
 	PortAccess portDataBase = new PortAccess();

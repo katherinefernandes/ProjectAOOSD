@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import graphicalInterface.newClientStuff;
 import objectsData.ClientData;
+import objectsData.ContainerData;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import users.CurrentClientV2;
@@ -17,6 +18,8 @@ public class ClientController {
 	private ArrayList<String> middleNameList;
 	private ArrayList<String> lastNameList;
 	private ClientData client;
+	private ArrayList<ContainerData> container;
+	private long portID;
 	
 	public ClientController(String clientID){
 		this.clientID = Long.valueOf(clientID);
@@ -52,12 +55,7 @@ public class ClientController {
 		
 	}
 	
-	//public void initializeCurrentClient(long ID) {
-	//	currentClient = new CurrentClientV2(ID);
-		
-		
-		
-	//}
+	
 	
 	private boolean checkNameValidity(String name) {
 		System.out.println(name);
@@ -202,5 +200,68 @@ public class ClientController {
 		}
 		return activeShipments;
 	}
-
+	public boolean getContainerByContainerID(String containerID) {
+		// TODO Auto-generated method stub
+		container = new ArrayList<ContainerData>();
+		currentClient.setFoundContainer();
+		try {
+			currentClient.getContainer(Long.valueOf(containerID));
+			if (currentClient.getFoundContainer()) {
+				container.add(currentClient.viewContainer());
+				System.out.println("The container has been found, now the data can be displayed safely");
+				return true;
+			}else {
+				System.out.println("The container does not exist");
+				return false;
+			}
+		}catch(NumberFormatException e) {
+			System.out.println("The value in the containerID field is not valid format");
+			return false;
+		}
+	}
+	public boolean getContainerByJourneyID(String journeyID) {
+		// TODO Auto-generated method stub
+		container = new ArrayList<ContainerData>();
+		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
+			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
+			container.add(currentClient.getContainersByActiveJourneyIDs(Long.valueOf(journeyID)));
+			System.out.println("Container found, now the data can be read");
+			return true;
+		}
+		return false;
+	}
+	private boolean checkIfJourneyIDisPartOfActiveShipment(String journeyID) {
+		String activeShipments = this.getActiveShipments();
+		if (activeShipments.contains(journeyID)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean getContainerByCargo(String cargo) {
+		// TODO Auto-generated method stub
+		container = currentClient.filterContainersByCargo(cargo);
+		if(container.size()<=0) {
+			System.out.println("There is no container containing this cargo"+cargo+ "for this client");
+			return false;
+		}
+		return true;
+	}
+	public boolean getContainerByPortName(String portname) {
+		// TODO Auto-generated method stub
+		portID = currentClient.getPortID(portname);
+		if (portID==1l) {
+			System.out.println("The portname is not present in the database");
+			return false;
+		}else {
+			container = currentClient.filterContainersByStartPortID(portID);
+			if (container.size()>0) {
+				System.out.println("some containers found at the port name given");
+				return true;
+			}else {
+				System.out.println("No containers found at the port name given");
+				return false;
+			}
+		}
+	}
 }
