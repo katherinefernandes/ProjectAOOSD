@@ -519,6 +519,101 @@ public class newClientStuff {
 		btnNewButton_3.setBounds(358, 408, 117, 29);
 		JourneyPanel.add(btnNewButton_3);
 		
+		JPanel viewContainerPanel = new JPanel();
+		viewContainerPanel.setBackground(new Color(95, 158, 160));
+		layeredPane.add(viewContainerPanel, "name_39906191038179");
+		viewContainerPanel.setLayout(null);
+		
+		JTextArea txtrStartPortName = new JTextArea();
+		txtrStartPortName.setText("Start port name:");
+		txtrStartPortName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrStartPortName.setEditable(false);
+		txtrStartPortName.setBackground(new Color(95, 158, 160));
+		txtrStartPortName.setBounds(17, 33, 133, 19);
+		viewContainerPanel.add(txtrStartPortName);
+		
+		JTextArea txtrDestinationPortName = new JTextArea();
+		txtrDestinationPortName.setText("Destination port name:");
+		txtrDestinationPortName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrDestinationPortName.setEditable(false);
+		txtrDestinationPortName.setBackground(new Color(95, 158, 160));
+		txtrDestinationPortName.setBounds(17, 78, 167, 19);
+		viewContainerPanel.add(txtrDestinationPortName);
+		
+		JTextArea txtrCargo_2 = new JTextArea();
+		txtrCargo_2.setText("Cargo:");
+		txtrCargo_2.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCargo_2.setEditable(false);
+		txtrCargo_2.setBackground(new Color(95, 158, 160));
+		txtrCargo_2.setBounds(17, 130, 95, 19);
+		viewContainerPanel.add(txtrCargo_2);
+		
+		JTextArea txtrArrivalDate = new JTextArea();
+		txtrArrivalDate.setText("Arrival Date:");
+		txtrArrivalDate.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrArrivalDate.setEditable(false);
+		txtrArrivalDate.setBackground(new Color(95, 158, 160));
+		txtrArrivalDate.setBounds(17, 350, 95, 19);
+		viewContainerPanel.add(txtrArrivalDate);
+		
+		JTextArea txtrCurrentInternalStatus = new JTextArea();
+		txtrCurrentInternalStatus.setText("Current internal status:");
+		txtrCurrentInternalStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCurrentInternalStatus.setEditable(false);
+		txtrCurrentInternalStatus.setBackground(new Color(95, 158, 160));
+		txtrCurrentInternalStatus.setBounds(17, 174, 186, 19);
+		viewContainerPanel.add(txtrCurrentInternalStatus);
+		
+		JTextArea txtrLastUpdated = new JTextArea();
+		txtrLastUpdated.setText("Last updated:");
+		txtrLastUpdated.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrLastUpdated.setEditable(false);
+		txtrLastUpdated.setBackground(new Color(95, 158, 160));
+		txtrLastUpdated.setBounds(17, 416, 114, 19);
+		viewContainerPanel.add(txtrLastUpdated);
+		
+		JTextArea startPortTextField = new JTextArea();
+		startPortTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		startPortTextField.setEditable(false);
+		startPortTextField.setBackground(new Color(95, 158, 160));
+		startPortTextField.setBounds(206, 35, 371, 19);
+		viewContainerPanel.add(startPortTextField);
+		
+		JTextArea destinationPortTextField = new JTextArea();
+		destinationPortTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		destinationPortTextField.setEditable(false);
+		destinationPortTextField.setBackground(new Color(95, 158, 160));
+		destinationPortTextField.setBounds(206, 80, 371, 19);
+		viewContainerPanel.add(destinationPortTextField);
+		
+		JTextArea cargoTextField = new JTextArea();
+		cargoTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		cargoTextField.setEditable(false);
+		cargoTextField.setBackground(new Color(95, 158, 160));
+		cargoTextField.setBounds(206, 132, 371, 19);
+		viewContainerPanel.add(cargoTextField);
+		
+		JTextArea internalStatusTextField = new JTextArea();
+		internalStatusTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		internalStatusTextField.setEditable(false);
+		internalStatusTextField.setBackground(new Color(95, 158, 160));
+		internalStatusTextField.setBounds(206, 176, 371, 159);
+		viewContainerPanel.add(internalStatusTextField);
+		
+		JTextArea arrivalDateTextField = new JTextArea();
+		arrivalDateTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		arrivalDateTextField.setEditable(false);
+		arrivalDateTextField.setBackground(new Color(95, 158, 160));
+		arrivalDateTextField.setBounds(206, 350, 371, 19);
+		viewContainerPanel.add(arrivalDateTextField);
+		
+		JTextArea lastUpdatedTextField = new JTextArea();
+		lastUpdatedTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lastUpdatedTextField.setEditable(false);
+		lastUpdatedTextField.setBackground(new Color(95, 158, 160));
+		lastUpdatedTextField.setBounds(206, 418, 354, 19);
+		viewContainerPanel.add(lastUpdatedTextField);
+		
 		DataPanel = new JPanel();
 		DataPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(DataPanel, "name_7969757405032");
@@ -538,6 +633,11 @@ public class newClientStuff {
 		containterIDsearch.setColumns(10);
 		
 		JButton Enterbutton = new JButton("Enter");
+		Enterbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(viewContainerPanel);
+			}
+		});
 		Enterbutton.setBounds(289, 279, 117, 29);
 		DataPanel.add(Enterbutton);
 		
@@ -587,6 +687,15 @@ public class newClientStuff {
 		txtrSearchByOne.setBackground(new Color(95, 158, 160));
 		txtrSearchByOne.setBounds(151, 30, 320, 19);
 		DataPanel.add(txtrSearchByOne);
+		
+		JTextArea noContainerError = new JTextArea();
+		noContainerError.setForeground(new Color(255, 0, 0));
+		noContainerError.setText("Container not found.");
+		noContainerError.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		noContainerError.setEditable(false);
+		noContainerError.setBackground(new Color(95, 158, 160));
+		noContainerError.setBounds(221, 321, 156, 19);
+		DataPanel.add(noContainerError);
 		
 		ViewInfoPanel = new JPanel();
 		ViewInfoPanel.setBackground(new Color(95, 158, 160));
