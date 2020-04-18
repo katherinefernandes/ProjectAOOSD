@@ -70,6 +70,7 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method stub
 		this.client.setPhoneNumber(countryCode, phone);
 		databaseClient.editEntry(client);
+		databaseClient.flushActiveData();
 		this.updatedPhone=true;
 	}
 
@@ -87,6 +88,7 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method stub
 		this.client.setEmail(email);
 		databaseClient.editEntry(client);
+		databaseClient.flushActiveData();
 		this.updatedEmail=true;
 	}
 
@@ -104,6 +106,7 @@ public class CurrentClientV2 extends User{
 		// TODO Auto-generated method stub
 		this.client.setPerson(firstName, middleName, lastName);
 		databaseClient.editEntry(client);
+		databaseClient.flushActiveData();
 		this.updatedReferencePerson=true;
 		
 	}

@@ -55,7 +55,7 @@ public class newClientStuff {
 	private JTextField PortNamesearch;
 	private JTextArea CurrentEmailTextField;
 	private JTextArea CurrentPhoneNumberTextArea;
-	private JTextArea InvalidNameError;
+	private JTextArea InvalidNameError,validTextField;
 	private JTextArea InvalidEmailError, PhoneError;
 
 	
@@ -182,7 +182,18 @@ public class newClientStuff {
 		JButton Save1 = new JButton("Save");
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
+				boolean checkMessage;
+				System.out.println("Inside the save button");
+				if (middlenametext.getText().isEmpty()) {
+					checkMessage=controller.saveReferencePerson(firstnametext.getText()," ",lastnametext.getText());
+				}else {
+					checkMessage=controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
+				}
+				if (checkMessage) {
+					validTextField.setVisible(true);
+				}else {
+					InvalidNameError.setVisible(true);
+				}
 				clearNameFields(firstnametext,middlenametext,lastnametext);
 			}
 		});
@@ -195,7 +206,18 @@ public class newClientStuff {
 		InvalidNameError.setEditable(false);
 		InvalidNameError.setBackground(new Color(95, 158, 160));
 		InvalidNameError.setBounds(219, 48, 313, 16);
-		//referencePanel.add(InvalidNameError);
+		referencePanel.add(InvalidNameError);
+		InvalidNameError.setVisible(false);
+		
+		validTextField = new JTextArea();
+		validTextField.setForeground(new Color(220, 20, 60));
+		validTextField.setText("Success");
+		validTextField.setEditable(false);
+		validTextField.setBackground(new Color(95, 158, 160));
+		validTextField.setBounds(219, 48, 313, 16);
+		referencePanel.add(validTextField);
+		validTextField.setVisible(false);
+		
 		
 		
 		emailPanel = new JPanel();
@@ -513,6 +535,7 @@ public class newClientStuff {
 	public void displayNameError() {
 		//InvalidNameError.setVisible(true);
 		referencePanel.add(InvalidNameError);
+		InvalidNameError.show();
 	}
 	
 	public void displayEmailError() {
@@ -522,4 +545,6 @@ public class newClientStuff {
 	public void displyPhoneError() {
 		PhonePanel.add(PhoneError);
 	}
+	
+	
 }
