@@ -24,7 +24,7 @@ import javax.swing.JRadioButton;
 
 public class newClientStuff {
 
-	private long clientID;
+	//private long clientID;
 	
 	public JFrame frame;
 	JButton emailButton,AddJourneyButton,ReferencepersonButton,ContainerButton;
@@ -183,6 +183,8 @@ public class newClientStuff {
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean checkMessage;
+				validTextField.setVisible(false);
+				InvalidNameError.setVisible(false);
 				System.out.println("Inside the save button");
 				if (middlenametext.getText().isEmpty()) {
 					checkMessage=controller.saveReferencePerson(firstnametext.getText()," ",lastnametext.getText());
@@ -191,6 +193,7 @@ public class newClientStuff {
 				}
 				if (checkMessage) {
 					validTextField.setVisible(true);
+					
 				}else {
 					InvalidNameError.setVisible(true);
 				}
@@ -225,6 +228,7 @@ public class newClientStuff {
 		layeredPane.add(emailPanel, "name_7578041274086");
 		emailPanel.setLayout(null);
 		
+		
 		JTextArea txtrEmail = new JTextArea();
 		txtrEmail.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrEmail.setEditable(false);
@@ -249,7 +253,19 @@ public class newClientStuff {
 		JButton saveEmailButton = new JButton("Save");
 		saveEmailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveEmail(EmailTextField.getText());
+				validTextField.setVisible(false);
+				InvalidEmailError.setVisible(false);
+				boolean CheckMessage;
+				if (EmailTextField.getText().isEmpty()) {
+					CheckMessage=false;
+				}else {
+					CheckMessage = controller.saveEmail(EmailTextField.getText());
+				}
+				if (CheckMessage) {
+					validTextField.setVisible(true);
+				}else {
+					InvalidEmailError.setVisible(true);
+				}
 				clearEmailFields(EmailTextField);
 				
 		
@@ -262,6 +278,7 @@ public class newClientStuff {
 		CurrentEmailTextField.setBackground(new Color(95, 158, 160));
 		CurrentEmailTextField.setEditable(false);
 		CurrentEmailTextField.setBounds(267, 99, 129, 16);
+		CurrentEmailTextField.setText(controller.getCurrentEmail());
 		emailPanel.add(CurrentEmailTextField);
 		
 		InvalidEmailError = new JTextArea();
@@ -270,7 +287,10 @@ public class newClientStuff {
 		InvalidEmailError.setText("Invalid email. Please try again");
 		InvalidEmailError.setForeground(new Color(220, 20, 60));
 		InvalidEmailError.setBounds(267, 46, 195, 16);
-		
+		emailPanel.add(InvalidEmailError);
+		InvalidEmailError.setVisible(false);
+		emailPanel.add(validTextField);
+		validTextField.setVisible(false);
 		
 		PhonePanel = new JPanel();
 		PhonePanel.setBackground(new Color(95, 158, 160));
@@ -284,7 +304,7 @@ public class newClientStuff {
 		txtrCurrentPhoneNumber.setText("Current Phone number:");
 		txtrCurrentPhoneNumber.setBounds(94, 88, 168, 16);
 		PhonePanel.add(txtrCurrentPhoneNumber);
-		
+		PhonePanel.add(validTextField);
 		JTextArea txtrNewPhoneNumber = new JTextArea();
 		txtrNewPhoneNumber.setBackground(new Color(95, 158, 160));
 		txtrNewPhoneNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -296,7 +316,19 @@ public class newClientStuff {
 		JButton savePhoneButton = new JButton("Save");
 		savePhoneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
+				validTextField.setVisible(false);
+				PhoneError.setVisible(false);
+				boolean checkMessage;
+				if (countryCodeTextField.getText().isEmpty()||newPhoneNumberText.getText().isEmpty()) {
+					checkMessage=false;
+				}else {
+					checkMessage = controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
+				}
+				if (checkMessage) {
+					validTextField.setVisible(true);
+				}else {
+					PhoneError.setVisible(true);
+				}
 				clearPhoneFields(countryCodeTextField,newPhoneNumberText);
 				
 			}
@@ -326,7 +358,9 @@ public class newClientStuff {
 		CurrentPhoneNumberTextArea.setEditable(false);
 		CurrentPhoneNumberTextArea.setBackground(new Color(95, 158, 160));
 		CurrentPhoneNumberTextArea.setBounds(292, 90, 197, 16);
+		CurrentPhoneNumberTextArea.setText(controller.getCurrentPhoneNumber());
 		PhonePanel.add(CurrentPhoneNumberTextArea);
+		
 		
 		PhoneError = new JTextArea();
 		PhoneError.setForeground(new Color(220, 20, 60));
@@ -334,7 +368,8 @@ public class newClientStuff {
 		PhoneError.setBackground(new Color(95, 158, 160));
 		PhoneError.setEditable(false);
 		PhoneError.setBounds(315, 55, 239, 16);
-		
+		PhonePanel.add(PhoneError);
+		PhoneError.setVisible(false);
 		
 		JourneyPanel = new JPanel();
 		JourneyPanel.setBackground(new Color(95, 158, 160));
@@ -532,19 +567,11 @@ public class newClientStuff {
 		}
 	}
 	
-	public void displayNameError() {
-		//InvalidNameError.setVisible(true);
-		referencePanel.add(InvalidNameError);
-		InvalidNameError.show();
-	}
 	
-	public void displayEmailError() {
-		emailPanel.add(InvalidEmailError);
-	}
 	
-	public void displyPhoneError() {
-		PhonePanel.add(PhoneError);
-	}
+	
+	
+	
 	
 	
 }
