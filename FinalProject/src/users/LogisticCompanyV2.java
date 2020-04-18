@@ -10,14 +10,13 @@ import objectsData.ContainerData;
 import supportingClasses.ValidInput;
 
 public class LogisticCompanyV2 extends User{
-	private ValidInput validate;
 	private boolean addNewClient;
 	private boolean updatedLocation;
+	private boolean updatedStatus;
 	public LogisticCompanyV2() {
 	//	databaseContainer = new ContainerAccess();
 	//	databaseClient = new ClientAccess();
 		super();
-		validate = new ValidInput();
 		display = true;
 		
 	}
@@ -30,13 +29,15 @@ public class LogisticCompanyV2 extends User{
 		return updatedLocation;
 	}
 	
-	
+	public boolean getUpdatedStatus() {
+		return updatedStatus;
+	}
 	
 	public boolean getContainerIsSet(long s) {
-		try { //Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
-			container = databaseContainer.getEntry(s); //Old code
+		try { 
+			container = databaseContainer.getEntry(s); 
 			return true;
-		} catch (NumberFormatException | ElementNotFoundException e) { //Added code
+		} catch (NumberFormatException | ElementNotFoundException e) { 
 			System.out.println("Container not found");
 			return false;
 		}
@@ -45,19 +46,24 @@ public class LogisticCompanyV2 extends User{
 
 
 	public void setAddNewClient() {
-		// TODO Auto-generated method stub
+		
 		this.addNewClient = false;
 	}
 	
 	public void setUpdatedLocation() {
-		// TODO Auto-generated method stub
+		
 		this.updatedLocation = false;
+	}
+	
+	public void setUpdatedStatus() {
+		
+		this.updatedStatus = false;
 	}
 	
 	public long addClient(String email, String name, int countryCode, long phone, ArrayList<String> firstName,
 			ArrayList<String> middleName, ArrayList<String> lastName, String street, String city, String postCode,
 			int houseNumber) {
-		// TODO Auto-generated method stub
+		
 		long id = ssecurity.generateID();
 		
 		ssecurity.saveClientID(id);
@@ -77,6 +83,13 @@ public class LogisticCompanyV2 extends User{
 		container.setCurrentPosition(latitude, longitude);
 		this.updatedLocation = true;
 	}
+
+	public void updateStatus(float temp, float hum, float press) {
+		container.setStatus(press, temp, hum);
+		this.updatedLocation = true;
+		
+	}
+
 
 	
 

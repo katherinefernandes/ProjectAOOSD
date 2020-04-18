@@ -35,6 +35,9 @@ public class LogisticCompanySteps {
 	private long containerid;
 	private float latitude;
 	private float longitude;
+	private float temp;
+	private float hum;
+	private float press;
 	
 	@Given("the logistic Company enters the Client ID {long}")
 	public void theLogisticCompanyEntersTheClientID(long clientID) {
@@ -176,5 +179,45 @@ public class LogisticCompanySteps {
 	    logistic.updateLocation(longitude, latitude);
 	    assertTrue("Updated location should be true now",logistic.getUpdatedLocation());
 	}
+
+	@Given("the logistic Company decides to update the internal status of the container")
+	public void theLogisticCompanyDecidesToUpdateTheInternalStatusOfTheContainer() {
+	    // Write code here that turns the phrase above into concrete actions
+		logistic.setUpdatedStatus();
+	    assertFalse("Updated status should be set to false",logistic.getUpdatedStatus());
+	}
+
+	@When("the logistic Company enters the container ID {long}")
+	public void theLogisticCompanyEntersTheContainerID(long id) {
+	    // Write code here that turns the phrase above into concrete actions
+		this.containerid = id;
+	    assertTrue(logistic.getContainerIsSet(id));
+	}
+
+	@When("the temperature value {float}")
+	public void theTemperatureValue(float double1) {
+	    // Write code here that turns the phrase above into concrete actions
+		this.temp = double1;
+	}
+
+	@When("the humidity level value {float}%")
+	public void theHumidityLevelValue(float double1) {
+	    // Write code here that turns the phrase above into concrete actions
+		this.hum = double1;
+	}
+
+	@When("the pressure value {float}atm")
+	public void thePressureValueAtm(float double1) {
+	    // Write code here that turns the phrase above into concrete actions
+		this.press = double1;
+	}
+
+	@Then("the internal status of the container is updated")
+	public void theInternalStatusOfTheContainerIsUpdated() {
+	    // Write code here that turns the phrase above into concrete actions
+	    logistic.updateStatus(temp, hum, press);
+	    assertTrue("Updated status should be true now",logistic.getUpdatedStatus());
+	}
+	
 }
 
