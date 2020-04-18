@@ -81,12 +81,16 @@ public class LogisticCompanyV2 extends User{
 
 	public void updateLocation(float longitude, float latitude) {
 		container.setCurrentPosition(latitude, longitude);
+		databaseContainer.editEntry(container);
+		databaseContainer.flushActiveData();
 		this.updatedLocation = true;
 	}
 
 	public void updateStatus(float temp, float hum, float press) {
 		container.setStatus(press, temp, hum);
-		this.updatedLocation = true;
+		databaseContainer.editEntry(container);//-Mamuna added this
+		databaseContainer.flushActiveData();//-Mamuna added this
+		this.updatedStatus = true;
 		
 	}
 
