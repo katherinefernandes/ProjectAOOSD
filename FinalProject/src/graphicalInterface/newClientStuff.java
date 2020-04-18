@@ -57,6 +57,10 @@ public class newClientStuff {
 	private JTextArea CurrentPhoneNumberTextArea;
 	private JTextArea InvalidNameError,validTextField;
 	private JTextArea InvalidEmailError, PhoneError;
+	private JTextArea emailError;
+	private JTextArea emailSuccess;
+	private JTextArea phoneSuccess;
+	private JTextArea txtrCurrentPhoneNumber_1;
 
 	
 	public newClientStuff(ClientController controller) {
@@ -122,8 +126,12 @@ public class newClientStuff {
 		ButtonPanel.add(btnNewButton_1);
 		
 		LogOutButton = new JButton("Log Out");
-		LogOutButton.setBounds(55, 273, 196, 29);
+		LogOutButton.setBounds(55, 318, 196, 29);
 		ButtonPanel.add(LogOutButton);
+		
+		JButton viewOwnInfoButton = new JButton("View Personal Info");
+		viewOwnInfoButton.setBounds(55, 277, 196, 29);
+		ButtonPanel.add(viewOwnInfoButton);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
@@ -277,9 +285,25 @@ public class newClientStuff {
 		CurrentEmailTextField = new JTextArea();
 		CurrentEmailTextField.setBackground(new Color(95, 158, 160));
 		CurrentEmailTextField.setEditable(false);
-		CurrentEmailTextField.setBounds(267, 99, 129, 16);
+		CurrentEmailTextField.setBounds(267, 99, 295, 16);
 		CurrentEmailTextField.setText(controller.getCurrentEmail());
 		emailPanel.add(CurrentEmailTextField);
+		
+		emailError = new JTextArea();
+		emailError.setForeground(new Color(255, 0, 0));
+		emailError.setText("Invalid Input. Try again");
+		emailError.setEditable(false);
+		emailError.setBackground(new Color(95, 158, 160));
+		emailError.setBounds(267, 264, 238, 16);
+		emailPanel.add(emailError);
+		
+		emailSuccess = new JTextArea();
+		emailSuccess.setForeground(new Color(127, 255, 0));
+		emailSuccess.setText("Success");
+		emailSuccess.setBackground(new Color(95, 158, 160));
+		emailSuccess.setEditable(false);
+		emailSuccess.setBounds(320, 285, 154, 16);
+		emailPanel.add(emailSuccess);
 		
 		InvalidEmailError = new JTextArea();
 		InvalidEmailError.setBackground(new Color(95, 158, 160));
@@ -287,10 +311,7 @@ public class newClientStuff {
 		InvalidEmailError.setText("Invalid email. Please try again");
 		InvalidEmailError.setForeground(new Color(220, 20, 60));
 		InvalidEmailError.setBounds(267, 46, 195, 16);
-		emailPanel.add(InvalidEmailError);
-		InvalidEmailError.setVisible(false);
-		emailPanel.add(validTextField);
-		validTextField.setVisible(false);
+		
 		
 		PhonePanel = new JPanel();
 		PhonePanel.setBackground(new Color(95, 158, 160));
@@ -303,8 +324,6 @@ public class newClientStuff {
 		txtrCurrentPhoneNumber.setEditable(false);
 		txtrCurrentPhoneNumber.setText("Current Phone number:");
 		txtrCurrentPhoneNumber.setBounds(94, 88, 168, 16);
-		PhonePanel.add(txtrCurrentPhoneNumber);
-		PhonePanel.add(validTextField);
 		JTextArea txtrNewPhoneNumber = new JTextArea();
 		txtrNewPhoneNumber.setBackground(new Color(95, 158, 160));
 		txtrNewPhoneNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -367,8 +386,24 @@ public class newClientStuff {
 		PhoneError.setText("Invalid Phone Number");
 		PhoneError.setBackground(new Color(95, 158, 160));
 		PhoneError.setEditable(false);
-		PhoneError.setBounds(315, 55, 239, 16);
+		PhoneError.setBounds(291, 263, 239, 16);
 		PhonePanel.add(PhoneError);
+		
+		phoneSuccess = new JTextArea();
+		phoneSuccess.setForeground(new Color(173, 255, 47));
+		phoneSuccess.setText("Success");
+		phoneSuccess.setBackground(new Color(95, 158, 160));
+		phoneSuccess.setEditable(false);
+		phoneSuccess.setBounds(286, 286, 176, 16);
+		PhonePanel.add(phoneSuccess);
+		
+		txtrCurrentPhoneNumber_1 = new JTextArea();
+		txtrCurrentPhoneNumber_1.setText("Current Phone Number");
+		txtrCurrentPhoneNumber_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCurrentPhoneNumber_1.setEditable(false);
+		txtrCurrentPhoneNumber_1.setBackground(new Color(95, 158, 160));
+		txtrCurrentPhoneNumber_1.setBounds(94, 90, 168, 16);
+		PhonePanel.add(txtrCurrentPhoneNumber_1);
 		PhoneError.setVisible(false);
 		
 		JourneyPanel = new JPanel();
@@ -566,12 +601,4 @@ public class newClientStuff {
 			field.setText("");
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
