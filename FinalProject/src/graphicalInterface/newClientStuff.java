@@ -622,7 +622,7 @@ public class newClientStuff {
 		txtrReferencePerson.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrReferencePerson.setEditable(false);
 		txtrReferencePerson.setBackground(new Color(95, 158, 160));
-		txtrReferencePerson.setBounds(44, 201, 127, 16);
+		txtrReferencePerson.setBounds(44, 220, 127, 16);
 		ViewInfoPanel.add(txtrReferencePerson);
 		
 		txtrAddress = new JTextArea();
@@ -630,7 +630,7 @@ public class newClientStuff {
 		txtrAddress.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrAddress.setEditable(false);
 		txtrAddress.setBackground(new Color(95, 158, 160));
-		txtrAddress.setBounds(44, 240, 127, 16);
+		txtrAddress.setBounds(44, 300, 127, 16);
 		ViewInfoPanel.add(txtrAddress);
 		
 		txtrActiveShipmnts = new JTextArea();
@@ -638,7 +638,7 @@ public class newClientStuff {
 		txtrActiveShipmnts.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrActiveShipmnts.setEditable(false);
 		txtrActiveShipmnts.setBackground(new Color(95, 158, 160));
-		txtrActiveShipmnts.setBounds(44, 277, 127, 26);
+		txtrActiveShipmnts.setBounds(44, 370, 127, 26);
 		ViewInfoPanel.add(txtrActiveShipmnts);
 		
 		viewCompanyNameTextField = new JTextArea();
@@ -661,7 +661,7 @@ public class newClientStuff {
 		viewEmailTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewEmailTextField.setEditable(false);
 		viewEmailTextField.setBackground(new Color(95, 158, 160));
-		viewEmailTextField.setBounds(206, 163, 356, 16);
+		viewEmailTextField.setBounds(206, 163, 356, 45);
 		viewEmailTextField.setText(controller.getCurrentEmail());
 		ViewInfoPanel.add(viewEmailTextField);
 		
@@ -669,7 +669,7 @@ public class newClientStuff {
 		viewReferencePersonTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewReferencePersonTextField.setEditable(false);
 		viewReferencePersonTextField.setBackground(new Color(95, 158, 160));
-		viewReferencePersonTextField.setBounds(206, 203, 356, 16);
+		viewReferencePersonTextField.setBounds(206, 220, 356, 68);
 		viewReferencePersonTextField.setText(controller.getReferencePerson());
 		ViewInfoPanel.add(viewReferencePersonTextField);
 		
@@ -677,7 +677,7 @@ public class newClientStuff {
 		viewAddressTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewAddressTextField.setEditable(false);
 		viewAddressTextField.setBackground(new Color(95, 158, 160));
-		viewAddressTextField.setBounds(206, 242, 356, 16);
+		viewAddressTextField.setBounds(206, 300, 356, 68);
 		viewAddressTextField.setText(controller.getAddress());
 		ViewInfoPanel.add(viewAddressTextField);
 		
@@ -685,7 +685,7 @@ public class newClientStuff {
 		viewActiveShipmentsTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewActiveShipmentsTextField.setEditable(false);
 		viewActiveShipmentsTextField.setBackground(new Color(95, 158, 160));
-		viewActiveShipmentsTextField.setBounds(206, 279, 356, 16);
+		viewActiveShipmentsTextField.setBounds(206, 370, 371, 102);
 		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 		ViewInfoPanel.add(viewActiveShipmentsTextField);
 	}
