@@ -205,16 +205,16 @@ public class newClientStuff {
 		InvalidNameError.setText("Invalid Input. Please enter valid information");
 		InvalidNameError.setEditable(false);
 		InvalidNameError.setBackground(new Color(95, 158, 160));
-		InvalidNameError.setBounds(219, 48, 313, 16);
+		InvalidNameError.setBounds(199, 30, 313, 16);
 		referencePanel.add(InvalidNameError);
 		InvalidNameError.setVisible(false);
 		
 		validTextField = new JTextArea();
-		validTextField.setForeground(new Color(220, 20, 60));
+		validTextField.setForeground(new Color(50, 205, 50));
 		validTextField.setText("Success");
 		validTextField.setEditable(false);
 		validTextField.setBackground(new Color(95, 158, 160));
-		validTextField.setBounds(219, 48, 313, 16);
+		validTextField.setBounds(308, 58, 59, 16);
 		referencePanel.add(validTextField);
 		validTextField.setVisible(false);
 		
