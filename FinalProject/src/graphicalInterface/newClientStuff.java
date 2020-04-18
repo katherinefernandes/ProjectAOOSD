@@ -261,8 +261,8 @@ public class newClientStuff {
 		JButton saveEmailButton = new JButton("Save");
 		saveEmailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				validTextField.setVisible(false);
-				InvalidEmailError.setVisible(false);
+				emailSuccess.setVisible(false);
+				emailError.setVisible(false);
 				boolean CheckMessage;
 				if (EmailTextField.getText().isEmpty()) {
 					CheckMessage=false;
@@ -270,9 +270,9 @@ public class newClientStuff {
 					CheckMessage = controller.saveEmail(EmailTextField.getText());
 				}
 				if (CheckMessage) {
-					validTextField.setVisible(true);
+					emailSuccess.setVisible(true);
 				}else {
-					InvalidEmailError.setVisible(true);
+					emailError.setVisible(true);
 				}
 				clearEmailFields(EmailTextField);
 				
@@ -296,6 +296,7 @@ public class newClientStuff {
 		emailError.setBackground(new Color(95, 158, 160));
 		emailError.setBounds(267, 264, 238, 16);
 		emailPanel.add(emailError);
+		emailError.setVisible(false);
 		
 		emailSuccess = new JTextArea();
 		emailSuccess.setForeground(new Color(127, 255, 0));
@@ -304,13 +305,7 @@ public class newClientStuff {
 		emailSuccess.setEditable(false);
 		emailSuccess.setBounds(320, 285, 154, 16);
 		emailPanel.add(emailSuccess);
-		
-		InvalidEmailError = new JTextArea();
-		InvalidEmailError.setBackground(new Color(95, 158, 160));
-		InvalidEmailError.setEditable(false);
-		InvalidEmailError.setText("Invalid email. Please try again");
-		InvalidEmailError.setForeground(new Color(220, 20, 60));
-		InvalidEmailError.setBounds(267, 46, 195, 16);
+		emailSuccess.setVisible(false);
 		
 		
 		PhonePanel = new JPanel();
@@ -335,7 +330,7 @@ public class newClientStuff {
 		JButton savePhoneButton = new JButton("Save");
 		savePhoneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				validTextField.setVisible(false);
+				phoneSuccess.setVisible(false);
 				PhoneError.setVisible(false);
 				boolean checkMessage;
 				if (countryCodeTextField.getText().isEmpty()||newPhoneNumberText.getText().isEmpty()) {
@@ -344,7 +339,7 @@ public class newClientStuff {
 					checkMessage = controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
 				}
 				if (checkMessage) {
-					validTextField.setVisible(true);
+					phoneSuccess.setVisible(true);
 				}else {
 					PhoneError.setVisible(true);
 				}
@@ -388,7 +383,7 @@ public class newClientStuff {
 		PhoneError.setEditable(false);
 		PhoneError.setBounds(291, 263, 239, 16);
 		PhonePanel.add(PhoneError);
-		
+		PhoneError.setVisible(false);
 		phoneSuccess = new JTextArea();
 		phoneSuccess.setForeground(new Color(173, 255, 47));
 		phoneSuccess.setText("Success");
@@ -396,7 +391,7 @@ public class newClientStuff {
 		phoneSuccess.setEditable(false);
 		phoneSuccess.setBounds(286, 286, 176, 16);
 		PhonePanel.add(phoneSuccess);
-		
+		phoneSuccess.setVisible(false);
 		txtrCurrentPhoneNumber_1 = new JTextArea();
 		txtrCurrentPhoneNumber_1.setText("Current Phone Number");
 		txtrCurrentPhoneNumber_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
