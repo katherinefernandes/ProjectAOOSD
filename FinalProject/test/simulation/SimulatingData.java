@@ -45,12 +45,14 @@ public class SimulatingData {
 	ContainerData container7 = new ContainerData(73013416799200l,port2.getID(),55.70f,12.59f);
 	ContainerData container8 = new ContainerData(521664805370600l,port2.getID(),55.70f,12.59f);
 	ContainerData container9 = new ContainerData(10849147913500l,897841664500l,IDgenerator.generateID(),port1.getID(),port2.getID(),26.11f,74.33f,"snacks",36.0f,1.0f,78.0f,LocalDateTime.of(2020, 06, 23, 12, 0));
+	ContainerData container11 = new ContainerData(10849147913512l,897841664500l,IDgenerator.generateID(),port1.getID(),port2.getID(),26.11f,74.33f,"snacks",36.0f,1.0f,78.0f,LocalDateTime.of(2020, 06, 23, 12, 0));
 	ContainerData container10 = new ContainerData(12708737034600l,14618447211200l,17027135462300l,port2.getID(),port1.getID(),33.11f,78.89f,"fish",0.0f,1.0f,20.0f,LocalDateTime.of(2020, 06, 23, 12, 0));
 	ClientData client4 = new ClientData(14618447211200l,"client4",45,40472098l,"client4@client.com",firstname,middlename,lastname,"randomstreet","somecity",98,"23909");
 	client4.addActiveShipment(container10.getJourneyID());
 	port1.addArrivingContainer(container10.getID());
 	clientDataBase.newEntry(client4);
 	clientDataBase.flushActiveData();
+	containerDataBase.newEntry(container11);
 	containerDataBase.newEntry(container9);
 	containerDataBase.newEntry(container1);
 	containerDataBase.newEntry(container2);
