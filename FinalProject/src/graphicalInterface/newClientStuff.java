@@ -74,6 +74,8 @@ public class newClientStuff {
 	private JTextArea viewReferencePersonTextField;
 	private JTextArea viewAddressTextField;
 	private JTextArea viewActiveShipmentsTextField;
+	private JTextArea txtrCurrentLocation;
+	private JTextArea currentLocationTextField;
 
 	
 	public newClientStuff(ClientController controller) {
@@ -597,7 +599,7 @@ public class newClientStuff {
 		internalStatusTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		internalStatusTextField.setEditable(false);
 		internalStatusTextField.setBackground(new Color(95, 158, 160));
-		internalStatusTextField.setBounds(206, 176, 371, 159);
+		internalStatusTextField.setBounds(206, 176, 371, 120);
 		viewContainerPanel.add(internalStatusTextField);
 		
 		JTextArea arrivalDateTextField = new JTextArea();
@@ -613,6 +615,21 @@ public class newClientStuff {
 		lastUpdatedTextField.setBackground(new Color(95, 158, 160));
 		lastUpdatedTextField.setBounds(206, 418, 354, 19);
 		viewContainerPanel.add(lastUpdatedTextField);
+		
+		txtrCurrentLocation = new JTextArea();
+		txtrCurrentLocation.setText("Current location:");
+		txtrCurrentLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCurrentLocation.setEditable(false);
+		txtrCurrentLocation.setBackground(new Color(95, 158, 160));
+		txtrCurrentLocation.setBounds(17, 319, 152, 19);
+		viewContainerPanel.add(txtrCurrentLocation);
+		
+		currentLocationTextField = new JTextArea();
+		currentLocationTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		currentLocationTextField.setEditable(false);
+		currentLocationTextField.setBackground(new Color(95, 158, 160));
+		currentLocationTextField.setBounds(206, 319, 262, 19);
+		viewContainerPanel.add(currentLocationTextField);
 		
 		DataPanel = new JPanel();
 		DataPanel.setBackground(new Color(95, 158, 160));
