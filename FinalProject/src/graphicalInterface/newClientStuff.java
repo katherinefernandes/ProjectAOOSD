@@ -646,6 +646,7 @@ public class newClientStuff {
 		viewCompanyNameTextField.setEditable(false);
 		viewCompanyNameTextField.setBackground(new Color(95, 158, 160));
 		viewCompanyNameTextField.setBounds(206, 86, 356, 16);
+		viewCompanyNameTextField.setText(controller.getCompanyName());
 		ViewInfoPanel.add(viewCompanyNameTextField);
 		
 		viewPhoneTextField = new JTextArea();
@@ -653,6 +654,7 @@ public class newClientStuff {
 		viewPhoneTextField.setEditable(false);
 		viewPhoneTextField.setBackground(new Color(95, 158, 160));
 		viewPhoneTextField.setBounds(206, 124, 356, 16);
+		viewPhoneTextField.setText(controller.getCurrentPhoneNumber());
 		ViewInfoPanel.add(viewPhoneTextField);
 		
 		viewEmailTextField = new JTextArea();
@@ -660,6 +662,7 @@ public class newClientStuff {
 		viewEmailTextField.setEditable(false);
 		viewEmailTextField.setBackground(new Color(95, 158, 160));
 		viewEmailTextField.setBounds(206, 163, 356, 16);
+		viewEmailTextField.setText(controller.getCurrentEmail());
 		ViewInfoPanel.add(viewEmailTextField);
 		
 		viewReferencePersonTextField = new JTextArea();
@@ -667,6 +670,7 @@ public class newClientStuff {
 		viewReferencePersonTextField.setEditable(false);
 		viewReferencePersonTextField.setBackground(new Color(95, 158, 160));
 		viewReferencePersonTextField.setBounds(206, 203, 356, 16);
+		viewReferencePersonTextField.setText(controller.getReferencePerson());
 		ViewInfoPanel.add(viewReferencePersonTextField);
 		
 		viewAddressTextField = new JTextArea();
@@ -674,6 +678,7 @@ public class newClientStuff {
 		viewAddressTextField.setEditable(false);
 		viewAddressTextField.setBackground(new Color(95, 158, 160));
 		viewAddressTextField.setBounds(206, 242, 356, 16);
+		viewAddressTextField.setText(controller.getAddress());
 		ViewInfoPanel.add(viewAddressTextField);
 		
 		viewActiveShipmentsTextField = new JTextArea();
@@ -681,6 +686,7 @@ public class newClientStuff {
 		viewActiveShipmentsTextField.setEditable(false);
 		viewActiveShipmentsTextField.setBackground(new Color(95, 158, 160));
 		viewActiveShipmentsTextField.setBounds(206, 279, 356, 16);
+		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 		ViewInfoPanel.add(viewActiveShipmentsTextField);
 	}
 	

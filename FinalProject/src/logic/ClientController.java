@@ -146,5 +146,61 @@ public class ClientController {
 		}
 		return email;
 	}
+	public String getCompanyName() {
+		// TODO Auto-generated method stub
+		String company="";
+		if (currentClient.getClientIsSet()) {
+			client = currentClient.viewClient();
+			company = client.getCompanyName();		
+		}
+		return company;
+	}
+	public String getReferencePerson() {
+		// TODO Auto-generated method stub
+		String personname="";
+		if (currentClient.getClientIsSet()) {
+			client = currentClient.viewClient();
+			personname = arrayListToString(client.getPerson().getFirstName())+" "+arrayListToString(client.getPerson().getMiddleName())+" "+arrayListToString(client.getPerson().getLastName());
+			
+		}
+		return personname;
+	}
+	private String arrayListToString(ArrayList<String> name) {
+		String Name="";
+		for(int i=0;i<name.size();i++) {
+			Name =Name+" "+name.get(i);
+		}
+		return Name;
+	}
+	
+	private String arrayListJourneyToString(ArrayList<Long> shipments) {
+		String IDs="";
+		for (int i=0;i<shipments.size();i++) {
+			IDs = "\nJourney: "+shipments.get(i);
+		}
+		return IDs;
+	}
+	
+	public String getAddress() {
+		// TODO Auto-generated method stub
+		String address ="";
+		if (currentClient.getClientIsSet()) {
+			client = currentClient.viewClient();
+			address = "City: "+client.getAddress().getCity();
+			address = address +"\nStreet: "+client.getAddress().getStreetName();
+			address = address+"\nBuilding: "+Integer.toString(client.getAddress().getHouseNumber());
+			address = address +"\nZipCode: "+client.getAddress().getZipCode();
+		}
+		return address;
+	}
+	public String getActiveShipments() {
+		// TODO Auto-generated method stub
+		String activeShipments ="";
+		if (currentClient.getClientIsSet()) {
+			client = currentClient.viewClient();
+			activeShipments = arrayListJourneyToString(client.getActiveShipment());
+		}
+		return activeShipments;
+	}
 
 }
