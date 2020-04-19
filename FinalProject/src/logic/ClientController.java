@@ -43,6 +43,7 @@ public class ClientController {
 			//clientmenu.displaySuccess();
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Update success, trying to display message");
+				currentClient = new CurrentClientV2(this.clientID);
 				return true;
 			} else {
 				System.out.println("Some thing went wrong in saving to the databaseClient");
@@ -91,6 +92,7 @@ public class ClientController {
 			System.out.println("Updating information");
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Everything went alright");
+				currentClient = new CurrentClientV2(this.clientID);
 				return true;
 			}else {
 				System.out.println("Something went wrong with the database update");
@@ -115,6 +117,7 @@ public class ClientController {
 			UpdateEmail update = new UpdateEmail(email);
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("The email has been successfully updated");
+				currentClient = new CurrentClientV2(this.clientID);
 				return true;
 			} else {
 				System.out.println("Something went wrong with the database");
@@ -247,6 +250,7 @@ public class ClientController {
 			System.out.println("There is no container containing this cargo"+cargo+ "for this client");
 			return false;
 		}
+		System.out.println("Found some containers containing this cargo");
 		return true;
 	}
 	public boolean getContainerByPortName(String portname) {

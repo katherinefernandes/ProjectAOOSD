@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import java.awt.CardLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
-import javax.swing.text.LayeredHighlighter;
 
 import logic.ClientController;
 import logic.LoginController;
@@ -18,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 
 
 
@@ -142,6 +140,15 @@ public class newClientStuff {
 		ButtonPanel.add(btnNewButton_1);
 		
 		LogOutButton = new JButton("Log Out");
+		LogOutButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("The logout button has been pressed, now need to swtich windows");
+				LoginController login = new LoginController();
+				frame.setVisible(false);
+			}
+			
+		});
 		LogOutButton.setBounds(55, 318, 196, 29);
 		ButtonPanel.add(LogOutButton);
 		
@@ -227,6 +234,7 @@ public class newClientStuff {
 					InvalidNameError.setVisible(true);
 				}
 				clearNameFields(firstnametext,middlenametext,lastnametext);
+				viewReferencePersonTextField.setText(controller.getReferencePerson());
 			}
 		});
 		Save1.setBounds(308, 244, 117, 29);
@@ -296,8 +304,8 @@ public class newClientStuff {
 					emailError.setVisible(true);
 				}
 				clearEmailFields(EmailTextField);
-				
-		
+				CurrentEmailTextField.setText(controller.getCurrentEmail());
+				viewEmailTextField.setText(controller.getCurrentEmail());
 			}
 		});
 		saveEmailButton.setBounds(357, 223, 117, 29);
@@ -365,7 +373,8 @@ public class newClientStuff {
 					PhoneError.setVisible(true);
 				}
 				clearPhoneFields(countryCodeTextField,newPhoneNumberText);
-				
+				viewPhoneTextField.setText(controller.getCurrentPhoneNumber());
+				CurrentPhoneNumberTextArea.setText(controller.getCurrentPhoneNumber());
 			}
 		});
 		savePhoneButton.setBounds(372, 222, 117, 29);
@@ -673,6 +682,8 @@ public class newClientStuff {
 				}else {
 					noContainerError.setVisible(true);
 				}
+				clearContainerDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
+				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
 		});
 		Enterbutton.setBounds(289, 279, 117, 29);
@@ -858,6 +869,11 @@ public class newClientStuff {
 	}
 	
 	public void clearEmailFields(JTextField...fields) {
+		for(JTextField field : fields) {
+			field.setText("");
+		}
+	}
+	public void clearContainerDataFields(JTextField...fields) {
 		for(JTextField field : fields) {
 			field.setText("");
 		}

@@ -81,7 +81,17 @@ public class LogisticsMenu {
 		
 		logoutButton = new JButton("Log Out");
 		logoutButton.setBounds(19, 298, 187, 29);
+		logoutButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("The logout button has been pressed, now need to swtich windows");
+				LoginController login = new LoginController();
+				frame.setVisible(false);
+			}
+			
+		});
 		panel.add(logoutButton);
+		
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
