@@ -54,6 +54,7 @@ public class LogisticCompanySteps {
 	    // Write code here that turns the phrase above into concrete actions
 	    assertFalse(logistic.getSetClient());
 	}*/
+	
 	@When("the Client ID is present in the database")
 	public void theClientIDIsPresentInTheDatabase() {
 	    // Write code here that turns the phrase above into concrete actions
