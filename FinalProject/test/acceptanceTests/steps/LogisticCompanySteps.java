@@ -1,13 +1,9 @@
 package acceptanceTests.steps;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 
-import dataAccess.ClientAccess;
-import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,7 +14,6 @@ import users.LogisticCompanyV2;
 
 public class LogisticCompanySteps {
 	private ClientData client;
-	private ClientAccess clientDatabase = new ClientAccess();
 	private LogisticCompanyV2 logistic = new LogisticCompanyV2();
 	private ValidInput validate = new ValidInput();
 	private String email;
@@ -40,22 +35,22 @@ public class LogisticCompanySteps {
 	private float press;
 	
 	@Given("the logistic Company enters the Client ID {long}")
-	public void theLogisticCompanyEntersTheClientID(long clientID) {
+	public void theLogisticCompanyEntersTheClientID(long clientID)  {
 	    // Write code here that turns the phrase above into concrete actions
 	    logistic.getClient(clientID);
 	}
 
-	@When("the Client ID is not present in the database")
+	/*@When("the Client ID is not present in the database")
 	public void theClientIDIsNotPresentInTheDatabase() {
 	    // Write code here that turns the phrase above into concrete actions
 	    assertFalse(logistic.getSetClient());
-	}
+	}*/
 
-	@Then("the client information is not shown as that client doesnot exist")
+	/*@Then("the client information is not shown as that client doesnot exist")
 	public void theClientInformationIsNotShownAsThatClientDoesnotExist() {
 	    // Write code here that turns the phrase above into concrete actions
-	    assertFalse(logistic.getDisplay());
-	}
+	    assertFalse(logistic.getSetClient());
+	}*/
 	@When("the Client ID is present in the database")
 	public void theClientIDIsPresentInTheDatabase() {
 	    // Write code here that turns the phrase above into concrete actions
@@ -65,8 +60,9 @@ public class LogisticCompanySteps {
 	@Then("the Client information is shown that the company name is {string}, the email is {string}")
 	public void theClientInformationIsShownThatTheCompanyNameIsTheEmailIs(String name, String email) {
 	    // Write code here that turns the phrase above into concrete actions
-	    assertTrue(logistic.getDisplay());
+	  //  assertTrue(logistic.getDisplay());
 	    client = logistic.viewClient();
+	    assertTrue(logistic.getSetClient());
 	    assertTrue(client.getCompanyName().equals(name));
 	    assertTrue(client.getEmail().equals(email));
 	}
@@ -156,7 +152,8 @@ public class LogisticCompanySteps {
 	public void theLogisticCompanyEntersTheContainerId(long id) {
 	    // Write code here that turns the phrase above into concrete actions
 	    this.containerid = id;
-	    assertTrue(logistic.getContainerIsSet(id));
+	    logistic.getContainer(this.containerid);
+	    assertTrue(logistic.getSetContainer());
 	}
 
 	@When("the latitude {float}")
@@ -191,7 +188,8 @@ public class LogisticCompanySteps {
 	public void theLogisticCompanyEntersTheContainerID(long id) {
 	    // Write code here that turns the phrase above into concrete actions
 		this.containerid = id;
-	    assertTrue(logistic.getContainerIsSet(id));
+		logistic.getContainer(id);
+	    assertTrue(logistic.getSetContainer());
 	}
 
 	@When("the temperature value {float}")

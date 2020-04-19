@@ -2,22 +2,15 @@ package users;
 
 import java.util.ArrayList;
 
-import dataAccess.ClientAccess;
-import dataAccess.ContainerAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
-import objectsData.ContainerData;
-import supportingClasses.ValidInput;
 
 public class LogisticCompanyV2 extends User{
 	private boolean addNewClient;
 	private boolean updatedLocation;
 	private boolean updatedStatus;
 	public LogisticCompanyV2() {
-	//	databaseContainer = new ContainerAccess();
-	//	databaseClient = new ClientAccess();
 		super();
-		display = true;
 		
 	}
 	
@@ -33,7 +26,7 @@ public class LogisticCompanyV2 extends User{
 		return updatedStatus;
 	}
 	
-	public boolean getContainerIsSet(long s) {
+	/*public boolean getContainerIsSet(long s) {
 		try { 
 			container = databaseContainer.getEntry(s); 
 			return true;
@@ -41,7 +34,7 @@ public class LogisticCompanyV2 extends User{
 			System.out.println("Container not found");
 			return false;
 		}
-	}
+	}*/
 	
 
 

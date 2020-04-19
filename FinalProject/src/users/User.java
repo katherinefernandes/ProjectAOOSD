@@ -3,30 +3,30 @@ package users;
 
 import dataAccess.ClientAccess;
 import dataAccess.ContainerAccess;
-import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import supportingClasses.Security;
 
-public  class User {
+public  class User implements View{
 	
 	protected ClientData client;
 	protected ContainerData container;
 	protected ClientAccess databaseClient;
 	protected ContainerAccess databaseContainer;
-	protected PortAccess databasePort;
-	protected boolean display;
-	protected Security ssecurity = new Security();
+	protected Security ssecurity;
 	protected boolean setClient;
+	protected boolean setContainer;
 	
 	public User() {
 		  databaseClient = new ClientAccess();
 		 databaseContainer = new ContainerAccess();
-		 databasePort = new PortAccess();
 		 this.setClient=false;
+		 ssecurity = new Security();
+		this.setContainer=false;
 	}
 	
+	@Override
 	public ClientData viewClient(){
 		return this.client;
 	}
@@ -36,19 +36,34 @@ public  class User {
 		try {
 			client = databaseClient.getEntry(clientID);
 			setClient = true;
-			display=true;
+		//	display=true;
 		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("client not found  "+clientID);
-			this.display=false;
+			throw new Error(e);
+		}
+	}
+	public void getContainer(long containerID) {
+		try { 
+			container = databaseContainer.getEntry(containerID); 
+			setContainer= true;
+		} catch (NumberFormatException | ElementNotFoundException e) { 
+			System.out.println("Container not found");
+			throw new Error(e);
 		}
 	}
 	
 	public boolean getSetClient() {
 		return this.setClient;
 	}
-	public boolean getDisplay() {
-		return this.display;
+	public boolean getSetContainer() {
+		return this.setContainer;
+	}
+
+	@Override
+	public ContainerData viewContainer() {
+		// TODO Auto-generated method stub
+		return this.container;
 	}
 	
 	
