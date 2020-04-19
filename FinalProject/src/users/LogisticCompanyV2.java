@@ -1,9 +1,11 @@
 package users;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
+import searchClients.SearchClients;
 import updateContainer.UpdateContainer;
 
 public class LogisticCompanyV2 extends User{
@@ -46,10 +48,12 @@ public class LogisticCompanyV2 extends User{
 
 	
 	public boolean updateContainerInformation(UpdateContainer Update) {
-		// TODO Auto-generated method stub
 		Update.updateInformation(container);
 		return Update.updated();
 	}
 
+	public List<ClientData> search(SearchClients option){
+		return option.getClients();
+	}
 
 }
