@@ -10,6 +10,9 @@ import io.cucumber.java.en.When;
 import objectsData.ClientData;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
+import updateClientInformation.UpdateEmail;
+import updateContainer.UpdateLocation;
+import updateContainer.UpdateStatus;
 import users.LogisticCompanyV2;
 
 public class LogisticCompanySteps {
@@ -140,16 +143,9 @@ public class LogisticCompanySteps {
 		assertTrue(logistic.getAddNewClient());
 	}
 	
-	@Given("that the logistic company chooses to update the location")
-	public void thatTheLogisticCompanyChoosesToUpdateTheLocation() {
-	    // Write code here that turns the phrase above into concrete actions
-		logistic.setUpdatedLocation();
-	    assertFalse("Updated location should be set to false",logistic.getUpdatedLocation());
-	    
-	}
 
-	@When("the logistic company enters the container id {long}")
-	public void theLogisticCompanyEntersTheContainerId(long id) {
+	@Given("that the logistic company enters the container ID {long}")
+	public void thatTheLogisticCompanyEntersTheContainerID(long id) {
 	    // Write code here that turns the phrase above into concrete actions
 	    this.containerid = id;
 	    logistic.getContainer(this.containerid);
@@ -173,23 +169,8 @@ public class LogisticCompanySteps {
 	@Then("the location for the container is updated")
 	public void theLocationForTheContainerIsUpdated() {
 	    // Write code here that turns the phrase above into concrete actions
-	    logistic.updateLocation(longitude, latitude);
-	    assertTrue("Updated location should be true now",logistic.getUpdatedLocation());
-	}
-
-	@Given("the logistic Company decides to update the internal status of the container")
-	public void theLogisticCompanyDecidesToUpdateTheInternalStatusOfTheContainer() {
-	    // Write code here that turns the phrase above into concrete actions
-		logistic.setUpdatedStatus();
-	    assertFalse("Updated status should be set to false",logistic.getUpdatedStatus());
-	}
-
-	@When("the logistic Company enters the container ID {long}")
-	public void theLogisticCompanyEntersTheContainerID(long id) {
-	    // Write code here that turns the phrase above into concrete actions
-		this.containerid = id;
-		logistic.getContainer(id);
-	    assertTrue(logistic.getSetContainer());
+		UpdateLocation update = new UpdateLocation(latitude, longitude);
+		assertTrue("This should be true now as the location has been updated",logistic.updateContainerInformation(update));
 	}
 
 	@When("the temperature value {float}")
@@ -213,8 +194,8 @@ public class LogisticCompanySteps {
 	@Then("the internal status of the container is updated")
 	public void theInternalStatusOfTheContainerIsUpdated() {
 	    // Write code here that turns the phrase above into concrete actions
-	    logistic.updateStatus(temp, hum, press);
-	    assertTrue("Updated status should be true now",logistic.getUpdatedStatus());
+		UpdateStatus update = new UpdateStatus(press, temp, hum);
+		assertTrue("This should be true now as the status has been updated",logistic.updateContainerInformation(update));
 	}
 	
 }
