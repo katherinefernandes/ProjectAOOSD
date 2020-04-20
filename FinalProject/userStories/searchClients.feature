@@ -24,14 +24,14 @@ Scenario: Logistic Company can search by client's name
 Given that the logistic company enters the client's name "White notebook"
 Then the list of clients with this name should appear
 
-#Scenario: Logistic Company can search by client's email
-#Given that the logistic company enters the client's email "whitenotebook@wn.com"
-#Then the list of clients with this email should appear
+Scenario: Logistic Company can search by client's email
+Given that the logistic company enters the client's email "whitenotebook@wn.com"
+Then the list of clients with this email should appear
 
-#Scenario: Logistic Company can search by client's reference person
-#Given that the logistic company enters the client's reference person "muna" "" "azam"
-#Then the list of clients with this reference person should appear
+Scenario: Logistic Company can search by client's reference person
+Given that the logistic company enters the client's reference person "muna" "" "azam"
+Then the list of clients with this reference person should appear
 
-#Scenario: Logistic Company can search by client's phone
-#Given that the logistic company enters the client's phone 85665565
-#Then the list of clients with this phone should appear
+Scenario: Logistic Company can search by client's phone
+Given that the logistic company enters the client's phone 85665565
+Then the list of clients with this phone should appear

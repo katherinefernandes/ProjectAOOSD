@@ -9,7 +9,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import objectsData.ClientData;
+import objectsData.ReferenceName;
+import searchClients.SearchByEmail;
 import searchClients.SearchByName;
+import searchClients.SearchByPhone;
+import searchClients.SearchByReferencePerson;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import updateClientInformation.UpdateEmail;
@@ -39,6 +43,13 @@ public class LogisticCompanySteps {
 	private float hum;
 	private float press;
 	private SearchByName optionName;
+	private SearchByEmail optionEmail;
+	private SearchByReferencePerson optionRefPerson;
+	private SearchByPhone optionPhone;
+	private ArrayList<String> firstN;
+	private ArrayList<String> middleN;
+	private ArrayList<String> lastN;
+	private ReferenceName searchRefPerson;
 	
 	@Given("the logistic Company enters the Client ID {long}")
 	public void theLogisticCompanyEntersTheClientID(long clientID)  {
@@ -161,7 +172,7 @@ public class LogisticCompanySteps {
 	
 	@Given("that the logistic company enters the client's name {string}")
 	public void thatTheLogisticCompanyEntersTheClientSName(String searchName) {
-	    // Write code here that turns the phrase above into concrete actions
+	    
 	    optionName = new SearchByName(searchName);
 	}
 
@@ -170,5 +181,47 @@ public class LogisticCompanySteps {
 	    assertNotEquals(logistic.search(optionName).size(), 0);
 	}
 
+	@Given("that the logistic company enters the client's email {string}")
+	public void thatTheLogisticCompanyEntersTheClientSEmail(String searchEmail) {
+	    
+		optionEmail = new SearchByEmail(searchEmail);
+	}
+
+	@Then("the list of clients with this email should appear")
+	public void theListOfClientsWithThisEmailShouldAppear() {
+	    
+		assertNotEquals(logistic.search(optionEmail).size(), 0);
+	}
+
+	@Given("that the logistic company enters the client's reference person {string} {string} {string}")
+	public void thatTheLogisticCompanyEntersTheClientSReferencePerson(String string, String string2, String string3) {
+		firstN = parseInput.parsingNames(string);
+		
+		middleN = parseInput.parsingNames(string2);
+		
+		lastN = parseInput.parsingNames(string3);
+		
+		searchRefPerson = new ReferenceName(firstN, middleN, lastN);
+		
+		optionRefPerson = new SearchByReferencePerson(searchRefPerson);
+	}
+
+	@Then("the list of clients with this reference person should appear")
+	public void theListOfClientsWithThisReferencePersonShouldAppear() {
+	   
+		assertNotEquals(logistic.search(optionRefPerson).size(), 0);
+	}
+
+	@Given("that the logistic company enters the client's phone {long}")
+	public void thatTheLogisticCompanyEntersTheClientSPhone(long searchPhone) {
+	
+		optionPhone = new SearchByPhone(searchPhone);
+	}
+
+	@Then("the list of clients with this phone should appear")
+	public void theListOfClientsWithThisPhoneShouldAppear() {
+	  
+		assertNotEquals(logistic.search(optionPhone).size(), 0);
+	}
 }
 
