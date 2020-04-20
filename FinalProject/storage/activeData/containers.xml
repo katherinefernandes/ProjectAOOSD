@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Containers xmlns="urn:Schema-Namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:Schema-Namespace dataStructure.xsd "/>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Containers xmlns="urn:Schema-Namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:Schema-Namespace dataStructure.xsd "/>
+>>>>>>> branch 'master' of git@github.com:katherinefernandes/ProjectAOOSD.git
