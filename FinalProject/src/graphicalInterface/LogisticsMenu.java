@@ -46,6 +46,8 @@ public class LogisticsMenu {
 	private JTextArea searchError;
 	private JTextArea successSearch;
 	private JTextArea viewClientTextField;
+	private JButton getClientIfoButton;
+	private JPanel viewClientPanel;
     
     public LogisticsMenu(LogisticController controller) {
 		this.controller = controller;
@@ -103,10 +105,7 @@ public class LogisticsMenu {
 		});
 		panel.add(logoutButton);
 		
-		JButton getClientIfoButton = new JButton("Search Client");
-		getClientIfoButton.setBounds(19, 186, 187, 29);
-		panel.add(getClientIfoButton);
-		
+
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
@@ -118,7 +117,7 @@ public class LogisticsMenu {
 		panel_1.add(layeredPane, "name_21719901481320");
 		
 		newClientPanel = new JPanel();
-		layeredPane.setLayer(newClientPanel, 0);
+		layeredPane.setLayer(newClientPanel, 1);
 		newClientPanel.setBounds(0, 0, 486, 412);
 		layeredPane.add(newClientPanel);
 		newClientPanel.setBackground(new Color(95, 158, 160));
@@ -488,7 +487,7 @@ public class LogisticsMenu {
 				if(checkMessage) {
 					successStatus.setVisible(true);
 					setViewContainerText();
-					switchPanels(viewContainerPanel);
+					switchPanels(viewClientPanel);
 				}else {
 					statusError.setVisible(true);
 				}
@@ -672,11 +671,21 @@ public class LogisticsMenu {
 		viewContainerPanel.add(graphsbutton);
 		
 		JPanel searchClientPanel = new JPanel();
-		layeredPane.setLayer(searchClientPanel, 2);
+		layeredPane.setLayer(searchClientPanel, 0);
 		searchClientPanel.setBackground(new Color(95, 158, 160));
 		searchClientPanel.setBounds(0, 0, 486, 406);
 		layeredPane.add(searchClientPanel);
 		searchClientPanel.setLayout(null);
+		
+		getClientIfoButton = new JButton("Search Client");
+		getClientIfoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(searchClientPanel);
+				
+			}
+		});
+		getClientIfoButton.setBounds(19, 186, 187, 29);
+		panel.add(getClientIfoButton);
 		
 		JTextArea txtrSearchByThe = new JTextArea();
 		txtrSearchByThe.setBackground(new Color(95, 158, 160));
@@ -784,7 +793,7 @@ public class LogisticsMenu {
 				}
 				
 				if(checkMessage) {
-					successSearch.setVisible(false);
+					successSearch.setVisible(true);
 					setFieldsClientData();
 					switchPanels(searchClientPanel);
 					
@@ -815,7 +824,7 @@ public class LogisticsMenu {
 		searchClientPanel.add(successSearch);
 		successSearch.setVisible(false);
 		
-		JPanel viewClientPanel = new JPanel();
+		viewClientPanel = new JPanel();
 		viewClientPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.setLayer(viewClientPanel, 0);
 		viewClientPanel.setBounds(0, 0, 486, 412);
