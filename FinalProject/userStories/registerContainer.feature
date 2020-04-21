@@ -27,6 +27,6 @@ Scenario: Client can register a container for a journey
 	And provides a destination port name "Copenhagen" 
 	And provides the name of the cargo "Mangoes" being transported
 	And provides the optimal internal state for the cargo which is 10.0 temperature, 1.0 atm pressure and 90.0% humidity
-	And provides the expected arrival date which is "2020-04-31T10:15:30"
+	And provides the expected arrival date which is "30-04-2020"
   Then a container is registered for the journey and the client is provided with a container ID to track the journey. 
 

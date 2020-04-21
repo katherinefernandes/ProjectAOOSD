@@ -3,6 +3,7 @@ package logic;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -191,9 +192,10 @@ public class ClientController {
 		String IDs="";
 		int counter=0;
 		for (int i=0;i<shipments.size();i++) {
-			IDs = "\nJourney: "+shipments.get(i);
-			counter++;
-			if(counter>3) {
+			IDs = IDs+"\nJourney: "+shipments.get(i);
+			System.out.println(IDs);
+			counter=counter+1;
+			if(counter>2) {
 				break;
 			}
 		}
@@ -359,7 +361,7 @@ public class ClientController {
 		result = result +"\nInternal Status: "+getInternalStatus(container);
 		String latitude = Float.toString(container.getCurrentPosition().getLatitude());
 		String longitude = Float.toString(container.getCurrentPosition().getlongitude());
-		result = result +"\nCurrent Location: "+"Latitude: "+latitude+"   Longitude: "+longitude;
+		result = result +"\nCurrent Location:"+"Latitude: "+latitude+"Longitude: "+longitude;
 		result = result +"\nArrival Date: "+container.getArriveBy();
 		result = result +"\nLast Updated: "+container.getUpdated();
 		return result;
@@ -419,14 +421,23 @@ public class ClientController {
 		// we need to fix the parse date ... 
 		//we need to set the arriveby in here as welll and then replace from line 426
 		System.out.println("Checking arrive by");
-		return true;
+		try {
+			parseInput.getDate(date);
+			return true;
+		}catch(DateTimeException e ){
+				System.out.println("Not accurate date format");
+		}catch ( java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("Not accurate date format");
+		}
+		return false;
 	}
 	public boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
 		// TODO Auto-generated method stub
 		float temperature = Float.valueOf(temp);
 		float humidity2 = Float.valueOf(humidity);
 		float atmosphere = Float.valueOf(atm);
-		currentClient.registerContainer(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, LocalDate.now());
+		System.out.println("Going to try registering");
+		currentClient.registerContainer(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, arriveby);
 		boolean result = currentClient.getContainerRegistered();
 		currentClient = new CurrentClientV2(this.clientID);
 		return result;

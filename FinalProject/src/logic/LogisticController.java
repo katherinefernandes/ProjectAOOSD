@@ -1,6 +1,5 @@
 package logic;
 
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,7 +225,7 @@ public class LogisticController {
 		result = result +"\nInternal Status: "+getInternalStatus(container);
 		String latitude = Float.toString(container.getCurrentPosition().getLatitude());
 		String longitude = Float.toString(container.getCurrentPosition().getlongitude());
-		result = result +"\nCurrent Location: "+"Latitude: "+latitude+"   Longitude: "+longitude;
+		result = result +"\nCurrent Location:"+"Latitude: "+latitude+" Longitude: "+longitude;
 		result = result +"\nArrival Date: "+container.getArriveBy();
 		result = result +"\nLast Updated: "+container.getUpdated();
 		return result;
@@ -332,12 +331,12 @@ public class LogisticController {
 
 	public String getclientsview() {
 		// TODO Auto-generated method stub
-		String result ="Displaying Up to most 2 Clients: ";
+		String result ="Displaying Up to most 3 Clients: ";
 		int counter =0;
 		for(int i=0;i<clients.size();i++) {
 			result =result+clientDataToString(clients.get(i));
 			counter++;
-			if(counter>1) {
+			if(counter>3) {
 				break;
 			}
 		}

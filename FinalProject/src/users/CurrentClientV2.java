@@ -97,7 +97,7 @@ public class CurrentClientV2 extends User{
 	}
 
 	public void registerContainer(long startPortID, long destinationPortID, String cargo, float temperature,
-			float pressure, float humidity, LocalDate arriveBy) {
+			float pressure, float humidity, String arriveBy) {
 		// TODO Auto-generated method stub
 		containerRegistered=false;
 		container.setClientID(client.getID());

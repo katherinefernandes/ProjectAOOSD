@@ -21,39 +21,46 @@ public class SearchByReferencePerson implements SearchClients{
 	
 	@Override
 	public List<ClientData> getClients() {
-		String fullName="";
+		String firstName="";
+		String middleName="";
+		String lastName ="";
 		List<ClientData> firstClients;
 		List<ClientData> middleClients;
 		List<ClientData> lastClients;
 		for(int i=0;i<referencePerson.getFirstName().size();i++) {
-			fullName=fullName+referencePerson.getFirstName().get(i);
+			firstName=firstName+referencePerson.getFirstName().get(i);
 		};
-		firstClients = databaseClient.searchEntries(fullName);
-		fullName="";
+		firstClients = databaseClient.searchEntries(firstName);
 		for(int i=0;i<referencePerson.getMiddleName().size();i++) {
-			fullName=fullName+referencePerson.getMiddleName().get(i);
+			middleName=middleName+referencePerson.getMiddleName().get(i);
 		};
-		middleClients=databaseClient.searchEntries(fullName);
-		fullName="";
+		middleClients=databaseClient.searchEntries(middleName);
 		for(int i=0;i<referencePerson.getLastName().size();i++) {
-			fullName=fullName+referencePerson.getLastName().get(i);
+			lastName=lastName+referencePerson.getLastName().get(i);
 		};
-		lastClients=databaseClient.searchEntries(fullName);
+		
+		lastClients=databaseClient.searchEntries(lastName);
 		Set<ClientData> hSet = new HashSet<ClientData>(); 
         for (ClientData x : firstClients ) {
-        	hSet.add(x);
+        	if(x.getPerson().getMiddleName().contains(middleName)&&x.getPerson().getLastName().contains(lastName)) {
+        		hSet.add(x);
+        	}
         }
         for (ClientData x : middleClients ) {
-        	hSet.add(x);
+        	if(x.getPerson().getFirstName().contains(firstName)&&x.getPerson().getLastName().contains(lastName)) {
+        		hSet.add(x);
+        	}
         }
         for (ClientData x : lastClients ) {
-        	hSet.add(x);
+        	if(x.getPerson().getFirstName().contains(firstName)&&x.getPerson().getMiddleName().contains(middleName)) {
+        		hSet.add(x);
+        	}
         }
         List<ClientData> finalresult = new ArrayList<ClientData>();
         for(ClientData x :hSet) {
-        	finalresult.add(x);
-        }
-		return finalresult;
+        	finalresult.add(x);}
+        
+        return finalresult;
 	}
 	
 }

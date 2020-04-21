@@ -1,10 +1,8 @@
 package graphicalInterface;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.CardLayout;
@@ -309,6 +307,8 @@ public class LogisticsMenu {
 				}
 				
 				clearDataFields(textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10);
+				txtrSuccess.setVisible(false);
+				txtrSomethingWentWrong.setVisible(false);
 			}
 		});
 		newClientPanel.add(Save1);
@@ -382,6 +382,7 @@ public class LogisticsMenu {
 					successPosition.setVisible(true);
 					setViewContainerText();
 					switchPanels(viewContainerPanel);
+					successPosition.setVisible(false);
 				}else {
 					positionError.setVisible(true);
 				}
@@ -488,6 +489,7 @@ public class LogisticsMenu {
 					successStatus.setVisible(true);
 					setViewContainerText();
 					switchPanels(viewClientPanel);
+					successStatus.setVisible(false);
 				}else {
 					statusError.setVisible(true);
 				}
@@ -795,12 +797,13 @@ public class LogisticsMenu {
 				if(checkMessage) {
 					successSearch.setVisible(true);
 					setFieldsClientData();
-					switchPanels(searchClientPanel);
+					switchPanels(viewClientPanel);
+					successSearch.setVisible(false);
 					
 				}else {
 					searchError.setVisible(true);
 				}
-				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField);
+				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField,firstNameTextField,middlenameTextField,lastNameTextField);
 			}
 			
 		});

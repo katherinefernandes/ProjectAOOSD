@@ -40,7 +40,7 @@ public class CurrentClientV2Steps {
 	private float temperature;
 	private float pressure;
 	private float humidity;
-	private LocalDate arriveBy;
+	private String arriveBy;
 	private ContainerData container;
 	private ArrayList<ContainerData> containersInJourney;
 	
@@ -164,7 +164,7 @@ public class CurrentClientV2Steps {
 	@When("provides the expected arrival date which is {string}")
 	public void providesTheExpectedArrivalDateWhichIs(String date) {
 		//need a method to get a proper date..
-	    arriveBy = LocalDate.now();
+	    arriveBy = date;
 	}
 
 	@Then("a container is registered for the journey and the client is provided with a container ID to track the journey.")
@@ -188,11 +188,11 @@ public class CurrentClientV2Steps {
 		assertTrue(container.getCargo().equals(cargo));
 	}
 
-	@Then("it will arrive by the year {int} month {int} day {int} hour {int} minute {int}")
-	public void itWillArriveByTheYearMonthDayHourMinute(int year, int month, int day, int hour, int minute) {
+	@Then("it will arrive by the date {string}")
+	public void itWillArriveByTheYearMonthDayHourMinute(String date) {
 	    System.out.println(container.getArriveBy());
-	    System.out.println(parseInput.getDate(LocalDate.of(year, month, day)));
-		assertTrue(container.getArriveBy().equals(parseInput.getDate(LocalDate.of(year, month, day))));
+	    System.out.println(parseInput.getDate(date));
+		assertTrue(container.getArriveBy().equals(parseInput.getDate(date)));
 	
 	}
 

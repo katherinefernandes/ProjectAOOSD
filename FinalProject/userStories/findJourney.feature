@@ -24,7 +24,7 @@ Feature: Find a journey
   Given that the client enters the ID 897841664500 that exists in the memory
   When the client enters the container the ID 10849147913500 that exists in the database
   Then the current location of the container is 26.11 latitude and 74.33 longitude, it contains the cargo:"snacks" 
-  And it will arrive by the year 2020 month 06 day 23 hour 12 minute 0
+  And it will arrive by the date "23-06-2020"
   
  	Scenario: Client can track the containers starting journey from a Port
  	Given that the client enters the ID 897841664500 that exists in the memory

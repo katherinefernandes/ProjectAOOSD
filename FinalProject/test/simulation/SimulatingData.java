@@ -50,9 +50,9 @@ public class SimulatingData {
 		ContainerData container6 = new ContainerData(IDgenerator.generateID(),port2.getID(),55.70f,12.59f);
 		ContainerData container7 = new ContainerData(73013416799200l,port2.getID(),55.70f,12.59f);
 		ContainerData container8 = new ContainerData(521664805370600l,port2.getID(),55.70f,12.59f);
-		ContainerData container9 = new ContainerData(10849147913500l,897841664500l,IDgenerator.generateID(),port1.getID(),port2.getID(),26.11f,74.33f,"snacks",36.0f,1.0f,78.0f,parseInput.getDate(LocalDate.of(2020, 06, 23)));
-		ContainerData container11 = new ContainerData(10849147913512l,897841664500l,IDgenerator.generateID(),port1.getID(),port2.getID(),26.11f,74.33f,"snacks",36.0f,1.0f,78.0f,parseInput.getDate(LocalDate.of(2020, 06, 23)));
-		ContainerData container10 = new ContainerData(12708737034600l,14618447211200l,17027135462300l,port2.getID(),port1.getID(),33.11f,78.89f,"fish",0.0f,1.0f,20.0f,parseInput.getDate(LocalDate.of(2020, 06, 23)));
+		ContainerData container9 = new ContainerData(10849147913500l,897841664500l,IDgenerator.generateID(),port1.getID(),port2.getID(),26.11f,74.33f,"snacks",36.0f,1.0f,78.0f,parseInput.getDate("23-06-2020"));
+		ContainerData container11 = new ContainerData(10849147913512l,897841664500l,IDgenerator.generateID(),port1.getID(),port2.getID(),26.11f,74.33f,"snacks",36.0f,1.0f,78.0f,parseInput.getDate("23-06-2020"));
+		ContainerData container10 = new ContainerData(12708737034600l,14618447211200l,17027135462300l,port2.getID(),port1.getID(),33.11f,78.89f,"fish",0.0f,1.0f,20.0f,parseInput.getDate("23-06-2020"));
 		ClientData client5 = new ClientData(14618447211200l,"client4",45,40472098l,"client4@client.com",firstname,middlename,lastname,"randomstreet","somecity",98,"23909");
 		client5.addActiveShipment(container10.getJourneyID());
 		port1.addArrivingContainer(container10.getID());

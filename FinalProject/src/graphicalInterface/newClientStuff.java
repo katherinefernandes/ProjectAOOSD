@@ -112,6 +112,7 @@ public class newClientStuff {
 		emailButton = new JButton("E-mail");
 		emailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setSuccessAndFailureFalse();
 				switchPanels(emailPanel);
 			}
 		});
@@ -121,6 +122,7 @@ public class newClientStuff {
 		AddJourneyButton = new JButton("Add Journey");
 		AddJourneyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setSuccessAndFailureFalse();
 				switchPanels(JourneyPanel);
 			}
 		});
@@ -130,6 +132,7 @@ public class newClientStuff {
 		ReferencepersonButton = new JButton("Reference Person");
 		ReferencepersonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setSuccessAndFailureFalse();
 				switchPanels(referencePanel);
 			}
 		});
@@ -139,6 +142,7 @@ public class newClientStuff {
 		ContainerButton = new JButton("Container Data");
 		ContainerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setSuccessAndFailureFalse();
 				switchPanels(DataPanel);
 			}
 		});
@@ -148,6 +152,7 @@ public class newClientStuff {
 		JButton btnNewButton_1 = new JButton("Phone Number");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setSuccessAndFailureFalse();
 				switchPanels(PhonePanel);
 			}
 		});
@@ -170,6 +175,7 @@ public class newClientStuff {
 		JButton viewOwnInfoButton = new JButton("View Personal Info");
 		viewOwnInfoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setSuccessAndFailureFalse();
 				switchPanels(ViewInfoPanel);
 			}
 		});
@@ -248,8 +254,10 @@ public class newClientStuff {
 				}else {
 					InvalidNameError.setVisible(true);
 				}
-				clearNameFields(firstnametext,middlenametext,lastnametext);
+				clearDataFields(firstnametext,middlenametext,lastnametext);
 				viewReferencePersonTextField.setText(controller.getReferencePerson());
+				validTextField.setVisible(false);
+				InvalidNameError.setVisible(false);
 			}
 		});
 		Save1.setBounds(308, 244, 117, 29);
@@ -318,9 +326,10 @@ public class newClientStuff {
 				}else {
 					emailError.setVisible(true);
 				}
-				clearEmailFields(EmailTextField);
+				clearDataFields(EmailTextField);
 				CurrentEmailTextField.setText(controller.getCurrentEmail());
 				viewEmailTextField.setText(controller.getCurrentEmail());
+		
 			}
 		});
 		saveEmailButton.setBounds(357, 223, 117, 29);
@@ -387,7 +396,7 @@ public class newClientStuff {
 				}else {
 					PhoneError.setVisible(true);
 				}
-				clearPhoneFields(countryCodeTextField,newPhoneNumberText);
+				clearDataFields(countryCodeTextField,newPhoneNumberText);
 				viewPhoneTextField.setText(controller.getCurrentPhoneNumber());
 				CurrentPhoneNumberTextArea.setText(controller.getCurrentPhoneNumber());
 			}
@@ -500,7 +509,7 @@ public class newClientStuff {
 		JourneyPanel.add(txtrOptimalHumidity);
 		
 		JTextArea txtrArriveBy = new JTextArea();
-		txtrArriveBy.setText("Arrive by: \n(dd/mm/yyyy)");
+		txtrArriveBy.setText("Arrive by: \ndd-MM-yyyy");
 		txtrArriveBy.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrArriveBy.setEditable(false);
 		txtrArriveBy.setBackground(new Color(95, 158, 160));
@@ -584,9 +593,9 @@ public class newClientStuff {
 				}else {
 					JourneyErrorText.setVisible(true);
 				}
-				 clearContainerDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
-				
-		}});
+				clearDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
+				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+			}});
 		JourneyPanel.add(saveJourney);
 		
 		JourneyErrorText = new JTextArea();
@@ -773,7 +782,7 @@ public class newClientStuff {
 				}else {
 					noContainerError.setVisible(true);
 				}
-				clearContainerDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
+				clearDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
 			
@@ -959,24 +968,8 @@ public class newClientStuff {
 		
 	}
 	
-	public void clearNameFields(JTextField...fields) {
-		for(JTextField field : fields) {
-			field.setText("");
-		}
-	
-}
-	public void clearPhoneFields(JTextField...fields) {
-		for(JTextField field : fields) {
-			field.setText("");
-		}
-	}
-	
-	public void clearEmailFields(JTextField...fields) {
-		for(JTextField field : fields) {
-			field.setText("");
-		}
-	}
-	public void clearContainerDataFields(JTextField...fields) {
+
+	public void clearDataFields(JTextField...fields) {
 		for(JTextField field : fields) {
 			field.setText("");
 		}
@@ -991,6 +984,17 @@ public class newClientStuff {
 		lastUpdatedTextField.setText(controller.getLastUpdate());
 		currentLocationTextField.setText(controller.getCurrentLocation());
 		multipleContainersTextField.setText(controller.getMulitpleContainersData());
+	}
+	private void setSuccessAndFailureFalse() {
+		emailSuccess.setVisible(false);
+		journeySuccessTextfield.setVisible(false);
+		JourneyErrorText.setVisible(false);
+		phoneSuccess.setVisible(false);
+		PhoneError.setVisible(false);
+		emailError.setVisible(false);
+		noContainerError.setVisible(false);
+		
+		
 	}
 
 }

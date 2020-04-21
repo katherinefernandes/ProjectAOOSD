@@ -25,7 +25,7 @@ public class ContainerDataTest {
 	private float t =36.8f;
 	private float a=1.2f;
 	private float h=78.0f;
-	private String arriveby = parseInput.getDate(LocalDate.now());
+	private String arriveby = parseInput.getDate("03-02-2020");
 	
 	
 	@BeforeEach
