@@ -581,8 +581,10 @@ public class newClientStuff {
 				if(checkMessage) {
 					journeySuccessTextfield.setVisible(true);
 					viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+				}else {
+					JourneyErrorText.setVisible(true);
 				}
-				
+				 clearContainerDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
 				
 		}});
 		JourneyPanel.add(saveJourney);
@@ -774,6 +776,7 @@ public class newClientStuff {
 				clearContainerDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
+			
 		});
 		Enterbutton.setBounds(289, 279, 117, 29);
 		DataPanel.add(Enterbutton);
@@ -978,6 +981,7 @@ public class newClientStuff {
 			field.setText("");
 		}
 	}
+	
 	private void setFieldsContainerData() {
 		internalStatusTextField.setText(controller.getInternalStatus());
 		startPortTextField.setText(controller.getStartPortName());

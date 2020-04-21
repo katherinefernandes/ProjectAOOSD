@@ -407,6 +407,7 @@ public class ClientController {
 		// TODO Auto-generated method stub
 		try {
 			Float.valueOf(floatnumber);
+			System.out.println("number value is correct");
 			return true;
 		}catch(NumberFormatException e) {
 			System.out.println("The internal status values are not valid");
@@ -417,6 +418,7 @@ public class ClientController {
 		// TODO Auto-generated method stub
 		// we need to fix the parse date ... 
 		//we need to set the arriveby in here as welll and then replace from line 426
+		System.out.println("Checking arrive by");
 		return true;
 	}
 	public boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
@@ -425,8 +427,9 @@ public class ClientController {
 		float humidity2 = Float.valueOf(humidity);
 		float atmosphere = Float.valueOf(atm);
 		currentClient.registerContainer(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, LocalDate.now());
-		
-		return currentClient.getContainerRegistered();
+		boolean result = currentClient.getContainerRegistered();
+		currentClient = new CurrentClientV2(this.clientID);
+		return result;
 	}
 	
 }
