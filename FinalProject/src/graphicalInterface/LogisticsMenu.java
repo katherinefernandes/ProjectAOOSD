@@ -23,7 +23,7 @@ public class LogisticsMenu {
 	public JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10;
 	public JTextField textField_11,textField_12,textField_13,textField_14,textField_15;
     public JPanel panel,panel_1,ContainePositionrPanel,newClientPanel,ContainerInfoPanel,StatusPanel;
-    public JButton newClientButton,getInfoButton,UpdateContainerButton,getContainerButton,logoutButton;
+    public JButton newClientButton,getInfoButton,UpdateContainerButton,logoutButton;
     public JLayeredPane layeredPane;
     private LoginController controller;
     
@@ -58,7 +58,7 @@ public class LogisticsMenu {
 				switchPanels(StatusPanel);
 			}
 		});
-		getInfoButton.setBounds(19, 123, 187, 29);
+		getInfoButton.setBounds(19, 110, 187, 29);
 		panel.add(getInfoButton);
 		
 		UpdateContainerButton = new JButton("Update container Position");
@@ -67,17 +67,8 @@ public class LogisticsMenu {
 				switchPanels(ContainePositionrPanel);
 			}
 		});
-		UpdateContainerButton.setBounds(19, 184, 187, 29);
+		UpdateContainerButton.setBounds(19, 145, 187, 29);
 		panel.add(UpdateContainerButton);
-		
-		getContainerButton = new JButton("Get Containter Info");
-		getContainerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchPanels(ContainerInfoPanel);
-			}
-		});
-		getContainerButton.setBounds(19, 238, 187, 29);
-		panel.add(getContainerButton);
 		
 		logoutButton = new JButton("Log Out");
 		logoutButton.setBounds(19, 298, 187, 29);
@@ -92,6 +83,10 @@ public class LogisticsMenu {
 		});
 		panel.add(logoutButton);
 		
+		JButton getClientIfoButton = new JButton("Client Information");
+		getClientIfoButton.setBounds(19, 186, 187, 29);
+		panel.add(getClientIfoButton);
+		
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
@@ -102,95 +97,11 @@ public class LogisticsMenu {
 		layeredPane = new JLayeredPane();
 		panel_1.add(layeredPane, "name_21719901481320");
 		
-		ContainePositionrPanel = new JPanel();
-		ContainePositionrPanel.setBounds(0, 0, 486, 412);
-		layeredPane.add(ContainePositionrPanel);
-		ContainePositionrPanel.setBackground(new Color(95, 158, 160));
-		ContainePositionrPanel.setLayout(null);
-		
-		JTextArea txtrNewLongitude = new JTextArea();
-		txtrNewLongitude.setToolTipText("");
-		txtrNewLongitude.setText("New longitude:");
-		txtrNewLongitude.setEditable(false);
-		txtrNewLongitude.setBackground(new Color(95, 158, 160));
-		txtrNewLongitude.setBounds(32, 106, 101, 16);
-		ContainePositionrPanel.add(txtrNewLongitude);
-		
-		JTextArea txtrNewLatitude = new JTextArea();
-		txtrNewLatitude.setToolTipText("");
-		txtrNewLatitude.setText("New latitude:");
-		txtrNewLatitude.setEditable(false);
-		txtrNewLatitude.setBackground(new Color(95, 158, 160));
-		txtrNewLatitude.setBounds(32, 147, 101, 16);
-		ContainePositionrPanel.add(txtrNewLatitude);
-		
-		textField_14 = new JTextField();
-		textField_14.setBounds(145, 101, 183, 26);
-		ContainePositionrPanel.add(textField_14);
-		textField_14.setColumns(10);
-		
-		textField_15 = new JTextField();
-		textField_15.setBounds(145, 142, 183, 26);
-		ContainePositionrPanel.add(textField_15);
-		textField_15.setColumns(10);
-		
-		JButton Save2 = new JButton("Save");
-		Save2.setBounds(211, 193, 117, 29);
-		ContainePositionrPanel.add(Save2);
-		
-		StatusPanel = new JPanel();
-		StatusPanel.setBackground(new Color(95, 158, 160));
-		StatusPanel.setBounds(0, 0, 480, 406);
-		layeredPane.add(StatusPanel);
-		StatusPanel.setLayout(null);
-		
-		JTextArea txtrConfusedAboutThis = new JTextArea();
-		txtrConfusedAboutThis.setToolTipText("");
-		txtrConfusedAboutThis.setBackground(new Color(95, 158, 160));
-		txtrConfusedAboutThis.setEditable(false);
-		txtrConfusedAboutThis.setText("New Atmosphere Pressure:");
-		txtrConfusedAboutThis.setBounds(25, 102, 175, 16);
-		StatusPanel.add(txtrConfusedAboutThis);
-		
-		JTextArea txtrNew = new JTextArea();
-		txtrNew.setToolTipText("");
-		txtrNew.setText("New Humidity Levels :");
-		txtrNew.setEditable(false);
-		txtrNew.setBackground(new Color(95, 158, 160));
-		txtrNew.setBounds(25, 139, 175, 16);
-		StatusPanel.add(txtrNew);
-		
-		JTextArea txtrNewTemperatureLevels = new JTextArea();
-		txtrNewTemperatureLevels.setToolTipText("");
-		txtrNewTemperatureLevels.setText("New Temperature Levels:");
-		txtrNewTemperatureLevels.setEditable(false);
-		txtrNewTemperatureLevels.setBackground(new Color(95, 158, 160));
-		txtrNewTemperatureLevels.setBounds(25, 182, 175, 16);
-		StatusPanel.add(txtrNewTemperatureLevels);
-		
-		textField_11 = new JTextField();
-		textField_11.setBounds(222, 97, 160, 26);
-		StatusPanel.add(textField_11);
-		textField_11.setColumns(10);
-		
-		textField_12 = new JTextField();
-		textField_12.setBounds(222, 134, 160, 26);
-		StatusPanel.add(textField_12);
-		textField_12.setColumns(10);
-		
-		textField_13 = new JTextField();
-		textField_13.setBounds(222, 177, 160, 26);
-		StatusPanel.add(textField_13);
-		textField_13.setColumns(10);
-		
-		JButton btnNewButton = new JButton("Save");
-		btnNewButton.setBounds(265, 225, 117, 29);
-		StatusPanel.add(btnNewButton);
-		
 		newClientPanel = new JPanel();
-		newClientPanel.setBackground(new Color(95, 158, 160));
-		newClientPanel.setBounds(6, 6, 474, 400);
+		layeredPane.setLayer(newClientPanel, 0);
+		newClientPanel.setBounds(0, 0, 486, 412);
 		layeredPane.add(newClientPanel);
+		newClientPanel.setBackground(new Color(95, 158, 160));
 		newClientPanel.setLayout(null);
 		
 		JTextArea txtrCompanyName = new JTextArea();
@@ -329,9 +240,110 @@ public class LogisticsMenu {
 		Save1.setBounds(213, 351, 117, 29);
 		newClientPanel.add(Save1);
 		
+		JTextArea txtrSuccess = new JTextArea();
+		txtrSuccess.setBackground(new Color(95, 158, 160));
+		txtrSuccess.setForeground(new Color(124, 252, 0));
+		txtrSuccess.setText("Success");
+		txtrSuccess.setEditable(false);
+		txtrSuccess.setBounds(92, 356, 82, 16);
+		newClientPanel.add(txtrSuccess);
+		
+		JTextArea txtrSomethingWentWrong = new JTextArea();
+		txtrSomethingWentWrong.setText("Something went wrong. Try again");
+		txtrSomethingWentWrong.setBackground(new Color(95, 158, 160));
+		txtrSomethingWentWrong.setForeground(new Color(255, 0, 0));
+		txtrSomethingWentWrong.setEditable(false);
+		txtrSomethingWentWrong.setBounds(93, 375, 236, 16);
+		newClientPanel.add(txtrSomethingWentWrong);
+		
+		ContainePositionrPanel = new JPanel();
+		ContainePositionrPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(ContainePositionrPanel);
+		ContainePositionrPanel.setBackground(new Color(95, 158, 160));
+		ContainePositionrPanel.setLayout(null);
+		
+		JTextArea txtrNewLongitude = new JTextArea();
+		txtrNewLongitude.setToolTipText("");
+		txtrNewLongitude.setText("New longitude:");
+		txtrNewLongitude.setEditable(false);
+		txtrNewLongitude.setBackground(new Color(95, 158, 160));
+		txtrNewLongitude.setBounds(32, 106, 101, 16);
+		ContainePositionrPanel.add(txtrNewLongitude);
+		
+		JTextArea txtrNewLatitude = new JTextArea();
+		txtrNewLatitude.setToolTipText("");
+		txtrNewLatitude.setText("New latitude:");
+		txtrNewLatitude.setEditable(false);
+		txtrNewLatitude.setBackground(new Color(95, 158, 160));
+		txtrNewLatitude.setBounds(32, 147, 101, 16);
+		ContainePositionrPanel.add(txtrNewLatitude);
+		
+		textField_14 = new JTextField();
+		textField_14.setBounds(145, 101, 183, 26);
+		ContainePositionrPanel.add(textField_14);
+		textField_14.setColumns(10);
+		
+		textField_15 = new JTextField();
+		textField_15.setBounds(145, 142, 183, 26);
+		ContainePositionrPanel.add(textField_15);
+		textField_15.setColumns(10);
+		
+		JButton Save2 = new JButton("Save");
+		Save2.setBounds(211, 193, 117, 29);
+		ContainePositionrPanel.add(Save2);
+		
+		StatusPanel = new JPanel();
+		StatusPanel.setBackground(new Color(95, 158, 160));
+		StatusPanel.setBounds(0, 0, 480, 406);
+		layeredPane.add(StatusPanel);
+		StatusPanel.setLayout(null);
+		
+		JTextArea txtrConfusedAboutThis = new JTextArea();
+		txtrConfusedAboutThis.setToolTipText("");
+		txtrConfusedAboutThis.setBackground(new Color(95, 158, 160));
+		txtrConfusedAboutThis.setEditable(false);
+		txtrConfusedAboutThis.setText("New Atmosphere Pressure:");
+		txtrConfusedAboutThis.setBounds(25, 102, 175, 16);
+		StatusPanel.add(txtrConfusedAboutThis);
+		
+		JTextArea txtrNew = new JTextArea();
+		txtrNew.setToolTipText("");
+		txtrNew.setText("New Humidity Levels :");
+		txtrNew.setEditable(false);
+		txtrNew.setBackground(new Color(95, 158, 160));
+		txtrNew.setBounds(25, 139, 175, 16);
+		StatusPanel.add(txtrNew);
+		
+		JTextArea txtrNewTemperatureLevels = new JTextArea();
+		txtrNewTemperatureLevels.setToolTipText("");
+		txtrNewTemperatureLevels.setText("New Temperature Levels:");
+		txtrNewTemperatureLevels.setEditable(false);
+		txtrNewTemperatureLevels.setBackground(new Color(95, 158, 160));
+		txtrNewTemperatureLevels.setBounds(25, 182, 175, 16);
+		StatusPanel.add(txtrNewTemperatureLevels);
+		
+		textField_11 = new JTextField();
+		textField_11.setBounds(222, 97, 160, 26);
+		StatusPanel.add(textField_11);
+		textField_11.setColumns(10);
+		
+		textField_12 = new JTextField();
+		textField_12.setBounds(222, 134, 160, 26);
+		StatusPanel.add(textField_12);
+		textField_12.setColumns(10);
+		
+		textField_13 = new JTextField();
+		textField_13.setBounds(222, 177, 160, 26);
+		StatusPanel.add(textField_13);
+		textField_13.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Save");
+		btnNewButton.setBounds(265, 225, 117, 29);
+		StatusPanel.add(btnNewButton);
+		
 		ContainerInfoPanel = new JPanel();
 		ContainerInfoPanel.setBackground(new Color(95, 158, 160));
-		layeredPane.setLayer(ContainerInfoPanel, 1);
+		layeredPane.setLayer(ContainerInfoPanel, 0);
 		ContainerInfoPanel.setBounds(0, 0, 480, 406);
 		layeredPane.add(ContainerInfoPanel);
 		ContainerInfoPanel.setLayout(null);
