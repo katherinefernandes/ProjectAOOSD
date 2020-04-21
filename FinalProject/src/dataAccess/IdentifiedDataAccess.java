@@ -71,8 +71,8 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 				insertDataPoint(dataPointParser.getDataPoint());
 			}
 		}
-		writer.add((XMLEvent) eventFactory.createEndElement("", "", collectionTagName));
-		writer.add((XMLEvent) eventFactory.createEndDocument());
+		writer.add(EventParser.generateEnd(collectionTagName).getEvent());
+		writer.add(EventParser.generateEndDoc().getEvent());
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
@@ -89,8 +89,8 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 		while(!activeData.isEmpty()) {
 			transferFirstActiveDataToFile();
 		}
-		writer.add((XMLEvent) eventFactory.createEndElement("", "", collectionTagName));
-		writer.add((XMLEvent) eventFactory.createEndDocument());
+		writer.add(EventParser.generateEnd(collectionTagName).getEvent());
+		writer.add(EventParser.generateEndDoc().getEvent());
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
@@ -124,10 +124,9 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 	
 	@Override
 	protected EventParser createStartTag(T data) {
-		List<Attribute> IDList = new ArrayList<>();
-		Attribute ID = eventFactory.createAttribute(QName.valueOf("ID"), String.valueOf(data.getID()));
-		IDList.add(ID);
-		return new EventParser(eventFactory.createStartElement("", "", dataPointTagName, IDList.iterator(), new ArrayList<Namespace>().iterator()));
+		EventParser startTag = EventParser.generateStart(dataPointTagName);
+		startTag.setIDAttribute(data.getID());
+		return startTag;
 	}
 	
 	private List<T> findMatchingEntriesFromFile(String searchWord) {

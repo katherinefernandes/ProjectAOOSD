@@ -2,6 +2,8 @@ package objectsData;
 
 import java.util.*;
 
+import dataAccess.EventParser;
+
 public class XMLField {
 	private int valueType;
 	private String tagName;
@@ -109,5 +111,35 @@ public class XMLField {
 		else {
 			throw new Exception("Wrong valuetype");
 		}
+	}
+	public List<EventParser> fieldToEvent(List<EventParser> events){
+		try {
+		switch(getValueType()){
+		case 0:
+			events.add(EventParser.generateStart(getTagName()));
+			events.add(EventParser.generateText(getValue()));
+			events.add(EventParser.generateEnd(getTagName()));
+			return events;
+		case 1:
+			events.add(EventParser.generateStart(getTagName()));
+			for(String value : getValues()) {
+				events.add(EventParser.generateStart(getValuesName()));
+				events.add(EventParser.generateText(value));
+				events.add(EventParser.generateEnd(getValuesName()));
+			}
+			events.add(EventParser.generateEnd(getTagName()));
+			return events;
+		case 2:
+			events.add(EventParser.generateStart(getTagName()));
+			for(XMLField xml : getCompound()) {
+				events = xml.fieldToEvent(events);
+			}
+			events.add(EventParser.generateEnd(getTagName()));
+			return events;
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		throw new Error("Invalid field type");
 	}
 }
