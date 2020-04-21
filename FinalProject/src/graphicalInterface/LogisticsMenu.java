@@ -37,6 +37,12 @@ public class LogisticsMenu {
 	private JTextArea viewContainerText;
 	private JTextArea successPosition;
 	private JTextArea positionError;
+	private JTextField clientemailTextField;
+	private JTextField companyNameTextField;
+	private JTextField clientPhoneTextField;
+	private JTextField firstNameTextField;
+	private JTextField middlenameTextField;
+	private JTextField lastNameTextField;
     
     public LogisticsMenu(LogisticController controller) {
 		this.controller = controller;
@@ -94,7 +100,7 @@ public class LogisticsMenu {
 		});
 		panel.add(logoutButton);
 		
-		JButton getClientIfoButton = new JButton("Client Information");
+		JButton getClientIfoButton = new JButton("Search Client");
 		getClientIfoButton.setBounds(19, 186, 187, 29);
 		panel.add(getClientIfoButton);
 		
@@ -646,7 +652,7 @@ public class LogisticsMenu {
 		ContainerInfoPanel.add(arrivaltext);
 		
 		 viewContainerPanel = new JPanel();
-		layeredPane.setLayer(viewContainerPanel, 2);
+		layeredPane.setLayer(viewContainerPanel, 0);
 		viewContainerPanel.setBackground(new Color(95, 158, 160));
 		viewContainerPanel.setBounds(0, 0, 486, 412);
 		layeredPane.add(viewContainerPanel);
@@ -661,6 +667,125 @@ public class LogisticsMenu {
 		JButton graphsbutton = new JButton("Graphs");
 		graphsbutton.setBounds(330, 352, 117, 29);
 		viewContainerPanel.add(graphsbutton);
+		
+		JPanel searchClientPanel = new JPanel();
+		layeredPane.setLayer(searchClientPanel, 2);
+		searchClientPanel.setBackground(new Color(95, 158, 160));
+		searchClientPanel.setBounds(0, 0, 486, 406);
+		layeredPane.add(searchClientPanel);
+		searchClientPanel.setLayout(null);
+		
+		JTextArea txtrSearchByThe = new JTextArea();
+		txtrSearchByThe.setBackground(new Color(95, 158, 160));
+		txtrSearchByThe.setText("Search by the following criteria. Priority from top to the bottom.");
+		txtrSearchByThe.setEditable(false);
+		txtrSearchByThe.setBounds(18, 6, 431, 16);
+		searchClientPanel.add(txtrSearchByThe);
+		
+		JTextArea txtrClientEmail = new JTextArea();
+		txtrClientEmail.setText("Client email:");
+		txtrClientEmail.setEditable(false);
+		txtrClientEmail.setBackground(new Color(95, 158, 160));
+		txtrClientEmail.setBounds(28, 52, 80, 16);
+		searchClientPanel.add(txtrClientEmail);
+		
+		JTextArea txtrCompanyName_1 = new JTextArea();
+		txtrCompanyName_1.setText("Company name:");
+		txtrCompanyName_1.setEditable(false);
+		txtrCompanyName_1.setBackground(new Color(95, 158, 160));
+		txtrCompanyName_1.setBounds(28, 80, 124, 16);
+		searchClientPanel.add(txtrCompanyName_1);
+		
+		JTextArea txtrClientPhoneNumber = new JTextArea();
+		txtrClientPhoneNumber.setText("Client phone number:");
+		txtrClientPhoneNumber.setEditable(false);
+		txtrClientPhoneNumber.setBackground(new Color(95, 158, 160));
+		txtrClientPhoneNumber.setBounds(28, 124, 146, 16);
+		searchClientPanel.add(txtrClientPhoneNumber);
+		
+		JTextArea txtrReferencePersonFirst = new JTextArea();
+		txtrReferencePersonFirst.setText("Reference person first name:");
+		txtrReferencePersonFirst.setEditable(false);
+		txtrReferencePersonFirst.setBackground(new Color(95, 158, 160));
+		txtrReferencePersonFirst.setBounds(28, 167, 181, 16);
+		searchClientPanel.add(txtrReferencePersonFirst);
+		
+		JTextArea txtrMiddleName_1 = new JTextArea();
+		txtrMiddleName_1.setText("middle name:");
+		txtrMiddleName_1.setEditable(false);
+		txtrMiddleName_1.setBackground(new Color(95, 158, 160));
+		txtrMiddleName_1.setBounds(123, 195, 93, 16);
+		searchClientPanel.add(txtrMiddleName_1);
+		
+		JTextArea txtrLastName_1 = new JTextArea();
+		txtrLastName_1.setText("last name:");
+		txtrLastName_1.setEditable(false);
+		txtrLastName_1.setBackground(new Color(95, 158, 160));
+		txtrLastName_1.setBounds(144, 223, 80, 16);
+		searchClientPanel.add(txtrLastName_1);
+		
+		clientemailTextField = new JTextField();
+		clientemailTextField.setBounds(234, 47, 225, 26);
+		searchClientPanel.add(clientemailTextField);
+		clientemailTextField.setColumns(10);
+		
+		companyNameTextField = new JTextField();
+		companyNameTextField.setColumns(10);
+		companyNameTextField.setBounds(234, 75, 225, 26);
+		searchClientPanel.add(companyNameTextField);
+		
+		clientPhoneTextField = new JTextField();
+		clientPhoneTextField.setColumns(10);
+		clientPhoneTextField.setBounds(234, 119, 225, 26);
+		searchClientPanel.add(clientPhoneTextField);
+		
+		firstNameTextField = new JTextField();
+		firstNameTextField.setColumns(10);
+		firstNameTextField.setBounds(234, 162, 225, 26);
+		searchClientPanel.add(firstNameTextField);
+		
+		middlenameTextField = new JTextField();
+		middlenameTextField.setColumns(10);
+		middlenameTextField.setBounds(234, 190, 225, 26);
+		searchClientPanel.add(middlenameTextField);
+		
+		lastNameTextField = new JTextField();
+		lastNameTextField.setColumns(10);
+		lastNameTextField.setBounds(234, 223, 225, 26);
+		searchClientPanel.add(lastNameTextField);
+		
+		JButton searchButton = new JButton("Search");
+		searchButton.setBounds(332, 294, 117, 29);
+		searchClientPanel.add(searchButton);
+		
+		JTextArea searchError = new JTextArea();
+		searchError.setForeground(new Color(255, 0, 0));
+		searchError.setText("Client not found. Try again");
+		searchError.setEditable(false);
+		searchError.setBackground(new Color(95, 158, 160));
+		searchError.setBounds(124, 299, 181, 16);
+		searchClientPanel.add(searchError);
+		
+		JTextArea successSearch = new JTextArea();
+		successSearch.setForeground(new Color(124, 252, 0));
+		successSearch.setText("Success");
+		successSearch.setEditable(false);
+		successSearch.setBackground(new Color(95, 158, 160));
+		successSearch.setBounds(356, 266, 80, 16);
+		searchClientPanel.add(successSearch);
+		
+		JPanel viewClientPanel = new JPanel();
+		viewClientPanel.setBackground(new Color(95, 158, 160));
+		layeredPane.setLayer(viewClientPanel, 0);
+		viewClientPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(viewClientPanel);
+		viewClientPanel.setLayout(null);
+		
+		JTextArea viewClientTextField = new JTextArea();
+		viewClientTextField.setEditable(false);
+		viewClientTextField.setBackground(new Color(95, 158, 160));
+		viewClientTextField.setBounds(17, 16, 452, 375);
+		viewClientPanel.add(viewClientTextField);
 	}
 	
 	public void switchPanels(JPanel panel) {
