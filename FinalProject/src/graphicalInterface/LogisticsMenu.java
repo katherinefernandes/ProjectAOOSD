@@ -31,6 +31,12 @@ public class LogisticsMenu {
 	private JTextArea txtrSuccess;
 	private JTextField containerIDtextstatus;
 	private JTextField textField_16;
+	private JTextArea statusError;
+	private JTextArea successStatus;
+	private JPanel viewContainerPanel;
+	private JTextArea viewContainerText;
+	private JTextArea successPosition;
+	private JTextArea positionError;
     
     public LogisticsMenu(LogisticController controller) {
 		this.controller = controller;
@@ -352,6 +358,29 @@ public class LogisticsMenu {
 		
 		JButton Save2 = new JButton("Save");
 		Save2.setBounds(211, 193, 117, 29);
+		Save2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean checkMessage = false;
+				successPosition.setVisible(false);
+				positionError.setVisible(false);
+				
+				if (!textField_16.getText().isEmpty()) {
+					checkMessage = controller.setContainerForUpdate(textField_16.getText());
+				}
+				if (checkMessage&&!(textField_14.getText().isEmpty())&&!(textField_15.getText().isEmpty())){
+					checkMessage = controller.updatePosition(textField_14.getText(),textField_15.getText());
+				}
+				if(checkMessage) {
+					successPosition.setVisible(true);
+					setViewContainerText();
+					switchPanels(viewContainerPanel);
+				}else {
+					positionError.setVisible(true);
+				}
+				clearDataFields(textField_16,textField_14,textField_15);
+			
+		}});
+		
 		ContainePositionrPanel.add(Save2);
 		
 		JTextArea txtrContainerId_2 = new JTextArea();
@@ -362,7 +391,7 @@ public class LogisticsMenu {
 		txtrContainerId_2.setBounds(32, 62, 101, 16);
 		ContainePositionrPanel.add(txtrContainerId_2);
 		
-		JTextArea successPosition = new JTextArea();
+		successPosition = new JTextArea();
 		successPosition.setForeground(new Color(50, 205, 50));
 		successPosition.setToolTipText("");
 		successPosition.setText("Success");
@@ -370,8 +399,10 @@ public class LogisticsMenu {
 		successPosition.setBackground(new Color(95, 158, 160));
 		successPosition.setBounds(239, 225, 89, 16);
 		ContainePositionrPanel.add(successPosition);
+		successPosition.setVisible(false);
 		
-		JTextArea positionError = new JTextArea();
+		
+		positionError = new JTextArea();
 		positionError.setForeground(new Color(255, 0, 0));
 		positionError.setToolTipText("");
 		positionError.setText("No container was found.");
@@ -379,6 +410,7 @@ public class LogisticsMenu {
 		positionError.setBackground(new Color(95, 158, 160));
 		positionError.setBounds(32, 198, 175, 16);
 		ContainePositionrPanel.add(positionError);
+		positionError.setVisible(false);
 		
 		textField_16 = new JTextField();
 		textField_16.setColumns(10);
@@ -433,6 +465,27 @@ public class LogisticsMenu {
 		
 		JButton btnNewButton = new JButton("Save");
 		btnNewButton.setBounds(265, 225, 117, 29);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean checkMessage = false;
+				successStatus.setVisible(false);
+				statusError.setVisible(false);
+				if (!containerIDtextstatus.getText().isEmpty()) {
+					checkMessage = controller.setContainerForUpdate(containerIDtextstatus.getText());
+				}
+				if (checkMessage&&!(textField_11.getText().isEmpty())&&!(textField_12.getText().isEmpty())&&!(textField_13.getText().isEmpty())){
+					checkMessage = controller.updateStatus(textField_11.getText(),textField_12.getText(),textField_13.getText());
+				}
+				if(checkMessage) {
+					successStatus.setVisible(true);
+					setViewContainerText();
+					switchPanels(viewContainerPanel);
+				}else {
+					statusError.setVisible(true);
+				}
+				clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
+			
+		}});
 		StatusPanel.add(btnNewButton);
 		
 		JTextArea txtrContainerId_1 = new JTextArea();
@@ -448,7 +501,7 @@ public class LogisticsMenu {
 		containerIDtextstatus.setBounds(222, 56, 160, 26);
 		StatusPanel.add(containerIDtextstatus);
 		
-		JTextArea statusError = new JTextArea();
+		statusError = new JTextArea();
 		statusError.setForeground(new Color(255, 69, 0));
 		statusError.setToolTipText("");
 		statusError.setText("Container not found.");
@@ -456,8 +509,9 @@ public class LogisticsMenu {
 		statusError.setBackground(new Color(95, 158, 160));
 		statusError.setBounds(102, 230, 175, 16);
 		StatusPanel.add(statusError);
+		statusError.setVisible(false);
 		
-		JTextArea successStatus = new JTextArea();
+		successStatus = new JTextArea();
 		successStatus.setForeground(new Color(50, 205, 50));
 		successStatus.setToolTipText("");
 		successStatus.setText("Success");
@@ -465,6 +519,7 @@ public class LogisticsMenu {
 		successStatus.setBackground(new Color(95, 158, 160));
 		successStatus.setBounds(245, 251, 175, 16);
 		StatusPanel.add(successStatus);
+		successStatus.setVisible(false);
 		
 		ContainerInfoPanel = new JPanel();
 		ContainerInfoPanel.setBackground(new Color(95, 158, 160));
@@ -590,14 +645,14 @@ public class LogisticsMenu {
 		arrivaltext.setBounds(209, 274, 137, 16);
 		ContainerInfoPanel.add(arrivaltext);
 		
-		JPanel viewContainerPanel = new JPanel();
+		 viewContainerPanel = new JPanel();
 		layeredPane.setLayer(viewContainerPanel, 2);
 		viewContainerPanel.setBackground(new Color(95, 158, 160));
 		viewContainerPanel.setBounds(0, 0, 486, 412);
 		layeredPane.add(viewContainerPanel);
 		viewContainerPanel.setLayout(null);
 		
-		JTextArea viewContainerText = new JTextArea();
+		 viewContainerText = new JTextArea();
 		viewContainerText.setBackground(new Color(95, 158, 160));
 		viewContainerText.setEditable(false);
 		viewContainerText.setBounds(18, 6, 450, 322);
@@ -619,5 +674,9 @@ public class LogisticsMenu {
 		for(JTextField field : fields) {
 			field.setText("");
 		}
+	}
+	private void setViewContainerText() {
+		viewContainerText.setText(controller.getContainerData());
+		successStatus.setVisible(false);
 	}
 }
