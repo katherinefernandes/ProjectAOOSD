@@ -29,6 +29,8 @@ public class LogisticsMenu {
     private LogisticController controller;
 	private JTextArea txtrSomethingWentWrong;
 	private JTextArea txtrSuccess;
+	private JTextField containerIDtextstatus;
+	private JTextField textField_16;
     
     public LogisticsMenu(LogisticController controller) {
 		this.controller = controller;
@@ -316,6 +318,7 @@ public class LogisticsMenu {
 		txtrSomethingWentWrong.setVisible(false);
 		
 		ContainePositionrPanel = new JPanel();
+		layeredPane.setLayer(ContainePositionrPanel, 0);
 		ContainePositionrPanel.setBounds(0, 0, 486, 412);
 		layeredPane.add(ContainePositionrPanel);
 		ContainePositionrPanel.setBackground(new Color(95, 158, 160));
@@ -351,7 +354,39 @@ public class LogisticsMenu {
 		Save2.setBounds(211, 193, 117, 29);
 		ContainePositionrPanel.add(Save2);
 		
+		JTextArea txtrContainerId_2 = new JTextArea();
+		txtrContainerId_2.setToolTipText("");
+		txtrContainerId_2.setText("Container ID:");
+		txtrContainerId_2.setEditable(false);
+		txtrContainerId_2.setBackground(new Color(95, 158, 160));
+		txtrContainerId_2.setBounds(32, 62, 101, 16);
+		ContainePositionrPanel.add(txtrContainerId_2);
+		
+		JTextArea successPosition = new JTextArea();
+		successPosition.setForeground(new Color(50, 205, 50));
+		successPosition.setToolTipText("");
+		successPosition.setText("Success");
+		successPosition.setEditable(false);
+		successPosition.setBackground(new Color(95, 158, 160));
+		successPosition.setBounds(239, 225, 89, 16);
+		ContainePositionrPanel.add(successPosition);
+		
+		JTextArea positionError = new JTextArea();
+		positionError.setForeground(new Color(255, 0, 0));
+		positionError.setToolTipText("");
+		positionError.setText("No container was found.");
+		positionError.setEditable(false);
+		positionError.setBackground(new Color(95, 158, 160));
+		positionError.setBounds(32, 198, 175, 16);
+		ContainePositionrPanel.add(positionError);
+		
+		textField_16 = new JTextField();
+		textField_16.setColumns(10);
+		textField_16.setBounds(145, 57, 183, 26);
+		ContainePositionrPanel.add(textField_16);
+		
 		StatusPanel = new JPanel();
+		layeredPane.setLayer(StatusPanel, 0);
 		StatusPanel.setBackground(new Color(95, 158, 160));
 		StatusPanel.setBounds(0, 0, 480, 406);
 		layeredPane.add(StatusPanel);
@@ -399,6 +434,37 @@ public class LogisticsMenu {
 		JButton btnNewButton = new JButton("Save");
 		btnNewButton.setBounds(265, 225, 117, 29);
 		StatusPanel.add(btnNewButton);
+		
+		JTextArea txtrContainerId_1 = new JTextArea();
+		txtrContainerId_1.setToolTipText("");
+		txtrContainerId_1.setText("Container ID:");
+		txtrContainerId_1.setEditable(false);
+		txtrContainerId_1.setBackground(new Color(95, 158, 160));
+		txtrContainerId_1.setBounds(25, 61, 175, 16);
+		StatusPanel.add(txtrContainerId_1);
+		
+		containerIDtextstatus = new JTextField();
+		containerIDtextstatus.setColumns(10);
+		containerIDtextstatus.setBounds(222, 56, 160, 26);
+		StatusPanel.add(containerIDtextstatus);
+		
+		JTextArea statusError = new JTextArea();
+		statusError.setForeground(new Color(255, 69, 0));
+		statusError.setToolTipText("");
+		statusError.setText("Container not found.");
+		statusError.setEditable(false);
+		statusError.setBackground(new Color(95, 158, 160));
+		statusError.setBounds(102, 230, 175, 16);
+		StatusPanel.add(statusError);
+		
+		JTextArea successStatus = new JTextArea();
+		successStatus.setForeground(new Color(50, 205, 50));
+		successStatus.setToolTipText("");
+		successStatus.setText("Success");
+		successStatus.setEditable(false);
+		successStatus.setBackground(new Color(95, 158, 160));
+		successStatus.setBounds(245, 251, 175, 16);
+		StatusPanel.add(successStatus);
 		
 		ContainerInfoPanel = new JPanel();
 		ContainerInfoPanel.setBackground(new Color(95, 158, 160));
@@ -523,6 +589,23 @@ public class LogisticsMenu {
 		arrivaltext.setBackground(new Color(95, 158, 160));
 		arrivaltext.setBounds(209, 274, 137, 16);
 		ContainerInfoPanel.add(arrivaltext);
+		
+		JPanel viewContainerPanel = new JPanel();
+		layeredPane.setLayer(viewContainerPanel, 2);
+		viewContainerPanel.setBackground(new Color(95, 158, 160));
+		viewContainerPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(viewContainerPanel);
+		viewContainerPanel.setLayout(null);
+		
+		JTextArea viewContainerText = new JTextArea();
+		viewContainerText.setBackground(new Color(95, 158, 160));
+		viewContainerText.setEditable(false);
+		viewContainerText.setBounds(18, 6, 450, 322);
+		viewContainerPanel.add(viewContainerText);
+		
+		JButton graphsbutton = new JButton("Graphs");
+		graphsbutton.setBounds(330, 352, 117, 29);
+		viewContainerPanel.add(graphsbutton);
 	}
 	
 	public void switchPanels(JPanel panel) {
