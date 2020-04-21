@@ -2,9 +2,7 @@ package dataAccess;
 
 import java.util.*;
 
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.*;
 
 import exceptions.ElementNotFoundException;
 import objectsData.IdentifiableData;
@@ -47,68 +45,67 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 	public void deleteEntry(long ID) {
 		activeData.removeDataWithID(ID);
 		
-		initializeIO();
+		xmlIO.initializeIO();
 		removeDataWithIDFromFile(ID);
-		finishWriteIO();
+		xmlIO.finishWriteIO();
 	}
 	
 	@Override
 	public void flushActiveData() {
-		initializeIO();
+		xmlIO.initializeIO();
 		zipActiveDataToFile();
-		finishWriteIO();
+		xmlIO.finishWriteIO();
+	}
+	
+	@Override
+	protected EventParser createStartTag(T data) {
+		EventParser startTag = EventParser.generateStart(dataPointTagName);
+		startTag.setIDAttribute(data.getID());
+		return startTag;
 	}
 
 	private void removeDataWithIDFromFile(long ID) {
 		DataPointParser dataPointParser = new DataPointParser(dataPointTagName,String.valueOf(ID));
-		try {
-		writer.add(reader.nextEvent());
-		writer.add(reader.nextEvent());
-		while(reader.hasNext()) {
-			EventParser event = new EventParser(reader.nextEvent());
+		xmlIO.transferNext();
+		xmlIO.transferNext();
+		while(xmlIO.hasNext()) {
+			EventParser event = xmlIO.readEvent();
 			dataPointParser.handleMatchOnID(event);
 			if(dataPointParser.isCompleteDataPoint() && !dataPointParser.isCompleteMatchingDataPoint()) {
-				insertDataPoint(dataPointParser.getDataPoint());
+				xmlIO.insertDataPoint(dataPointParser.getDataPoint());
 			}
 		}
-		writer.add(EventParser.generateEnd(collectionTagName).getEvent());
-		writer.add(EventParser.generateEndDoc().getEvent());
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
+		xmlIO.writeEvent(EventParser.generateEnd(collectionTagName));
+		xmlIO.writeEvent(EventParser.generateEndDoc());
 	}
 
 	private void zipActiveDataToFile() {
 		DataPointParser dataPointParser = new DataPointParser(dataPointTagName);
-		try {
-		writer.add(reader.nextEvent());
-		writer.add(reader.nextEvent());
-		while(reader.hasNext()) {
+		xmlIO.transferNext();
+		xmlIO.transferNext();
+		while(xmlIO.hasNext()) {
 			dataPointParser = handleNextEvent(dataPointParser);
 		}
 		while(!activeData.isEmpty()) {
 			transferFirstActiveDataToFile();
 		}
-		writer.add(EventParser.generateEnd(collectionTagName).getEvent());
-		writer.add(EventParser.generateEndDoc().getEvent());
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
+		xmlIO.writeEvent(EventParser.generateEnd(collectionTagName));
+		xmlIO.writeEvent(EventParser.generateEndDoc());
 	}
 
-	private DataPointParser handleNextEvent(DataPointParser dataPointParser) throws XMLStreamException {
-		EventParser event = new EventParser(reader.nextEvent());
+	private DataPointParser handleNextEvent(DataPointParser dataPointParser){
+		EventParser event = xmlIO.readEvent();
 		dataPointParser.handleMatchOnID(event);
 		if(event.isStartOfDataPoint(dataPointTagName)) {
 			insertAllLesserActiveData(dataPointParser);
 		}else if(event.isEndOfDataPoint(dataPointTagName) && !dataPointParser.isCompleteMatchingDataPoint()) {
-			insertDataPoint(dataPointParser.getDataPoint());
+			xmlIO.insertDataPoint(dataPointParser.getDataPoint());
 		}
 		return dataPointParser;
 	}
 
 	private void transferFirstActiveDataToFile() {
-		insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
+		xmlIO.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
 		activeData.removeDataAtIndex(0);
 	}
 
@@ -122,36 +119,24 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 		}
 	}
 	
-	@Override
-	protected EventParser createStartTag(T data) {
-		EventParser startTag = EventParser.generateStart(dataPointTagName);
-		startTag.setIDAttribute(data.getID());
-		return startTag;
-	}
-	
 	private List<T> findMatchingEntriesFromFile(String searchWord) {
-		initializeIO();
+		xmlIO.initializeIO();
 		List<T> matchingEntries = searchThroughAllEvents(searchWord);
-		finishReadIO();
+		xmlIO.finishReadIO();
 		return matchingEntries;
 	}
 
 	private List<T> searchThroughAllEvents(String searchWord) {
 		List<T> matchingEntries = new ArrayList<>();
 		DataPointParser currentDataPoint = new DataPointParser(dataPointTagName,searchWord);
-		try {
-		reader.nextEvent();
-		reader.nextEvent();
-		while(reader.hasNext()) {
-			EventParser event = new EventParser(reader.nextEvent());
+		xmlIO.readEvent();
+		xmlIO.readEvent();
+		while(xmlIO.hasNext()) {
+			EventParser event = xmlIO.readEvent();
 			currentDataPoint.handleMatchOnIDAndValue(event);
 			if(currentDataPoint.isCompleteMatchingDataPoint()) {
 				matchingEntries.add(dataFromEvents(currentDataPoint));
 			}
-		}
-		} catch (XMLStreamException e) {
-			finishReadIO();
-			e.printStackTrace();
 		}
 		return matchingEntries;
 	}

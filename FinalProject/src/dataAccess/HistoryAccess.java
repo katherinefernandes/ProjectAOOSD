@@ -28,70 +28,33 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 
 	@Override
 	public void flushActiveData() {
-		initializeIO();
-		try {
-		writer.add(reader.nextEvent());
-		writer.add(reader.nextEvent());
+		xmlIO.initializeIO();
+		xmlIO.transferNext();
+		xmlIO.transferNext();
 		saveAllActiveData();
 		saveAllSavedData();
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
-		finishWriteIO();
-	}
-
-	private void saveAllSavedData() throws XMLStreamException {
-		while(reader.hasNext()) {
-			writer.add(reader.nextEvent());
-		}
-	}
-
-	private void saveAllActiveData() {
-		while(!activeData.isEmpty()) {
-			insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
-			activeData.removeDataAtIndex(0);
-		}
+		xmlIO.finishWriteIO();
 	}
 	
 	public void wipeHistory() {
 		activeData.wipeAllData();
-		initializeIO();
-		try {
-			writer.add(reader.nextEvent());
-			writer.add(reader.nextEvent());
-			writer.add(EventParser.generateEnd(collectionTagName).getEvent());
-			writer.add(EventParser.generateEndDoc().getEvent());
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
+		xmlIO.initializeIO();
+		xmlIO.transferNext();
+		xmlIO.transferNext();
+		xmlIO.writeEvent(EventParser.generateEnd(collectionTagName));
+		xmlIO.writeEvent(EventParser.generateEndDoc());
+		xmlIO.finishWriteIO();
+	}
+
+	private void saveAllSavedData() {
+		while(xmlIO.hasNext()) {
+			xmlIO.transferNext();
 		}
-		finishWriteIO();
 	}
 
 	@Override
 	protected EventParser createStartTag(HistoryData data) {
 		return EventParser.generateStart(dataPointTagName);
-	}
-	
-	private List<HistoryData> findMatchingEntriesFromFile(String searchWord){
-		List<HistoryData> matchingEntries = new ArrayList<>();
-		initializeIO();
-		DataPointParser dataPoint = new DataPointParser(dataPointTagName, searchWord);
-		try {
-		reader.nextEvent();
-		reader.nextEvent();
-		while(reader.hasNext()) {
-			EventParser event = new EventParser(reader.nextEvent());
-			dataPoint.handleMatchOnValue(event);
-			if(dataPoint.isCompleteMatchingDataPoint()) {
-				matchingEntries.add(dataFromEvents(dataPoint));
-			}
-		}			
-		} catch (XMLStreamException e) {
-			finishReadIO();
-			e.printStackTrace();
-		}
-		finishReadIO();
-		return matchingEntries;
 	}
 	
 	private HistoryData dataFromEvents(DataPointParser dataPoint) {
@@ -124,5 +87,29 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		HistoryData historyData = new HistoryData(timeStamp, containerID, journeyID, clientID, destinationPortID, startPortID, cargo, temperature, atmosphere, humidity, latitude, longitude);
 		
 		return historyData;
+	}
+	
+	private void saveAllActiveData() {
+		while(!activeData.isEmpty()) {
+			xmlIO.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
+			activeData.removeDataAtIndex(0);
+		}
+	}
+	
+	private List<HistoryData> findMatchingEntriesFromFile(String searchWord){
+		List<HistoryData> matchingEntries = new ArrayList<>();
+		DataPointParser dataPoint = new DataPointParser(dataPointTagName, searchWord);
+		xmlIO.initializeIO();
+		xmlIO.readEvent();
+		xmlIO.readEvent();
+		while(xmlIO.hasNext()) {
+			EventParser event = xmlIO.readEvent();
+			dataPoint.handleMatchOnValue(event);
+			if(dataPoint.isCompleteMatchingDataPoint()) {
+				matchingEntries.add(dataFromEvents(dataPoint));
+			}
+		}	
+		xmlIO.finishReadIO();
+		return matchingEntries;
 	}
 }
