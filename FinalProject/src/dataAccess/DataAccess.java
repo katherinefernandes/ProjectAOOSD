@@ -1,6 +1,5 @@
 package dataAccess;
 
-import objectsData.ObjectData;
 import objectsData.ObjectDataInterface;
 import objectsData.XMLField;
 
@@ -16,8 +15,8 @@ import javax.xml.validation.*;
 public abstract class DataAccess<T extends ObjectDataInterface> {
 	protected Schema schema;
 	protected String filePath;
-	protected String elementsName;
-	protected String collectionsName;
+	protected String dataPointTagName;
+	protected String collectionTagName;
 	
 	protected XMLEventFactory eventFactory;
 	protected XMLEventReader reader;
@@ -30,8 +29,8 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 	
 	public DataAccess(String filePath, String elementsName, String collectionsName) {
 		this.filePath = filePath;
-		this.elementsName = elementsName;
-		this.collectionsName = collectionsName;
+		this.dataPointTagName = elementsName;
+		this.collectionTagName = collectionsName;
 		eventFactory = XMLEventFactory.newInstance();
 	}
 	
@@ -42,10 +41,10 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 
 	public abstract void flushActiveData();
 	
-	protected abstract StartElement createStartTag(T data);
+	protected abstract EventParser createStartTag(T data);
 	
-	protected List<XMLEvent> eventsFromData(T data){
-		List<XMLEvent> events = new ArrayList<>();
+	protected List<EventParser> eventsFromData(T data){
+		List<EventParser> events = new ArrayList<>();
 		addStartElement(data, events);
 		addAllFieldsAsEvents(data.getXML(), events);
 		addEndElement(data, events);
@@ -93,25 +92,25 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 		}
 	}
 	
-	protected int iterateUntilFound(int index, List<XMLEvent> events, String find) {
+	protected int iterateUntilFound(int index, DataPointParser dataPoint, String find) {
 		XMLEvent event;
-		while(!((event = events.get(index)).isStartElement() && getEventName(event).equals(find))){
+		while(!((event = dataPoint.getEventAtIndex(index).getEvent()).isStartElement() && event.asStartElement().getName().getLocalPart().equals(find))){
 			index++;
 		}
 		return index;
 	}
 	
-	protected void insertDatapoint(List<XMLEvent> Datapoint) {
+	protected void insertDataPoint(List<EventParser> dataPoint) {
 		try {
-		for(XMLEvent event : Datapoint) {
-				writer.add(event);
+		for(EventParser event : dataPoint) {
+				writer.add(event.getEvent());
 			} 
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	protected List<XMLEvent> fieldToEvent(List<XMLEvent> events, XMLField field){
+	protected List<EventParser> fieldToEvent(List<EventParser> events, XMLField field){
 		try {
 		switch(field.getValueType()){
 		case 0:
@@ -142,45 +141,34 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 		throw new Error("Invalid field type");
 	}
 	
-	protected String getEventName(XMLEvent event) {
-		if(event.isStartElement()) {
-			return event.asStartElement().getName().getLocalPart();
-		}
-		else if(event.isEndElement()) {
-			return event.asEndElement().getName().getLocalPart();
-		}
-		else {
-			throw new Error("Can only get name from start and end elements");
-		}
+	
+	protected EventParser generateStart(String string) {
+		return new EventParser(eventFactory.createStartElement("","",string));
 	}
 	
-	protected StartElement generateStart(String string) {
-		return eventFactory.createStartElement("","",string);
+	protected EventParser generateText(Object string) {
+		return new EventParser(eventFactory.createCharacters(String.valueOf(string)));
 	}
 	
-	protected Characters generateText(Object string) {
-		return eventFactory.createCharacters(String.valueOf(string));
+	protected EventParser generateEnd(String string) {
+		return new EventParser(eventFactory.createEndElement("", "", string));
 	}
 	
-	protected EndElement generateEnd(String string) {
-		return eventFactory.createEndElement("", "", string);
-	}
-	
-	private void addStartElement(T data, List<XMLEvent> events) {
+	private void addStartElement(T data, List<EventParser> events) {
 		events.add(createStartTag(data));
 	}
 	
-	private void addAllFieldsAsEvents(List<XMLField> xmlFields, List<XMLEvent> events) {
+	private void addAllFieldsAsEvents(List<XMLField> xmlFields, List<EventParser> events) {
 		try {
 			for(XMLField field : xmlFields) {
-				events.addAll(fieldToEvent(new ArrayList<XMLEvent>(),field));
+				events.addAll(fieldToEvent(new ArrayList<EventParser>(),field));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void addEndElement(T data, List<XMLEvent> events) {
+	private void addEndElement(T data, List<EventParser> events) {
 		events.add(generateEnd(data.getTagname()));
 	}
 
