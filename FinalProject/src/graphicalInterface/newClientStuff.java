@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 
 import logic.ClientController;
 import logic.LoginController;
+import supportingClasses.ValidInput;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -86,10 +87,13 @@ public class newClientStuff {
 	private JTextArea lastUpdatedTextField;
 	private JTextArea multipleContainersTextField;
 	private JButton saveJourney;
-	
+	private JTextArea JourneyErrorText;
+	private ValidInput validate;
+	private JTextArea journeySuccessTextfield;
 	
 	public newClientStuff(ClientController controller) {
 		this.controller = controller;
+		validate =new ValidInput();
 		initialize();
 	}
 	private void initialize() {
@@ -496,7 +500,7 @@ public class newClientStuff {
 		JourneyPanel.add(txtrOptimalHumidity);
 		
 		JTextArea txtrArriveBy = new JTextArea();
-		txtrArriveBy.setText("Arrive by:");
+		txtrArriveBy.setText("Arrive by: \n(dd/mm/yyyy)");
 		txtrArriveBy.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrArriveBy.setEditable(false);
 		txtrArriveBy.setBackground(new Color(95, 158, 160));
@@ -543,14 +547,47 @@ public class newClientStuff {
 		saveJourney.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean checkMessage= false;
+				JourneyErrorText.setVisible(false);
+				journeySuccessTextfield.setVisible(false);
 				if (!textField_8.getText().isEmpty()) {
 					checkMessage = controller.checkStartPortName( textField_8.getText());
-				};
+				}
+				if (checkMessage&&(!textField_9.getText().isEmpty())) {
+					checkMessage = controller.checkDestinationPortName(textField_9.getText());
+				}else if(textField_9.getText().isEmpty()) {
+					System.out.println("There is no destination port entered");
+					checkMessage=false;
+				}
+				if(!checkMessage) {
+					JourneyErrorText.setVisible(true);
+					return;
+				}
+				if(!textField_10.getText().isEmpty()) {
+					checkMessage = validate.validateName(textField_10.getText());
+					
+				}
+				if(checkMessage&&!textField_11.getText().isEmpty()&&!textField_12.getText().isEmpty()&&!textField_13.getText().isEmpty()) {
+					checkMessage = controller.checkFloat(textField_11.getText());
+					checkMessage = controller.checkFloat(textField_12.getText());
+					checkMessage = controller.checkFloat(textField_13.getText());
+				}
+				if(checkMessage&&!textField_14.getText().isEmpty()) {
+					checkMessage = controller.setArriveByString(textField_14.getText());
+					
+				}
+				if(checkMessage) {
+					checkMessage = controller.registerJourney(textField_10.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText(),textField_14.getText());
+				}
+				if(checkMessage) {
+					journeySuccessTextfield.setVisible(true);
+					viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+				}
+				
 				
 		}});
 		JourneyPanel.add(saveJourney);
 		
-		JTextArea JourneyErrorText = new JTextArea();
+		 JourneyErrorText = new JTextArea();
 		JourneyErrorText.setForeground(new Color(255, 0, 0));
 		JourneyErrorText.setText("Could not register the journey. Try again");
 		JourneyErrorText.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -558,8 +595,9 @@ public class newClientStuff {
 		JourneyErrorText.setBackground(new Color(95, 158, 160));
 		JourneyErrorText.setBounds(84, 362, 390, 16);
 		JourneyPanel.add(JourneyErrorText);
+		JourneyErrorText.setVisible(false);
 		
-		JTextArea journeySuccessTextfield = new JTextArea();
+		journeySuccessTextfield = new JTextArea();
 		journeySuccessTextfield.setForeground(new Color(50, 205, 50));
 		journeySuccessTextfield.setText("Success!");
 		journeySuccessTextfield.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -567,6 +605,7 @@ public class newClientStuff {
 		journeySuccessTextfield.setBackground(new Color(95, 158, 160));
 		journeySuccessTextfield.setBounds(236, 390, 83, 16);
 		JourneyPanel.add(journeySuccessTextfield);
+		journeySuccessTextfield.setVisible(false);
 		
 		JPanel viewContainerPanel = new JPanel();
 		viewContainerPanel.setBackground(new Color(95, 158, 160));

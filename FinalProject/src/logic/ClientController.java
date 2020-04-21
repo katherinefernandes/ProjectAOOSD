@@ -3,6 +3,7 @@ package logic;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import containerFilters.FilterByCargoName;
@@ -34,6 +35,7 @@ public class ClientController {
 	private long portID;
 	private PortAccess databasePort;
 	private long startPortID;
+	private long destinationPortID;
 	
 	public ClientController(String clientID){
 		this.clientID = Long.valueOf(clientID);
@@ -388,4 +390,43 @@ public class ClientController {
 	    System.out.println("Container not found nor set, something wrong with currentclient method");
 		return false;
 	}
+	public boolean checkDestinationPortName(String portname) {
+		// TODO Auto-generated method stub
+		destinationPortID = currentClient.getPortID(portname);
+		if(destinationPortID==1l) {
+			System.out.println("Destination port does not exit");
+			return false;
+		}
+		System.out.println("Destination port exists");
+		currentClient.updateDestinationPort(destinationPortID);
+		
+		
+		return true;
+	}
+	public boolean checkFloat(String floatnumber) {
+		// TODO Auto-generated method stub
+		try {
+			Float.valueOf(floatnumber);
+			return true;
+		}catch(NumberFormatException e) {
+			System.out.println("The internal status values are not valid");
+			return false;
+		}
+	}
+	public boolean setArriveByString(String date) {
+		// TODO Auto-generated method stub
+		// we need to fix the parse date ... 
+		//we need to set the arriveby in here as welll and then replace from line 426
+		return true;
+	}
+	public boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
+		// TODO Auto-generated method stub
+		float temperature = Float.valueOf(temp);
+		float humidity2 = Float.valueOf(humidity);
+		float atmosphere = Float.valueOf(atm);
+		currentClient.registerContainer(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, LocalDate.now());
+		
+		return currentClient.getContainerRegistered();
+	}
+	
 }
