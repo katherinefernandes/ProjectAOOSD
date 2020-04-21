@@ -10,6 +10,7 @@ import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 import objectsData.PortData;
+import supportingClasses.UpdateHistory;
 import supportingClasses.parseInput;
 import updateClientInformation.UpdateClient;
 
@@ -21,11 +22,13 @@ public class CurrentClientV2 extends User{
 	private boolean containerRegistered;
 	//private ArrayList<Long> ActiveJourneys;
 	private PortAccess databasePort;
+	private UpdateHistory history;
 
 	public CurrentClientV2(long ID) {
 		super();
 		this.getClient(ID);
 		databasePort = new PortAccess();
+		history = new UpdateHistory();
 	}
 	
 	
@@ -109,6 +112,7 @@ public class CurrentClientV2 extends User{
 		container.setJourneyID(ssecurity.generateID());
 		databaseContainer.editEntry(container);
 		databaseContainer.flushActiveData();
+		history.updateHistoryDataBase(container);
 		client.addActiveShipment(container.getJourneyID());
 		databaseClient.editEntry(client);
 		databaseClient.flushActiveData();

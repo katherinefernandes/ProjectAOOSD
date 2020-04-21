@@ -12,6 +12,7 @@ import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
 import supportingClasses.Security;
+import supportingClasses.UpdateHistory;
 import supportingClasses.parseInput;
 
 public class SimulatingData {
@@ -21,7 +22,7 @@ public class SimulatingData {
 		ArrayList<String> firstname = new ArrayList<String>();
 		ArrayList<String> middlename = new ArrayList<String>();
 		ArrayList<String> lastname = new ArrayList<String>();
-		
+		UpdateHistory history = new UpdateHistory();
 		
 		firstname.add("muna");
 		lastname.add("azam");
@@ -69,6 +70,18 @@ public class SimulatingData {
 		containerDataBase.newEntry(container7);
 		containerDataBase.newEntry(container8);
 		containerDataBase.newEntry(container10);
+		history.updateHistoryDataBase(container10);
+		history.updateHistoryDataBase(container11);
+		history.updateHistoryDataBase(container9);
+		history.updateHistoryDataBase(container8);
+		history.updateHistoryDataBase(container7);
+		history.updateHistoryDataBase(container6);
+		history.updateHistoryDataBase(container5);
+		history.updateHistoryDataBase(container4);
+		history.updateHistoryDataBase(container3);
+		history.updateHistoryDataBase(container2);
+		history.updateHistoryDataBase(container1);
+		
 		port2.addStationedContainer(container8.getID());
 		port2.addStationedContainer(container7.getID());
 		port2.addStationedContainer(container6.getID());

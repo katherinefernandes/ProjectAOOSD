@@ -150,6 +150,7 @@ public class LogisticController {
 
 	public boolean addClient() {
 		// TODO Auto-generated method stub
+		logistic.setAddNewClient();
 		logistic.addClient(email, companyName, cc, phonenumber, firstName, middleName, lastName, street, city, zipcode, building);
 		return logistic.getAddNewClient();
 	}
