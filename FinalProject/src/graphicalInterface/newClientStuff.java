@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 
 import logic.ClientController;
 import logic.LoginController;
+import supportingClasses.ValidInput;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -78,9 +79,21 @@ public class newClientStuff {
 	private JTextArea noContainerError;
 	private JTextArea txtrSearchByOne; 
 	private JPanel newMultipleContainersPanel;
+	private JTextArea startPortTextField;
+	private JTextArea destinationPortTextField;
+	private JTextArea cargoTextField;
+	private JTextArea internalStatusTextField;
+	private JTextArea arrivalDateTextField;
+	private JTextArea lastUpdatedTextField;
+	private JTextArea multipleContainersTextField;
+	private JButton saveJourney;
+	private JTextArea JourneyErrorText;
+	private ValidInput validate;
+	private JTextArea journeySuccessTextfield;
 	
 	public newClientStuff(ClientController controller) {
 		this.controller = controller;
+		validate =new ValidInput();
 		initialize();
 	}
 	private void initialize() {
@@ -487,11 +500,11 @@ public class newClientStuff {
 		JourneyPanel.add(txtrOptimalHumidity);
 		
 		JTextArea txtrArriveBy = new JTextArea();
-		txtrArriveBy.setText("Arrive by:");
+		txtrArriveBy.setText("Arrive by: \n(dd/mm/yyyy)");
 		txtrArriveBy.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrArriveBy.setEditable(false);
 		txtrArriveBy.setBackground(new Color(95, 158, 160));
-		txtrArriveBy.setBounds(84, 287, 128, 30);
+		txtrArriveBy.setBounds(84, 287, 128, 51);
 		JourneyPanel.add(txtrArriveBy);
 		
 		textField_8 = new JTextField();
@@ -529,11 +542,54 @@ public class newClientStuff {
 		JourneyPanel.add(textField_14);
 		textField_14.setColumns(10);
 		
-		JButton btnNewButton_3 = new JButton("Save");
-		btnNewButton_3.setBounds(357, 322, 117, 29);
-		JourneyPanel.add(btnNewButton_3);
+		 saveJourney = new JButton("Save");
+		saveJourney.setBounds(357, 322, 117, 29);
+		saveJourney.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean checkMessage= false;
+				JourneyErrorText.setVisible(false);
+				journeySuccessTextfield.setVisible(false);
+				if (!textField_8.getText().isEmpty()) {
+					checkMessage = controller.checkStartPortName( textField_8.getText());
+				}
+				if (checkMessage&&(!textField_9.getText().isEmpty())) {
+					checkMessage = controller.checkDestinationPortName(textField_9.getText());
+				}else if(textField_9.getText().isEmpty()) {
+					System.out.println("There is no destination port entered");
+					checkMessage=false;
+				}
+				if(!checkMessage) {
+					JourneyErrorText.setVisible(true);
+					return;
+				}
+				if(!textField_10.getText().isEmpty()) {
+					checkMessage = validate.validateName(textField_10.getText());
+					
+				}
+				if(checkMessage&&!textField_11.getText().isEmpty()&&!textField_12.getText().isEmpty()&&!textField_13.getText().isEmpty()) {
+					checkMessage = controller.checkFloat(textField_11.getText());
+					checkMessage = controller.checkFloat(textField_12.getText());
+					checkMessage = controller.checkFloat(textField_13.getText());
+				}
+				if(checkMessage&&!textField_14.getText().isEmpty()) {
+					checkMessage = controller.setArriveByString(textField_14.getText());
+					
+				}
+				if(checkMessage) {
+					checkMessage = controller.registerJourney(textField_10.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText(),textField_14.getText());
+				}
+				if(checkMessage) {
+					journeySuccessTextfield.setVisible(true);
+					viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+				}else {
+					JourneyErrorText.setVisible(true);
+				}
+				 clearContainerDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
+				
+		}});
+		JourneyPanel.add(saveJourney);
 		
-		JTextArea JourneyErrorText = new JTextArea();
+		JourneyErrorText = new JTextArea();
 		JourneyErrorText.setForeground(new Color(255, 0, 0));
 		JourneyErrorText.setText("Could not register the journey. Try again");
 		JourneyErrorText.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -541,8 +597,9 @@ public class newClientStuff {
 		JourneyErrorText.setBackground(new Color(95, 158, 160));
 		JourneyErrorText.setBounds(84, 362, 390, 16);
 		JourneyPanel.add(JourneyErrorText);
+		JourneyErrorText.setVisible(false);
 		
-		JTextArea journeySuccessTextfield = new JTextArea();
+		journeySuccessTextfield = new JTextArea();
 		journeySuccessTextfield.setForeground(new Color(50, 205, 50));
 		journeySuccessTextfield.setText("Success!");
 		journeySuccessTextfield.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -550,6 +607,7 @@ public class newClientStuff {
 		journeySuccessTextfield.setBackground(new Color(95, 158, 160));
 		journeySuccessTextfield.setBounds(236, 390, 83, 16);
 		JourneyPanel.add(journeySuccessTextfield);
+		journeySuccessTextfield.setVisible(false);
 		
 		JPanel viewContainerPanel = new JPanel();
 		viewContainerPanel.setBackground(new Color(95, 158, 160));
@@ -604,42 +662,43 @@ public class newClientStuff {
 		txtrLastUpdated.setBounds(17, 364, 114, 19);
 		viewContainerPanel.add(txtrLastUpdated);
 		
-		JTextArea startPortTextField = new JTextArea();
+		startPortTextField = new JTextArea();
 		startPortTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		startPortTextField.setEditable(false);
 		startPortTextField.setBackground(new Color(95, 158, 160));
 		startPortTextField.setBounds(206, 35, 371, 19);
+		
 		viewContainerPanel.add(startPortTextField);
 		
-		JTextArea destinationPortTextField = new JTextArea();
+		destinationPortTextField = new JTextArea();
 		destinationPortTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		destinationPortTextField.setEditable(false);
 		destinationPortTextField.setBackground(new Color(95, 158, 160));
 		destinationPortTextField.setBounds(206, 80, 371, 19);
 		viewContainerPanel.add(destinationPortTextField);
 		
-		JTextArea cargoTextField = new JTextArea();
+		cargoTextField = new JTextArea();
 		cargoTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		cargoTextField.setEditable(false);
 		cargoTextField.setBackground(new Color(95, 158, 160));
 		cargoTextField.setBounds(206, 132, 371, 19);
 		viewContainerPanel.add(cargoTextField);
 		
-		JTextArea internalStatusTextField = new JTextArea();
+		internalStatusTextField = new JTextArea();
 		internalStatusTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		internalStatusTextField.setEditable(false);
 		internalStatusTextField.setBackground(new Color(95, 158, 160));
 		internalStatusTextField.setBounds(206, 176, 371, 88);
 		viewContainerPanel.add(internalStatusTextField);
 		
-		JTextArea arrivalDateTextField = new JTextArea();
+		arrivalDateTextField = new JTextArea();
 		arrivalDateTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		arrivalDateTextField.setEditable(false);
 		arrivalDateTextField.setBackground(new Color(95, 158, 160));
 		arrivalDateTextField.setBounds(206, 323, 371, 19);
 		viewContainerPanel.add(arrivalDateTextField);
 		
-		JTextArea lastUpdatedTextField = new JTextArea();
+		lastUpdatedTextField = new JTextArea();
 		lastUpdatedTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lastUpdatedTextField.setEditable(false);
 		lastUpdatedTextField.setBackground(new Color(95, 158, 160));
@@ -688,11 +747,14 @@ public class newClientStuff {
 			public void actionPerformed(ActionEvent e) {
 				noContainerError.setVisible(false);
 				boolean checkMessage=false;
+				boolean checkCriteria = false;
 				if (!containterIDsearch.getText().isEmpty()) {
 					checkMessage = controller.getContainerByContainerID(containterIDsearch.getText());
+					checkCriteria = true;
 				} 
 				if(!checkMessage&&!JourneyIDsearch.getText().isEmpty()) {
 					checkMessage = controller.getContainerByJourneyID(JourneyIDsearch.getText());
+					checkCriteria =true;
 				}
 				if(!checkMessage&&!CargoIDsearch.getText().isEmpty()) {
 					checkMessage = controller.getContainerByCargo(CargoIDsearch.getText());
@@ -702,13 +764,19 @@ public class newClientStuff {
 				}
 				if(checkMessage) {
 					noContainerError.setVisible(false);
-					switchPanels(viewContainerPanel);
+					setFieldsContainerData();
+					if(checkCriteria) {
+						switchPanels(viewContainerPanel);
+					}else {
+						switchPanels(newMultipleContainersPanel);
+					}
 				}else {
 					noContainerError.setVisible(true);
 				}
 				clearContainerDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
+			
 		});
 		Enterbutton.setBounds(289, 279, 117, 29);
 		DataPanel.add(Enterbutton);
@@ -876,7 +944,7 @@ public class newClientStuff {
 		layeredPane.add(newMultipleContainersPanel, "name_65527884775862");
 		newMultipleContainersPanel.setLayout(null);
 		
-		JTextArea multipleContainersTextField = new JTextArea();
+		 multipleContainersTextField = new JTextArea();
 		multipleContainersTextField.setBackground(new Color(95, 158, 160));
 		multipleContainersTextField.setEditable(false);
 		multipleContainersTextField.setBounds(20, 25, 543, 432);
@@ -913,4 +981,16 @@ public class newClientStuff {
 			field.setText("");
 		}
 	}
+	
+	private void setFieldsContainerData() {
+		internalStatusTextField.setText(controller.getInternalStatus());
+		startPortTextField.setText(controller.getStartPortName());
+		destinationPortTextField.setText(controller.getDestinationPortName());
+		cargoTextField.setText(controller.getCargo());
+		arrivalDateTextField.setText(controller.getArrivalDate());
+		lastUpdatedTextField.setText(controller.getLastUpdate());
+		currentLocationTextField.setText(controller.getCurrentLocation());
+		multipleContainersTextField.setText(controller.getMulitpleContainersData());
+	}
+
 }
