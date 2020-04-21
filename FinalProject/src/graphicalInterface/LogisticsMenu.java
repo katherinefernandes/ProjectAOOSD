@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import logic.LoginController;
+import logic.LogisticController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,9 +26,11 @@ public class LogisticsMenu {
     public JPanel panel,panel_1,ContainePositionrPanel,newClientPanel,ContainerInfoPanel,StatusPanel;
     public JButton newClientButton,getInfoButton,UpdateContainerButton,logoutButton;
     public JLayeredPane layeredPane;
-    private LoginController controller;
+    private LogisticController controller;
+	private JTextArea txtrSomethingWentWrong;
+	private JTextArea txtrSuccess;
     
-    public LogisticsMenu(LoginController controller) {
+    public LogisticsMenu(LogisticController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -238,23 +241,79 @@ public class LogisticsMenu {
 		
 		JButton Save1 = new JButton("Save");
 		Save1.setBounds(213, 351, 117, 29);
+		Save1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean checkMessage = false;
+				txtrSuccess.setVisible(false);
+				txtrSomethingWentWrong.setVisible(false);
+				if(!textField.getText().isEmpty()) {
+					checkMessage = controller.setCompanyName(textField.getText());
+				}
+				if(checkMessage&&!textField_1.getText().isEmpty()) {
+					checkMessage = controller.setEmail(textField_1.getText());
+				}
+				if(checkMessage&&!textField_2.getText().isEmpty()) {
+					checkMessage = controller.setCountryCode(textField_2.getText());
+				}
+				if(checkMessage&&!textField_3.getText().isEmpty()) {
+					checkMessage = controller.setPhoneNumber(textField_3.getText());
+				}
+				if (checkMessage&&!textField_4.getText().isEmpty()) {
+					checkMessage = controller.setFirstName(textField_4.getText());
+				}
+				if (checkMessage&&!textField_5.getText().isEmpty()) {
+					checkMessage = controller.setMiddleName(textField_5.getText());
+				}
+				if (checkMessage&&!textField_6.getText().isEmpty()) {
+					checkMessage = controller.setLastName(textField_6.getText());
+				}
+				if(checkMessage&&!textField_7.getText().isEmpty()) {
+					checkMessage = controller.setStreetName(textField_7.getText());
+				}
+				if(checkMessage&&!textField_8.getText().isEmpty()) {
+					checkMessage = controller.setCity(textField_8.getText());
+				}
+				if(checkMessage&&!textField_9.getText().isEmpty()) {
+					checkMessage = controller.setBuilding(textField_9.getText());
+				}
+				if(checkMessage&&!textField_10.getText().isEmpty()) {
+					checkMessage = controller.setPostcode(textField_10.getText());
+				}
+				if(textField_10.getText().isEmpty()||textField_9.getText().isEmpty()||textField_8.getText().isEmpty()||textField_7.getText().isEmpty()||textField_6.getText().isEmpty()||textField_4.getText().isEmpty()||textField_3.getText().isEmpty()||textField_2.getText().isEmpty()||textField_1.getText().isEmpty()) {
+					checkMessage = false;
+				}
+				
+				if(checkMessage) {
+					checkMessage = controller.addClient();
+				}
+				if(checkMessage) {
+					txtrSuccess.setVisible(true);
+				}else {
+					txtrSomethingWentWrong.setVisible(true);
+				}
+				
+				clearDataFields(textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10);
+			}
+		});
 		newClientPanel.add(Save1);
 		
-		JTextArea txtrSuccess = new JTextArea();
+		txtrSuccess = new JTextArea();
 		txtrSuccess.setBackground(new Color(95, 158, 160));
 		txtrSuccess.setForeground(new Color(124, 252, 0));
 		txtrSuccess.setText("Success");
 		txtrSuccess.setEditable(false);
 		txtrSuccess.setBounds(92, 356, 82, 16);
 		newClientPanel.add(txtrSuccess);
+		txtrSuccess.setVisible(false);
 		
-		JTextArea txtrSomethingWentWrong = new JTextArea();
+		txtrSomethingWentWrong = new JTextArea();
 		txtrSomethingWentWrong.setText("Something went wrong. Try again");
 		txtrSomethingWentWrong.setBackground(new Color(95, 158, 160));
 		txtrSomethingWentWrong.setForeground(new Color(255, 0, 0));
 		txtrSomethingWentWrong.setEditable(false);
 		txtrSomethingWentWrong.setBounds(93, 375, 236, 16);
 		newClientPanel.add(txtrSomethingWentWrong);
+		txtrSomethingWentWrong.setVisible(false);
 		
 		ContainePositionrPanel = new JPanel();
 		ContainePositionrPanel.setBounds(0, 0, 486, 412);
@@ -472,5 +531,10 @@ public class LogisticsMenu {
 		layeredPane.repaint();
 		layeredPane.revalidate();
 		
+	}
+	public void clearDataFields(JTextField...fields) {
+		for(JTextField field : fields) {
+			field.setText("");
+		}
 	}
 }

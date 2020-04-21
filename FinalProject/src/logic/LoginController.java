@@ -89,7 +89,8 @@ public class LoginController {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							LogisticsMenu logistics = new LogisticsMenu(thisController);
+							LogisticController logisticController = new LogisticController();
+							LogisticsMenu logistics = new LogisticsMenu(logisticController);
 							logistics.frame.setVisible(true);
 							window.closeFrame();
 						} catch (Exception e) {
