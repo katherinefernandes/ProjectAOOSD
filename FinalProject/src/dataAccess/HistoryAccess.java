@@ -1,16 +1,11 @@
 package dataAccess;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.*;
 
-import objectsData.ClientData;
 import objectsData.HistoryData;
-import objectsData.InternalState;
-import objectsData.Location;
 
 public class HistoryAccess extends DataAccess<HistoryData> {
 	private ActiveData<HistoryData> activeData;
@@ -64,8 +59,8 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 		try {
 			writer.add(reader.nextEvent());
 			writer.add(reader.nextEvent());
-			writer.add(eventFactory.createEndElement("", "", collectionTagName));
-			writer.add(eventFactory.createEndDocument());
+			writer.add(EventParser.generateEnd(collectionTagName).getEvent());
+			writer.add(EventParser.generateEndDoc().getEvent());
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
@@ -74,7 +69,7 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 
 	@Override
 	protected EventParser createStartTag(HistoryData data) {
-		return new EventParser(eventFactory.createStartElement("", "", dataPointTagName));
+		return EventParser.generateStart(dataPointTagName);
 	}
 	
 	private List<HistoryData> findMatchingEntriesFromFile(String searchWord){

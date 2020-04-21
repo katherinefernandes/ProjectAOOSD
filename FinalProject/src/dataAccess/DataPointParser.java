@@ -3,7 +3,7 @@ package dataAccess;
 import java.util.*;
 import javax.xml.stream.events.*;
 
-class DataPointParser {
+public class DataPointParser {
 	private Long ID;
 	private List<EventParser> dataPoint;
 	private String dataPointTagName;

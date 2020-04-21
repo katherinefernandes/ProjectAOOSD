@@ -18,7 +18,6 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 	protected String dataPointTagName;
 	protected String collectionTagName;
 	
-	protected XMLEventFactory eventFactory;
 	protected XMLEventReader reader;
 	protected XMLEventWriter writer;
 	protected FileInputStream streamIn;
@@ -31,7 +30,6 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 		this.filePath = filePath;
 		this.dataPointTagName = elementsName;
 		this.collectionTagName = collectionsName;
-		eventFactory = XMLEventFactory.newInstance();
 	}
 	
 	
@@ -110,50 +108,6 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 		}
 	}
 	
-	protected List<EventParser> fieldToEvent(List<EventParser> events, XMLField field){
-		try {
-		switch(field.getValueType()){
-		case 0:
-			events.add(generateStart(field.getTagName()));
-			events.add(generateText(field.getValue()));
-			events.add(generateEnd(field.getTagName()));
-			return events;
-		case 1:
-			events.add(generateStart(field.getTagName()));
-			for(String value : field.getValues()) {
-				events.add(generateStart(field.getValuesName()));
-				events.add(generateText(value));
-				events.add(generateEnd(field.getValuesName()));
-			}
-			events.add(generateEnd(field.getTagName()));
-			return events;
-		case 2:
-			events.add(generateStart(field.getTagName()));
-			for(XMLField xml : field.getCompound()) {
-				fieldToEvent(events,xml);
-			}
-			events.add(generateEnd(field.getTagName()));
-			return events;
-		}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		throw new Error("Invalid field type");
-	}
-	
-	
-	protected EventParser generateStart(String string) {
-		return new EventParser(eventFactory.createStartElement("","",string));
-	}
-	
-	protected EventParser generateText(Object string) {
-		return new EventParser(eventFactory.createCharacters(String.valueOf(string)));
-	}
-	
-	protected EventParser generateEnd(String string) {
-		return new EventParser(eventFactory.createEndElement("", "", string));
-	}
-	
 	private void addStartElement(T data, List<EventParser> events) {
 		events.add(createStartTag(data));
 	}
@@ -161,7 +115,7 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 	private void addAllFieldsAsEvents(List<XMLField> xmlFields, List<EventParser> events) {
 		try {
 			for(XMLField field : xmlFields) {
-				events.addAll(fieldToEvent(new ArrayList<EventParser>(),field));
+				events.addAll(field.fieldToEvent(new ArrayList<EventParser>()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -169,7 +123,7 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 	}
 	
 	private void addEndElement(T data, List<EventParser> events) {
-		events.add(generateEnd(data.getTagname()));
+		events.add(EventParser.generateEnd(data.getTagname()));
 	}
 
 }
