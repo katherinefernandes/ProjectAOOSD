@@ -662,7 +662,7 @@ public class newClientStuff {
 		viewContainerPanel.add(currentLocationTextField);
 		
 		JButton GraphsButton = new JButton("Graphs");
-		GraphsButton.setBounds(460, 443, 117, 29);
+		GraphsButton.setBounds(424, 420, 117, 29);
 		viewContainerPanel.add(GraphsButton);
 		
 		DataPanel = new JPanel();
