@@ -3,7 +3,6 @@ package objectsData;
 import java.util.*;
 
 public class ClientData extends IdentifiableData{
-	private long clientID;
 	private String companyName;
 	private PhoneNumber phoneNumber;
 	private String email;
@@ -11,7 +10,7 @@ public class ClientData extends IdentifiableData{
 	private Address address;
 	private ArrayList<Long> activeShipment;
 
-	
+	//TODO make names follow naming-conventions
 	public ClientData(long cid, String companyname, int country, long phone, String email, ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln, String street, String city, int house, String zip) {
 		this.tagName = "Client";
 		this.ID=cid;

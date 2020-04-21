@@ -3,7 +3,10 @@ package objectsData;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//TODO general problem with all subclasses: they don't follow open-close or single responsibility
+//-open-close because adding more datafields to a class means changing code in multiple classes and methods
+//-single responsibility because time updated is assigned automatically, which shouldn't be the job of these
+//classes which should be seen as capsules of data as well as methods for parsing and converting that data.
 public abstract class ObjectData implements ObjectDataInterface{
 	protected List<XMLField> xmlFields;
 	protected String tagName;
@@ -37,6 +40,7 @@ public abstract class ObjectData implements ObjectDataInterface{
 		return index;
 	}
 	
+	//TODO remove switch and output argument
 	private void XMLvalues(List<String> values,XMLField field) throws Exception {
 		switch (field.getValueType()){
 		case 0:

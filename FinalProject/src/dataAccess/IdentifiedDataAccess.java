@@ -50,6 +50,12 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 		xmlIO.finishWriteIO();
 	}
 	
+	public boolean IDExists(String ID) {
+		boolean exists = activeData.IDIsInActiveData(ID);
+		exists = exists || IDIsInFile(ID);
+		return exists;
+	}
+	
 	@Override
 	public void flushActiveData() {
 		xmlIO.initializeIO();
@@ -62,6 +68,26 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 		EventParser startTag = EventParser.generateStart(dataPointTagName);
 		startTag.setIDAttribute(data.getID());
 		return startTag;
+	}
+	
+	private boolean IDIsInFile(String ID) {
+		xmlIO.initializeIO();
+		boolean isFound = searchFileForID(ID);
+		xmlIO.finishReadIO();
+		return isFound;
+	}
+	
+	private boolean searchFileForID(String ID) {
+		DataPointParser dataPoint = new DataPointParser(dataPointTagName,ID);
+		xmlIO.readEvent();
+		xmlIO.readEvent();
+		while(xmlIO.hasNext()) {
+			dataPoint.handleMatchOnID(xmlIO.readEvent());
+			if(dataPoint.isCompleteMatchingDataPoint()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void removeDataWithIDFromFile(long ID) {

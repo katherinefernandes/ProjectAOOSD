@@ -4,6 +4,7 @@ import java.util.*;
 
 import dataAccess.EventParser;
 
+//TODO convert from overloaded type to a hierarchy of subclasses
 public class XMLField {
 	private int valueType;
 	private String tagName;

@@ -33,7 +33,6 @@ public class LogisticCompanyV2 extends User{
 		
 		long id = ssecurity.generateID();
 		
-		ssecurity.saveClientID(id);
 		
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstName, middleName, lastName, street, city, houseNumber, postCode);
 		

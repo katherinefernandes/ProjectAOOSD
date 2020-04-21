@@ -17,17 +17,16 @@ public class LoginController {
 	private String companyPassword = "admin";
 	private ArrayList<String> clientIDs;
 	private Login_Window window;
+	private ClientAccess clientAccess;
 
 	public LoginController() {
-		Security s = new Security();
-		clientIDs = s.getClientIDs();
+		clientAccess = new ClientAccess();
 		window = new Login_Window(this);
 		window.openFrame();
-		
 	}
 	
 	public boolean validClientInfo(String clientID) {
-		if (clientIDs.contains(clientID)) {
+		if (clientAccess.IDExists(clientID)) {
 			System.out.println("textfield in window: " +  clientID);
 			
 			return true;

@@ -26,6 +26,15 @@ class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveData<T> {
 		}
 	}
 	
+	public boolean IDIsInActiveData(String ID) {
+		for(T data : dataList) {
+			if (String.valueOf(data.getID()).equals(ID)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private void storeDataAtSupremum(T newData) {
 		long newDataID = newData.getID();
 		int index = findSupremumIndexInActiveData(newDataID);
