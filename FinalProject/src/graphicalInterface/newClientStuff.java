@@ -533,6 +533,24 @@ public class newClientStuff {
 		btnNewButton_3.setBounds(357, 322, 117, 29);
 		JourneyPanel.add(btnNewButton_3);
 		
+		JTextArea JourneyErrorText = new JTextArea();
+		JourneyErrorText.setForeground(new Color(255, 0, 0));
+		JourneyErrorText.setText("Could not register the journey. Try again");
+		JourneyErrorText.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		JourneyErrorText.setEditable(false);
+		JourneyErrorText.setBackground(new Color(95, 158, 160));
+		JourneyErrorText.setBounds(84, 362, 390, 16);
+		JourneyPanel.add(JourneyErrorText);
+		
+		JTextArea journeySuccessTextfield = new JTextArea();
+		journeySuccessTextfield.setForeground(new Color(50, 205, 50));
+		journeySuccessTextfield.setText("Success!");
+		journeySuccessTextfield.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		journeySuccessTextfield.setEditable(false);
+		journeySuccessTextfield.setBackground(new Color(95, 158, 160));
+		journeySuccessTextfield.setBounds(236, 390, 83, 16);
+		JourneyPanel.add(journeySuccessTextfield);
+		
 		JPanel viewContainerPanel = new JPanel();
 		viewContainerPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(viewContainerPanel, "name_39906191038179");
@@ -644,7 +662,7 @@ public class newClientStuff {
 		viewContainerPanel.add(currentLocationTextField);
 		
 		JButton GraphsButton = new JButton("Graphs");
-		GraphsButton.setBounds(460, 443, 117, 29);
+		GraphsButton.setBounds(424, 420, 117, 29);
 		viewContainerPanel.add(GraphsButton);
 		
 		DataPanel = new JPanel();
