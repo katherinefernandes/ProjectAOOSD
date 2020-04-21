@@ -1,5 +1,6 @@
 package supportingClasses;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -15,8 +16,7 @@ public class parseInput {
 	}*/ //mamuna-> I added this to test it out in console...
 	
 	
-	public static String getDate() {
-		LocalDateTime myDateObj = LocalDateTime.now();  
+	public static String getDate(LocalDate myDateObj) {
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
 	    
 	    String formattedDate = myDateObj.format(myFormatObj);  

@@ -1,5 +1,6 @@
 package users;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 import objectsData.PortData;
+import supportingClasses.parseInput;
 import updateClientInformation.UpdateClient;
 
 public class CurrentClientV2 extends User{
@@ -95,7 +97,7 @@ public class CurrentClientV2 extends User{
 	}
 
 	public void registerContainer(long startPortID, long destinationPortID, String cargo, float temperature,
-			float pressure, float humidity, LocalDateTime arriveBy) {
+			float pressure, float humidity, LocalDate arriveBy) {
 		// TODO Auto-generated method stub
 		containerRegistered=false;
 		container.setClientID(client.getID());
@@ -103,7 +105,7 @@ public class CurrentClientV2 extends User{
 		container.setDestinationPortID(destinationPortID);
 		container.setCargo(cargo);
 		container.setStatus(pressure, temperature, humidity);
-		container.setArriveBy(arriveBy);
+		container.setArriveBy(parseInput.getDate(arriveBy));
 		container.setJourneyID(ssecurity.generateID());
 		databaseContainer.editEntry(container);
 		databaseContainer.flushActiveData();

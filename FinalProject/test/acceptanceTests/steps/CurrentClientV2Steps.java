@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class CurrentClientV2Steps {
 	private float temperature;
 	private float pressure;
 	private float humidity;
-	private LocalDateTime arriveBy;
+	private LocalDate arriveBy;
 	private ContainerData container;
 	private ArrayList<ContainerData> containersInJourney;
 	
@@ -163,7 +164,7 @@ public class CurrentClientV2Steps {
 	@When("provides the expected arrival date which is {string}")
 	public void providesTheExpectedArrivalDateWhichIs(String date) {
 		//need a method to get a proper date..
-	    arriveBy = LocalDateTime.now();
+	    arriveBy = LocalDate.now();
 	}
 
 	@Then("a container is registered for the journey and the client is provided with a container ID to track the journey.")
@@ -189,7 +190,10 @@ public class CurrentClientV2Steps {
 
 	@Then("it will arrive by the year {int} month {int} day {int} hour {int} minute {int}")
 	public void itWillArriveByTheYearMonthDayHourMinute(int year, int month, int day, int hour, int minute) {
-	    assertTrue(container.getArriveBy().equals(LocalDateTime.of(year, month, day, hour, minute)));
+	    System.out.println(container.getArriveBy());
+	    System.out.println(parseInput.getDate(LocalDate.of(year, month, day)));
+		assertTrue(container.getArriveBy().equals(parseInput.getDate(LocalDate.of(year, month, day))));
+	
 	}
 
 	@When("the client provides the port name {string}")

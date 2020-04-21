@@ -27,8 +27,8 @@ public class ContainerAccess extends IdentifiedDataAccess<ContainerData> {
 	@Override
 	public ContainerData dataFromEvents(List<XMLEvent> events, long ID) {
 		int i = 0;
-		XMLEvent event;
-		StartElement start;
+		//XMLEvent event;
+		//StartElement start;
 		i = iterateUntilFound(i,events,"ClientID");
 		long clientID = Long.valueOf(events.get(++i).asCharacters().getData());
 		i = iterateUntilFound(i,events,"JourneyID");
@@ -50,9 +50,9 @@ public class ContainerAccess extends IdentifiedDataAccess<ContainerData> {
 		i = iterateUntilFound(i,events,"Humidity");
 		float humidity = Float.valueOf(events.get(++i).asCharacters().getData());
 		i = iterateUntilFound(i,events,"Updated");
-		LocalDateTime updated = LocalDateTime.parse(events.get(++i).asCharacters().getData());
+		String updated = (events.get(++i).asCharacters().getData());
 		i = iterateUntilFound(i,events,"ArriveBy");
-		LocalDateTime arriveBy = LocalDateTime.parse(events.get(++i).asCharacters().getData());
+		String arriveBy = (events.get(++i).asCharacters().getData());
 		
 		
 		ContainerData container = new ContainerData(ID, clientID, journeyID, startPortID, destinationPortID, latitude, longitude, cargo, temperature, atmosphere, humidity, updated, arriveBy);
