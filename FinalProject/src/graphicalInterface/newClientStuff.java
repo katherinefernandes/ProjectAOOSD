@@ -587,7 +587,7 @@ public class newClientStuff {
 		}});
 		JourneyPanel.add(saveJourney);
 		
-		 JourneyErrorText = new JTextArea();
+		JourneyErrorText = new JTextArea();
 		JourneyErrorText.setForeground(new Color(255, 0, 0));
 		JourneyErrorText.setText("Could not register the journey. Try again");
 		JourneyErrorText.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
