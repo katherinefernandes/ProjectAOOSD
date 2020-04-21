@@ -35,6 +35,7 @@ public class DataPointParser {
 	
 	public long getID() {
 		return ID;
+		
 	}
 	
 	public void handleMatchOnIDAndValue(EventParser event) {
