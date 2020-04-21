@@ -33,10 +33,9 @@ public class ContainerAccess extends IdentifiedDataAccess<ContainerData> {
 		i = iterateUntilFound(i,dataPoint,"Humidity");
 		float humidity = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
 		i = iterateUntilFound(i,dataPoint,"Updated");
-		LocalDateTime updated = LocalDateTime.parse(dataPoint.getEventAtIndex(++i).getData());
+		String updated = dataPoint.getEventAtIndex(++i).getData();
 		i = iterateUntilFound(i,dataPoint,"ArriveBy");
-		LocalDateTime arriveBy = LocalDateTime.parse(dataPoint.getEventAtIndex(++i).getData());
-		
+		String arriveBy = dataPoint.getEventAtIndex(++i).getData();	
 		
 		ContainerData container = new ContainerData(dataPoint.getID(), clientID, journeyID, startPortID, destinationPortID, latitude, longitude, cargo, temperature, atmosphere, humidity, updated, arriveBy);
 		

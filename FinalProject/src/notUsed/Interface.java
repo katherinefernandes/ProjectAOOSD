@@ -83,7 +83,7 @@ public class Interface {
 		System.out.println("+-------------------------------------+");
 		System.out.println("|Welcome to the Logistics Company Menu| ");
 		System.out.println("+-------------------------------------+");
-		LogisticCompany l = new LogisticCompany();
+	//	LogisticCompany l = new LogisticCompany();
 		
 		do {
 			System.out.println("1. Add a new Client");
@@ -97,7 +97,7 @@ public class Interface {
 			switch(Option) {
 			case 1:
 				System.out.println("Add a new Client");
-			    l.addClient(sc);
+		//	    l.addClient(sc);
 			    break;
 			    
 			    
@@ -111,7 +111,7 @@ public class Interface {
 				
 			case 3:
 				System.out.println("Update container Information");
-				l.updateContainer(sc);
+			//	l.updateContainer(sc);
 				break;
 			case 4:
 				System.out.println("Get Container Information");

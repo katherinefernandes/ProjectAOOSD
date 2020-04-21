@@ -17,14 +17,14 @@ public class PortAccessTest extends IdentifiableDataAccessTest<PortData,PortAcce
 		super();
 		dataAccess = new PortAccess();
 		
-		data1 = new PortData(4223372036854775807L, "Denmark", "Nordhavn", 55F, 64.2F);
+		data1 = new PortData(422337203685477580L, "Denmark", "Nordhavn", 55F, 64.2F);
 		data1.addArrivingContainer(871872L);
 		data1.addStationedContainer(18247182L);
 		
 		data2 = new PortData(73827291L, "China", "Bejing main port", 100.F,43.2F);
 		data2.addStationedContainer(298392831L);
 		
-		data1_v2 = new PortData(4223372036854775807L, "Denmark", "Nordhavn", 55F, 64.2F);
+		data1_v2 = new PortData(422337203685477580L, "Denmark", "new Nordhavn", 57F, 61.2F);
 		
 		data1_v2.addStationedContainer(871872L);
 		

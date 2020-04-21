@@ -50,10 +50,10 @@ class DataPointParser {
 	public void handleMatchOnID(EventParser event) {
 		if(event.isStartOfDataPoint(dataPointTagName)) {
 			Attribute IDAttribute = event.getIDAttribute();
+			startNewDataPoint(Long.valueOf(IDAttribute.getValue()));
 			if(searchWord != null) {
 				isMatchingEntry = searchWordIsInID(IDAttribute);
 			}
-			startNewDataPoint(Long.valueOf(IDAttribute.getValue()));
 		}
 		dataPoint.add(event);
 	}
@@ -61,6 +61,7 @@ class DataPointParser {
 	
 	public void startNewDataPoint(long ID) {
 		this.ID = ID;
+		isMatchingEntry = false;
 		dataPoint = new ArrayList<>();
 	}
 	

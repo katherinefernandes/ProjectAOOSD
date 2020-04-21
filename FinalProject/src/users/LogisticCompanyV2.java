@@ -1,24 +1,17 @@
 package users;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import dataAccess.ClientAccess;
-import dataAccess.ContainerAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
-import objectsData.ContainerData;
-import supportingClasses.ValidInput;
+import searchClients.SearchClients;
+import updateContainer.UpdateContainer;
 
 public class LogisticCompanyV2 extends User{
-	private ValidInput validate;
 	private boolean addNewClient;
-	private boolean updatedLocation;
 	public LogisticCompanyV2() {
-	//	databaseContainer = new ContainerAccess();
-	//	databaseClient = new ClientAccess();
 		super();
-		validate = new ValidInput();
-		display = true;
 		
 	}
 	
@@ -26,38 +19,18 @@ public class LogisticCompanyV2 extends User{
 		return addNewClient;
 	}
 	
-	public boolean getUpdatedLocation() {
-		return updatedLocation;
-	}
-	
-	
-	
-	public boolean getContainerIsSet(long s) {
-		try { //Edited by simon to fix compile errors. New exception to handle conflicting ids in insertion. Added code
-			container = databaseContainer.getEntry(s); //Old code
-			return true;
-		} catch (NumberFormatException | ElementNotFoundException e) { //Added code
-			System.out.println("Container not found");
-			return false;
-		}
-	}
-	
-
 
 	public void setAddNewClient() {
-		// TODO Auto-generated method stub
+		
 		this.addNewClient = false;
 	}
 	
-	public void setUpdatedLocation() {
-		// TODO Auto-generated method stub
-		this.updatedLocation = false;
-	}
+
 	
 	public long addClient(String email, String name, int countryCode, long phone, ArrayList<String> firstName,
 			ArrayList<String> middleName, ArrayList<String> lastName, String street, String city, String postCode,
 			int houseNumber) {
-		// TODO Auto-generated method stub
+		
 		long id = ssecurity.generateID();
 		
 		ssecurity.saveClientID(id);
@@ -73,12 +46,14 @@ public class LogisticCompanyV2 extends User{
 		return id;
 	}
 
-	public void updateLocation(float longitude, float latitude) {
-		container.setCurrentPosition(latitude, longitude);
-		this.updatedLocation = true;
+	
+	public boolean updateContainerInformation(UpdateContainer Update) {
+		Update.updateInformation(container);
+		return Update.updated();
 	}
 
-	
-
+	public List<ClientData> search(SearchClients option){
+		return option.getClients();
+	}
 
 }

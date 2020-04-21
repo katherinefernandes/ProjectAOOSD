@@ -28,10 +28,10 @@ Scenario: Logistic Company can view the Client information
 	Then the Client information is shown that the company name is "random", the email is "random@random.com"
 
 
-Scenario: Logistic Company cannot view the Client information
-  Given the logistic Company enters the Client ID 897841664590
-  When the Client ID is not present in the database
-	Then the client information is not shown as that client doesnot exist
+#Scenario: Logistic Company cannot view the Client information
+#  Given the logistic Company enters the Client ID 897841664590
+#  When the Client ID is not present in the database
+#	Then the client information is not shown as that client doesnot exist
 
 Scenario: Client can view its own information
 	Given that the client enters the ID 897841664500 that exists in the memory

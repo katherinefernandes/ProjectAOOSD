@@ -20,13 +20,12 @@
 Feature: Track the history of the Journey
 	Description: The history of how the internal status of the container changed over time
 	
-	#Scenario: The logistic Company should be able to update the internal status of the container
-	#Given the logistic Company decides to update the internal status of the container
-	#When the logistic Company enters the container ID 521664805370600
-	#And the temperature value 38.0
-	#And the humidity level value 98.0% 
-	#And the pressure value 1atm
-	#Then the internal status of the container is updated
+	Scenario: The logistic Company should be able to update the internal status of the container
+	Given that the logistic company enters the container ID 10849147913512
+	When the temperature value 38.0
+	And the humidity level value 98.0% 
+	And the pressure value 1.0atm
+	Then the internal status of the container is updated
 	
 	Scenario: The client should be able to view the internal status of the container
 	Given that the client enters the ID 14618447211200 that exists in the memory

@@ -21,8 +21,7 @@ Feature: Update Container Location
  Description: The Logistic Company should be able to update the container location.
  
 Scenario: Logistic Company can register a new location for the container
-Given that the logistic company chooses to update the location 
-When the logistic company enters the container id 73013416799200
-And the latitude 65.4
+Given that the logistic company enters the container ID 73013416799200
+When the latitude 65.4
 And the longitude 45.85
 Then the location for the container is updated

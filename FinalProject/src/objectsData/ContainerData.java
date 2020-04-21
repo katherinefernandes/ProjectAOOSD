@@ -1,10 +1,11 @@
 package objectsData;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import supportingClasses.parseInput;
 
 public class ContainerData extends IdentifiableData {
 	private long containerID;
@@ -15,8 +16,8 @@ public class ContainerData extends IdentifiableData {
 	private Location currentPosition;
 	private String cargo;
 	private InternalState status;
-	private LocalDateTime updated;
-	private LocalDateTime arriveBy;
+	private String updated;
+	private String arriveBy;
 	// new codeeee
 	//overloaded constructor
 	public ContainerData(long containerID, long portID, float latitude, float longitude) {
@@ -29,8 +30,8 @@ public class ContainerData extends IdentifiableData {
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo="none";
 		this.status=new InternalState(1f,35f,75f);
-		this.updated=LocalDateTime.now(); 
-		this.arriveBy=LocalDateTime.now(); 
+		this.updated=parseInput.getDate(LocalDate.now()); 
+		this.arriveBy=parseInput.getDate(LocalDate.now()); 
 		setXMLFields();
 	}
 	public void setClientID(long clientID) {
@@ -72,7 +73,7 @@ public class ContainerData extends IdentifiableData {
 	////
 	
 
-	public ContainerData(long containerID, long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime arriveBy) {
+	public ContainerData(long containerID, long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String arriveBy) {
 		this.tagName = "Container";
 		this.ID = containerID;
 		this.containerID=containerID;
@@ -83,19 +84,19 @@ public class ContainerData extends IdentifiableData {
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo=cargo;
 		this.status=new InternalState(atmosphere, temperature, humidity);
-		this.updated=LocalDateTime.now(); 
+		this.updated=parseInput.getDate(LocalDate.now()); 
 		this.arriveBy=arriveBy;
 		setXMLFields();
 	}
 	
 	//Overloaded constructor added by Simon to handle values of updated that are not right now, for example when getting a container from the xml files. new code from here -
-	public ContainerData(long containerID, long clientId, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, LocalDateTime updated, LocalDateTime arriveby) {
+	public ContainerData(long containerID, long clientId, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String updated, String arriveby) {
 		this(containerID,clientId,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,temperature,atmosphere,humidity,arriveby);
 		setUpdated(updated);
 		
 	}//- to here
 	
-	public void useContainerAgain(long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, LocalDateTime arriveby) {
+	public void useContainerAgain(long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, String arriveby) {
 		this.clientID=clid;
 		this.journeyID=jid;
 		this.startPortID=spid;
@@ -103,7 +104,7 @@ public class ContainerData extends IdentifiableData {
 		this.currentPosition= new Location(lat,lon);
 		this.cargo=cargo;
 		this.status=new InternalState(a, t, h);
-		this.updated=LocalDateTime.now();
+		this.updated=parseInput.getDate(LocalDate.now());
 		this.arriveBy=arriveby;
 		setXMLFields();
 	}
@@ -121,7 +122,7 @@ public class ContainerData extends IdentifiableData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setUpdated(LocalDateTime.now());
+		setUpdated(parseInput.getDate(LocalDate.now()));
 	}
 	public void setStatus(float a, float t, float h) {
 		this.status.setAtmosphere(a);
@@ -137,14 +138,14 @@ public class ContainerData extends IdentifiableData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setUpdated(LocalDateTime.now());
+		setUpdated(parseInput.getDate(LocalDate.now()));
 	}
 	
-	public void setUpdated(LocalDateTime time) {
+	public void setUpdated(String time) {
 		this.updated = time;
 		int index = indexOfTagname(xmlFields,"Updated");
 		try {
-			xmlFields.get(index).setValue(time.truncatedTo(ChronoUnit.SECONDS).toString());
+			xmlFields.get(index).setValue(time);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,10 +155,10 @@ public class ContainerData extends IdentifiableData {
 	public Location getCurrentPosition() {
 		return this.currentPosition;
 	}
-	public LocalDateTime getUpdated() {
+	public String getUpdated() {
 		return this.updated;
 	}
-	public LocalDateTime getArriveBy() {
+	public String getArriveBy() {
 		return this.arriveBy;
 	}
 	
@@ -195,8 +196,8 @@ public class ContainerData extends IdentifiableData {
 		statusList.add(new XMLField("Atmosphere",String.valueOf(status.getAtmosphere())));
 		statusList.add(new XMLField("Humidity",String.valueOf(status.getHumidity())));
 		XMLField statusXML = new XMLField("InternalState",statusList);
-		XMLField updatedXML = new XMLField("Updated",updated.truncatedTo(ChronoUnit.SECONDS).toString());
-		XMLField arriveByXML = new XMLField("ArriveBy",arriveBy.truncatedTo(ChronoUnit.SECONDS).toString());
+		XMLField updatedXML = new XMLField("Updated",updated);
+		XMLField arriveByXML = new XMLField("ArriveBy",arriveBy);
 		
 		XMLField[] array = {clientIDXML,journeyIDXML,startPortIDXML,destinationPortIDXML,positionXML,cargoXML,statusXML,updatedXML,arriveByXML};
 		xmlFields = Arrays.asList(array);
@@ -211,12 +212,12 @@ public class ContainerData extends IdentifiableData {
 			e.printStackTrace();
 		}
 	}
-	public void setArriveBy(LocalDateTime arriveBy2) {
+	public void setArriveBy(String arriveBy2) {
 		// TODO Auto-generated method stub
 		this.arriveBy=arriveBy2;
 		int index = indexOfTagname(xmlFields, "ArriveBy");
 		try {
-			xmlFields.get(index).setValue(arriveBy2.truncatedTo(ChronoUnit.SECONDS).toString());
+			xmlFields.get(index).setValue(arriveBy2);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

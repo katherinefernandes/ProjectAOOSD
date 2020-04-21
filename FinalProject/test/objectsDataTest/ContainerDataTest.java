@@ -2,12 +2,14 @@ package objectsDataTest;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 import objectsData.ContainerData;
+import supportingClasses.parseInput;
 
 public class ContainerDataTest {
 	private ContainerData objectTest;
@@ -23,13 +25,13 @@ public class ContainerDataTest {
 	private float t =36.8f;
 	private float a=1.2f;
 	private float h=78.0f;
-	private LocalDateTime arriveby = LocalDateTime.now();
+	private String arriveby = parseInput.getDate(LocalDate.now());
 	
 	
 	@BeforeEach
 	public void testContainerData() {
 		
-		objectTest = new ContainerData( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, arriveby);
+		objectTest = new ContainerData( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, (arriveby));
 		objectTest2 = new ContainerData(cid,spid, lat, lon);
 		
 	}
@@ -37,7 +39,7 @@ public class ContainerDataTest {
 	@Test
 	public void testUseContainerAgain() {
 		assertSame(cargo,objectTest.getCargo());
-		objectTest.useContainerAgain(clid, jid, spid,  dpid,  lat,  lon,  "apple",  t,  a,  h, arriveby);
+		objectTest.useContainerAgain(clid, jid, spid,  dpid,  lat,  lon,  "apple",  t,  a,  h, (arriveby));
 		assertSame("apple",objectTest.getCargo());
 	}
 

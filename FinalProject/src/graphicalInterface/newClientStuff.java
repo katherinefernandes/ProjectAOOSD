@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import java.awt.CardLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
-import javax.swing.text.LayeredHighlighter;
 
 import logic.ClientController;
 import logic.LoginController;
@@ -18,13 +17,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 
 
 
 public class newClientStuff {
 
-	private long clientID;
+	//private long clientID;
 	
 	public JFrame frame;
 	JButton emailButton,AddJourneyButton,ReferencepersonButton,ContainerButton;
@@ -55,7 +53,29 @@ public class newClientStuff {
 	private JTextField PortNamesearch;
 	private JTextArea CurrentEmailTextField;
 	private JTextArea CurrentPhoneNumberTextArea;
-
+	private JTextArea InvalidNameError,validTextField;
+	private JTextArea InvalidEmailError, PhoneError;
+	private JTextArea emailError;
+	private JTextArea emailSuccess;
+	private JTextArea phoneSuccess;
+	private JTextArea txtrCurrentPhoneNumber_1;
+	private JPanel ViewInfoPanel;
+	private JTextArea txtrComapnyName;
+	private JTextArea txtrCountry;
+	private JTextArea txtrEmail_1;
+	private JTextArea txtrReferencePerson;
+	private JTextArea txtrAddress;
+	private JTextArea txtrActiveShipmnts;
+	private JTextArea viewCompanyNameTextField;
+	private JTextArea viewPhoneTextField;
+	private JTextArea viewEmailTextField;
+	private JTextArea viewReferencePersonTextField;
+	private JTextArea viewAddressTextField;
+	private JTextArea viewActiveShipmentsTextField;
+	private JTextArea txtrCurrentLocation;
+	private JTextArea currentLocationTextField;
+	private JTextArea noContainerError;
+	private JTextArea txtrSearchByOne; 
 	
 	public newClientStuff(ClientController controller) {
 		this.controller = controller;
@@ -120,8 +140,26 @@ public class newClientStuff {
 		ButtonPanel.add(btnNewButton_1);
 		
 		LogOutButton = new JButton("Log Out");
-		LogOutButton.setBounds(55, 273, 196, 29);
+		LogOutButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("The logout button has been pressed, now need to swtich windows");
+				LoginController login = new LoginController();
+				frame.setVisible(false);
+			}
+			
+		});
+		LogOutButton.setBounds(55, 318, 196, 29);
 		ButtonPanel.add(LogOutButton);
+		
+		JButton viewOwnInfoButton = new JButton("View Personal Info");
+		viewOwnInfoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(ViewInfoPanel);
+			}
+		});
+		viewOwnInfoButton.setBounds(55, 277, 196, 29);
+		ButtonPanel.add(viewOwnInfoButton);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
@@ -180,17 +218,53 @@ public class newClientStuff {
 		JButton Save1 = new JButton("Save");
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
+				boolean checkMessage;
+				validTextField.setVisible(false);
+				InvalidNameError.setVisible(false);
+				System.out.println("Inside the save button");
+				if (middlenametext.getText().isEmpty()) {
+					checkMessage=controller.saveReferencePerson(firstnametext.getText()," ",lastnametext.getText());
+				}else {
+					checkMessage=controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
+				}
+				if (checkMessage) {
+					validTextField.setVisible(true);
+					
+				}else {
+					InvalidNameError.setVisible(true);
+				}
 				clearNameFields(firstnametext,middlenametext,lastnametext);
+				viewReferencePersonTextField.setText(controller.getReferencePerson());
 			}
 		});
 		Save1.setBounds(308, 244, 117, 29);
 		referencePanel.add(Save1);
 		
+		InvalidNameError = new JTextArea();
+		InvalidNameError.setForeground(new Color(220, 20, 60));
+		InvalidNameError.setText("Invalid Input. Please enter valid information");
+		InvalidNameError.setEditable(false);
+		InvalidNameError.setBackground(new Color(95, 158, 160));
+		InvalidNameError.setBounds(199, 30, 313, 16);
+		referencePanel.add(InvalidNameError);
+		InvalidNameError.setVisible(false);
+		
+		validTextField = new JTextArea();
+		validTextField.setForeground(new Color(50, 205, 50));
+		validTextField.setText("Success");
+		validTextField.setEditable(false);
+		validTextField.setBackground(new Color(95, 158, 160));
+		validTextField.setBounds(308, 58, 59, 16);
+		referencePanel.add(validTextField);
+		validTextField.setVisible(false);
+		
+		
+		
 		emailPanel = new JPanel();
 		emailPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(emailPanel, "name_7578041274086");
 		emailPanel.setLayout(null);
+		
 		
 		JTextArea txtrEmail = new JTextArea();
 		txtrEmail.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -216,10 +290,22 @@ public class newClientStuff {
 		JButton saveEmailButton = new JButton("Save");
 		saveEmailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveEmail(EmailTextField.getText());
+				emailSuccess.setVisible(false);
+				emailError.setVisible(false);
+				boolean CheckMessage;
+				if (EmailTextField.getText().isEmpty()) {
+					CheckMessage=false;
+				}else {
+					CheckMessage = controller.saveEmail(EmailTextField.getText());
+				}
+				if (CheckMessage) {
+					emailSuccess.setVisible(true);
+				}else {
+					emailError.setVisible(true);
+				}
 				clearEmailFields(EmailTextField);
-				
-		
+				CurrentEmailTextField.setText(controller.getCurrentEmail());
+				viewEmailTextField.setText(controller.getCurrentEmail());
 			}
 		});
 		saveEmailButton.setBounds(357, 223, 117, 29);
@@ -228,8 +314,28 @@ public class newClientStuff {
 		CurrentEmailTextField = new JTextArea();
 		CurrentEmailTextField.setBackground(new Color(95, 158, 160));
 		CurrentEmailTextField.setEditable(false);
-		CurrentEmailTextField.setBounds(267, 99, 129, 16);
+		CurrentEmailTextField.setBounds(267, 99, 295, 16);
+		CurrentEmailTextField.setText(controller.getCurrentEmail());
 		emailPanel.add(CurrentEmailTextField);
+		
+		emailError = new JTextArea();
+		emailError.setForeground(new Color(255, 0, 0));
+		emailError.setText("Invalid Input. Try again");
+		emailError.setEditable(false);
+		emailError.setBackground(new Color(95, 158, 160));
+		emailError.setBounds(267, 264, 238, 16);
+		emailPanel.add(emailError);
+		emailError.setVisible(false);
+		
+		emailSuccess = new JTextArea();
+		emailSuccess.setForeground(new Color(127, 255, 0));
+		emailSuccess.setText("Success");
+		emailSuccess.setBackground(new Color(95, 158, 160));
+		emailSuccess.setEditable(false);
+		emailSuccess.setBounds(320, 285, 154, 16);
+		emailPanel.add(emailSuccess);
+		emailSuccess.setVisible(false);
+		
 		
 		PhonePanel = new JPanel();
 		PhonePanel.setBackground(new Color(95, 158, 160));
@@ -242,8 +348,6 @@ public class newClientStuff {
 		txtrCurrentPhoneNumber.setEditable(false);
 		txtrCurrentPhoneNumber.setText("Current Phone number:");
 		txtrCurrentPhoneNumber.setBounds(94, 88, 168, 16);
-		PhonePanel.add(txtrCurrentPhoneNumber);
-		
 		JTextArea txtrNewPhoneNumber = new JTextArea();
 		txtrNewPhoneNumber.setBackground(new Color(95, 158, 160));
 		txtrNewPhoneNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -255,9 +359,22 @@ public class newClientStuff {
 		JButton savePhoneButton = new JButton("Save");
 		savePhoneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
+				phoneSuccess.setVisible(false);
+				PhoneError.setVisible(false);
+				boolean checkMessage;
+				if (countryCodeTextField.getText().isEmpty()||newPhoneNumberText.getText().isEmpty()) {
+					checkMessage=false;
+				}else {
+					checkMessage = controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
+				}
+				if (checkMessage) {
+					phoneSuccess.setVisible(true);
+				}else {
+					PhoneError.setVisible(true);
+				}
 				clearPhoneFields(countryCodeTextField,newPhoneNumberText);
-				
+				viewPhoneTextField.setText(controller.getCurrentPhoneNumber());
+				CurrentPhoneNumberTextArea.setText(controller.getCurrentPhoneNumber());
 			}
 		});
 		savePhoneButton.setBounds(372, 222, 117, 29);
@@ -285,7 +402,34 @@ public class newClientStuff {
 		CurrentPhoneNumberTextArea.setEditable(false);
 		CurrentPhoneNumberTextArea.setBackground(new Color(95, 158, 160));
 		CurrentPhoneNumberTextArea.setBounds(292, 90, 197, 16);
+		CurrentPhoneNumberTextArea.setText(controller.getCurrentPhoneNumber());
 		PhonePanel.add(CurrentPhoneNumberTextArea);
+		
+		
+		PhoneError = new JTextArea();
+		PhoneError.setForeground(new Color(220, 20, 60));
+		PhoneError.setText("Invalid Phone Number");
+		PhoneError.setBackground(new Color(95, 158, 160));
+		PhoneError.setEditable(false);
+		PhoneError.setBounds(291, 263, 239, 16);
+		PhonePanel.add(PhoneError);
+		PhoneError.setVisible(false);
+		phoneSuccess = new JTextArea();
+		phoneSuccess.setForeground(new Color(173, 255, 47));
+		phoneSuccess.setText("Success");
+		phoneSuccess.setBackground(new Color(95, 158, 160));
+		phoneSuccess.setEditable(false);
+		phoneSuccess.setBounds(286, 286, 176, 16);
+		PhonePanel.add(phoneSuccess);
+		phoneSuccess.setVisible(false);
+		txtrCurrentPhoneNumber_1 = new JTextArea();
+		txtrCurrentPhoneNumber_1.setText("Current Phone Number");
+		txtrCurrentPhoneNumber_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCurrentPhoneNumber_1.setEditable(false);
+		txtrCurrentPhoneNumber_1.setBackground(new Color(95, 158, 160));
+		txtrCurrentPhoneNumber_1.setBounds(94, 90, 168, 16);
+		PhonePanel.add(txtrCurrentPhoneNumber_1);
+		PhoneError.setVisible(false);
 		
 		JourneyPanel = new JPanel();
 		JourneyPanel.setBackground(new Color(95, 158, 160));
@@ -387,6 +531,116 @@ public class newClientStuff {
 		btnNewButton_3.setBounds(358, 408, 117, 29);
 		JourneyPanel.add(btnNewButton_3);
 		
+		JPanel viewContainerPanel = new JPanel();
+		viewContainerPanel.setBackground(new Color(95, 158, 160));
+		layeredPane.add(viewContainerPanel, "name_39906191038179");
+		viewContainerPanel.setLayout(null);
+		
+		JTextArea txtrStartPortName = new JTextArea();
+		txtrStartPortName.setText("Start port name:");
+		txtrStartPortName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrStartPortName.setEditable(false);
+		txtrStartPortName.setBackground(new Color(95, 158, 160));
+		txtrStartPortName.setBounds(17, 33, 133, 19);
+		viewContainerPanel.add(txtrStartPortName);
+		
+		JTextArea txtrDestinationPortName = new JTextArea();
+		txtrDestinationPortName.setText("Destination port name:");
+		txtrDestinationPortName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrDestinationPortName.setEditable(false);
+		txtrDestinationPortName.setBackground(new Color(95, 158, 160));
+		txtrDestinationPortName.setBounds(17, 78, 167, 19);
+		viewContainerPanel.add(txtrDestinationPortName);
+		
+		JTextArea txtrCargo_2 = new JTextArea();
+		txtrCargo_2.setText("Cargo:");
+		txtrCargo_2.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCargo_2.setEditable(false);
+		txtrCargo_2.setBackground(new Color(95, 158, 160));
+		txtrCargo_2.setBounds(17, 130, 95, 19);
+		viewContainerPanel.add(txtrCargo_2);
+		
+		JTextArea txtrArrivalDate = new JTextArea();
+		txtrArrivalDate.setText("Arrival Date:");
+		txtrArrivalDate.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrArrivalDate.setEditable(false);
+		txtrArrivalDate.setBackground(new Color(95, 158, 160));
+		txtrArrivalDate.setBounds(17, 350, 95, 19);
+		viewContainerPanel.add(txtrArrivalDate);
+		
+		JTextArea txtrCurrentInternalStatus = new JTextArea();
+		txtrCurrentInternalStatus.setText("Current internal status:");
+		txtrCurrentInternalStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCurrentInternalStatus.setEditable(false);
+		txtrCurrentInternalStatus.setBackground(new Color(95, 158, 160));
+		txtrCurrentInternalStatus.setBounds(17, 174, 186, 19);
+		viewContainerPanel.add(txtrCurrentInternalStatus);
+		
+		JTextArea txtrLastUpdated = new JTextArea();
+		txtrLastUpdated.setText("Last updated:");
+		txtrLastUpdated.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrLastUpdated.setEditable(false);
+		txtrLastUpdated.setBackground(new Color(95, 158, 160));
+		txtrLastUpdated.setBounds(17, 416, 114, 19);
+		viewContainerPanel.add(txtrLastUpdated);
+		
+		JTextArea startPortTextField = new JTextArea();
+		startPortTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		startPortTextField.setEditable(false);
+		startPortTextField.setBackground(new Color(95, 158, 160));
+		startPortTextField.setBounds(206, 35, 371, 19);
+		viewContainerPanel.add(startPortTextField);
+		
+		JTextArea destinationPortTextField = new JTextArea();
+		destinationPortTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		destinationPortTextField.setEditable(false);
+		destinationPortTextField.setBackground(new Color(95, 158, 160));
+		destinationPortTextField.setBounds(206, 80, 371, 19);
+		viewContainerPanel.add(destinationPortTextField);
+		
+		JTextArea cargoTextField = new JTextArea();
+		cargoTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		cargoTextField.setEditable(false);
+		cargoTextField.setBackground(new Color(95, 158, 160));
+		cargoTextField.setBounds(206, 132, 371, 19);
+		viewContainerPanel.add(cargoTextField);
+		
+		JTextArea internalStatusTextField = new JTextArea();
+		internalStatusTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		internalStatusTextField.setEditable(false);
+		internalStatusTextField.setBackground(new Color(95, 158, 160));
+		internalStatusTextField.setBounds(206, 176, 371, 120);
+		viewContainerPanel.add(internalStatusTextField);
+		
+		JTextArea arrivalDateTextField = new JTextArea();
+		arrivalDateTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		arrivalDateTextField.setEditable(false);
+		arrivalDateTextField.setBackground(new Color(95, 158, 160));
+		arrivalDateTextField.setBounds(206, 350, 371, 19);
+		viewContainerPanel.add(arrivalDateTextField);
+		
+		JTextArea lastUpdatedTextField = new JTextArea();
+		lastUpdatedTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lastUpdatedTextField.setEditable(false);
+		lastUpdatedTextField.setBackground(new Color(95, 158, 160));
+		lastUpdatedTextField.setBounds(206, 418, 354, 19);
+		viewContainerPanel.add(lastUpdatedTextField);
+		
+		txtrCurrentLocation = new JTextArea();
+		txtrCurrentLocation.setText("Current location:");
+		txtrCurrentLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCurrentLocation.setEditable(false);
+		txtrCurrentLocation.setBackground(new Color(95, 158, 160));
+		txtrCurrentLocation.setBounds(17, 319, 152, 19);
+		viewContainerPanel.add(txtrCurrentLocation);
+		
+		currentLocationTextField = new JTextArea();
+		currentLocationTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		currentLocationTextField.setEditable(false);
+		currentLocationTextField.setBackground(new Color(95, 158, 160));
+		currentLocationTextField.setBounds(206, 319, 262, 19);
+		viewContainerPanel.add(currentLocationTextField);
+		
 		DataPanel = new JPanel();
 		DataPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(DataPanel, "name_7969757405032");
@@ -406,6 +660,32 @@ public class newClientStuff {
 		containterIDsearch.setColumns(10);
 		
 		JButton Enterbutton = new JButton("Enter");
+		Enterbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				noContainerError.setVisible(false);
+				boolean checkMessage=false;
+				if (!containterIDsearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByContainerID(containterIDsearch.getText());
+				} 
+				if(!checkMessage&&!JourneyIDsearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByJourneyID(JourneyIDsearch.getText());
+				}
+				if(!checkMessage&&!CargoIDsearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByCargo(CargoIDsearch.getText());
+				}
+				if(!checkMessage&&!PortNamesearch.getText().isEmpty()) {
+					checkMessage = controller.getContainerByPortName(PortNamesearch.getText());
+				}
+				if(checkMessage) {
+					noContainerError.setVisible(false);
+					switchPanels(viewContainerPanel);
+				}else {
+					noContainerError.setVisible(true);
+				}
+				clearContainerDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
+				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+			}
+		});
 		Enterbutton.setBounds(289, 279, 117, 29);
 		DataPanel.add(Enterbutton);
 		
@@ -448,13 +728,124 @@ public class newClientStuff {
 		PortNamesearch.setBounds(206, 217, 199, 26);
 		DataPanel.add(PortNamesearch);
 		
-		JTextArea txtrSearchByOne = new JTextArea();
-		txtrSearchByOne.setText("Search by one of the following criteria:");
+		txtrSearchByOne = new JTextArea();
+		txtrSearchByOne.setText("Search by one of the following criteria. Remember that priority will be given to the topmost field correctly entered.");
 		txtrSearchByOne.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrSearchByOne.setEditable(false);
 		txtrSearchByOne.setBackground(new Color(95, 158, 160));
 		txtrSearchByOne.setBounds(151, 30, 320, 19);
 		DataPanel.add(txtrSearchByOne);
+		
+		noContainerError = new JTextArea();
+		noContainerError.setForeground(new Color(255, 0, 0));
+		noContainerError.setText("Container not found.");
+		noContainerError.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		noContainerError.setEditable(false);
+		noContainerError.setBackground(new Color(95, 158, 160));
+		noContainerError.setBounds(221, 321, 156, 19);
+		DataPanel.add(noContainerError);
+		noContainerError.setVisible(false);
+		
+		ViewInfoPanel = new JPanel();
+		ViewInfoPanel.setBackground(new Color(95, 158, 160));
+		layeredPane.add(ViewInfoPanel, "name_37514469502135");
+		ViewInfoPanel.setLayout(null);
+		
+		txtrComapnyName = new JTextArea();
+		txtrComapnyName.setText("Comapny Name:");
+		txtrComapnyName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrComapnyName.setEditable(false);
+		txtrComapnyName.setBackground(new Color(95, 158, 160));
+		txtrComapnyName.setBounds(44, 84, 127, 26);
+		ViewInfoPanel.add(txtrComapnyName);
+		
+		txtrCountry = new JTextArea();
+		txtrCountry.setText("Phone Number:");
+		txtrCountry.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrCountry.setEditable(false);
+		txtrCountry.setBackground(new Color(95, 158, 160));
+		txtrCountry.setBounds(44, 122, 127, 16);
+		ViewInfoPanel.add(txtrCountry);
+		
+		txtrEmail_1 = new JTextArea();
+		txtrEmail_1.setText("Email:");
+		txtrEmail_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrEmail_1.setEditable(false);
+		txtrEmail_1.setBackground(new Color(95, 158, 160));
+		txtrEmail_1.setBounds(44, 161, 127, 16);
+		ViewInfoPanel.add(txtrEmail_1);
+		
+		txtrReferencePerson = new JTextArea();
+		txtrReferencePerson.setText("Reference Person:");
+		txtrReferencePerson.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrReferencePerson.setEditable(false);
+		txtrReferencePerson.setBackground(new Color(95, 158, 160));
+		txtrReferencePerson.setBounds(44, 207, 127, 16);
+		ViewInfoPanel.add(txtrReferencePerson);
+		
+		txtrAddress = new JTextArea();
+		txtrAddress.setText("Address:");
+		txtrAddress.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrAddress.setEditable(false);
+		txtrAddress.setBackground(new Color(95, 158, 160));
+		txtrAddress.setBounds(44, 274, 127, 16);
+		ViewInfoPanel.add(txtrAddress);
+		
+		txtrActiveShipmnts = new JTextArea();
+		txtrActiveShipmnts.setText("Active shipments:");
+		txtrActiveShipmnts.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		txtrActiveShipmnts.setEditable(false);
+		txtrActiveShipmnts.setBackground(new Color(95, 158, 160));
+		txtrActiveShipmnts.setBounds(44, 370, 127, 26);
+		ViewInfoPanel.add(txtrActiveShipmnts);
+		
+		viewCompanyNameTextField = new JTextArea();
+		viewCompanyNameTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		viewCompanyNameTextField.setEditable(false);
+		viewCompanyNameTextField.setBackground(new Color(95, 158, 160));
+		viewCompanyNameTextField.setBounds(206, 86, 356, 16);
+		viewCompanyNameTextField.setText(controller.getCompanyName());
+		ViewInfoPanel.add(viewCompanyNameTextField);
+		
+		viewPhoneTextField = new JTextArea();
+		viewPhoneTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		viewPhoneTextField.setEditable(false);
+		viewPhoneTextField.setBackground(new Color(95, 158, 160));
+		viewPhoneTextField.setBounds(206, 124, 356, 16);
+		viewPhoneTextField.setText(controller.getCurrentPhoneNumber());
+		ViewInfoPanel.add(viewPhoneTextField);
+		
+		viewEmailTextField = new JTextArea();
+		viewEmailTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		viewEmailTextField.setEditable(false);
+		viewEmailTextField.setBackground(new Color(95, 158, 160));
+		viewEmailTextField.setBounds(206, 163, 356, 45);
+		viewEmailTextField.setText(controller.getCurrentEmail());
+		ViewInfoPanel.add(viewEmailTextField);
+		
+		viewReferencePersonTextField = new JTextArea();
+		viewReferencePersonTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		viewReferencePersonTextField.setEditable(false);
+		viewReferencePersonTextField.setBackground(new Color(95, 158, 160));
+		viewReferencePersonTextField.setBounds(206, 207, 356, 37);
+		viewReferencePersonTextField.setText(controller.getReferencePerson());
+		ViewInfoPanel.add(viewReferencePersonTextField);
+		
+		viewAddressTextField = new JTextArea();
+		viewAddressTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		viewAddressTextField.setEditable(false);
+		viewAddressTextField.setBackground(new Color(95, 158, 160));
+		viewAddressTextField.setBounds(206, 256, 356, 109);
+		viewAddressTextField.setText(controller.getAddress());
+		ViewInfoPanel.add(viewAddressTextField);
+		
+		viewActiveShipmentsTextField = new JTextArea();
+		viewActiveShipmentsTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		viewActiveShipmentsTextField.setEditable(false);
+		viewActiveShipmentsTextField.setBackground(new Color(95, 158, 160));
+		viewActiveShipmentsTextField.setBounds(206, 370, 371, 102);
+		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+		ViewInfoPanel.add(viewActiveShipmentsTextField);
 	}
 	
 	public void switchPanels(JPanel panel) {
@@ -478,6 +869,11 @@ public class newClientStuff {
 	}
 	
 	public void clearEmailFields(JTextField...fields) {
+		for(JTextField field : fields) {
+			field.setText("");
+		}
+	}
+	public void clearContainerDataFields(JTextField...fields) {
 		for(JTextField field : fields) {
 			field.setText("");
 		}
