@@ -504,7 +504,7 @@ public class newClientStuff {
 		txtrArriveBy.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrArriveBy.setEditable(false);
 		txtrArriveBy.setBackground(new Color(95, 158, 160));
-		txtrArriveBy.setBounds(84, 287, 128, 30);
+		txtrArriveBy.setBounds(84, 287, 128, 51);
 		JourneyPanel.add(txtrArriveBy);
 		
 		textField_8 = new JTextField();
