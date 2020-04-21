@@ -2,7 +2,7 @@ package dataAccess;
 
 import objectsData.IdentifiableData;
 
-public class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveData<T> {
+class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveData<T> {
 	
 	@Override
 	public void storeNewData(T newData) {
@@ -58,4 +58,5 @@ public class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveDa
 	private boolean insertionCreatedDuplicate(int index) {
 		return getDataAtIndex(index).getID() == getDataAtIndex(index + 1).getID();
 	}
+
 }

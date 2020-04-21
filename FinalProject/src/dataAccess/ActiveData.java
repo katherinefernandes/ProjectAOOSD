@@ -1,10 +1,9 @@
 package dataAccess;
 
 import java.util.*;
-import objectsData.ObjectData;
 import objectsData.ObjectDataInterface;
 
-public class ActiveData<T extends ObjectDataInterface> {
+class ActiveData<T extends ObjectDataInterface> {
 	List<T> dataList;
 	
 	public ActiveData() {
@@ -19,7 +18,7 @@ public class ActiveData<T extends ObjectDataInterface> {
 		return dataList.get(index);
 	}
 	
-	public List<T> searchThroughData(String searchWord){
+	public List<T> findMatchingEntriesFromActiveData(String searchWord){
 		List<T> matchingData = new ArrayList<>();
 		for(T data : dataList) {
 			matchingData = addDataIfMatch(matchingData, data, searchWord);
