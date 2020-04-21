@@ -174,11 +174,12 @@ public class LogisticCompanySteps {
 	public void thatTheLogisticCompanyEntersTheClientSName(String searchName) {
 	    
 	    optionName = new SearchByName(searchName);
+	    
 	}
 
 	@Then("the list of clients with this name should appear")
 	public void theListOfClientsWithThisNameShouldAppear() {
-	    assertNotEquals(logistic.search(optionName).size(), 0);
+	    assertNotEquals(logistic.search(optionName).size(),0);
 	}
 
 	@Given("that the logistic company enters the client's email {string}")

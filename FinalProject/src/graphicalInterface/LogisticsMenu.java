@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import logic.LoginController;
+import logic.LogisticController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -23,11 +24,30 @@ public class LogisticsMenu {
 	public JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10;
 	public JTextField textField_11,textField_12,textField_13,textField_14,textField_15;
     public JPanel panel,panel_1,ContainePositionrPanel,newClientPanel,ContainerInfoPanel,StatusPanel;
-    public JButton newClientButton,getInfoButton,UpdateContainerButton,getContainerButton,logoutButton;
+    public JButton newClientButton,getInfoButton,UpdateContainerButton,logoutButton;
     public JLayeredPane layeredPane;
-    private LoginController controller;
+    private LogisticController controller;
+	private JTextArea txtrSomethingWentWrong;
+	private JTextArea txtrSuccess;
+	private JTextField containerIDtextstatus;
+	private JTextField textField_16;
+	private JTextArea statusError;
+	private JTextArea successStatus;
+	private JPanel viewContainerPanel;
+	private JTextArea viewContainerText;
+	private JTextArea successPosition;
+	private JTextArea positionError;
+	private JTextField clientemailTextField;
+	private JTextField companyNameTextField;
+	private JTextField clientPhoneTextField;
+	private JTextField firstNameTextField;
+	private JTextField middlenameTextField;
+	private JTextField lastNameTextField;
+	private JTextArea searchError;
+	private JTextArea successSearch;
+	private JTextArea viewClientTextField;
     
-    public LogisticsMenu(LoginController controller) {
+    public LogisticsMenu(LogisticController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -58,7 +78,7 @@ public class LogisticsMenu {
 				switchPanels(StatusPanel);
 			}
 		});
-		getInfoButton.setBounds(19, 123, 187, 29);
+		getInfoButton.setBounds(19, 110, 187, 29);
 		panel.add(getInfoButton);
 		
 		UpdateContainerButton = new JButton("Update container Position");
@@ -67,17 +87,8 @@ public class LogisticsMenu {
 				switchPanels(ContainePositionrPanel);
 			}
 		});
-		UpdateContainerButton.setBounds(19, 184, 187, 29);
+		UpdateContainerButton.setBounds(19, 145, 187, 29);
 		panel.add(UpdateContainerButton);
-		
-		getContainerButton = new JButton("Get Containter Info");
-		getContainerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switchPanels(ContainerInfoPanel);
-			}
-		});
-		getContainerButton.setBounds(19, 238, 187, 29);
-		panel.add(getContainerButton);
 		
 		logoutButton = new JButton("Log Out");
 		logoutButton.setBounds(19, 298, 187, 29);
@@ -92,6 +103,10 @@ public class LogisticsMenu {
 		});
 		panel.add(logoutButton);
 		
+		JButton getClientIfoButton = new JButton("Search Client");
+		getClientIfoButton.setBounds(19, 186, 187, 29);
+		panel.add(getClientIfoButton);
+		
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
@@ -102,95 +117,11 @@ public class LogisticsMenu {
 		layeredPane = new JLayeredPane();
 		panel_1.add(layeredPane, "name_21719901481320");
 		
-		ContainePositionrPanel = new JPanel();
-		ContainePositionrPanel.setBounds(0, 0, 486, 412);
-		layeredPane.add(ContainePositionrPanel);
-		ContainePositionrPanel.setBackground(new Color(95, 158, 160));
-		ContainePositionrPanel.setLayout(null);
-		
-		JTextArea txtrNewLongitude = new JTextArea();
-		txtrNewLongitude.setToolTipText("");
-		txtrNewLongitude.setText("New longitude:");
-		txtrNewLongitude.setEditable(false);
-		txtrNewLongitude.setBackground(new Color(95, 158, 160));
-		txtrNewLongitude.setBounds(32, 106, 101, 16);
-		ContainePositionrPanel.add(txtrNewLongitude);
-		
-		JTextArea txtrNewLatitude = new JTextArea();
-		txtrNewLatitude.setToolTipText("");
-		txtrNewLatitude.setText("New latitude:");
-		txtrNewLatitude.setEditable(false);
-		txtrNewLatitude.setBackground(new Color(95, 158, 160));
-		txtrNewLatitude.setBounds(32, 147, 101, 16);
-		ContainePositionrPanel.add(txtrNewLatitude);
-		
-		textField_14 = new JTextField();
-		textField_14.setBounds(145, 101, 183, 26);
-		ContainePositionrPanel.add(textField_14);
-		textField_14.setColumns(10);
-		
-		textField_15 = new JTextField();
-		textField_15.setBounds(145, 142, 183, 26);
-		ContainePositionrPanel.add(textField_15);
-		textField_15.setColumns(10);
-		
-		JButton Save2 = new JButton("Save");
-		Save2.setBounds(211, 193, 117, 29);
-		ContainePositionrPanel.add(Save2);
-		
-		StatusPanel = new JPanel();
-		StatusPanel.setBackground(new Color(95, 158, 160));
-		StatusPanel.setBounds(0, 0, 480, 406);
-		layeredPane.add(StatusPanel);
-		StatusPanel.setLayout(null);
-		
-		JTextArea txtrConfusedAboutThis = new JTextArea();
-		txtrConfusedAboutThis.setToolTipText("");
-		txtrConfusedAboutThis.setBackground(new Color(95, 158, 160));
-		txtrConfusedAboutThis.setEditable(false);
-		txtrConfusedAboutThis.setText("New Atmosphere Pressure:");
-		txtrConfusedAboutThis.setBounds(25, 102, 175, 16);
-		StatusPanel.add(txtrConfusedAboutThis);
-		
-		JTextArea txtrNew = new JTextArea();
-		txtrNew.setToolTipText("");
-		txtrNew.setText("New Humidity Levels :");
-		txtrNew.setEditable(false);
-		txtrNew.setBackground(new Color(95, 158, 160));
-		txtrNew.setBounds(25, 139, 175, 16);
-		StatusPanel.add(txtrNew);
-		
-		JTextArea txtrNewTemperatureLevels = new JTextArea();
-		txtrNewTemperatureLevels.setToolTipText("");
-		txtrNewTemperatureLevels.setText("New Temperature Levels:");
-		txtrNewTemperatureLevels.setEditable(false);
-		txtrNewTemperatureLevels.setBackground(new Color(95, 158, 160));
-		txtrNewTemperatureLevels.setBounds(25, 182, 175, 16);
-		StatusPanel.add(txtrNewTemperatureLevels);
-		
-		textField_11 = new JTextField();
-		textField_11.setBounds(222, 97, 160, 26);
-		StatusPanel.add(textField_11);
-		textField_11.setColumns(10);
-		
-		textField_12 = new JTextField();
-		textField_12.setBounds(222, 134, 160, 26);
-		StatusPanel.add(textField_12);
-		textField_12.setColumns(10);
-		
-		textField_13 = new JTextField();
-		textField_13.setBounds(222, 177, 160, 26);
-		StatusPanel.add(textField_13);
-		textField_13.setColumns(10);
-		
-		JButton btnNewButton = new JButton("Save");
-		btnNewButton.setBounds(265, 225, 117, 29);
-		StatusPanel.add(btnNewButton);
-		
 		newClientPanel = new JPanel();
-		newClientPanel.setBackground(new Color(95, 158, 160));
-		newClientPanel.setBounds(6, 6, 474, 400);
+		layeredPane.setLayer(newClientPanel, 0);
+		newClientPanel.setBounds(0, 0, 486, 412);
 		layeredPane.add(newClientPanel);
+		newClientPanel.setBackground(new Color(95, 158, 160));
 		newClientPanel.setLayout(null);
 		
 		JTextArea txtrCompanyName = new JTextArea();
@@ -327,11 +258,281 @@ public class LogisticsMenu {
 		
 		JButton Save1 = new JButton("Save");
 		Save1.setBounds(213, 351, 117, 29);
+		Save1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean checkMessage = false;
+				txtrSuccess.setVisible(false);
+				txtrSomethingWentWrong.setVisible(false);
+				if(!textField.getText().isEmpty()) {
+					checkMessage = controller.setCompanyName(textField.getText());
+				}
+				if(checkMessage&&!textField_1.getText().isEmpty()) {
+					checkMessage = controller.setEmail(textField_1.getText());
+				}
+				if(checkMessage&&!textField_2.getText().isEmpty()) {
+					checkMessage = controller.setCountryCode(textField_2.getText());
+				}
+				if(checkMessage&&!textField_3.getText().isEmpty()) {
+					checkMessage = controller.setPhoneNumber(textField_3.getText());
+				}
+				if (checkMessage&&!textField_4.getText().isEmpty()) {
+					checkMessage = controller.setFirstName(textField_4.getText());
+				}
+				if (checkMessage&&!textField_5.getText().isEmpty()) {
+					checkMessage = controller.setMiddleName(textField_5.getText());
+				}
+				if (checkMessage&&!textField_6.getText().isEmpty()) {
+					checkMessage = controller.setLastName(textField_6.getText());
+				}
+				if(checkMessage&&!textField_7.getText().isEmpty()) {
+					checkMessage = controller.setStreetName(textField_7.getText());
+				}
+				if(checkMessage&&!textField_8.getText().isEmpty()) {
+					checkMessage = controller.setCity(textField_8.getText());
+				}
+				if(checkMessage&&!textField_9.getText().isEmpty()) {
+					checkMessage = controller.setBuilding(textField_9.getText());
+				}
+				if(checkMessage&&!textField_10.getText().isEmpty()) {
+					checkMessage = controller.setPostcode(textField_10.getText());
+				}
+				if(textField_10.getText().isEmpty()||textField_9.getText().isEmpty()||textField_8.getText().isEmpty()||textField_7.getText().isEmpty()||textField_6.getText().isEmpty()||textField_4.getText().isEmpty()||textField_3.getText().isEmpty()||textField_2.getText().isEmpty()||textField_1.getText().isEmpty()) {
+					checkMessage = false;
+				}
+				
+				if(checkMessage) {
+					checkMessage = controller.addClient();
+				}
+				if(checkMessage) {
+					txtrSuccess.setVisible(true);
+				}else {
+					txtrSomethingWentWrong.setVisible(true);
+				}
+				
+				clearDataFields(textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10);
+			}
+		});
 		newClientPanel.add(Save1);
+		
+		txtrSuccess = new JTextArea();
+		txtrSuccess.setBackground(new Color(95, 158, 160));
+		txtrSuccess.setForeground(new Color(124, 252, 0));
+		txtrSuccess.setText("Success");
+		txtrSuccess.setEditable(false);
+		txtrSuccess.setBounds(92, 356, 82, 16);
+		newClientPanel.add(txtrSuccess);
+		txtrSuccess.setVisible(false);
+		
+		txtrSomethingWentWrong = new JTextArea();
+		txtrSomethingWentWrong.setText("Something went wrong. Try again");
+		txtrSomethingWentWrong.setBackground(new Color(95, 158, 160));
+		txtrSomethingWentWrong.setForeground(new Color(255, 0, 0));
+		txtrSomethingWentWrong.setEditable(false);
+		txtrSomethingWentWrong.setBounds(93, 375, 236, 16);
+		newClientPanel.add(txtrSomethingWentWrong);
+		txtrSomethingWentWrong.setVisible(false);
+		
+		ContainePositionrPanel = new JPanel();
+		layeredPane.setLayer(ContainePositionrPanel, 0);
+		ContainePositionrPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(ContainePositionrPanel);
+		ContainePositionrPanel.setBackground(new Color(95, 158, 160));
+		ContainePositionrPanel.setLayout(null);
+		
+		JTextArea txtrNewLongitude = new JTextArea();
+		txtrNewLongitude.setToolTipText("");
+		txtrNewLongitude.setText("New longitude:");
+		txtrNewLongitude.setEditable(false);
+		txtrNewLongitude.setBackground(new Color(95, 158, 160));
+		txtrNewLongitude.setBounds(32, 106, 101, 16);
+		ContainePositionrPanel.add(txtrNewLongitude);
+		
+		JTextArea txtrNewLatitude = new JTextArea();
+		txtrNewLatitude.setToolTipText("");
+		txtrNewLatitude.setText("New latitude:");
+		txtrNewLatitude.setEditable(false);
+		txtrNewLatitude.setBackground(new Color(95, 158, 160));
+		txtrNewLatitude.setBounds(32, 147, 101, 16);
+		ContainePositionrPanel.add(txtrNewLatitude);
+		
+		textField_14 = new JTextField();
+		textField_14.setBounds(145, 101, 183, 26);
+		ContainePositionrPanel.add(textField_14);
+		textField_14.setColumns(10);
+		
+		textField_15 = new JTextField();
+		textField_15.setBounds(145, 142, 183, 26);
+		ContainePositionrPanel.add(textField_15);
+		textField_15.setColumns(10);
+		
+		JButton Save2 = new JButton("Save");
+		Save2.setBounds(211, 193, 117, 29);
+		Save2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean checkMessage = false;
+				successPosition.setVisible(false);
+				positionError.setVisible(false);
+				
+				if (!textField_16.getText().isEmpty()) {
+					checkMessage = controller.setContainerForUpdate(textField_16.getText());
+				}
+				if (checkMessage&&!(textField_14.getText().isEmpty())&&!(textField_15.getText().isEmpty())){
+					checkMessage = controller.updatePosition(textField_14.getText(),textField_15.getText());
+				}
+				if(checkMessage) {
+					successPosition.setVisible(true);
+					setViewContainerText();
+					switchPanels(viewContainerPanel);
+				}else {
+					positionError.setVisible(true);
+				}
+				clearDataFields(textField_16,textField_14,textField_15);
+			
+		}});
+		
+		ContainePositionrPanel.add(Save2);
+		
+		JTextArea txtrContainerId_2 = new JTextArea();
+		txtrContainerId_2.setToolTipText("");
+		txtrContainerId_2.setText("Container ID:");
+		txtrContainerId_2.setEditable(false);
+		txtrContainerId_2.setBackground(new Color(95, 158, 160));
+		txtrContainerId_2.setBounds(32, 62, 101, 16);
+		ContainePositionrPanel.add(txtrContainerId_2);
+		
+		successPosition = new JTextArea();
+		successPosition.setForeground(new Color(50, 205, 50));
+		successPosition.setToolTipText("");
+		successPosition.setText("Success");
+		successPosition.setEditable(false);
+		successPosition.setBackground(new Color(95, 158, 160));
+		successPosition.setBounds(239, 225, 89, 16);
+		ContainePositionrPanel.add(successPosition);
+		successPosition.setVisible(false);
+		
+		
+		positionError = new JTextArea();
+		positionError.setForeground(new Color(255, 0, 0));
+		positionError.setToolTipText("");
+		positionError.setText("No container was found.");
+		positionError.setEditable(false);
+		positionError.setBackground(new Color(95, 158, 160));
+		positionError.setBounds(32, 198, 175, 16);
+		ContainePositionrPanel.add(positionError);
+		positionError.setVisible(false);
+		
+		textField_16 = new JTextField();
+		textField_16.setColumns(10);
+		textField_16.setBounds(145, 57, 183, 26);
+		ContainePositionrPanel.add(textField_16);
+		
+		StatusPanel = new JPanel();
+		layeredPane.setLayer(StatusPanel, 0);
+		StatusPanel.setBackground(new Color(95, 158, 160));
+		StatusPanel.setBounds(0, 0, 480, 406);
+		layeredPane.add(StatusPanel);
+		StatusPanel.setLayout(null);
+		
+		JTextArea txtrConfusedAboutThis = new JTextArea();
+		txtrConfusedAboutThis.setToolTipText("");
+		txtrConfusedAboutThis.setBackground(new Color(95, 158, 160));
+		txtrConfusedAboutThis.setEditable(false);
+		txtrConfusedAboutThis.setText("New Atmosphere Pressure:");
+		txtrConfusedAboutThis.setBounds(25, 102, 175, 16);
+		StatusPanel.add(txtrConfusedAboutThis);
+		
+		JTextArea txtrNew = new JTextArea();
+		txtrNew.setToolTipText("");
+		txtrNew.setText("New Humidity Levels :");
+		txtrNew.setEditable(false);
+		txtrNew.setBackground(new Color(95, 158, 160));
+		txtrNew.setBounds(25, 139, 175, 16);
+		StatusPanel.add(txtrNew);
+		
+		JTextArea txtrNewTemperatureLevels = new JTextArea();
+		txtrNewTemperatureLevels.setToolTipText("");
+		txtrNewTemperatureLevels.setText("New Temperature Levels:");
+		txtrNewTemperatureLevels.setEditable(false);
+		txtrNewTemperatureLevels.setBackground(new Color(95, 158, 160));
+		txtrNewTemperatureLevels.setBounds(25, 182, 175, 16);
+		StatusPanel.add(txtrNewTemperatureLevels);
+		
+		textField_11 = new JTextField();
+		textField_11.setBounds(222, 97, 160, 26);
+		StatusPanel.add(textField_11);
+		textField_11.setColumns(10);
+		
+		textField_12 = new JTextField();
+		textField_12.setBounds(222, 134, 160, 26);
+		StatusPanel.add(textField_12);
+		textField_12.setColumns(10);
+		
+		textField_13 = new JTextField();
+		textField_13.setBounds(222, 177, 160, 26);
+		StatusPanel.add(textField_13);
+		textField_13.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Save");
+		btnNewButton.setBounds(265, 225, 117, 29);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean checkMessage = false;
+				successStatus.setVisible(false);
+				statusError.setVisible(false);
+				if (!containerIDtextstatus.getText().isEmpty()) {
+					checkMessage = controller.setContainerForUpdate(containerIDtextstatus.getText());
+				}
+				if (checkMessage&&!(textField_11.getText().isEmpty())&&!(textField_12.getText().isEmpty())&&!(textField_13.getText().isEmpty())){
+					checkMessage = controller.updateStatus(textField_11.getText(),textField_12.getText(),textField_13.getText());
+				}
+				if(checkMessage) {
+					successStatus.setVisible(true);
+					setViewContainerText();
+					switchPanels(viewContainerPanel);
+				}else {
+					statusError.setVisible(true);
+				}
+				clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
+			
+		}});
+		StatusPanel.add(btnNewButton);
+		
+		JTextArea txtrContainerId_1 = new JTextArea();
+		txtrContainerId_1.setToolTipText("");
+		txtrContainerId_1.setText("Container ID:");
+		txtrContainerId_1.setEditable(false);
+		txtrContainerId_1.setBackground(new Color(95, 158, 160));
+		txtrContainerId_1.setBounds(25, 61, 175, 16);
+		StatusPanel.add(txtrContainerId_1);
+		
+		containerIDtextstatus = new JTextField();
+		containerIDtextstatus.setColumns(10);
+		containerIDtextstatus.setBounds(222, 56, 160, 26);
+		StatusPanel.add(containerIDtextstatus);
+		
+		statusError = new JTextArea();
+		statusError.setForeground(new Color(255, 69, 0));
+		statusError.setToolTipText("");
+		statusError.setText("Container not found.");
+		statusError.setEditable(false);
+		statusError.setBackground(new Color(95, 158, 160));
+		statusError.setBounds(102, 230, 175, 16);
+		StatusPanel.add(statusError);
+		statusError.setVisible(false);
+		
+		successStatus = new JTextArea();
+		successStatus.setForeground(new Color(50, 205, 50));
+		successStatus.setToolTipText("");
+		successStatus.setText("Success");
+		successStatus.setEditable(false);
+		successStatus.setBackground(new Color(95, 158, 160));
+		successStatus.setBounds(245, 251, 175, 16);
+		StatusPanel.add(successStatus);
+		successStatus.setVisible(false);
 		
 		ContainerInfoPanel = new JPanel();
 		ContainerInfoPanel.setBackground(new Color(95, 158, 160));
-		layeredPane.setLayer(ContainerInfoPanel, 1);
+		layeredPane.setLayer(ContainerInfoPanel, 0);
 		ContainerInfoPanel.setBounds(0, 0, 480, 406);
 		layeredPane.add(ContainerInfoPanel);
 		ContainerInfoPanel.setLayout(null);
@@ -452,13 +653,200 @@ public class LogisticsMenu {
 		arrivaltext.setBackground(new Color(95, 158, 160));
 		arrivaltext.setBounds(209, 274, 137, 16);
 		ContainerInfoPanel.add(arrivaltext);
+		
+		 viewContainerPanel = new JPanel();
+		layeredPane.setLayer(viewContainerPanel, 0);
+		viewContainerPanel.setBackground(new Color(95, 158, 160));
+		viewContainerPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(viewContainerPanel);
+		viewContainerPanel.setLayout(null);
+		
+		 viewContainerText = new JTextArea();
+		viewContainerText.setBackground(new Color(95, 158, 160));
+		viewContainerText.setEditable(false);
+		viewContainerText.setBounds(18, 6, 450, 322);
+		viewContainerPanel.add(viewContainerText);
+		
+		JButton graphsbutton = new JButton("Graphs");
+		graphsbutton.setBounds(330, 352, 117, 29);
+		viewContainerPanel.add(graphsbutton);
+		
+		JPanel searchClientPanel = new JPanel();
+		layeredPane.setLayer(searchClientPanel, 2);
+		searchClientPanel.setBackground(new Color(95, 158, 160));
+		searchClientPanel.setBounds(0, 0, 486, 406);
+		layeredPane.add(searchClientPanel);
+		searchClientPanel.setLayout(null);
+		
+		JTextArea txtrSearchByThe = new JTextArea();
+		txtrSearchByThe.setBackground(new Color(95, 158, 160));
+		txtrSearchByThe.setText("Search by the following criteria. Priority from top to the bottom.");
+		txtrSearchByThe.setEditable(false);
+		txtrSearchByThe.setBounds(18, 6, 431, 16);
+		searchClientPanel.add(txtrSearchByThe);
+		
+		JTextArea txtrClientEmail = new JTextArea();
+		txtrClientEmail.setText("Client email:");
+		txtrClientEmail.setEditable(false);
+		txtrClientEmail.setBackground(new Color(95, 158, 160));
+		txtrClientEmail.setBounds(28, 52, 80, 16);
+		searchClientPanel.add(txtrClientEmail);
+		
+		JTextArea txtrCompanyName_1 = new JTextArea();
+		txtrCompanyName_1.setText("Company name:");
+		txtrCompanyName_1.setEditable(false);
+		txtrCompanyName_1.setBackground(new Color(95, 158, 160));
+		txtrCompanyName_1.setBounds(28, 80, 124, 16);
+		searchClientPanel.add(txtrCompanyName_1);
+		
+		JTextArea txtrClientPhoneNumber = new JTextArea();
+		txtrClientPhoneNumber.setText("Client phone number:");
+		txtrClientPhoneNumber.setEditable(false);
+		txtrClientPhoneNumber.setBackground(new Color(95, 158, 160));
+		txtrClientPhoneNumber.setBounds(28, 124, 146, 16);
+		searchClientPanel.add(txtrClientPhoneNumber);
+		
+		JTextArea txtrReferencePersonFirst = new JTextArea();
+		txtrReferencePersonFirst.setText("Reference person first name:");
+		txtrReferencePersonFirst.setEditable(false);
+		txtrReferencePersonFirst.setBackground(new Color(95, 158, 160));
+		txtrReferencePersonFirst.setBounds(28, 167, 181, 16);
+		searchClientPanel.add(txtrReferencePersonFirst);
+		
+		JTextArea txtrMiddleName_1 = new JTextArea();
+		txtrMiddleName_1.setText("middle name:");
+		txtrMiddleName_1.setEditable(false);
+		txtrMiddleName_1.setBackground(new Color(95, 158, 160));
+		txtrMiddleName_1.setBounds(123, 195, 93, 16);
+		searchClientPanel.add(txtrMiddleName_1);
+		
+		JTextArea txtrLastName_1 = new JTextArea();
+		txtrLastName_1.setText("last name:");
+		txtrLastName_1.setEditable(false);
+		txtrLastName_1.setBackground(new Color(95, 158, 160));
+		txtrLastName_1.setBounds(144, 223, 80, 16);
+		searchClientPanel.add(txtrLastName_1);
+		
+		clientemailTextField = new JTextField();
+		clientemailTextField.setBounds(234, 47, 225, 26);
+		searchClientPanel.add(clientemailTextField);
+		clientemailTextField.setColumns(10);
+		
+		companyNameTextField = new JTextField();
+		companyNameTextField.setColumns(10);
+		companyNameTextField.setBounds(234, 75, 225, 26);
+		searchClientPanel.add(companyNameTextField);
+		
+		clientPhoneTextField = new JTextField();
+		clientPhoneTextField.setColumns(10);
+		clientPhoneTextField.setBounds(234, 119, 225, 26);
+		searchClientPanel.add(clientPhoneTextField);
+		
+		firstNameTextField = new JTextField();
+		firstNameTextField.setColumns(10);
+		firstNameTextField.setBounds(234, 162, 225, 26);
+		searchClientPanel.add(firstNameTextField);
+		
+		middlenameTextField = new JTextField();
+		middlenameTextField.setColumns(10);
+		middlenameTextField.setBounds(234, 190, 225, 26);
+		searchClientPanel.add(middlenameTextField);
+		
+		lastNameTextField = new JTextField();
+		lastNameTextField.setColumns(10);
+		lastNameTextField.setBounds(234, 223, 225, 26);
+		searchClientPanel.add(lastNameTextField);
+		
+		JButton searchButton = new JButton("Search");
+		searchButton.setBounds(332, 294, 117, 29);
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				searchError.setVisible(false);
+				successSearch.setVisible(false);
+				boolean checkMessage=false;
+				if (!clientemailTextField.getText().isEmpty()) {
+					checkMessage = controller.getClientByEmail(clientemailTextField.getText());
+					
+				} 
+				if(!checkMessage&&!companyNameTextField.getText().isEmpty()) {
+					checkMessage = controller.getClientByCompanyName(companyNameTextField.getText());
+					
+				}
+				if(!checkMessage&&!clientPhoneTextField.getText().isEmpty()) {
+					checkMessage = controller.getClientByPhone(clientPhoneTextField.getText());
+				}
+				if(!checkMessage&&!(firstNameTextField.getText().isEmpty()&&lastNameTextField.getText().isEmpty())) {
+					if(middlenameTextField.getText().isEmpty()) {
+						checkMessage = controller.getClientByReferencePerson(firstNameTextField.getText(),"",lastNameTextField.getText());
+					}else {
+						checkMessage = controller.getClientByReferencePerson(firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
+					}
+				}
+				
+				if(checkMessage) {
+					successSearch.setVisible(false);
+					setFieldsClientData();
+					switchPanels(searchClientPanel);
+					
+				}else {
+					searchError.setVisible(true);
+				}
+				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField);
+			}
+			
+		});
+		searchClientPanel.add(searchButton);
+		
+		searchError = new JTextArea();
+		searchError.setForeground(new Color(255, 0, 0));
+		searchError.setText("Client not found. Try again");
+		searchError.setEditable(false);
+		searchError.setBackground(new Color(95, 158, 160));
+		searchError.setBounds(124, 299, 181, 16);
+		searchClientPanel.add(searchError);
+		searchError.setVisible(false);
+		
+		successSearch = new JTextArea();
+		successSearch.setForeground(new Color(124, 252, 0));
+		successSearch.setText("Success");
+		successSearch.setEditable(false);
+		successSearch.setBackground(new Color(95, 158, 160));
+		successSearch.setBounds(356, 266, 80, 16);
+		searchClientPanel.add(successSearch);
+		successSearch.setVisible(false);
+		
+		JPanel viewClientPanel = new JPanel();
+		viewClientPanel.setBackground(new Color(95, 158, 160));
+		layeredPane.setLayer(viewClientPanel, 0);
+		viewClientPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(viewClientPanel);
+		viewClientPanel.setLayout(null);
+		
+		 viewClientTextField = new JTextArea();
+		viewClientTextField.setEditable(false);
+		viewClientTextField.setBackground(new Color(95, 158, 160));
+		viewClientTextField.setBounds(17, 16, 452, 375);
+		viewClientPanel.add(viewClientTextField);
 	}
 	
+	protected void setFieldsClientData() {
+		// TODO Auto-generated method stub
+		viewClientTextField.setText(controller.getclientsview());
+	}
 	public void switchPanels(JPanel panel) {
 		layeredPane.removeAll();
 		layeredPane.add(panel);
 		layeredPane.repaint();
 		layeredPane.revalidate();
 		
+	}
+	public void clearDataFields(JTextField...fields) {
+		for(JTextField field : fields) {
+			field.setText("");
+		}
+	}
+	private void setViewContainerText() {
+		viewContainerText.setText(controller.getContainerData());
+		successStatus.setVisible(false);
 	}
 }
