@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 
 
@@ -76,6 +77,7 @@ public class newClientStuff {
 	private JTextArea currentLocationTextField;
 	private JTextArea noContainerError;
 	private JTextArea txtrSearchByOne; 
+	private JPanel newMultipleContainersPanel;
 	
 	public newClientStuff(ClientController controller) {
 		this.controller = controller;
@@ -441,7 +443,7 @@ public class newClientStuff {
 		txtrStartPort.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrStartPort.setBackground(new Color(95, 158, 160));
 		txtrStartPort.setEditable(false);
-		txtrStartPort.setBounds(84, 186, 122, 16);
+		txtrStartPort.setBounds(84, 90, 122, 16);
 		JourneyPanel.add(txtrStartPort);
 		
 		JTextArea txtrStartPort_1 = new JTextArea();
@@ -449,7 +451,7 @@ public class newClientStuff {
 		txtrStartPort_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrStartPort_1.setEditable(false);
 		txtrStartPort_1.setBackground(new Color(95, 158, 160));
-		txtrStartPort_1.setBounds(84, 150, 83, 16);
+		txtrStartPort_1.setBounds(84, 51, 83, 16);
 		JourneyPanel.add(txtrStartPort_1);
 		
 		JTextArea txtrCargo = new JTextArea();
@@ -457,7 +459,7 @@ public class newClientStuff {
 		txtrCargo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrCargo.setEditable(false);
 		txtrCargo.setBackground(new Color(95, 158, 160));
-		txtrCargo.setBounds(84, 224, 122, 25);
+		txtrCargo.setBounds(84, 128, 122, 25);
 		JourneyPanel.add(txtrCargo);
 		
 		JTextArea txtrOptimalAtmosphere = new JTextArea();
@@ -465,7 +467,7 @@ public class newClientStuff {
 		txtrOptimalAtmosphere.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrOptimalAtmosphere.setEditable(false);
 		txtrOptimalAtmosphere.setBackground(new Color(95, 158, 160));
-		txtrOptimalAtmosphere.setBounds(84, 260, 174, 25);
+		txtrOptimalAtmosphere.setBounds(84, 165, 174, 25);
 		JourneyPanel.add(txtrOptimalAtmosphere);
 		
 		JTextArea txtrOptimalAtmPressure = new JTextArea();
@@ -473,7 +475,7 @@ public class newClientStuff {
 		txtrOptimalAtmPressure.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrOptimalAtmPressure.setEditable(false);
 		txtrOptimalAtmPressure.setBackground(new Color(95, 158, 160));
-		txtrOptimalAtmPressure.setBounds(84, 297, 165, 25);
+		txtrOptimalAtmPressure.setBounds(84, 202, 165, 25);
 		JourneyPanel.add(txtrOptimalAtmPressure);
 		
 		JTextArea txtrOptimalHumidity = new JTextArea();
@@ -481,7 +483,7 @@ public class newClientStuff {
 		txtrOptimalHumidity.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrOptimalHumidity.setEditable(false);
 		txtrOptimalHumidity.setBackground(new Color(95, 158, 160));
-		txtrOptimalHumidity.setBounds(84, 327, 152, 30);
+		txtrOptimalHumidity.setBounds(84, 245, 152, 30);
 		JourneyPanel.add(txtrOptimalHumidity);
 		
 		JTextArea txtrArriveBy = new JTextArea();
@@ -489,46 +491,46 @@ public class newClientStuff {
 		txtrArriveBy.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrArriveBy.setEditable(false);
 		txtrArriveBy.setBackground(new Color(95, 158, 160));
-		txtrArriveBy.setBounds(84, 367, 128, 30);
+		txtrArriveBy.setBounds(84, 287, 128, 30);
 		JourneyPanel.add(txtrArriveBy);
 		
 		textField_8 = new JTextField();
-		textField_8.setBounds(295, 147, 179, 26);
+		textField_8.setBounds(295, 48, 179, 26);
 		JourneyPanel.add(textField_8);
 		textField_8.setColumns(10);
 		
 		textField_9 = new JTextField();
-		textField_9.setBounds(295, 183, 179, 26);
+		textField_9.setBounds(295, 87, 179, 26);
 		JourneyPanel.add(textField_9);
 		textField_9.setColumns(10);
 		
 		textField_10 = new JTextField();
-		textField_10.setBounds(295, 221, 179, 26);
+		textField_10.setBounds(295, 125, 179, 26);
 		JourneyPanel.add(textField_10);
 		textField_10.setColumns(10);
 		
 		textField_11 = new JTextField();
-		textField_11.setBounds(295, 257, 179, 26);
+		textField_11.setBounds(295, 163, 179, 26);
 		JourneyPanel.add(textField_11);
 		textField_11.setColumns(10);
 		
 		textField_12 = new JTextField();
-		textField_12.setBounds(295, 294, 179, 26);
+		textField_12.setBounds(295, 201, 179, 26);
 		JourneyPanel.add(textField_12);
 		textField_12.setColumns(10);
 		
 		textField_13 = new JTextField();
-		textField_13.setBounds(295, 331, 179, 26);
+		textField_13.setBounds(295, 239, 179, 26);
 		JourneyPanel.add(textField_13);
 		textField_13.setColumns(10);
 		
 		textField_14 = new JTextField();
-		textField_14.setBounds(295, 364, 179, 26);
+		textField_14.setBounds(295, 284, 179, 26);
 		JourneyPanel.add(textField_14);
 		textField_14.setColumns(10);
 		
 		JButton btnNewButton_3 = new JButton("Save");
-		btnNewButton_3.setBounds(358, 408, 117, 29);
+		btnNewButton_3.setBounds(357, 322, 117, 29);
 		JourneyPanel.add(btnNewButton_3);
 		
 		JPanel viewContainerPanel = new JPanel();
@@ -565,7 +567,7 @@ public class newClientStuff {
 		txtrArrivalDate.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrArrivalDate.setEditable(false);
 		txtrArrivalDate.setBackground(new Color(95, 158, 160));
-		txtrArrivalDate.setBounds(17, 350, 95, 19);
+		txtrArrivalDate.setBounds(17, 323, 95, 19);
 		viewContainerPanel.add(txtrArrivalDate);
 		
 		JTextArea txtrCurrentInternalStatus = new JTextArea();
@@ -581,7 +583,7 @@ public class newClientStuff {
 		txtrLastUpdated.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrLastUpdated.setEditable(false);
 		txtrLastUpdated.setBackground(new Color(95, 158, 160));
-		txtrLastUpdated.setBounds(17, 416, 114, 19);
+		txtrLastUpdated.setBounds(17, 364, 114, 19);
 		viewContainerPanel.add(txtrLastUpdated);
 		
 		JTextArea startPortTextField = new JTextArea();
@@ -609,21 +611,21 @@ public class newClientStuff {
 		internalStatusTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		internalStatusTextField.setEditable(false);
 		internalStatusTextField.setBackground(new Color(95, 158, 160));
-		internalStatusTextField.setBounds(206, 176, 371, 120);
+		internalStatusTextField.setBounds(206, 176, 371, 88);
 		viewContainerPanel.add(internalStatusTextField);
 		
 		JTextArea arrivalDateTextField = new JTextArea();
 		arrivalDateTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		arrivalDateTextField.setEditable(false);
 		arrivalDateTextField.setBackground(new Color(95, 158, 160));
-		arrivalDateTextField.setBounds(206, 350, 371, 19);
+		arrivalDateTextField.setBounds(206, 323, 371, 19);
 		viewContainerPanel.add(arrivalDateTextField);
 		
 		JTextArea lastUpdatedTextField = new JTextArea();
 		lastUpdatedTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lastUpdatedTextField.setEditable(false);
 		lastUpdatedTextField.setBackground(new Color(95, 158, 160));
-		lastUpdatedTextField.setBounds(206, 418, 354, 19);
+		lastUpdatedTextField.setBounds(206, 364, 354, 19);
 		viewContainerPanel.add(lastUpdatedTextField);
 		
 		txtrCurrentLocation = new JTextArea();
@@ -631,15 +633,19 @@ public class newClientStuff {
 		txtrCurrentLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrCurrentLocation.setEditable(false);
 		txtrCurrentLocation.setBackground(new Color(95, 158, 160));
-		txtrCurrentLocation.setBounds(17, 319, 152, 19);
+		txtrCurrentLocation.setBounds(17, 292, 152, 19);
 		viewContainerPanel.add(txtrCurrentLocation);
 		
 		currentLocationTextField = new JTextArea();
 		currentLocationTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		currentLocationTextField.setEditable(false);
 		currentLocationTextField.setBackground(new Color(95, 158, 160));
-		currentLocationTextField.setBounds(206, 319, 262, 19);
+		currentLocationTextField.setBounds(231, 292, 346, 19);
 		viewContainerPanel.add(currentLocationTextField);
+		
+		JButton GraphsButton = new JButton("Graphs");
+		GraphsButton.setBounds(460, 443, 117, 29);
+		viewContainerPanel.add(GraphsButton);
 		
 		DataPanel = new JPanel();
 		DataPanel.setBackground(new Color(95, 158, 160));
@@ -729,11 +735,11 @@ public class newClientStuff {
 		DataPanel.add(PortNamesearch);
 		
 		txtrSearchByOne = new JTextArea();
-		txtrSearchByOne.setText("Search by one of the following criteria. Remember that priority will be given to the topmost field correctly entered.");
+		txtrSearchByOne.setText(" Search by one of the following criteria.\n Remember that priority will be given to the topmost field correctly entered.");
 		txtrSearchByOne.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrSearchByOne.setEditable(false);
 		txtrSearchByOne.setBackground(new Color(95, 158, 160));
-		txtrSearchByOne.setBounds(151, 30, 320, 19);
+		txtrSearchByOne.setBounds(6, 29, 571, 44);
 		DataPanel.add(txtrSearchByOne);
 		
 		noContainerError = new JTextArea();
@@ -846,6 +852,17 @@ public class newClientStuff {
 		viewActiveShipmentsTextField.setBounds(206, 370, 371, 102);
 		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 		ViewInfoPanel.add(viewActiveShipmentsTextField);
+		
+		newMultipleContainersPanel = new JPanel();
+		newMultipleContainersPanel.setBackground(new Color(95, 158, 160));
+		layeredPane.add(newMultipleContainersPanel, "name_65527884775862");
+		newMultipleContainersPanel.setLayout(null);
+		
+		JTextArea multipleContainersTextField = new JTextArea();
+		multipleContainersTextField.setBackground(new Color(95, 158, 160));
+		multipleContainersTextField.setEditable(false);
+		multipleContainersTextField.setBounds(20, 25, 543, 432);
+		newMultipleContainersPanel.add(multipleContainersTextField);
 	}
 	
 	public void switchPanels(JPanel panel) {
