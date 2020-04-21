@@ -1,13 +1,19 @@
 package logic;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
+import dataAccess.PortAccess;
+import exceptions.ElementNotFoundException;
 //import graphicalInterface.newClientStuff;
 import objectsData.ClientData;
 import objectsData.ContainerData;
+import objectsData.PortData;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import updateClientInformation.UpdateEmail;
@@ -26,11 +32,14 @@ public class ClientController {
 	private ClientData client;
 	private ArrayList<ContainerData> container;
 	private long portID;
+	private PortAccess databasePort;
+	private long startPortID;
 	
 	public ClientController(String clientID){
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
 		currentClient = new CurrentClientV2(this.clientID);
+		databasePort = new PortAccess();
 	}
 	public boolean saveReferencePerson(String firstName, String middleName, String lastName) {
 		System.out.println("inside the method savereferencePerson");
@@ -178,8 +187,13 @@ public class ClientController {
 	
 	private String arrayListJourneyToString(ArrayList<Long> shipments) {
 		String IDs="";
+		int counter=0;
 		for (int i=0;i<shipments.size();i++) {
 			IDs = "\nJourney: "+shipments.get(i);
+			counter++;
+			if(counter>3) {
+				break;
+			}
 		}
 		return IDs;
 	}
@@ -198,10 +212,11 @@ public class ClientController {
 	}
 	public String getActiveShipments() {
 		// TODO Auto-generated method stub
-		String activeShipments ="";
+		String activeShipments ="The recently registered journeys: ";
+		
 		if (currentClient.getSetClient()) {
 			client = currentClient.viewClient();
-			activeShipments = arrayListJourneyToString(client.getActiveShipment());
+			activeShipments = activeShipments+arrayListJourneyToString(client.getActiveShipment());
 		}
 		return activeShipments;
 	}
@@ -270,5 +285,107 @@ public class ClientController {
 				return false;
 			}
 		}
+	}
+
+	public String getStartPortName() {
+		// TODO Auto-generated method stub
+		return getPortName(container.get(0).getStartPortID());
+	}
+	private String getPortName(long portID) {
+		PortData port;
+		try {
+			port = databasePort.getEntry(portID);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Cant find the port");
+			throw new Error(e);
+		}
+		return port.getPortName();
+	}
+	public String getDestinationPortName() {
+		// TODO Auto-generated method stub
+		return getPortName(container.get(0).getDestinationPortID());
+	}
+	public String getCargo() {
+		// TODO Auto-generated method stub
+		return container.get(0).getCargo();
+	}
+	public String getArrivalDate() {
+		// TODO Auto-generated method stub
+		return container.get(0).getArriveBy();
+	}
+	public String getLastUpdate() {
+		// TODO Auto-generated method stub
+		return container.get(0).getUpdated();
+	}
+	public String getInternalStatus() {
+		// TODO Auto-generated method stub
+		String temp= Float.toString(container.get(0).getInternalStatus().getTemperature());
+		String humidity = Float.toString(container.get(0).getInternalStatus().getHumidity());
+		String pressure = Float.toString(container.get(0).getInternalStatus().getAtmosphere());
+		
+		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
+	}
+	public String getCurrentLocation() {
+		// TODO Auto-generated method stub
+		String latitude = Float.toString(container.get(0).getCurrentPosition().getLatitude());
+		String longitude = Float.toString(container.get(0).getCurrentPosition().getlongitude());
+		return "Latitude: "+latitude+"  Longitude: "+longitude;
+	}
+	public String getMulitpleContainersData() {
+		// TODO Auto-generated method stub
+		String result ="Displaying Up to most 2 Containers: ";
+		int counter =0;
+		for(int i=0;i<container.size();i++) {
+			result =result+containerDataToString(container.get(i));
+			counter++;
+			if(counter>1) {
+				break;
+			}
+		}
+		
+		
+		
+		return result;
+	}
+	private String containerDataToString(ContainerData container) {
+		String result="\n";
+		result = result +"\nJourney ID: "+container.getJourneyID();
+		result = result +"\nStart Port: "+getPortName(container.getStartPortID());
+		result = result +"\nDestination Port: "+getPortName(container.getDestinationPortID());
+		result = result +"\nCargo: "+container.getCargo();
+		result = result +"\nInternal Status: "+getInternalStatus(container);
+		String latitude = Float.toString(container.getCurrentPosition().getLatitude());
+		String longitude = Float.toString(container.getCurrentPosition().getlongitude());
+		result = result +"\nCurrent Location: "+"Latitude: "+latitude+"   Longitude: "+longitude;
+		result = result +"\nArrival Date: "+container.getArriveBy();
+		result = result +"\nLast Updated: "+container.getUpdated();
+		return result;
+	}
+	private String getInternalStatus(ContainerData container) {
+		// TODO Auto-generated method stub
+		String temp= Float.toString(container.getInternalStatus().getTemperature());
+		String humidity = Float.toString(container.getInternalStatus().getHumidity());
+		String pressure = Float.toString(container.getInternalStatus().getAtmosphere());
+		
+		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
+	}
+	public boolean checkStartPortName(String portname) {
+		// TODO Auto-generated method stub
+		startPortID = currentClient.getPortID(portname);
+		System.out.println("Checking if the port name exists");
+	   if (startPortID==1l) {
+		   System.out.println("Port name doesnot exist");
+		   return false;
+	   };
+	   System.out.println("Port name is valid");
+	    currentClient.getAContainer(startPortID);
+	    System.out.println("Checking if the container is set");
+	    if (currentClient.getFoundContainer()) {
+	    	System.out.println("Container found");
+	    	return true;
+	    }
+	    System.out.println("Container not found nor set, something wrong with currentclient method");
+		return false;
 	}
 }
