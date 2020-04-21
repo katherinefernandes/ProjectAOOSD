@@ -3,11 +3,18 @@ package logic;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
+import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
+import objectsData.ReferenceName;
+import searchClients.SearchByEmail;
+import searchClients.SearchByName;
+import searchClients.SearchByPhone;
+import searchClients.SearchByReferencePerson;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import updateContainer.UpdateLocation;
@@ -30,6 +37,15 @@ public class LogisticController {
 	private String zipcode;
 	private long containerID;
 	private PortAccess databasePort;
+	private SearchByEmail optionEmail;
+	private List<ClientData> clients;
+	private SearchByName optionName;
+	private SearchByPhone optionPhone;
+	private ArrayList<String> firstN;
+	private ArrayList<String> middleN;
+	private ArrayList<String> lastN;
+	private ReferenceName searchRefPerson;
+	private SearchByReferencePerson optionRefPerson;
 	
 	public LogisticController(){
 		logistic = new LogisticCompanyV2();
@@ -248,6 +264,100 @@ public class LogisticController {
 			return logistic.updateContainerInformation(update);
 		}
 		return false;
+	}
+
+
+	public boolean getClientByEmail(String searchEmail) {
+		// TODO Auto-generated method stub
+		optionEmail = new SearchByEmail(searchEmail);
+		clients= logistic.search(optionEmail);
+		if (clients.size()>0) {
+			
+			return true;
+		}
+		return false;
+		
+	}
+
+
+	public boolean getClientByCompanyName(String searchName) {
+		// TODO Auto-generated method stub
+		optionName = new SearchByName(searchName);
+		clients = logistic.search(optionName);
+		if(clients.size()>0) {
+			return true;
+		}
+		return false;
+	}
+
+
+	public boolean getClientByPhone(String phone) {
+		// TODO Auto-generated method stub
+		long phonenumber;
+		try {
+			phonenumber= Long.valueOf(phone);
+			System.out.println("Correct string phonenumber");
+			optionPhone = new SearchByPhone(phonenumber);
+			clients = logistic.search(optionPhone);
+			}catch(NumberFormatException e) {
+				System.out.println("the  latitude is not valid");
+				return false;
+			}
+		if (clients.size()>0) {
+			return true;
+		}
+		return false;
+	}
+
+
+	public boolean getClientByReferencePerson(String text, String string, String text2) {
+		// TODO Auto-generated method stub
+		firstN = parseInput.parsingNames(text);
+		
+		middleN = parseInput.parsingNames(string);
+		
+		lastN = parseInput.parsingNames(text2);
+		
+		searchRefPerson = new ReferenceName(firstN, middleN, lastN);
+		
+		optionRefPerson = new SearchByReferencePerson(searchRefPerson);
+		
+		clients = logistic.search(optionRefPerson);
+		if(clients.size()>0) {
+			return true;
+		}
+		return false;
+	}
+
+
+	public String getclientsview() {
+		// TODO Auto-generated method stub
+		String result ="Displaying Up to most 2 Clients: ";
+		int counter =0;
+		for(int i=0;i<clients.size();i++) {
+			result =result+clientDataToString(clients.get(i));
+			counter++;
+			if(counter>1) {
+				break;
+			}
+		}
+		return result;
+	}
+	private String clientDataToString(ClientData client) {
+		String result ="\n";
+		result = result +"\nClient ID: "+client.getID();
+		result = result +"\nCompany Name: "+client.getCompanyName();
+		result =result +"\nEmail: "+client.getEmail();
+		result = result +"\nReference Person: "+arraylisttostring(client.getPerson().getFirstName())+arraylisttostring(client.getPerson().getMiddleName())+arraylisttostring(client.getPerson().getLastName());
+		result = result +"\nPhone number: "+Integer.toString(client.getPhoneNumber().getCountryCode())+Long.toString(client.getPhoneNumber().getPhone());
+		return result;
+	}
+	private String arraylisttostring(ArrayList<String> string) {
+		String result="";
+		for(int i=0;i<string.size();i++) {
+			result = result +" "+ string.get(i);
+		}
+		return result;
 	}
 	
 }

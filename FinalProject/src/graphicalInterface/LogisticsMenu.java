@@ -43,6 +43,9 @@ public class LogisticsMenu {
 	private JTextField firstNameTextField;
 	private JTextField middlenameTextField;
 	private JTextField lastNameTextField;
+	private JTextArea searchError;
+	private JTextArea successSearch;
+	private JTextArea viewClientTextField;
     
     public LogisticsMenu(LogisticController controller) {
 		this.controller = controller;
@@ -756,23 +759,61 @@ public class LogisticsMenu {
 		
 		JButton searchButton = new JButton("Search");
 		searchButton.setBounds(332, 294, 117, 29);
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				searchError.setVisible(false);
+				successSearch.setVisible(false);
+				boolean checkMessage=false;
+				if (!clientemailTextField.getText().isEmpty()) {
+					checkMessage = controller.getClientByEmail(clientemailTextField.getText());
+					
+				} 
+				if(!checkMessage&&!companyNameTextField.getText().isEmpty()) {
+					checkMessage = controller.getClientByCompanyName(companyNameTextField.getText());
+					
+				}
+				if(!checkMessage&&!clientPhoneTextField.getText().isEmpty()) {
+					checkMessage = controller.getClientByPhone(clientPhoneTextField.getText());
+				}
+				if(!checkMessage&&!(firstNameTextField.getText().isEmpty()&&lastNameTextField.getText().isEmpty())) {
+					if(middlenameTextField.getText().isEmpty()) {
+						checkMessage = controller.getClientByReferencePerson(firstNameTextField.getText(),"",lastNameTextField.getText());
+					}else {
+						checkMessage = controller.getClientByReferencePerson(firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
+					}
+				}
+				
+				if(checkMessage) {
+					successSearch.setVisible(false);
+					setFieldsClientData();
+					switchPanels(searchClientPanel);
+					
+				}else {
+					searchError.setVisible(true);
+				}
+				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField);
+			}
+			
+		});
 		searchClientPanel.add(searchButton);
 		
-		JTextArea searchError = new JTextArea();
+		searchError = new JTextArea();
 		searchError.setForeground(new Color(255, 0, 0));
 		searchError.setText("Client not found. Try again");
 		searchError.setEditable(false);
 		searchError.setBackground(new Color(95, 158, 160));
 		searchError.setBounds(124, 299, 181, 16);
 		searchClientPanel.add(searchError);
+		searchError.setVisible(false);
 		
-		JTextArea successSearch = new JTextArea();
+		successSearch = new JTextArea();
 		successSearch.setForeground(new Color(124, 252, 0));
 		successSearch.setText("Success");
 		successSearch.setEditable(false);
 		successSearch.setBackground(new Color(95, 158, 160));
 		successSearch.setBounds(356, 266, 80, 16);
 		searchClientPanel.add(successSearch);
+		successSearch.setVisible(false);
 		
 		JPanel viewClientPanel = new JPanel();
 		viewClientPanel.setBackground(new Color(95, 158, 160));
@@ -781,13 +822,17 @@ public class LogisticsMenu {
 		layeredPane.add(viewClientPanel);
 		viewClientPanel.setLayout(null);
 		
-		JTextArea viewClientTextField = new JTextArea();
+		 viewClientTextField = new JTextArea();
 		viewClientTextField.setEditable(false);
 		viewClientTextField.setBackground(new Color(95, 158, 160));
 		viewClientTextField.setBounds(17, 16, 452, 375);
 		viewClientPanel.add(viewClientTextField);
 	}
 	
+	protected void setFieldsClientData() {
+		// TODO Auto-generated method stub
+		viewClientTextField.setText(controller.getclientsview());
+	}
 	public void switchPanels(JPanel panel) {
 		layeredPane.removeAll();
 		layeredPane.add(panel);
