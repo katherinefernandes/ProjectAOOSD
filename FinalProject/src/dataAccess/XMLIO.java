@@ -24,7 +24,7 @@ public class XMLIO {
 	
 	public XMLIO(String fileInPath) {
 		this.fileIn = new File(fileInPath);
-		fileOut = new File("temp.xml");
+		fileOut = new File("storage/temp.xml");
 	}
 	
 	public void initializeIO() {
