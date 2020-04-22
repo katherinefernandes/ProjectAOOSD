@@ -239,20 +239,13 @@ public class newClientStuff {
 		JButton Save1 = new JButton("Save");
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean checkMessage;
 				validTextField.setVisible(false);
 				InvalidNameError.setVisible(false);
 				System.out.println("Inside the save button");
 				if (middlenametext.getText().isEmpty()) {
-					checkMessage=controller.saveReferencePerson(firstnametext.getText()," ",lastnametext.getText());
+					controller.saveReferencePerson(firstnametext.getText()," ",lastnametext.getText());
 				}else {
-					checkMessage=controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
-				}
-				if (checkMessage) {
-					validTextField.setVisible(true);
-					
-				}else {
-					InvalidNameError.setVisible(true);
+					controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
 				}
 				clearDataFields(firstnametext,middlenametext,lastnametext);
 				viewReferencePersonTextField.setText(controller.getReferencePerson());
@@ -995,6 +988,18 @@ public class newClientStuff {
 		noContainerError.setVisible(false);
 		
 		
+	}
+	
+	public void errorMessageForName() {
+		setTextVisibleTrue(InvalidNameError);
+	}
+
+	public void successFieldForName() {
+		setTextVisibleTrue(validTextField);
+	}
+	
+	private void setTextVisibleTrue(JTextArea field) {
+		field.setVisible(true);
 	}
 
 }

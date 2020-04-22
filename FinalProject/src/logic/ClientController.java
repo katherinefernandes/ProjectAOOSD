@@ -12,6 +12,7 @@ import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
+import graphicalInterface.newClientStuff;
 //import graphicalInterface.newClientStuff;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -27,7 +28,7 @@ public class ClientController {
 	private long clientID;
 	private CurrentClientV2 currentClient;
 	private ValidInput validate;
-	//private newClientStuff clientmenu;
+	private newClientStuff clientmenu;
 	private ArrayList<String> firstNameList;
 	private ArrayList<String> middleNameList;
 	private ArrayList<String> lastNameList;
@@ -43,9 +44,12 @@ public class ClientController {
 		validate = new ValidInput();
 		currentClient = new CurrentClientV2(this.clientID);
 		databasePort = new PortAccess();
+		clientmenu = new newClientStuff(this);
+		clientmenu.frame.setVisible(true);
 	}
-	public boolean saveReferencePerson(String firstName, String middleName, String lastName) {
+	public void saveReferencePerson(String firstName, String middleName, String lastName) {
 		System.out.println("inside the method savereferencePerson");
+		boolean checkMessage = false;
 		if(checkNameValidity(firstName) && checkNameValidity(middleName) && checkNameValidity(lastName)){
 			firstNameList = parseInput.parsingNames(firstName);
 			middleNameList = parseInput.parsingNames(middleName);
@@ -56,16 +60,20 @@ public class ClientController {
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Update success, trying to display message");
 				currentClient = new CurrentClientV2(this.clientID);
-				return true;
+				checkMessage = true;
 			} else {
 				System.out.println("Some thing went wrong in saving to the databaseClient");
-				return false;
+				checkMessage = false;
 			}
 		}
-		
 		else {
 			System.out.println("The names are not valid");
-			return false;	
+			checkMessage = false;	
+		}
+		if (checkMessage) {
+			clientmenu.successFieldForName();
+		}else {
+			clientmenu.errorMessageForName();
 		}
 		
 		
