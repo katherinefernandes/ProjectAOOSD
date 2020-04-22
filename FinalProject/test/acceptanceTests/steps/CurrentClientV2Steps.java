@@ -4,14 +4,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.function.Executable;
+
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
+import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,6 +27,7 @@ import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import users.CurrentClientV2;
+import users.User;
 
 public class CurrentClientV2Steps {
 	private CurrentClientV2 clientmanager;
@@ -43,6 +48,9 @@ public class CurrentClientV2Steps {
 	private String arriveBy;
 	private ContainerData container;
 	private ArrayList<ContainerData> containersInJourney;
+	private long clientID;
+	private User user;
+	private String errorMessage;
 	
 	@Given("that the client enters the ID {long} that exists in the memory")
 	public void theIDItEnteredExistsInTheMemory(long ID) {
@@ -176,7 +184,13 @@ public class CurrentClientV2Steps {
 	
 	@When("the client enters the container the ID {long} that exists in the database")
 	public void theClientEntersTheContainerTheIDThatExistsInTheDatabase(long containerID) {
-	    clientmanager.getContainer(containerID);
+	    try {
+			clientmanager.getContainer(containerID);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new Error(e);
+		}
 	    assertTrue(clientmanager.getSetContainer());
 	}
 

@@ -35,25 +35,17 @@ public  class User implements View{
 	}
 	
 	
-	public void getClient (long clientID) {
-		try {
+	public void getClient (long clientID) throws ElementNotFoundException {
+		
 			client = databaseClient.getEntry(clientID);
 			setClient = true;
-		//	display=true;
-		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("client not found  "+clientID);
-			throw new Error(e);
-		}
+		
+		
 	}
-	public void getContainer(long containerID) {
-		try { 
+	public void getContainer(long containerID) throws ElementNotFoundException {
+		
 			container = databaseContainer.getEntry(containerID); 
 			setContainer= true;
-		} catch (NumberFormatException | ElementNotFoundException e) { 
-			System.out.println("Container not found");
-			throw new Error(e);
-		}
 	}
 	
 	public boolean getSetClient() {

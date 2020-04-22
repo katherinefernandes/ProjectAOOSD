@@ -166,6 +166,9 @@ public class LogisticController {
 			}catch(NumberFormatException e) {
 				System.out.println("the containerID is not valid");
 				return false;
+			}catch(ElementNotFoundException e) {
+				System.out.println("The counterID is not correct");
+				return false;
 			}
 	}
 
