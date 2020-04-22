@@ -74,8 +74,6 @@ public class LoginController {
 					public void run() {
 						try {
 							ClientController clientController = new ClientController((window.getClientInput()));
-							newClientStuff clientmenu = new newClientStuff(clientController);
-							clientmenu.frame.setVisible(true);
 							window.closeFrame();
 							
 						
