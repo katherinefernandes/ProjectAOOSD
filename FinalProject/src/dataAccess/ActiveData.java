@@ -10,8 +10,8 @@ class ActiveData<T extends ObjectDataInterface> {
 		dataList = new ArrayList<>();
 	}
 	
-	public void storeNewData(T newData) {
-		dataList.add(newData);
+	public void storeNewData(T newData2) {
+		dataList.add(newData2);
 	}
 	
 	public T getDataAtIndex(int index) {
