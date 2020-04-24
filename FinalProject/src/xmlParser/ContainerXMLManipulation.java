@@ -1,40 +1,40 @@
-package XMLParser;
+package xmlParser;
 
 import objectsData.*;
 import java.time.LocalDateTime;
 
-public class ContainerAccess extends IdentifiedDataAccess<ContainerData> {
+public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> {
 	
-	public ContainerAccess() {
+	public ContainerXMLManipulation() {
 		super("storage/activeData/containers.xml", "Container", "Containers");
 	}
 	
 	@Override
 	public ContainerData dataFromEvents(DataPointParser dataPoint) {
 		int i = 0;
-		i = iterateUntilFound(i,dataPoint,"ClientID");
+		i = dataPoint.iterateUntilFound(i,"ClientID");
 		long clientID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"JourneyID");
+		i = dataPoint.iterateUntilFound(i,"JourneyID");
 		long journeyID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"StartPortID");
+		i = dataPoint.iterateUntilFound(i,"StartPortID");
 		long startPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"DestinationPortID");
+		i = dataPoint.iterateUntilFound(i,"DestinationPortID");
 		long destinationPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Latitude");
+		i = dataPoint.iterateUntilFound(i,"Latitude");
 		float latitude = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Longitude");
+		i = dataPoint.iterateUntilFound(i,"Longitude");
 		float longitude = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Cargo");
+		i = dataPoint.iterateUntilFound(i,"Cargo");
 		String cargo = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"Temperature");
+		i = dataPoint.iterateUntilFound(i,"Temperature");
 		float temperature = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Atmosphere");
+		i = dataPoint.iterateUntilFound(i,"Atmosphere");
 		float atmosphere = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Humidity");
+		i = dataPoint.iterateUntilFound(i,"Humidity");
 		float humidity = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Updated");
+		i = dataPoint.iterateUntilFound(i,"Updated");
 		String updated = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"ArriveBy");
+		i = dataPoint.iterateUntilFound(i,"ArriveBy");
 		String arriveBy = dataPoint.getEventAtIndex(++i).getData();	
 		
 		ContainerData container = new ContainerData(dataPoint.getID(), clientID, journeyID, startPortID, destinationPortID, latitude, longitude, cargo, temperature, atmosphere, humidity, updated, arriveBy);

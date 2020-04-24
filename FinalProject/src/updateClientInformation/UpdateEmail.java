@@ -1,17 +1,17 @@
 package updateClientInformation;
 
-import XMLParser.ClientAccess;
 import objectsData.ClientData;
+import xmlParser.ClientXMLManipulation;
 
 public class UpdateEmail implements UpdateClient {
 	private String email;
 	private boolean setUpdate;
-	private ClientAccess databaseClient;
+	private ClientXMLManipulation databaseClient;
 	
 	public UpdateEmail(String email) {
 		this.email=email;
 		this.setUpdate=false;
-		databaseClient= new ClientAccess();
+		databaseClient= new ClientXMLManipulation();
 	}
 	
 	

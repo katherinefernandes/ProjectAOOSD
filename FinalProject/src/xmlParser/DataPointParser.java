@@ -1,4 +1,4 @@
-package XMLParser;
+package xmlParser;
 
 import java.util.*;
 import javax.xml.stream.events.*;
@@ -84,6 +84,14 @@ public class DataPointParser {
 	public boolean isCompleteDataPoint() {
 		EventParser lastElement = dataPoint.get(dataPoint.size()-1);
 		return lastElement.isEndOfDataPoint(dataPointTagName);
+	}
+	
+	public int iterateUntilFound(int index, String find) {
+		XMLEvent event;
+		while(!((event = getEventAtIndex(index).getEvent()).isStartElement() && event.asStartElement().getName().getLocalPart().equals(find))){
+			index++;
+		}
+		return index;
 	}
 	
 	private boolean searchWordIsInID(Attribute IDattribute) {

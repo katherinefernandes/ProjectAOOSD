@@ -13,9 +13,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.function.Executable;
 
-import XMLParser.ClientAccess;
-import XMLParser.ContainerAccess;
-import XMLParser.PortAccess;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
@@ -34,6 +31,9 @@ import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import users.CurrentClientV2;
 import users.User;
+import xmlParser.ClientXMLManipulation;
+import xmlParser.ContainerXMLManipulation;
+import xmlParser.PortXMLManipulation;
 
 public class CurrentClientV2Steps {
 	private CurrentClientV2 clientApplication = new CurrentClientV2(828300261636100l);
@@ -41,8 +41,8 @@ public class CurrentClientV2Steps {
 	private long containerID;
 	private long journeyID;
 	private long startPortID;
-	private ClientAccess databaseClient = new ClientAccess();
-	private ContainerAccess databaseContainer = new ContainerAccess();
+	private ClientXMLManipulation databaseClient = new ClientXMLManipulation();
+	private ContainerXMLManipulation databaseContainer = new ContainerXMLManipulation();
 	private long destinationPortID;
 	private float latitude;
 	private float longitude;
@@ -53,7 +53,7 @@ public class CurrentClientV2Steps {
 	private float temperature;
 	private float humidity;
 	private ArrayList<ContainerData> Containers;
-	private PortAccess databasePort = new PortAccess();
+	private PortXMLManipulation databasePort = new PortXMLManipulation();
 	private String startportname;
 	/*private ClientData client;
 	private int countryCode;

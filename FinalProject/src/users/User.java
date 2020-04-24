@@ -1,29 +1,29 @@
 package users;
 
 
-import XMLParser.ClientAccess;
-import XMLParser.ContainerAccess;
-import XMLParser.HistoryAccess;
-import XMLParser.IdentifiedDataAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.HistoryData;
 import supportingClasses.Security;
+import xmlParser.ClientXMLManipulation;
+import xmlParser.ContainerXMLManipulation;
+import xmlParser.HistoryXMLManipulation;
+import xmlParser.IdentifiableXMLManipulation;
 
 public class User implements View{
 	//TODO what's the point of this class? Why are these fields together in a class with only getters and setters
 	protected ClientData client;
 	protected ContainerData container;
-	protected ClientAccess databaseClient;
-	protected ContainerAccess databaseContainer;
+	protected ClientXMLManipulation databaseClient;
+	protected ContainerXMLManipulation databaseContainer;
 	protected Security ssecurity;
 	protected boolean setClient;
 	protected boolean setContainer;
 	
 	public User() {
-		databaseClient = new ClientAccess();
-		databaseContainer = new ContainerAccess();
+		databaseClient = new ClientXMLManipulation();
+		databaseContainer = new ContainerXMLManipulation();
 		this.setClient=false;
 		ssecurity = new Security();
 		this.setContainer=false;

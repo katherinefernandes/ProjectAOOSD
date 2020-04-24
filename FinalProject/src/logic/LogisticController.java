@@ -4,7 +4,6 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import XMLParser.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -19,6 +18,7 @@ import supportingClasses.parseInput;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 import users.LogisticCompanyV2;
+import xmlParser.PortXMLManipulation;
 
 public class LogisticController {
 	private LogisticCompanyV2 logistic;
@@ -35,7 +35,7 @@ public class LogisticController {
 	private Integer building;
 	private String zipcode;
 	private long containerID;
-	private PortAccess databasePort;
+	private PortXMLManipulation databasePort;
 	private SearchByEmail optionEmail;
 	private List<ClientData> clients;
 	private SearchByName optionName;
@@ -49,7 +49,7 @@ public class LogisticController {
 	public LogisticController(){
 		logistic = new LogisticCompanyV2();
 		validate = new ValidInput();
-		databasePort=new PortAccess();
+		databasePort=new PortXMLManipulation();
 	}
 
 

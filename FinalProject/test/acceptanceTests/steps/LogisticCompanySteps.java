@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import XMLParser.ClientAccess;
 import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -22,6 +21,7 @@ import updateClientInformation.UpdateEmail;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 import users.LogisticCompanyV2;
+import xmlParser.ClientXMLManipulation;
 
 public class LogisticCompanySteps {
 	
@@ -33,7 +33,7 @@ public class LogisticCompanySteps {
 	private ArrayList<String> firstname;
 	private ArrayList<String> lastname;
 	private ArrayList<String> middlename;
-	private ClientAccess databaseClient = new ClientAccess();
+	private ClientXMLManipulation databaseClient = new ClientXMLManipulation();
 	private LogisticCompanyV2 logistic = new LogisticCompanyV2();
 	private ClientData client;
 	/*private ClientData client;

@@ -1,4 +1,4 @@
-package XMLParser;
+package xmlParser;
 
 import objectsData.ObjectDataInterface;
 import objectsData.XMLField;
@@ -12,14 +12,14 @@ import javax.xml.stream.*;
 import javax.xml.stream.events.*;
 import javax.xml.validation.*;
 
-public abstract class DataAccess<T extends ObjectDataInterface> {
+public abstract class GeneralXMLManipulation<T extends ObjectDataInterface> {
 	protected String dataPointTagName;
 	protected String collectionTagName;
-	protected XMLIO xmlIO;
+	protected IO io;
 	
 	
-	public DataAccess(String filePath, String elementsName, String collectionsName) {
-		this.xmlIO = new XMLIO(filePath);
+	public GeneralXMLManipulation(String filePath, String elementsName, String collectionsName) {
+		this.io = new XMLIO(filePath);
 		this.dataPointTagName = elementsName;
 		this.collectionTagName = collectionsName;
 	}
@@ -39,14 +39,6 @@ public abstract class DataAccess<T extends ObjectDataInterface> {
 		addAllFieldsAsEvents(data.getXML(), events);
 		addEndElement(data, events);
 		return events;
-	}
-
-	protected int iterateUntilFound(int index, DataPointParser dataPoint, String find) {
-		XMLEvent event;
-		while(!((event = dataPoint.getEventAtIndex(index).getEvent()).isStartElement() && event.asStartElement().getName().getLocalPart().equals(find))){
-			index++;
-		}
-		return index;
 	}
 	
 	private void addStartElement(T data, List<EventParser> events) {

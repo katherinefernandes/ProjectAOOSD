@@ -3,18 +3,18 @@ package containerFilters;
 import java.util.ArrayList;
 import java.util.List;
 
-import XMLParser.ContainerAccess;
 import objectsData.ClientData;
 import objectsData.ContainerData;
+import xmlParser.ContainerXMLManipulation;
 
 public abstract class FilteringContainersForAClient implements FilterContainer {
 
 	protected ArrayList<ContainerData> containers;
-	private ContainerAccess databaseContainer;
+	private ContainerXMLManipulation databaseContainer;
 	private ArrayList<Long> activeJourneys;
 	
 	public FilteringContainersForAClient(ClientData client) {
-		 databaseContainer = new ContainerAccess();
+		 databaseContainer = new ContainerXMLManipulation();
 		 
 		this.activeJourneys=client.getActiveShipment();
 		containers= new ArrayList<ContainerData>();

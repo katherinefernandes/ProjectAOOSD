@@ -10,16 +10,16 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.Test;
 
-import XMLParser.ContainerAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 import supportingClasses.parseInput;
+import xmlParser.ContainerXMLManipulation;
 
-public class ContainerAccessTest extends IdentifiableDataAccessTest<ContainerData,ContainerAccess>{
+public class ContainerAccessTest extends IdentifiableDataAccessTest<ContainerData,ContainerXMLManipulation>{
 
 	public ContainerAccessTest() {
 		super();
-		dataAccess = new ContainerAccess();
+		dataAccess = new ContainerXMLManipulation();
 		
 		data1 = new ContainerData(20711569474800L, 102621L, 675465457L, 53354L, 755356L, 45.6F, 34.787F, "Fish n' chips", 3.5F, 108.2F, 66F,parseInput.getDate("10-04-2020"));
 		data2 = new ContainerData(6755L, 2530321L, 4533566L, 3434568L, 35668556L, 55.6F, 22.87F, "Lard", 7F, 102F, 44F, parseInput.getDate("12-04-2020"));

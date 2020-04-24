@@ -1,4 +1,4 @@
-package XMLParser;
+package xmlParser;
 
 import objectsData.IdentifiableData;
 

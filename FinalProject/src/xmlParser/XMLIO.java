@@ -1,4 +1,4 @@
-package XMLParser;
+package xmlParser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +14,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 
-public class XMLIO {
+public class XMLIO implements IO{
 	private XMLEventReader reader;
 	private XMLEventWriter writer;
 	private FileInputStream streamIn;

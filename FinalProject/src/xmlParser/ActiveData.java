@@ -1,4 +1,4 @@
-package XMLParser;
+package xmlParser;
 
 import java.util.*;
 import objectsData.ObjectDataInterface;

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import XMLParser.PortAccess;
 import containerFilters.FilteringContainersForAClient;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
@@ -13,6 +12,7 @@ import objectsData.PortData;
 import supportingClasses.UpdateHistory;
 import supportingClasses.parseInput;
 import updateClientInformation.UpdateClient;
+import xmlParser.PortXMLManipulation;
 
 public class CurrentClientV2 extends User{
 	private PortData startPort;
@@ -21,7 +21,7 @@ public class CurrentClientV2 extends User{
 	private long containerID;
 	private boolean containerRegistered;
 	//private ArrayList<Long> ActiveJourneys;
-	private PortAccess databasePort;
+	private PortXMLManipulation databasePort;
 	private UpdateHistory history;
 
 	public CurrentClientV2(long ID) {
@@ -32,7 +32,7 @@ public class CurrentClientV2 extends User{
 			// TODO Auto-generated catch block
 			throw new Error(e);
 		}
-		databasePort = new PortAccess();
+		databasePort = new PortXMLManipulation();
 		history = new UpdateHistory();
 	}
 

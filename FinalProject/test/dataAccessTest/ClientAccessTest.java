@@ -6,15 +6,15 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import XMLParser.ClientAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
+import xmlParser.ClientXMLManipulation;
 
-public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,ClientAccess>{
+public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,ClientXMLManipulation>{
 	
 	public ClientAccessTest() {
 		super();
-		dataAccess = new ClientAccess();
+		dataAccess = new ClientXMLManipulation();
 
 		ArrayList<String> firstNames1 = new ArrayList<String>();
 		firstNames1.add("Rincewind");

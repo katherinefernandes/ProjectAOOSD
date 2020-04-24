@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import XMLParser.ClientAccess;
-import XMLParser.ContainerAccess;
-import XMLParser.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -14,11 +11,14 @@ import objectsData.PortData;
 import supportingClasses.Security;
 import supportingClasses.UpdateHistory;
 import supportingClasses.parseInput;
+import xmlParser.ClientXMLManipulation;
+import xmlParser.ContainerXMLManipulation;
+import xmlParser.PortXMLManipulation;
 
 public class SimulatingData {
 
 	public static void main(String[] args) {
-		ClientAccess clientDataBase = new ClientAccess();
+		ClientXMLManipulation clientDataBase = new ClientXMLManipulation();
 		ArrayList<String> firstname = new ArrayList<String>();
 		ArrayList<String> middlename = new ArrayList<String>();
 		ArrayList<String> lastname = new ArrayList<String>();
@@ -41,8 +41,8 @@ public class SimulatingData {
 		Security IDgenerator = new Security();
 		PortData port1 = new PortData(IDgenerator.generateID(),"Pakistan","Gwadar",25.11f,62.33f);
 		PortData port2 = new PortData(IDgenerator.generateID(),"Denmark","Copenhagen",55.70f,12.59f);
-		PortAccess portDataBase = new PortAccess();
-		ContainerAccess containerDataBase = new ContainerAccess();
+		PortXMLManipulation portDataBase = new PortXMLManipulation();
+		ContainerXMLManipulation containerDataBase = new ContainerXMLManipulation();
 		ContainerData container1 = new ContainerData(IDgenerator.generateID(),port1.getID(),25.11f,62.33f);
 		ContainerData container2 = new ContainerData(IDgenerator.generateID(),port1.getID(),25.11f,62.33f);
 		ContainerData container3 = new ContainerData(IDgenerator.generateID(),port1.getID(),25.11f,62.33f);

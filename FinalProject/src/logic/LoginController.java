@@ -3,7 +3,6 @@ package logic;
 import java.awt.EventQueue;
 import java.util.*;
 
-import XMLParser.ClientAccess;
 import dataBase.*;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.Login_Window;
@@ -12,22 +11,23 @@ import graphicalInterface.newClientStuff;
 import objectsData.ClientData;
 import supportingClasses.Security;
 import users.CurrentClientV2;
+import xmlParser.ClientXMLManipulation;
 
 public class LoginController {
 	private String companyUsername = "admin";
 	private String companyPassword = "admin";
 	private ArrayList<String> clientIDs;
 	private Login_Window window;
-	private ClientAccess clientAccess;
+	private ClientXMLManipulation clientXMLManipulation;
 
 	public LoginController() {
-		clientAccess = new ClientAccess();
+		clientXMLManipulation = new ClientXMLManipulation();
 		window = new Login_Window(this);
 		window.openFrame();
 	}
 	
 	public boolean validClientInfo(String clientID) {
-		if (clientAccess.IDExists(clientID)) {
+		if (clientXMLManipulation.IDExists(clientID)) {
 			System.out.println("textfield in window: " +  clientID);
 			
 			return true;
