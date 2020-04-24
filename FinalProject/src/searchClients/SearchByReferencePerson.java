@@ -37,8 +37,7 @@ public class SearchByReferencePerson implements SearchClients{
 		};
 		Set<ClientData> hSet = new HashSet<ClientData>(); 
         for (ClientData x : firstClients ) {
-        	
-        	if(x.getPerson().getMiddleName().size()==middleName.length()&&x.getPerson().getLastName().contains(lastName)) {
+        	if(x.getPerson().getMiddleName().contains(middleName)&&x.getPerson().getLastName().contains(lastName)) {
         		hSet.add(x);
         	}
         }

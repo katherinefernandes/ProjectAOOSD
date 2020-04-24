@@ -16,11 +16,13 @@ public class parseInput {
 	}*/ //mamuna-> I added this to test it out in console...
 	
 	
-	public static String getDate(String myDateObj) {
+	public static String getDate(String myDateObj) { //
 		String [] date=myDateObj.split("-");
 		LocalDate myDateObj2 = LocalDate.of(Integer.valueOf(date[2]),Integer.valueOf(date[1]),Integer.valueOf(date[0]));
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
 	    String formattedDate = myDateObj2.format(myFormatObj);  
 	    return formattedDate;
-	}
+	}// this needs to be deleted.. instead have a validation for the date
+	
+
 }
