@@ -30,12 +30,8 @@ public class CurrentClientV2 extends User{
 		databasePort = new PortAccess();
 		history = new UpdateHistory();
 	}
-	
-	
-
 
 	public boolean updateClientInformation(UpdateClient Update) {
-		// TODO Auto-generated method stub
 		Update.updateInformation(client);
 		return Update.updated();
 	}

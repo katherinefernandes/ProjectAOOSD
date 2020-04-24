@@ -11,8 +11,8 @@ import objectsData.ContainerData;
 import objectsData.HistoryData;
 import supportingClasses.Security;
 
-public  class User implements View{
-	
+public class User implements View{
+	//TODO what's the point of this class? Why are these fields together in a class with only getters and setters
 	protected ClientData client;
 	protected ContainerData container;
 	protected ClientAccess databaseClient;
@@ -22,16 +22,21 @@ public  class User implements View{
 	protected boolean setContainer;
 	
 	public User() {
-		  databaseClient = new ClientAccess();
-		 databaseContainer = new ContainerAccess();
-		 this.setClient=false;
-		 ssecurity = new Security();
+		databaseClient = new ClientAccess();
+		databaseContainer = new ContainerAccess();
+		this.setClient=false;
+		ssecurity = new Security();
 		this.setContainer=false;
 	}
 	
 	@Override
 	public ClientData viewClient(){
 		return this.client;
+	}
+	
+	@Override
+	public ContainerData viewContainer() {
+		return this.container;
 	}
 	
 	
@@ -41,7 +46,6 @@ public  class User implements View{
 			setClient = true;
 		//	display=true;
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println("client not found  "+clientID);
 			throw new Error(e);
 		}
@@ -61,12 +65,6 @@ public  class User implements View{
 	}
 	public boolean getSetContainer() {
 		return this.setContainer;
-	}
-
-	@Override
-	public ContainerData viewContainer() {
-		// TODO Auto-generated method stub
-		return this.container;
 	}
 	
 	

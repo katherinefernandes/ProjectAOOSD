@@ -15,7 +15,7 @@ import javax.xml.validation.*;
 public abstract class DataAccess<T extends ObjectDataInterface> {
 	protected String dataPointTagName;
 	protected String collectionTagName;
-	protected XMLIO xmlIO;
+	protected XMLIO xmlIO; //TODO abstract class IO
 	
 	
 	public DataAccess(String filePath, String elementsName, String collectionsName) {
