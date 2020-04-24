@@ -3,13 +3,13 @@ package logic;
 import java.awt.EventQueue;
 import java.util.*;
 
+import applications.ClientApplication;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.Login_Window;
 import graphicalInterface.LogisticsMenu;
 import graphicalInterface.newClientStuff;
 import objectsData.ClientData;
 import supportingClasses.Security;
-import users.CurrentClientV2;
 import xmlParser.ClientXMLManipulation;
 
 public class LoginController {

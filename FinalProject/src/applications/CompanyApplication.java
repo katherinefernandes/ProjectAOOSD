@@ -1,4 +1,4 @@
-package users;
+package applications;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import objectsData.ClientData;
 import searchClients.SearchClients;
 import updateContainer.UpdateContainer;
 
-public class LogisticCompanyV2 extends User{
+public class CompanyApplication extends Application{
 	private boolean addNewClient;
-	public LogisticCompanyV2() {
+	public CompanyApplication() {
 		super();
 		
 	}

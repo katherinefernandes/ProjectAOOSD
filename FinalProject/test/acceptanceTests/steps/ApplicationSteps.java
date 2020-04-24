@@ -8,6 +8,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import applications.ClientApplication;
+import applications.CompanyApplication;
+import applications.Application;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
@@ -33,9 +36,6 @@ import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
-import users.CurrentClientV2;
-import users.LogisticCompanyV2;
-import users.User;
 import xmlParser.ClientXMLManipulation;
 import xmlParser.ContainerXMLManipulation;
 import xmlParser.PortXMLManipulation;
@@ -52,9 +52,9 @@ public class ApplicationSteps {
 	private ArrayList<String> lastname;
 	private ArrayList<String> middlename;
 	private ClientXMLManipulation databaseClient = new ClientXMLManipulation();
-	private LogisticCompanyV2 logistic = new LogisticCompanyV2();
+	private CompanyApplication logistic = new CompanyApplication();
 	private ClientData client;
-	private CurrentClientV2 clientApplication;
+	private ClientApplication clientApplication;
 	private long journeyID;
 	private long startPortID;
 	private long destinationPortID;
@@ -83,7 +83,7 @@ public class ApplicationSteps {
 	private SearchByPhone optionPhone;
 	private long containerID;
 	private ContainerData container;
-	private User user;
+	private Application user;
 	private String errorMessage;
 	private String portName;
 	private long portID;
@@ -172,7 +172,7 @@ public class ApplicationSteps {
 	@Given("that the client with the ID {long} is logged into the clientApplication")
 	public void thatTheClientWithTheIDIsLoggedIntoTheClientApplication(long clientID) {
 
-		clientApplication = new CurrentClientV2(clientID);
+		clientApplication = new ClientApplication(clientID);
 		assertTrue(clientApplication.getSetClient());
 	}
 
@@ -217,7 +217,7 @@ public class ApplicationSteps {
 		client = new ClientData(this.clientID,"company",92,23789,"email@eh.com",parseInput.parsingNames("muna"),parseInput.parsingNames(""),parseInput.parsingNames("azam"),"g11/2","Islamabad",59,"2620");
 		databaseClient.newEntry(client);
 		databaseClient.flushActiveData();
-		clientApplication =  new CurrentClientV2(clientID);
+		clientApplication =  new ClientApplication(clientID);
 	}
 
 	@Given("the client has a container with the journey ID {long} registered for a journey")
@@ -273,7 +273,7 @@ public class ApplicationSteps {
 	@When("the client asks for the information of the container with the journey ID {long}")
 	public void theClientAsksForTheInformationOfTheContainerWithTheJourneyID(long journeyID) {
 
-		clientApplication = new CurrentClientV2(clientID);
+		clientApplication = new ClientApplication(clientID);
 		this.journeyID=journeyID;
 	    FilteringContainersForAClient filter = new FilterByJourneyID(client,journeyID);
 	    Containers = clientApplication.getFilteredContainersOnAJourney(filter);
@@ -521,7 +521,7 @@ public class ApplicationSteps {
 
 	@Given("the start port is given {string}")
 	public void theStartPortIsGiven(String portname) {
-		clientApplication = new CurrentClientV2(897841664590l);
+		clientApplication = new ClientApplication(897841664590l);
 		startPortID = clientApplication.getPortID(portname); // need to move the getPortID to a supporting class class
 		System.out.println("Startport ID: "+startPortID);
 		assertNotEquals(startPortID,1l);
@@ -703,7 +703,7 @@ public class ApplicationSteps {
 	public void thatTheClientIDIsEntered(long clientID) {
 
 		this.clientID = clientID;
-		user = new User();
+		user = new Application();
 	}
 
 	@When("the database is asked to return the client information")
@@ -728,7 +728,7 @@ public class ApplicationSteps {
 	public void thatTheContainerIDIsEntered(long containerID) {
 
 		this.containerID = containerID;
-		user = new User();
+		user = new Application();
 	}
 
 	@When("the database is asked to return the container information")
@@ -746,7 +746,7 @@ public class ApplicationSteps {
 	public void thatThePortNameIsEntered(String portName) {
 
 	    this.portName=portName;
-	    clientApplication = new CurrentClientV2(897841664590l);//will be deleted when the getportID is moved
+	    clientApplication = new ClientApplication(897841664590l);//will be deleted when the getportID is moved
 	}
 
 	@When("the database is asked to return the portID")
@@ -764,7 +764,7 @@ public class ApplicationSteps {
 	public void thatThePortIDIsEntered(long portID) {
 
 		this.portID=portID;
-		clientApplication = new CurrentClientV2(897841664590l);//will be deleted when the getportID is moved
+		clientApplication = new ClientApplication(897841664590l);//will be deleted when the getportID is moved
 	}
 
 	@When("the database is asked to return the port data")

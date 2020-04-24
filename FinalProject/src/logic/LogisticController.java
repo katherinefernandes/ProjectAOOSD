@@ -4,6 +4,7 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import applications.CompanyApplication;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -17,11 +18,10 @@ import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
-import users.LogisticCompanyV2;
 import xmlParser.PortXMLManipulation;
 
 public class LogisticController {
-	private LogisticCompanyV2 logistic;
+	private CompanyApplication logistic;
 	private String companyName;
 	private String email;
 	private ValidInput validate;
@@ -47,7 +47,7 @@ public class LogisticController {
 	private SearchByReferencePerson optionRefPerson;
 	
 	public LogisticController(){
-		logistic = new LogisticCompanyV2();
+		logistic = new CompanyApplication();
 		validate = new ValidInput();
 		databasePort=new PortXMLManipulation();
 	}

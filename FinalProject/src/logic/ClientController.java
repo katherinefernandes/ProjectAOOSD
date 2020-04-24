@@ -7,6 +7,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import applications.ClientApplication;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
@@ -21,12 +22,11 @@ import supportingClasses.parseInput;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
-import users.CurrentClientV2;
 import xmlParser.PortXMLManipulation;
 
 public class ClientController {
 	private long clientID;
-	private CurrentClientV2 currentClient;
+	private ClientApplication currentClient;
 	private ValidInput validate;
 	private newClientStuff clientmenu;
 	private ArrayList<String> firstNameList;
@@ -42,7 +42,7 @@ public class ClientController {
 	public ClientController(String clientID){
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
-		currentClient = new CurrentClientV2(this.clientID);
+		currentClient = new ClientApplication(this.clientID);
 		databasePort = new PortXMLManipulation();
 		clientmenu = new newClientStuff(this);
 		clientmenu.frame.setVisible(true);
@@ -59,7 +59,7 @@ public class ClientController {
 			//clientmenu.displaySuccess();
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Update success, trying to display message");
-				currentClient = new CurrentClientV2(this.clientID);
+				currentClient = new ClientApplication(this.clientID);
 				checkMessage = true;
 			} else {
 				System.out.println("Some thing went wrong in saving to the databaseClient");
@@ -112,7 +112,7 @@ public class ClientController {
 			System.out.println("Updating information");
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Everything went alright");
-				currentClient = new CurrentClientV2(this.clientID);
+				currentClient = new ClientApplication(this.clientID);
 				return true;
 			}else {
 				System.out.println("Something went wrong with the database update");
@@ -137,7 +137,7 @@ public class ClientController {
 			UpdateEmail update = new UpdateEmail(email);
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("The email has been successfully updated");
-				currentClient = new CurrentClientV2(this.clientID);
+				currentClient = new ClientApplication(this.clientID);
 				return true;
 			} else {
 				System.out.println("Something went wrong with the database");
@@ -450,7 +450,7 @@ public class ClientController {
 		System.out.println("Going to try registering");
 		currentClient.registerContainer(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, arriveby);
 		boolean result = currentClient.getContainerRegistered();
-		currentClient = new CurrentClientV2(this.clientID);
+		currentClient = new ClientApplication(this.clientID);
 		return result;
 	}
 	
