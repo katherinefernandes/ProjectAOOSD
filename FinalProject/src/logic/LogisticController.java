@@ -6,6 +6,7 @@ import java.util.List;
 
 import applications.CompanyApplication;
 import exceptions.ElementNotFoundException;
+import graphicalInterface.LogisticsMenu;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
@@ -45,29 +46,32 @@ public class LogisticController {
 	private ArrayList<String> lastN;
 	private ReferenceName searchRefPerson;
 	private SearchByReferencePerson optionRefPerson;
+	private LogisticsMenu logisticMenu;
 	
 	public LogisticController(){
 		logistic = new CompanyApplication();
 		validate = new ValidInput();
 		databasePort=new PortXMLManipulation();
+		logisticMenu = new LogisticsMenu(this);
+		logisticMenu.frame.setVisible(true);
 	}
 
 
-	public boolean setCompanyName(String text) {
+	private boolean setCompanyName(String text) {
 		// TODO Auto-generated method stub
 		this.companyName=text;
 		return true;
 	}
 
 
-	public boolean setEmail(String email) {
+	private boolean setEmail(String email) {
 		// TODO Auto-generated method stub
 		this.email = email;
 		return validate.validateEmail(email);
 	}
 
 
-	public boolean setCountryCode(String countryCode) {
+	private boolean setCountryCode(String countryCode) {
 		// TODO Auto-generated method stub
 		try {
 			cc = Integer.valueOf(countryCode);
@@ -80,7 +84,7 @@ public class LogisticController {
 	}
 
 
-	public boolean setPhoneNumber(String phone) {
+	private boolean setPhoneNumber(String phone) {
 			try {
 				phonenumber = Long.valueOf(phone);
 				System.out.println("string is correct");
@@ -92,7 +96,7 @@ public class LogisticController {
 	}
 
 
-	public boolean setFirstName(String name1) {
+	private boolean setFirstName(String name1) {
 		// TODO Auto-generated method stub
 		
 		firstName = parseInput.parsingNames(name1);
@@ -100,35 +104,35 @@ public class LogisticController {
 	}
 
 
-	public boolean setMiddleName(String name2) {
+	private boolean setMiddleName(String name2) {
 		// TODO Auto-generated method stub
 		middleName = parseInput.parsingNames(name2);
 		return validate.validateName(name2);
 	}
 
 
-	public boolean setLastName(String name) {
+	private boolean setLastName(String name) {
 		// TODO Auto-generated method stub
 		lastName = parseInput.parsingNames(name);
 		return validate.validateName(name);
 	}
 
 
-	public boolean setStreetName(String street) {
+	private boolean setStreetName(String street) {
 		// TODO Auto-generated method stub
 		this.street=street;
 		return true;
 	}
 
 
-	public boolean setCity(String text) {
+	private boolean setCity(String text) {
 		// TODO Auto-generated method stub
 		this.city = text;
 		return validate.validateName(text);
 	}
 
 
-	public boolean setBuilding(String text) {
+	private boolean setBuilding(String text) {
 		// TODO Auto-generated method stub
 		try {
 			this.building = Integer.valueOf(text);
@@ -141,14 +145,14 @@ public class LogisticController {
 	}
 
 
-	public boolean setPostcode(String postcode) {
+	private boolean setPostcode(String postcode) {
 		// TODO Auto-generated method stub
 		this.zipcode= postcode;
 		return validate.validatePostCode(postcode);
 	}
 
 
-	public boolean addClient() {
+	private boolean addClient() {
 		// TODO Auto-generated method stub
 		logistic.setAddNewClient();
 		logistic.addClient(email, companyName, cc, phonenumber, firstName, middleName, lastName, street, city, zipcode, building);
@@ -156,7 +160,7 @@ public class LogisticController {
 	}
 
 
-	public boolean setContainerForUpdate(String text) {
+	private boolean setContainerForUpdate(String text) {
 		// TODO Auto-generated method stub
 		try {
 			containerID= Long.valueOf(text);
@@ -244,7 +248,7 @@ public class LogisticController {
 	}
 
 
-	public boolean updatePosition(String longitude, String latitude) {
+	private boolean updatePosition(String longitude, String latitude) {
 		// TODO Auto-generated method stub
 		float longit;
 		float lati;
@@ -263,7 +267,7 @@ public class LogisticController {
 				return false;
 			}
 		if (validate.validateLocation(lati)&&validate.validateLocation(longit)) {
-			UpdateLocation update = new UpdateLocation(lati, longit);
+			UpdateLocation update = new UpdateLocation( longit,lati);
 			return logistic.updateContainerInformation(update);
 		}
 		return false;
@@ -361,6 +365,177 @@ public class LogisticController {
 			result = result +" "+ string.get(i);
 		}
 		return result;
+	}
+
+
+	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,
+			String firstname, String phone, String countrycode, String email,String companyname) {
+		
+		boolean	checkMessage = setCompanyName(companyname);
+		if(checkMessage) {
+			checkMessage = setEmail(email);
+		}else {
+			System.out.println("Company name has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage = setCountryCode(countrycode);
+		}else {
+			System.out.println("email has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage = setPhoneNumber(phone);
+		}else {
+			System.out.println("Countrycode has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if (checkMessage) {
+			checkMessage =setFirstName(firstname);
+		}else {
+			System.out.println("phone has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if (checkMessage) {
+			checkMessage =setMiddleName(middlename);
+		}else {
+			System.out.println("firstname has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if (checkMessage) {
+			checkMessage = setLastName(lastname);
+		}else {
+			System.out.println("middlename has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage = setStreetName(street);
+		}else {
+			System.out.println("lastname has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage = setCity(city);
+		}else {
+			System.out.println("street has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage =setBuilding(building);
+		}else {
+			System.out.println("city has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage =setPostcode(postcode);
+		}else {
+			System.out.println("building has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage =addClient();
+		}else {
+			System.out.println("postcode has error");
+			logisticMenu.errorMessageForAddClient();
+			return;
+		}
+		if(checkMessage) {
+			logisticMenu.successFieldForAddClient();
+		}else {
+			logisticMenu.errorMessageForAddClient();
+		}
+		
+	}
+
+
+	public void updateContainerPosition(String containerID, String logitude, String latitude) {
+
+		boolean	checkMessage = setContainerForUpdate(containerID);
+		if (checkMessage){
+			checkMessage = updatePosition(logitude,latitude);
+		}else {
+			System.out.println("Container ID is invalid, try again");
+			logisticMenu.errorPositionUpdate();
+			return;
+		}
+		if(checkMessage) {
+			logisticMenu.successPositionUpdate();
+			logisticMenu.setViewContainerText();
+			logisticMenu.viewContainerPanelTrue();
+		}else {
+			System.out.println("Something went wrong in update..");
+			logisticMenu.errorPositionUpdate();
+		}
+	}
+
+
+	public void updateContainerStatus(String containerID, String press, String humid, String temp) {
+		
+		boolean	checkMessage = setContainerForUpdate(containerID);
+		
+		if (checkMessage){
+			checkMessage =updateStatus(press,humid,temp);
+		}else {
+			System.out.println("Invalid container ID");
+			logisticMenu.errorStatusUpdate();
+			return;
+		}
+		if(checkMessage) {
+			logisticMenu.successStatusUpdate();
+			logisticMenu.setViewContainerText();
+			logisticMenu.viewContainerPanelTrue();
+			return;
+		}else {
+			System.out.println("Something went wrong in status update");
+			logisticMenu.errorStatusUpdate();
+			return;
+		}
+		
+	}
+
+
+	public void searchClient(String email, String company, String phone, String firstname, String middle, String last) {
+	
+		boolean checkMessage=false;
+		if (!email.isEmpty()) {
+			checkMessage = getClientByEmail(email);
+			
+		} 
+		if(!checkMessage&&!company.isEmpty()) {
+			checkMessage = getClientByCompanyName(company);
+			
+		}
+		if(!checkMessage&&!phone.isEmpty()) {
+			checkMessage =getClientByPhone(phone);
+		}
+		if(!checkMessage&&!(firstname.isEmpty()&&last.isEmpty())) {
+			if(middle.isEmpty()) {
+				checkMessage = getClientByReferencePerson(firstname,"",last);
+			}else {
+				checkMessage = getClientByReferencePerson(firstname,middle,last);
+			}
+		}
+		
+		if(checkMessage) {
+			System.out.println("Success search");
+			logisticMenu.successSearch();
+			logisticMenu.setFieldsClientData();
+			logisticMenu.viewClient();
+			return;
+		}else {
+			System.out.println("Not success");
+			logisticMenu.errorSearch();
+		}
 	}
 	
 }

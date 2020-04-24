@@ -1,9 +1,6 @@
 package applications;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import containerFilters.FilteringContainersForAClient;
 import exceptions.ElementNotFoundException;
@@ -20,7 +17,6 @@ public class ClientApplication extends Application{
 	private boolean foundContainer;
 	private long containerID;
 	private boolean containerRegistered;
-	//private ArrayList<Long> ActiveJourneys;
 	private PortXMLManipulation databasePort;
 	private UpdateHistory history;
 
@@ -29,13 +25,14 @@ public class ClientApplication extends Application{
 		try {
 			this.getClient(ID);
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
 			throw new Error(e);
 		}
 		databasePort = new PortXMLManipulation();
 		history = new UpdateHistory();
 	}
 
+	
+	
 	public boolean updateClientInformation(UpdateClient update) {
 		update.updateInformation(client);
 		return update.updated();
@@ -43,19 +40,9 @@ public class ClientApplication extends Application{
 
 
 
-	public long getPortID(String portname) {
-		List<PortData> listOfPorts = databasePort.searchEntries(portname);
-		if (listOfPorts.size()>0) {
-			return listOfPorts.get(0).getID();
-		} 
-		else {
-			return 1l;
-		}
-		
-	}
+	
 
 	public void getAContainer(long startPortID) {
-		// TODO Auto-generated method stub
 		foundContainer = false;
 		try {
 			startPort = databasePort.getEntry(startPortID);
@@ -70,7 +57,7 @@ public class ClientApplication extends Application{
 				createANewContainer(startPortID);
 			}
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			throw new Error(e);
 		}
 		
@@ -81,9 +68,9 @@ public class ClientApplication extends Application{
 	}
 
 	
-
+	//this method could be moved to anotherclass
 	public boolean updateDestinationPort(long destinationPortID) {
-		// TODO Auto-generated method stub
+
 		try {
 			destinationPort = databasePort.getEntry(destinationPortID);
 			destinationPort.addArrivingContainer(containerID);
@@ -91,15 +78,15 @@ public class ClientApplication extends Application{
 			databasePort.flushActiveData();
 			return true;
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			return false;
 		}
 		
 	}
 
-	public void registerContainer(long startPortID, long destinationPortID, String cargo, float temperature,
+	public void registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy) {
-		// TODO Auto-generated method stub
+
 		containerRegistered=false;
 		container.setClientID(client.getID());
 		container.setStartPortID(startPortID);
@@ -118,14 +105,14 @@ public class ClientApplication extends Application{
 	}
 
 	public boolean getContainerRegistered() {
-		// TODO Auto-generated method stub
+
 		return this.containerRegistered;
 	}
 
 	
 
 	private void createANewContainer(long startPortID)  {
-		// TODO Auto-generated method stub
+
 		container = new ContainerData(this.ssecurity.generateID(),startPortID,startPort.getPosition().getLatitude(),startPort.getPosition().getlongitude());
 		containerID = container.getID();
 		startPort.addStationedContainer(containerID);
@@ -136,7 +123,7 @@ public class ClientApplication extends Application{
 		getAContainer(startPortID);
 	}
 
-	public ArrayList<ContainerData> getFilteredContainersOnAJourney(FilteringContainersForAClient filter){
+	public ArrayList<ContainerData> filterContainersOnAJourney(FilteringContainersForAClient filter){
 		return filter.filterContainers();
 	}
 	

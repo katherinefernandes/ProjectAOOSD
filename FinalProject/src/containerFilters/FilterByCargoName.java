@@ -18,7 +18,7 @@ public class FilterByCargoName extends FilteringContainersForAClient{
 
 	@Override
 	public ArrayList<ContainerData> filterContainers() {
-		// TODO Auto-generated method stub
+		
 		for (int i=0;i<containers.size();i++) {
 			if (!containers.get(i).getCargo().equals(cargo)) {
 				containers.remove(i);
@@ -26,5 +26,5 @@ public class FilterByCargoName extends FilteringContainersForAClient{
 		}
 		return containers;
 	}
-
+	
 }

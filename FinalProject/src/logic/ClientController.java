@@ -1,10 +1,7 @@
 package logic;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import applications.ClientApplication;
@@ -13,10 +10,11 @@ import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.newClientStuff;
-//import graphicalInterface.newClientStuff;
+
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
+import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import updateClientInformation.UpdateEmail;
@@ -38,10 +36,12 @@ public class ClientController {
 	private PortXMLManipulation databasePort;
 	private long startPortID;
 	private long destinationPortID;
-	
+	private ExtractingPortID extractingPortID;
+
 	public ClientController(String clientID){
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
+		extractingPortID = new ExtractingPortID();
 		currentClient = new ClientApplication(this.clientID);
 		databasePort = new PortXMLManipulation();
 		clientmenu = new newClientStuff(this);
@@ -50,19 +50,18 @@ public class ClientController {
 	public void saveReferencePerson(String firstName, String middleName, String lastName) {
 		System.out.println("inside the method savereferencePerson");
 		boolean checkMessage = false;
-		if(checkNameValidity(firstName) && checkNameValidity(middleName) && checkNameValidity(lastName)){
+		if(checkNameValidity(firstName) && validate.validateName(middleName) && checkNameValidity(lastName)){
 			firstNameList = parseInput.parsingNames(firstName);
 			middleNameList = parseInput.parsingNames(middleName);
 			lastNameList = parseInput.parsingNames(lastName);
 			UpdateReferencePerson update = new UpdateReferencePerson(firstNameList,middleNameList,lastNameList);
 			System.out.println("Going to try to update information");
-			//clientmenu.displaySuccess();
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Update success, trying to display message");
 				currentClient = new ClientApplication(this.clientID);
 				checkMessage = true;
 			} else {
-				System.out.println("Some thing went wrong in saving to the databaseClient");
+				System.out.println("Some thing went wrong, try again");
 				checkMessage = false;
 			}
 		}
@@ -105,7 +104,8 @@ public class ClientController {
 	}
 	
 	
-	public boolean savePhoneNumber(String countryCode,String phone) {
+	public void savePhoneNumber(String countryCode,String phone) {
+		boolean checkMessage =false;
 		if(checkPhoneValidity(phone)&&checkCountryCodeValidity(countryCode)) {
 			System.out.println("The phone number and country code were valid, now going to update information");
 			UpdatePhoneNumber update = new UpdatePhoneNumber(Integer.valueOf(countryCode),Long.valueOf(phone));
@@ -113,16 +113,21 @@ public class ClientController {
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Everything went alright");
 				currentClient = new ClientApplication(this.clientID);
-				return true;
+				checkMessage = true;
 			}else {
 				System.out.println("Something went wrong with the database update");
-				return false;
+				checkMessage = false;
 			}
 			
 		}
 		else {
 			 System.out.println("The phone number or the countrycode type is not valid");
-			 return false;
+			 checkMessage =  false;
+		}
+		if (checkMessage) {
+			clientmenu.successFieldForPhone();
+		}else {
+			clientmenu.errorMessageForPhone();
 		}
 		
 	}
@@ -131,23 +136,29 @@ public class ClientController {
 		return validate.validateEmail(email);
 	}
 	
-	public boolean saveEmail(String email) {
+	public void saveEmail(String email) {
+		boolean checkMessage =false;
 		if(checkEmailValidity(email)) {
 			System.out.println("The email type is valid, now going to try setting it");
 			UpdateEmail update = new UpdateEmail(email);
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("The email has been successfully updated");
 				currentClient = new ClientApplication(this.clientID);
-				return true;
+				checkMessage = true;
 			} else {
 				System.out.println("Something went wrong with the database");
-				return false;
+				checkMessage = false;
 			}
 			
 		}
 		else {
 			System.out.println("The email type is not valid");
-			return false;
+			checkMessage = false;
+		}
+		if (checkMessage) {
+			clientmenu.successFieldForEmail();
+		}else {
+			clientmenu.errorMessageForEmail();
 		}
 		
 	}
@@ -258,7 +269,7 @@ public class ClientController {
 		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
-		    container= currentClient.getFilteredContainersOnAJourney(filter);
+		    container= currentClient.filterContainersOnAJourney(filter);
 			System.out.println("Container found, now the data can be read");
 			return true;
 		}
@@ -275,7 +286,7 @@ public class ClientController {
 	public boolean getContainerByCargo(String cargo) {
 		// TODO Auto-generated method stub
 		FilterByCargoName filter = new FilterByCargoName(currentClient.viewClient(),cargo);
-		container = currentClient.getFilteredContainersOnAJourney(filter);
+		container = currentClient.filterContainersOnAJourney(filter);
 		if(container.size()<=0) {
 			System.out.println("There is no container containing this cargo"+cargo+ "for this client");
 			return false;
@@ -285,13 +296,13 @@ public class ClientController {
 	}
 	public boolean getContainerByPortName(String portname) {
 		// TODO Auto-generated method stub
-		portID = currentClient.getPortID(portname);
+		portID = extractingPortID.getPortID(portname);
 		if (portID==1l) {
 			System.out.println("The portname is not present in the database");
 			return false;
 		}else {
 			FilterByPortName filter = new FilterByPortName(currentClient.viewClient(),portID);
-			container = currentClient.getFilteredContainersOnAJourney(filter);
+			container = currentClient.filterContainersOnAJourney(filter);
 			if (container.size()>0) {
 				System.out.println("some containers found at the port name given");
 				return true;
@@ -385,9 +396,9 @@ public class ClientController {
 		
 		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
 	}
-	public boolean checkStartPortName(String portname) {
-		// TODO Auto-generated method stub
-		startPortID = currentClient.getPortID(portname);
+	private boolean checkStartPortName(String portname) {
+
+		startPortID = extractingPortID.getPortID(portname);
 		System.out.println("Checking if the port name exists");
 	   if (startPortID==1l) {
 		   System.out.println("Port name doesnot exist");
@@ -403,9 +414,9 @@ public class ClientController {
 	    System.out.println("Container not found nor set, something wrong with currentclient method");
 		return false;
 	}
-	public boolean checkDestinationPortName(String portname) {
-		// TODO Auto-generated method stub
-		destinationPortID = currentClient.getPortID(portname);
+	private boolean checkDestinationPortName(String portname) {
+
+		destinationPortID = extractingPortID.getPortID(portname);
 		if(destinationPortID==1l) {
 			System.out.println("Destination port does not exit");
 			return false;
@@ -416,8 +427,8 @@ public class ClientController {
 		
 		return true;
 	}
-	public boolean checkFloat(String floatnumber) {
-		// TODO Auto-generated method stub
+	private boolean checkFloat(String floatnumber) {
+
 		try {
 			Float.valueOf(floatnumber);
 			System.out.println("number value is correct");
@@ -427,10 +438,8 @@ public class ClientController {
 			return false;
 		}
 	}
-	public boolean setArriveByString(String date) {
-		// TODO Auto-generated method stub
-		// we need to fix the parse date ... 
-		//we need to set the arriveby in here as welll and then replace from line 426
+	private boolean setArriveByString(String date) {
+
 		System.out.println("Checking arrive by");
 		try {
 			parseInput.getDate(date);
@@ -442,16 +451,93 @@ public class ClientController {
 		}
 		return false;
 	}
-	public boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
-		// TODO Auto-generated method stub
+	private boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
+
 		float temperature = Float.valueOf(temp);
 		float humidity2 = Float.valueOf(humidity);
 		float atmosphere = Float.valueOf(atm);
 		System.out.println("Going to try registering");
-		currentClient.registerContainer(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, arriveby);
+		currentClient.registerContainerForAJourney(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, arriveby);
 		boolean result = currentClient.getContainerRegistered();
 		currentClient = new ClientApplication(this.clientID);
 		return result;
+	}
+	public void saveJourney(String startPortName, String destinationPortName, String cargo, String atm, String temp, String humidity,
+			String arriveby) {
+		boolean checkMessage = checkStartPortName( startPortName);
+		if (checkMessage) {
+			checkMessage = checkDestinationPortName(destinationPortName);
+		}else  {
+			System.out.println("There is no startPortName");
+			clientmenu.errorMessageForAddJourney();
+			return;
+		}
+		if(!checkMessage) {
+			System.out.println("Destination port not valid");
+			clientmenu.errorMessageForAddJourney();
+			return;
+		}
+		
+		checkMessage = validate.validateName(cargo);
+		
+		if(checkMessage) {
+			checkMessage =checkFloat(atm);
+			checkMessage = checkFloat(temp);
+			checkMessage = checkFloat(humidity);
+		}else {
+			System.out.println("Cargo is not valid");
+			clientmenu.errorMessageForAddJourney();
+			return;
+		}
+		if(checkMessage) {
+			checkMessage =setArriveByString(arriveby);
+		}else {
+			System.out.println("One of the internal status things is invalid");
+			clientmenu.errorMessageForAddJourney();
+			return;
+		}
+		if(checkMessage) {
+			System.out.println("Everything is valid, now trying to register");
+			checkMessage = registerJourney(cargo,  atm, temp,  humidity, arriveby);
+		}else {
+			System.out.println("Arriveby is not valid");
+			clientmenu.errorMessageForAddJourney();
+			return;
+		}
+		if(checkMessage) {
+			clientmenu.successFieldForAddJourney();
+			clientmenu.updateActiveShipments();
+		}else {
+			System.out.println("something went wrong when registering the journey");
+			clientmenu.errorMessageForAddJourney();
+		}
+		
+	}
+	public void searchContainer(String journeyID, String cargo, String portName) {
+		boolean checkCriteria = false;
+		boolean checkMessage = false;
+		if(!journeyID.isEmpty()) {
+			checkMessage = getContainerByJourneyID(journeyID);
+			checkCriteria =true;
+		}
+		if(!checkMessage&&!cargo.isEmpty()) {
+			checkMessage = getContainerByCargo(cargo);
+		}
+		if(!checkMessage&&!portName.isEmpty()) {
+			checkMessage = getContainerByPortName(portName);
+		}
+		if(checkMessage) {
+			clientmenu.setFieldsContainerData();
+			if(checkCriteria) {
+				clientmenu.viewOneContainerPanel();
+			}else {
+				clientmenu.viewMultipleContainerPanel();
+			}
+		}else {
+			System.out.println("no container found by the above criterias");
+			clientmenu.containerSearchError();
+		}
+		
 	}
 	
 }

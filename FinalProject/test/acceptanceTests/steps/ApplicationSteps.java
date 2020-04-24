@@ -28,6 +28,7 @@ import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
+import supportingClasses.ExtractingPortID;
 import supportingClasses.Security;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
@@ -42,6 +43,7 @@ import xmlParser.PortXMLManipulation;
 
 public class ApplicationSteps {
 	
+	private ExtractingPortID extractingPortID = new ExtractingPortID();
 	private ValidInput validate =new ValidInput();
 	private long clientID;
 	private String companyname;
@@ -101,9 +103,9 @@ public class ApplicationSteps {
 		portDataBase.newEntry(port3);
 		portDataBase.flushActiveData();
 		//need to delete the things below when I move the getPortID to a class -mamuna
-		ClientData client1 = new ClientData(897841664590l,"random",45,23879091l,"random@random.com",parseInput.parsingNames("somename"),parseInput.parsingNames("somename"),parseInput.parsingNames("somename"),"g-11/2","islamabad",58,"1400");
-		databaseClient.newEntry(client1);
-		databaseClient.flushActiveData();
+	//	ClientData client1 = new ClientData(897841664590l,"random",45,23879091l,"random@random.com",parseInput.parsingNames("somename"),parseInput.parsingNames("somename"),parseInput.parsingNames("somename"),"g-11/2","islamabad",58,"1400");
+	//	databaseClient.newEntry(client1);
+	//	databaseClient.flushActiveData();
 	}
 
 	
@@ -232,13 +234,13 @@ public class ApplicationSteps {
 	@Given("the start port of the container was {string}")
 	public void theStartPortOfTheContainerWas(String portname) {
 
-		this.startPortID = clientApplication.getPortID(portname);
+		this.startPortID = extractingPortID.getPortID(portname);
 	}
 
 	@Given("the destination port is {string}")
 	public void theDestinationPortIs(String portname) {
 
-		this.destinationPortID = clientApplication.getPortID(portname);
+		this.destinationPortID = extractingPortID.getPortID(portname);
 	}
 
 	@Given("the current location of the container is {float} latitude and {float} longitude")
@@ -276,7 +278,7 @@ public class ApplicationSteps {
 		clientApplication = new ClientApplication(clientID);
 		this.journeyID=journeyID;
 	    FilteringContainersForAClient filter = new FilterByJourneyID(client,journeyID);
-	    Containers = clientApplication.getFilteredContainersOnAJourney(filter);
+	    Containers = clientApplication.filterContainersOnAJourney(filter);
 	    assertFalse(Containers.isEmpty());
 	    System.out.println(Containers.get(0).getJourneyID()+"  "+Containers.get(0).getStartPortID());
 
@@ -304,7 +306,7 @@ public class ApplicationSteps {
 	
 	@When("the client provides the port name {string}")
 	public void theClientProvidesThePortName(String portname) {
-		startPortID = clientApplication.getPortID(portname);
+		startPortID = extractingPortID.getPortID(portname);
 		System.out.println("Startport ID: "+startPortID);
 		assertNotEquals(startPortID,1l);
 	}
@@ -313,7 +315,7 @@ public class ApplicationSteps {
 	public void theClientCanViewTheInformationForHisContainersStartingJourneyFromThePort(String portname) {
 
 		FilterByPortName filter = new FilterByPortName(clientApplication.viewClient(),startPortID);
-		Containers = clientApplication.getFilteredContainersOnAJourney(filter);
+		Containers = clientApplication.filterContainersOnAJourney(filter);
 		assertFalse(Containers.isEmpty());
 	}
 
@@ -333,7 +335,7 @@ public class ApplicationSteps {
 	@When("the client provides a port name {string} from where the journey will start")
 	public void theClientProvidesAPortNameFromWhereTheJourneyWillStart(String portname) {
 	    // Write code here that turns the phrase above into concrete actions
-		 startPortID = clientApplication.getPortID(portname);
+		 startPortID = extractingPortID.getPortID(portname);
 		 assertNotEquals(startPortID,1l);
 		 clientApplication.getAContainer(startPortID);
 		 assertTrue(clientApplication.getFoundContainer());
@@ -342,7 +344,7 @@ public class ApplicationSteps {
 	@When("provides a destination port name {string}")
 	public void providesADestinationPortName(String portname) {
 
-		destinationPortID = clientApplication.getPortID(portname);
+		destinationPortID =extractingPortID.getPortID(portname);
 		assertNotEquals(destinationPortID,1l);// the startPortID would be 1 if the portname is not valid
 		clientApplication.updateDestinationPort(destinationPortID);
 	}
@@ -371,7 +373,7 @@ public class ApplicationSteps {
 	@Then("a container is registered for the journey and the client is provided with a journey ID to track the container.")
 	public void aContainerIsRegisteredForTheJourneyAndTheClientIsProvidedWithAJourneyIDToTrackTheContainer() {
 	    
-		clientApplication.registerContainer(startPortID,destinationPortID,cargo,temperature,pressure,humidity,arriveBy);
+		clientApplication.registerContainerForAJourney(startPortID,destinationPortID,cargo,temperature,pressure,humidity,arriveBy);
 	    assertTrue(clientApplication.getContainerRegistered());
 	}
 	@Given("the logistic Company decides to add a new client")
@@ -521,8 +523,7 @@ public class ApplicationSteps {
 
 	@Given("the start port is given {string}")
 	public void theStartPortIsGiven(String portname) {
-		clientApplication = new ClientApplication(897841664590l);
-		startPortID = clientApplication.getPortID(portname); // need to move the getPortID to a supporting class class
+		startPortID = extractingPortID.getPortID(portname); // need to move the getPortID to a supporting class class
 		System.out.println("Startport ID: "+startPortID);
 		assertNotEquals(startPortID,1l);
 		
@@ -530,7 +531,7 @@ public class ApplicationSteps {
 
 	@Given("the destination port is given {string}")
 	public void theDestinationPortIsGiven(String portname) {
-		this.destinationPortID = clientApplication.getPortID(portname);
+		this.destinationPortID = extractingPortID.getPortID(portname);
 	    
 	}
 
@@ -671,7 +672,7 @@ public class ApplicationSteps {
 	public void theClientChoosesToViewTheInternalStatusOfAContainerWithTheJourneyID(long journeyID) {
 	    	this.journeyID=journeyID;
 	    	FilterByJourneyID filter = new FilterByJourneyID(clientApplication.viewClient(),this.journeyID);
-			Containers = clientApplication.getFilteredContainersOnAJourney(filter);
+			Containers = clientApplication.filterContainersOnAJourney(filter);
 			for (int i=0;i<Containers.size();i++) {
 				assertEquals(Containers.get(i).getJourneyID(),journeyID);
 			}
@@ -689,7 +690,7 @@ public class ApplicationSteps {
 		
 		this.cargo=cargo;
 		FilterByCargoName filter = new FilterByCargoName(clientApplication.viewClient(),cargo);
-		Containers = clientApplication.getFilteredContainersOnAJourney(filter);
+		Containers = clientApplication.filterContainersOnAJourney(filter);
 	}
 
 	@Then("the client can view all the information for all those containers")
@@ -752,7 +753,7 @@ public class ApplicationSteps {
 	@When("the database is asked to return the portID")
 	public void theDatabaseIsAskedToReturnThePortID() {
 
-		this.portID = clientApplication.getPortID(portName);
+		this.portID = extractingPortID.getPortID(portName);
 	}
 
 	@Then("the ID {long} is returned which means that port name is not valid")

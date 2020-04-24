@@ -22,7 +22,12 @@ public class parseInput {
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
 	    String formattedDate = myDateObj2.format(myFormatObj);  
 	    return formattedDate;
-	}// this needs to be deleted.. instead have a validation for the date
-	
+	}// this needs to be deleted.. instead have a validation for the date, need to make sure that the date>=localdate.now()
+	public static String getDate(LocalDate myDateObj) { //using this for generating last updated...
+		
+	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
+	    String formattedDate = myDateObj.format(myFormatObj);  
+	    return formattedDate;
+	}
 
 }

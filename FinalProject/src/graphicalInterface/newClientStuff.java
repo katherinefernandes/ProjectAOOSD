@@ -29,9 +29,9 @@ public class newClientStuff {
 	//private long clientID;
 	
 	public JFrame frame;
-	JButton emailButton,AddJourneyButton,ReferencepersonButton,ContainerButton;
-	JPanel ButtonPanel,panel_1,referencePanel,emailPanel,JourneyPanel,DataPanel;
-	JLayeredPane layeredPane;
+	private JButton emailButton,AddJourneyButton,ReferencepersonButton,ContainerButton;
+	private JPanel ButtonPanel,panel_1,referencePanel,emailPanel,JourneyPanel,DataPanel;
+	private JLayeredPane layeredPane;
 	private JTextArea txtrName;
 	private JTextArea txtrLastName;
 	private JTextField firstnametext;
@@ -92,6 +92,7 @@ public class newClientStuff {
 	private JTextArea JourneyErrorText;
 	private ValidInput validate;
 	private JTextArea journeySuccessTextfield;
+	private JPanel viewContainerPanel;
 	
 	public newClientStuff(ClientController controller) {
 		this.controller = controller;
@@ -137,7 +138,7 @@ public class newClientStuff {
 				setSuccessAndFailureFalse();
 				switchPanels(referencePanel);
 			}
-		});
+		}); 
 		ReferencepersonButton.setBounds(55, 68, 196, 29);
 		ButtonPanel.add(ReferencepersonButton);
 		
@@ -244,15 +245,21 @@ public class newClientStuff {
 				validTextField.setVisible(false);
 				InvalidNameError.setVisible(false);
 				System.out.println("Inside the save button");
+				System.out.println("As a precaution, making sure the first and last field are not empty: ");
+				if(firstnametext.getText().isEmpty()||lastnametext.getText().isEmpty()) {
+					System.out.println("one of the two important fields is not filled: firstname or lastname");
+					InvalidNameError.setVisible(false);
+					return;
+				}
 				if (middlenametext.getText().isEmpty()) {
+					System.out.println("The middlename text is empty");
 					controller.saveReferencePerson(firstnametext.getText()," ",lastnametext.getText());
 				}else {
+					System.out.println("The middlenametext is not empty");
 					controller.saveReferencePerson(firstnametext.getText(),middlenametext.getText(),lastnametext.getText());
 				}
 				clearDataFields(firstnametext,middlenametext,lastnametext);
 				viewReferencePersonTextField.setText(controller.getReferencePerson());
-				validTextField.setVisible(false);
-				InvalidNameError.setVisible(false);
 			}
 		});
 		Save1.setBounds(308, 244, 117, 29);
@@ -310,17 +317,15 @@ public class newClientStuff {
 			public void actionPerformed(ActionEvent e) {
 				emailSuccess.setVisible(false);
 				emailError.setVisible(false);
-				boolean CheckMessage;
 				if (EmailTextField.getText().isEmpty()) {
-					CheckMessage=false;
-				}else {
-					CheckMessage = controller.saveEmail(EmailTextField.getText());
-				}
-				if (CheckMessage) {
-					emailSuccess.setVisible(true);
-				}else {
+					System.out.println("The email has not been entered");
 					emailError.setVisible(true);
+					return;
+				}else {
+					System.out.println("Going to try saving the email");
+					controller.saveEmail(EmailTextField.getText());
 				}
+				
 				clearDataFields(EmailTextField);
 				CurrentEmailTextField.setText(controller.getCurrentEmail());
 				viewEmailTextField.setText(controller.getCurrentEmail());
@@ -380,17 +385,14 @@ public class newClientStuff {
 			public void actionPerformed(ActionEvent e) {
 				phoneSuccess.setVisible(false);
 				PhoneError.setVisible(false);
-				boolean checkMessage;
 				if (countryCodeTextField.getText().isEmpty()||newPhoneNumberText.getText().isEmpty()) {
-					checkMessage=false;
-				}else {
-					checkMessage = controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
-				}
-				if (checkMessage) {
-					phoneSuccess.setVisible(true);
-				}else {
+					System.out.println("One of the text fields is empty. pleas try again");
 					PhoneError.setVisible(true);
+					return;
+				}else {
+					controller.savePhoneNumber(countryCodeTextField.getText(),newPhoneNumberText.getText());
 				}
+				
 				clearDataFields(countryCodeTextField,newPhoneNumberText);
 				viewPhoneTextField.setText(controller.getCurrentPhoneNumber());
 				CurrentPhoneNumberTextArea.setText(controller.getCurrentPhoneNumber());
@@ -550,45 +552,19 @@ public class newClientStuff {
 		saveJourney.setBounds(357, 322, 117, 29);
 		saveJourney.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean checkMessage= false;
 				JourneyErrorText.setVisible(false);
 				journeySuccessTextfield.setVisible(false);
-				if (!textField_8.getText().isEmpty()) {
-					checkMessage = controller.checkStartPortName( textField_8.getText());
-				}
-				if (checkMessage&&(!textField_9.getText().isEmpty())) {
-					checkMessage = controller.checkDestinationPortName(textField_9.getText());
-				}else if(textField_9.getText().isEmpty()) {
-					System.out.println("There is no destination port entered");
-					checkMessage=false;
-				}
-				if(!checkMessage) {
+				if (textField_8.getText().isEmpty()||textField_9.getText().isEmpty()||textField_10.getText().isEmpty()||textField_11.getText().isEmpty()||textField_12.getText().isEmpty()||textField_13.getText().isEmpty()||textField_14.getText().isEmpty()) {
+					System.out.println("One or more of the text fields is empty, please again");
 					JourneyErrorText.setVisible(true);
+					clearDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
 					return;
-				}
-				if(!textField_10.getText().isEmpty()) {
-					checkMessage = validate.validateName(textField_10.getText());
-					
-				}
-				if(checkMessage&&!textField_11.getText().isEmpty()&&!textField_12.getText().isEmpty()&&!textField_13.getText().isEmpty()) {
-					checkMessage = controller.checkFloat(textField_11.getText());
-					checkMessage = controller.checkFloat(textField_12.getText());
-					checkMessage = controller.checkFloat(textField_13.getText());
-				}
-				if(checkMessage&&!textField_14.getText().isEmpty()) {
-					checkMessage = controller.setArriveByString(textField_14.getText());
-					
-				}
-				if(checkMessage) {
-					checkMessage = controller.registerJourney(textField_10.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText(),textField_14.getText());
-				}
-				if(checkMessage) {
-					journeySuccessTextfield.setVisible(true);
-					viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 				}else {
-					JourneyErrorText.setVisible(true);
+					System.out.println("All the text fields are entered, thus will now try to save the journey");
+					clearDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
+					controller.saveJourney(textField_8.getText(),textField_9.getText(),textField_10.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText(),textField_14.getText());
 				}
-				clearDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
+				
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}});
 		JourneyPanel.add(saveJourney);
@@ -613,7 +589,7 @@ public class newClientStuff {
 		JourneyPanel.add(journeySuccessTextfield);
 		journeySuccessTextfield.setVisible(false);
 		
-		JPanel viewContainerPanel = new JPanel();
+		viewContainerPanel = new JPanel();
 		viewContainerPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(viewContainerPanel, "name_39906191038179");
 		viewContainerPanel.setLayout(null);
@@ -733,7 +709,7 @@ public class newClientStuff {
 		layeredPane.add(DataPanel, "name_7969757405032");
 		DataPanel.setLayout(null);
 		
-		JTextArea txtrContainerId = new JTextArea();
+		/*JTextArea txtrContainerId = new JTextArea();
 		txtrContainerId.setBounds(66, 85, 95, 19);
 		txtrContainerId.setText("Container ID:");
 		txtrContainerId.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -744,39 +720,13 @@ public class newClientStuff {
 		containterIDsearch = new JTextField();
 		containterIDsearch.setBounds(206, 82, 199, 26);
 		DataPanel.add(containterIDsearch);
-		containterIDsearch.setColumns(10);
+		containterIDsearch.setColumns(10);*/
 		
 		JButton Enterbutton = new JButton("Enter");
 		Enterbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				noContainerError.setVisible(false);
-				boolean checkMessage=false;
-				boolean checkCriteria = false;
-				if (!containterIDsearch.getText().isEmpty()) {
-					checkMessage = controller.getContainerByContainerID(containterIDsearch.getText());
-					checkCriteria = true;
-				} 
-				if(!checkMessage&&!JourneyIDsearch.getText().isEmpty()) {
-					checkMessage = controller.getContainerByJourneyID(JourneyIDsearch.getText());
-					checkCriteria =true;
-				}
-				if(!checkMessage&&!CargoIDsearch.getText().isEmpty()) {
-					checkMessage = controller.getContainerByCargo(CargoIDsearch.getText());
-				}
-				if(!checkMessage&&!PortNamesearch.getText().isEmpty()) {
-					checkMessage = controller.getContainerByPortName(PortNamesearch.getText());
-				}
-				if(checkMessage) {
-					noContainerError.setVisible(false);
-					setFieldsContainerData();
-					if(checkCriteria) {
-						switchPanels(viewContainerPanel);
-					}else {
-						switchPanels(newMultipleContainersPanel);
-					}
-				}else {
-					noContainerError.setVisible(true);
-				}
+				controller.searchContainer(JourneyIDsearch.getText(),CargoIDsearch.getText(),PortNamesearch.getText());
 				clearDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
@@ -966,15 +916,20 @@ public class newClientStuff {
 		layeredPane.revalidate();
 		
 	}
+	public void viewOneContainerPanel() {
+		switchPanels(viewContainerPanel);
+	}
+	public void viewMultipleContainerPanel() {
+		switchPanels(newMultipleContainersPanel);
+	}
 	
-
 	public void clearDataFields(JTextField...fields) {
 		for(JTextField field : fields) {
 			field.setText("");
 		}
 	}
 	
-	private void setFieldsContainerData() {
+	public void setFieldsContainerData() {
 		internalStatusTextField.setText(controller.getInternalStatus());
 		startPortTextField.setText(controller.getStartPortName());
 		destinationPortTextField.setText(controller.getDestinationPortName());
@@ -991,7 +946,7 @@ public class newClientStuff {
 		phoneSuccess.setVisible(false);
 		PhoneError.setVisible(false);
 		emailError.setVisible(false);
-		noContainerError.setVisible(false);
+		noContainerError.setVisible(false); 
 		
 		
 	}
@@ -1006,6 +961,33 @@ public class newClientStuff {
 	
 	private void setTextVisibleTrue(JTextArea field) {
 		field.setVisible(true);
+	}
+	public void errorMessageForEmail() {
+		setTextVisibleTrue(emailError);
+	}
+
+	public void successFieldForEmail() {
+		setTextVisibleTrue(emailSuccess);
+	}
+	public void errorMessageForPhone() {
+		setTextVisibleTrue(PhoneError);
+	}
+
+	public void successFieldForPhone() {
+		setTextVisibleTrue(phoneSuccess);
+	}
+	public void errorMessageForAddJourney() {
+		setTextVisibleTrue(JourneyErrorText);
+	}
+
+	public void successFieldForAddJourney() {
+		setTextVisibleTrue(journeySuccessTextfield);
+	}
+	public void updateActiveShipments() {
+		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+	}
+	public void containerSearchError() {
+		setTextVisibleTrue(noContainerError);
 	}
 
 }
