@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -53,7 +54,12 @@ public class LogisticCompanySteps {
 	
 	@Given("the logistic Company enters the Client ID {long}")
 	public void theLogisticCompanyEntersTheClientID(long clientID)  {
-	    logistic.getClient(clientID);
+	    try {
+			logistic.getClient(clientID);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			throw new Error(e);
+		}
 	}
 	
 	@When("the Client ID is present in the database")
@@ -127,7 +133,13 @@ public class LogisticCompanySteps {
 	@Given("that the logistic company enters the container ID {long}")
 	public void thatTheLogisticCompanyEntersTheContainerID(long id) {
 	    this.containerid = id;
-	    logistic.getContainer(this.containerid);
+	    try {
+			logistic.getContainer(this.containerid);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new Error(e);
+		}
 	    assertTrue(logistic.getSetContainer());
 	}
 

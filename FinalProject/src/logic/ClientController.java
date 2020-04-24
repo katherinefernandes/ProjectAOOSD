@@ -248,6 +248,9 @@ public class ClientController {
 		}catch(NumberFormatException e) {
 			System.out.println("The value in the containerID field is not valid format");
 			return false;
+		}catch(ElementNotFoundException e) {
+			System.out.println("The counterID is not correct");
+			return false;
 		}
 	}
 	public boolean getContainerByJourneyID(String journeyID) {

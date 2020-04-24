@@ -56,7 +56,7 @@ public class HistoryData extends ObjectData {
 		try {
 			xmlFields.get(index).setValue(timeStamp.toString());
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Error(e);
 		}
 	}//- to here
 	

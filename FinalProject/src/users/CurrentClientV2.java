@@ -26,7 +26,12 @@ public class CurrentClientV2 extends User{
 
 	public CurrentClientV2(long ID) {
 		super();
-		this.getClient(ID);
+		try {
+			this.getClient(ID);
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			throw new Error(e);
+		}
 		databasePort = new PortAccess();
 		history = new UpdateHistory();
 	}
@@ -39,7 +44,6 @@ public class CurrentClientV2 extends User{
 
 
 	public long getPortID(String portname) {
-		// TODO Auto-generated method 
 		List<PortData> listOfPorts = databasePort.searchEntries(portname);
 		if (listOfPorts.size()>0) {
 			return listOfPorts.get(0).getID();
@@ -67,8 +71,7 @@ public class CurrentClientV2 extends User{
 			}
 		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("either port or the container not found");
-			e.printStackTrace();
+			throw new Error(e);
 		}
 		
 	}
@@ -89,8 +92,7 @@ public class CurrentClientV2 extends User{
 			return true;
 		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new Error(e);
+			return false;
 		}
 		
 	}
