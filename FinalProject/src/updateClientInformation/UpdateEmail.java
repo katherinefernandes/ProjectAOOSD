@@ -1,6 +1,6 @@
 package updateClientInformation;
 
-import dataAccess.ClientAccess;
+import XMLParser.ClientAccess;
 import objectsData.ClientData;
 
 public class UpdateEmail implements UpdateClient {

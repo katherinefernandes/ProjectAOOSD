@@ -1,4 +1,4 @@
-package dataAccess;
+package XMLParser;
 
 import objectsData.IdentifiableData;
 

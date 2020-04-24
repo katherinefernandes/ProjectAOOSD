@@ -2,7 +2,7 @@ package updateClientInformation;
 
 import java.util.ArrayList;
 
-import dataAccess.ClientAccess;
+import XMLParser.ClientAccess;
 import objectsData.ClientData;
 
 public class UpdateReferencePerson implements UpdateClient {

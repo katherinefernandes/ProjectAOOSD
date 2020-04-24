@@ -7,7 +7,7 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import dataAccess.PortAccess;
+import XMLParser.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.PortData;
 

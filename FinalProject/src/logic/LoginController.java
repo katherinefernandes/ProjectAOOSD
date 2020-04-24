@@ -3,7 +3,8 @@ package logic;
 import java.awt.EventQueue;
 import java.util.*;
 
-import dataAccess.*;
+import XMLParser.ClientAccess;
+import dataBase.*;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.Login_Window;
 import graphicalInterface.LogisticsMenu;

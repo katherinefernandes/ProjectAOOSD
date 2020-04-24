@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import dataAccess.HistoryAccess;
+import XMLParser.HistoryAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.HistoryData;
 

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import dataAccess.ClientAccess;
+import XMLParser.ClientAccess;
 import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

@@ -4,7 +4,8 @@ import java.util.*;
 
 import org.junit.jupiter.api.*;
 
-import dataAccess.*;
+import XMLParser.DataAccess;
+import dataBase.*;
 import exceptions.ElementNotFoundException;
 import objectsData.*;
 

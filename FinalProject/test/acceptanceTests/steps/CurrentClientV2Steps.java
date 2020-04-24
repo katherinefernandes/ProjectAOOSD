@@ -13,13 +13,13 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.function.Executable;
 
+import XMLParser.ClientAccess;
+import XMLParser.ContainerAccess;
+import XMLParser.PortAccess;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import containerFilters.FilteringContainersForAClient;
-import dataAccess.ClientAccess;
-import dataAccess.ContainerAccess;
-import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

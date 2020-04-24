@@ -3,7 +3,7 @@ package containerFilters;
 import java.util.ArrayList;
 import java.util.List;
 
-import dataAccess.ContainerAccess;
+import XMLParser.ContainerAccess;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 

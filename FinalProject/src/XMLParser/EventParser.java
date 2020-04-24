@@ -1,4 +1,4 @@
-package dataAccess;
+package XMLParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,12 @@ public class EventParser {
 	}
 	
 	public String getData() {
-		return event.asCharacters().getData();
+		if(event.isCharacters()) {
+			return event.asCharacters().getData();
+		}
+		else {
+			return "";
+		}
 	}
 	
 	public static EventParser generateStart(String string) {

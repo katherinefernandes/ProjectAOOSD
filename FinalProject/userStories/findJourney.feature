@@ -21,7 +21,7 @@ Feature: Find a journey
   
  	Scenario: Client can track the containers starting journey from a Port
  	Given that there exists a client with ID 36836570081687 
- 	And the client has a container with the journey ID 10849147913879 registered for a journey 
+ 	And the client has a container with the journey ID 10849147913500 registered for a journey 
   And the start port of the container was "Gwadar"
   And the destination port is "Copenhagen"
   And the current location of the container is 26.11 latitude and 74.33 longitude

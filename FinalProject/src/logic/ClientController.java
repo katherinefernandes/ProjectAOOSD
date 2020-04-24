@@ -7,10 +7,10 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import XMLParser.PortAccess;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
-import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.newClientStuff;
 //import graphicalInterface.newClientStuff;

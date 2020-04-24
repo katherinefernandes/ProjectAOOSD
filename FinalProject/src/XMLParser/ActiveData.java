@@ -1,4 +1,4 @@
-package dataAccess;
+package XMLParser;
 
 import java.util.*;
 import objectsData.ObjectDataInterface;
