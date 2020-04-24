@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import dataAccess.ClientAccess;
+import XMLParser.ClientAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 
@@ -25,7 +25,7 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,Clie
 		ArrayList<String> lastNames1 = new ArrayList<String>();
 		lastNames1.add("Marx");
 
-		data1 = new ClientData(102621L,"Washington cleaning",45,
+		data1 = new ClientData(555555555557L,"Washington cleaning",45,
 								123456789,"clean.your.pipes@wash.com",
 								firstNames1,middleNames1,lastNames1,
 								"Bakerstreet","Derry",42,"1213");
@@ -45,7 +45,7 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,Clie
 								firstNames2,middleNames2,lastNames2,
 								"Elm street","Arkham",33,"2000");
 		
-		data1_v2 = new ClientData(102621L,"new Washington cleansing",46,
+		data1_v2 = new ClientData(555555555557L,"new Washington cleansing",46,
 									123456789,"clean.your.pipes@wash.com",
 									firstNames1,middleNames1,lastNames1,
 									"Bakerstreet","Darry",42,"1216");

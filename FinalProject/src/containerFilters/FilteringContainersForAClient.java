@@ -3,7 +3,7 @@ package containerFilters;
 import java.util.ArrayList;
 import java.util.List;
 
-import dataAccess.ContainerAccess;
+import XMLParser.ContainerAccess;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 
@@ -15,6 +15,7 @@ public abstract class FilteringContainersForAClient implements FilterContainer {
 	
 	public FilteringContainersForAClient(ClientData client) {
 		 databaseContainer = new ContainerAccess();
+		 
 		this.activeJourneys=client.getActiveShipment();
 		containers= new ArrayList<ContainerData>();
 		getContainersByActiveJourneyIDs();
@@ -22,6 +23,7 @@ public abstract class FilteringContainersForAClient implements FilterContainer {
 	
 	private  void getContainersByActiveJourneyIDs() {
 		List<ContainerData> containerExtractedByDataBase;
+		System.out.println("activeJourneys: "+activeJourneys.size());
 		for(int i=0;i<this.activeJourneys.size();i++) {
 			String journeyIDInString = this.activeJourneys.get(i).toString();
 			containerExtractedByDataBase = databaseContainer.searchEntries(journeyIDInString);

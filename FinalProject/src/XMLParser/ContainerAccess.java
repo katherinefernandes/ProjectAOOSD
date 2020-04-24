@@ -1,4 +1,4 @@
-package dataAccess;
+package XMLParser;
 
 import objectsData.*;
 import java.time.LocalDateTime;

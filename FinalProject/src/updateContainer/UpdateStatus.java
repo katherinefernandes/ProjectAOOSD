@@ -1,7 +1,7 @@
 package updateContainer;
 
-import dataAccess.ContainerAccess;
-import dataAccess.HistoryAccess;
+import XMLParser.ContainerAccess;
+import XMLParser.HistoryAccess;
 import objectsData.ContainerData;
 import objectsData.HistoryData;
 import supportingClasses.UpdateHistory;

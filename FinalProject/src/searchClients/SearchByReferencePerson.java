@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import dataAccess.ClientAccess;
+import XMLParser.ClientAccess;
 import objectsData.ClientData;
 import objectsData.ReferenceName;
 

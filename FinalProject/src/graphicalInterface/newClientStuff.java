@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.CardLayout;
@@ -941,16 +943,20 @@ public class newClientStuff {
 		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 		ViewInfoPanel.add(viewActiveShipmentsTextField);
 		
+		
+		
 		newMultipleContainersPanel = new JPanel();
 		newMultipleContainersPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(newMultipleContainersPanel, "name_65527884775862");
 		newMultipleContainersPanel.setLayout(null);
 		
-		 multipleContainersTextField = new JTextArea();
+		multipleContainersTextField = new JTextArea();
 		multipleContainersTextField.setBackground(new Color(95, 158, 160));
 		multipleContainersTextField.setEditable(false);
 		multipleContainersTextField.setBounds(20, 25, 543, 432);
+		JScrollPane scroll = new JScrollPane(multipleContainersTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		newMultipleContainersPanel.add(multipleContainersTextField);
+		newMultipleContainersPanel.add(scroll);
 	}
 	
 	public void switchPanels(JPanel panel) {

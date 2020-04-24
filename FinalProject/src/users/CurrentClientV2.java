@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import XMLParser.PortAccess;
 import containerFilters.FilteringContainersForAClient;
-import dataAccess.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 import objectsData.PortData;
@@ -36,9 +36,9 @@ public class CurrentClientV2 extends User{
 		history = new UpdateHistory();
 	}
 
-	public boolean updateClientInformation(UpdateClient Update) {
-		Update.updateInformation(client);
-		return Update.updated();
+	public boolean updateClientInformation(UpdateClient update) {
+		update.updateInformation(client);
+		return update.updated();
 	}
 
 

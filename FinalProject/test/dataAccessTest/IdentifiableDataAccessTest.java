@@ -4,8 +4,8 @@ import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;
 
-import dataAccess.DataAccess;
-import dataAccess.IdentifiedDataAccess;
+import XMLParser.DataAccess;
+import XMLParser.IdentifiedDataAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.IdentifiableData;
 import objectsData.ObjectData;
@@ -35,10 +35,13 @@ public abstract class IdentifiableDataAccessTest<T extends IdentifiableData, A e
 		insertData(data1);
 		
 		dataAccess.flushActiveData();
+		insertData(data1_v2);
+		
+		dataAccess.flushActiveData();
 		
 		T pulledData = dataAccess.getEntry(getDataID(data1));
 		
-		assertEqualData(pulledData,data1);
+		assertEqualData(pulledData,data1_v2);
 	}
 	
 	public void editTest() throws ElementNotFoundException, NumberFormatException {

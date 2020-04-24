@@ -2,7 +2,7 @@ package searchClients;
 
 import java.util.List;
 
-import dataAccess.ClientAccess;
+import XMLParser.ClientAccess;
 import objectsData.ClientData;
 
 public class SearchByPhone implements SearchClients{

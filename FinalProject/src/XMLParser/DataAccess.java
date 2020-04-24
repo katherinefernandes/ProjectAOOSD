@@ -1,4 +1,4 @@
-package dataAccess;
+package XMLParser;
 
 import objectsData.ObjectDataInterface;
 import objectsData.XMLField;
@@ -15,7 +15,7 @@ import javax.xml.validation.*;
 public abstract class DataAccess<T extends ObjectDataInterface> {
 	protected String dataPointTagName;
 	protected String collectionTagName;
-	protected XMLIO xmlIO; //TODO abstract class IO
+	protected XMLIO xmlIO;
 	
 	
 	public DataAccess(String filePath, String elementsName, String collectionsName) {
