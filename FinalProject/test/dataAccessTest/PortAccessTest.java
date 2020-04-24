@@ -7,15 +7,15 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import XMLParser.PortAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.PortData;
+import xmlParser.PortXMLManipulation;
 
-public class PortAccessTest extends IdentifiableDataAccessTest<PortData,PortAccess>{
+public class PortAccessTest extends IdentifiableDataAccessTest<PortData,PortXMLManipulation>{
 
 	public PortAccessTest(){
 		super();
-		dataAccess = new PortAccess();
+		dataAccess = new PortXMLManipulation();
 		
 		data1 = new PortData(422337203685477580L, "Denmark", "Nordhavn", 55F, 64.2F);
 		data1.addArrivingContainer(871872L);

@@ -2,16 +2,16 @@ package searchClients;
 
 import java.util.List;
 
-import XMLParser.ClientAccess;
 import objectsData.ClientData;
+import xmlParser.ClientXMLManipulation;
 
 public class SearchByEmail implements SearchClients{
-	private ClientAccess databaseClient;
+	private ClientXMLManipulation databaseClient;
 	private String email;
 	
 	
 	public SearchByEmail(String email) {
-		databaseClient = new ClientAccess();
+		databaseClient = new ClientXMLManipulation();
 		this.email = email;
 	}
 	

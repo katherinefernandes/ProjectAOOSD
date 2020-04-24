@@ -1,4 +1,4 @@
-package XMLParser;
+package xmlParser;
 
 import java.util.*;
 
@@ -7,10 +7,10 @@ import javax.xml.stream.XMLStreamException;
 import exceptions.ElementNotFoundException;
 import objectsData.IdentifiableData;
 
-public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends DataAccess<T> {
+public abstract class IdentifiableXMLManipulation<T extends IdentifiableData> extends GeneralXMLManipulation<T> {
 	private ActiveIdentifiableData<T> activeData;
 	
-	public IdentifiedDataAccess(String filename, String dataPointTagName, String collectionTagName) {
+	public IdentifiableXMLManipulation(String filename, String dataPointTagName, String collectionTagName) {
 		super(filename, dataPointTagName, collectionTagName);
 		activeData = new ActiveIdentifiableData<>();
 	}
@@ -45,9 +45,9 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 	public void deleteEntry(long ID) {
 		activeData.removeDataWithID(ID);
 		
-		xmlIO.initializeIO();
+		io.initializeIO();
 		removeDataWithIDFromFile(ID);
-		xmlIO.finishWriteIO();
+		io.finishWriteIO();
 	}
 	
 	public boolean IDExists(String ID) {
@@ -58,9 +58,9 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 	
 	@Override
 	public void flushActiveData() {
-		xmlIO.initializeIO();
+		io.initializeIO();
 		zipActiveDataToFile();
-		xmlIO.finishWriteIO();
+		io.finishWriteIO();
 	}
 	
 	@Override
@@ -71,18 +71,18 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 	}
 	
 	private boolean IDIsInFile(String ID) {
-		xmlIO.initializeIO();
+		io.initializeIO();
 		boolean isFound = searchFileForID(ID);
-		xmlIO.finishReadIO();
+		io.finishReadIO();
 		return isFound;
 	}
 	
 	private boolean searchFileForID(String ID) {
 		DataPointParser dataPoint = new DataPointParser(dataPointTagName,ID);
-		xmlIO.readEvent();
-		xmlIO.readEvent();
-		while(xmlIO.hasNext()) {
-			dataPoint.handleMatchOnID(xmlIO.readEvent());
+		io.readEvent();
+		io.readEvent();
+		while(io.hasNext()) {
+			dataPoint.handleMatchOnID(io.readEvent());
 			if(dataPoint.isCompleteMatchingDataPoint()) {
 				return true;
 			}
@@ -92,46 +92,46 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 
 	private void removeDataWithIDFromFile(long ID) {
 		DataPointParser dataPointParser = new DataPointParser(dataPointTagName,String.valueOf(ID));
-		xmlIO.transferNext();
-		xmlIO.transferNext();
-		while(xmlIO.hasNext()) {
-			EventParser event = xmlIO.readEvent();
+		io.transferNext();
+		io.transferNext();
+		while(io.hasNext()) {
+			EventParser event = io.readEvent();
 			dataPointParser.handleMatchOnID(event);
 			if(dataPointParser.isCompleteDataPoint() && !dataPointParser.isCompleteMatchingDataPoint()) {
-				xmlIO.insertDataPoint(dataPointParser.getDataPoint());
+				io.insertDataPoint(dataPointParser.getDataPoint());
 			}
 		}
-		xmlIO.writeEvent(EventParser.generateEnd(collectionTagName));
-		xmlIO.writeEvent(EventParser.generateEndDoc());
+		io.writeEvent(EventParser.generateEnd(collectionTagName));
+		io.writeEvent(EventParser.generateEndDoc());
 	}
 
 	private void zipActiveDataToFile() {
 		DataPointParser dataPointParser = new DataPointParser(dataPointTagName);
-		xmlIO.transferNext();
-		xmlIO.transferNext();
-		while(xmlIO.hasNext()) {
+		io.transferNext();
+		io.transferNext();
+		while(io.hasNext()) {
 			dataPointParser = handleNextEvent(dataPointParser);
 		}
 		while(!activeData.isEmpty()) {
 			transferFirstActiveDataToFile();
 		}
-		xmlIO.writeEvent(EventParser.generateEnd(collectionTagName));
-		xmlIO.writeEvent(EventParser.generateEndDoc());
+		io.writeEvent(EventParser.generateEnd(collectionTagName));
+		io.writeEvent(EventParser.generateEndDoc());
 	}
 
 	private DataPointParser handleNextEvent(DataPointParser dataPointParser){
-		EventParser event = xmlIO.readEvent();
+		EventParser event = io.readEvent();
 		dataPointParser.handleMatchOnID(event);
 		if(event.isStartOfDataPoint(dataPointTagName)) {
 			insertAllLesserActiveData(dataPointParser);
 		}else if(event.isEndOfDataPoint(dataPointTagName) && !dataPointParser.isCompleteMatchingDataPoint()) {
-			xmlIO.insertDataPoint(dataPointParser.getDataPoint());
+			io.insertDataPoint(dataPointParser.getDataPoint());
 		}
 		return dataPointParser;
 	}
 
 	private void transferFirstActiveDataToFile() {
-		xmlIO.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
+		io.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
 		activeData.removeDataAtIndex(0);
 	}
 
@@ -146,19 +146,19 @@ public abstract class IdentifiedDataAccess<T extends IdentifiableData> extends D
 	}
 	
 	private List<T> findMatchingEntriesFromFile(String searchWord) {
-		xmlIO.initializeIO();
+		io.initializeIO();
 		List<T> matchingEntries = searchThroughAllEvents(searchWord);
-		xmlIO.finishReadIO();
+		io.finishReadIO();
 		return matchingEntries;
 	}
 
 	private List<T> searchThroughAllEvents(String searchWord) {
 		List<T> matchingEntries = new ArrayList<>();
 		DataPointParser currentDataPoint = new DataPointParser(dataPointTagName,searchWord);
-		xmlIO.readEvent();
-		xmlIO.readEvent();
-		while(xmlIO.hasNext()) {
-			EventParser event = xmlIO.readEvent();
+		io.readEvent();
+		io.readEvent();
+		while(io.hasNext()) {
+			EventParser event = io.readEvent();
 			currentDataPoint.handleMatchOnIDAndValue(event);
 			if(currentDataPoint.isCompleteMatchingDataPoint()) {
 				matchingEntries.add(dataFromEvents(currentDataPoint));

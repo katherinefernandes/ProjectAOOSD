@@ -1,4 +1,4 @@
-package XMLParser;
+package xmlParser;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -7,9 +7,9 @@ import javax.xml.stream.XMLStreamException;
 
 import objectsData.HistoryData;
 
-public class HistoryAccess extends DataAccess<HistoryData> {
+public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> {
 	private ActiveData<HistoryData> activeData;
-	public HistoryAccess() {
+	public HistoryXMLManipulation() {
 		super("storage/activeData/history.xml","DataPoint","History");
 		activeData = new ActiveData<>();
 	}
@@ -28,27 +28,27 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 
 	@Override
 	public void flushActiveData() {
-		xmlIO.initializeIO();
-		xmlIO.transferNext();
-		xmlIO.transferNext();
+		io.initializeIO();
+		io.transferNext();
+		io.transferNext();
 		saveAllActiveData();
 		saveAllSavedData();
-		xmlIO.finishWriteIO();
+		io.finishWriteIO();
 	}
 	
 	public void wipeHistory() {
 		activeData.wipeAllData();
-		xmlIO.initializeIO();
-		xmlIO.transferNext();
-		xmlIO.transferNext();
-		xmlIO.writeEvent(EventParser.generateEnd(collectionTagName));
-		xmlIO.writeEvent(EventParser.generateEndDoc());
-		xmlIO.finishWriteIO();
+		io.initializeIO();
+		io.transferNext();
+		io.transferNext();
+		io.writeEvent(EventParser.generateEnd(collectionTagName));
+		io.writeEvent(EventParser.generateEndDoc());
+		io.finishWriteIO();
 	}
 
 	private void saveAllSavedData() {
-		while(xmlIO.hasNext()) {
-			xmlIO.transferNext();
+		while(io.hasNext()) {
+			io.transferNext();
 		}
 	}
 
@@ -59,29 +59,29 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 	
 	private HistoryData dataFromEvents(DataPointParser dataPoint) {
 		int i = 0;
-		i = iterateUntilFound(i,dataPoint,"TimeStamp");
+		i = dataPoint.iterateUntilFound(i,"TimeStamp");
 		LocalDateTime timeStamp = LocalDateTime.parse(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"ContainerID");
+		i = dataPoint.iterateUntilFound(i,"ContainerID");
 		long containerID = Integer.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"JourneyID");
+		i = dataPoint.iterateUntilFound(i,"JourneyID");
 		long journeyID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"ClientID");
+		i = dataPoint.iterateUntilFound(i,"ClientID");
 		long clientID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"DestinationPortID");
+		i = dataPoint.iterateUntilFound(i,"DestinationPortID");
 		long destinationPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"StartPortID");
+		i = dataPoint.iterateUntilFound(i,"StartPortID");
 		long startPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Cargo");
+		i = dataPoint.iterateUntilFound(i,"Cargo");
 		String cargo = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"Temperature");
+		i = dataPoint.iterateUntilFound(i,"Temperature");
 		float temperature = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Atmosphere");
+		i = dataPoint.iterateUntilFound(i,"Atmosphere");
 		float atmosphere = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Humidity");
+		i = dataPoint.iterateUntilFound(i,"Humidity");
 		float humidity = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Latitude");
+		i = dataPoint.iterateUntilFound(i,"Latitude");
 		float latitude = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Longitude");
+		i = dataPoint.iterateUntilFound(i,"Longitude");
 		float longitude = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
 		
 		HistoryData historyData = new HistoryData(timeStamp, containerID, journeyID, clientID, destinationPortID, startPortID, cargo, temperature, atmosphere, humidity, latitude, longitude);
@@ -91,7 +91,7 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 	
 	private void saveAllActiveData() {
 		while(!activeData.isEmpty()) {
-			xmlIO.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
+			io.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
 			activeData.removeDataAtIndex(0);
 		}
 	}
@@ -99,17 +99,17 @@ public class HistoryAccess extends DataAccess<HistoryData> {
 	private List<HistoryData> findMatchingEntriesFromFile(String searchWord){
 		List<HistoryData> matchingEntries = new ArrayList<>();
 		DataPointParser dataPoint = new DataPointParser(dataPointTagName, searchWord);
-		xmlIO.initializeIO();
-		xmlIO.readEvent();
-		xmlIO.readEvent();
-		while(xmlIO.hasNext()) {
-			EventParser event = xmlIO.readEvent();
+		io.initializeIO();
+		io.readEvent();
+		io.readEvent();
+		while(io.hasNext()) {
+			EventParser event = io.readEvent();
 			dataPoint.handleMatchOnValue(event);
 			if(dataPoint.isCompleteMatchingDataPoint()) {
 				matchingEntries.add(dataFromEvents(dataPoint));
 			}
 		}	
-		xmlIO.finishReadIO();
+		io.finishReadIO();
 		return matchingEntries;
 	}
 }

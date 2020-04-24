@@ -8,9 +8,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import XMLParser.ClientAccess;
-import XMLParser.ContainerAccess;
-import XMLParser.PortAccess;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
@@ -39,6 +36,9 @@ import updateContainer.UpdateStatus;
 import users.CurrentClientV2;
 import users.LogisticCompanyV2;
 import users.User;
+import xmlParser.ClientXMLManipulation;
+import xmlParser.ContainerXMLManipulation;
+import xmlParser.PortXMLManipulation;
 
 public class ApplicationSteps {
 	
@@ -51,7 +51,7 @@ public class ApplicationSteps {
 	private ArrayList<String> firstname;
 	private ArrayList<String> lastname;
 	private ArrayList<String> middlename;
-	private ClientAccess databaseClient = new ClientAccess();
+	private ClientXMLManipulation databaseClient = new ClientXMLManipulation();
 	private LogisticCompanyV2 logistic = new LogisticCompanyV2();
 	private ClientData client;
 	private CurrentClientV2 clientApplication;
@@ -65,7 +65,7 @@ public class ApplicationSteps {
 	private float humidity;
 	private String cargo;
 	private String arriveBy;
-	private ContainerAccess databaseContainer = new ContainerAccess();
+	private ContainerXMLManipulation databaseContainer = new ContainerXMLManipulation();
 	private ArrayList<ContainerData> Containers;
 	private String name;
 	private ArrayList<String> firstName;
@@ -94,7 +94,7 @@ public class ApplicationSteps {
 		Security IDgenerator = new Security();
 		PortData port1 = new PortData(IDgenerator.generateID(),"Pakistan","Gwadar",25.11f,62.33f);
 		PortData port2 = new PortData(IDgenerator.generateID(),"Denmark","Copenhagen",55.70f,12.59f);
-		PortAccess portDataBase = new PortAccess();
+		PortXMLManipulation portDataBase = new PortXMLManipulation();
 		PortData port3 = new PortData(IDgenerator.generateID(),"Singapore","Keppel",1.26f,103.83f);
 		portDataBase.newEntry(port2);
 		portDataBase.newEntry(port1);

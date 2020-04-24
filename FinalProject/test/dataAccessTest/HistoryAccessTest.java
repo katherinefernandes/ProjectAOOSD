@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import XMLParser.HistoryAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.HistoryData;
+import xmlParser.HistoryXMLManipulation;
 
-public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryAccess> {
+public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryXMLManipulation> {
 	
 	public HistoryAccessTest() {
 		super();
-		dataAccess = new HistoryAccess();
+		dataAccess = new HistoryXMLManipulation();
 		data1 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
 		data1_v2 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
 		data2 = new HistoryData(LocalDateTime.of(2020, 3, 1, 13, 12, 14), 124321L, 123819L, 9173284L, 12839L, 1923819L, "crab", 24.F, 104.F, 90F, 112.F, 33.F);

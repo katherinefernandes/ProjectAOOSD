@@ -4,13 +4,13 @@ import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;
 
-import XMLParser.DataAccess;
-import XMLParser.IdentifiedDataAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.IdentifiableData;
 import objectsData.ObjectData;
+import xmlParser.GeneralXMLManipulation;
+import xmlParser.IdentifiableXMLManipulation;
 
-public abstract class IdentifiableDataAccessTest<T extends IdentifiableData, A extends IdentifiedDataAccess<T>> extends DataAccessTest<T,A>{
+public abstract class IdentifiableDataAccessTest<T extends IdentifiableData, A extends IdentifiableXMLManipulation<T>> extends DataAccessTest<T,A>{
 	public IdentifiableDataAccessTest() {
 		super();
 	}

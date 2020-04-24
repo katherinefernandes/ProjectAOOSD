@@ -1,11 +1,11 @@
-package XMLParser;
+package xmlParser;
 
 import javax.xml.stream.events.XMLEvent;
 import objectsData.PortData;
 
-public class PortAccess extends IdentifiedDataAccess<PortData> {
+public class PortXMLManipulation extends IdentifiableXMLManipulation<PortData> {
 	
-	public PortAccess() {
+	public PortXMLManipulation() {
 		super("storage/activeData/ports.xml","Port","Ports");
 	}
 
@@ -13,16 +13,16 @@ public class PortAccess extends IdentifiedDataAccess<PortData> {
 	protected PortData dataFromEvents(DataPointParser dataPoint) {
 		int i = 0;
 		XMLEvent event;
-		i = iterateUntilFound(i,dataPoint,"Country");
+		i = dataPoint.iterateUntilFound(i,"Country");
 		String country = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"PortName");
+		i = dataPoint.iterateUntilFound(i,"PortName");
 		String portName = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"Latitude");
+		i = dataPoint.iterateUntilFound(i,"Latitude");
 		float latitude = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Longitude");
+		i = dataPoint.iterateUntilFound(i,"Longitude");
 		float longitude = Float.valueOf(dataPoint.getEventAtIndex(++i).getData());
 		PortData port = new PortData(dataPoint.getID(), country, portName, latitude, longitude);
-		i = iterateUntilFound(i,dataPoint,"StationedContainers");
+		i = dataPoint.iterateUntilFound(i,"StationedContainers");
 		while(!((event = dataPoint.getEventAtIndex(i).getEvent()).isEndElement() && 
 				event.asEndElement().getName().getLocalPart().equals("StationedContainers"))) {
 			if(event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("ContainerID")) {

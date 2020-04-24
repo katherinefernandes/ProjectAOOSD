@@ -1,14 +1,14 @@
 package updateContainer;
 
-import XMLParser.ContainerAccess;
 import objectsData.ContainerData;
 import objectsData.HistoryData;
 import supportingClasses.UpdateHistory;
+import xmlParser.ContainerXMLManipulation;
 
 public class UpdateLocation implements UpdateContainer{
 
 	private boolean setUpdate;
-	private ContainerAccess databaseContainer;
+	private ContainerXMLManipulation databaseContainer;
 	private float lon;
 	private float lat;
 	private UpdateHistory history;
@@ -17,7 +17,7 @@ public class UpdateLocation implements UpdateContainer{
 		this.lon = lon;
 		this.lat = lat;
 		this.setUpdate = false;
-		databaseContainer = new ContainerAccess();
+		databaseContainer = new ContainerXMLManipulation();
 		history = new UpdateHistory();
 	}
 	

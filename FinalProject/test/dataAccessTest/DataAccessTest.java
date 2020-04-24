@@ -4,11 +4,11 @@ import java.util.*;
 
 import org.junit.jupiter.api.*;
 
-import XMLParser.DataAccess;
 import exceptions.ElementNotFoundException;
 import objectsData.*;
+import xmlParser.GeneralXMLManipulation;
 
-public abstract class DataAccessTest<T extends ObjectDataInterface, A extends DataAccess<T>> {
+public abstract class DataAccessTest<T extends ObjectDataInterface, A extends GeneralXMLManipulation<T>> {
 	T data1;
 	T data2;
 	T data1_v2;

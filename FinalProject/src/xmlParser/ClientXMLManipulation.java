@@ -1,12 +1,12 @@
-package XMLParser;
+package xmlParser;
 
 import objectsData.*;
 import java.util.*;
 import javax.xml.stream.events.*;
 
 
-public class ClientAccess extends IdentifiedDataAccess<ClientData> {
-	public ClientAccess() {
+public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> {
+	public ClientXMLManipulation() {
 		super("storage/activeData/clients.xml", "Client","Clients");
 	}
 	
@@ -15,18 +15,18 @@ public class ClientAccess extends IdentifiedDataAccess<ClientData> {
 		int i = 0;
 		XMLEvent event;
 		StartElement start;
-		i = iterateUntilFound(i,dataPoint,"CompanyName");
+		i = dataPoint.iterateUntilFound(i,"CompanyName");
 		String companyName = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"CountryCode");
+		i = dataPoint.iterateUntilFound(i,"CountryCode");
 		int countryCode = Integer.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"PhoneBaseNumber");
+		i = dataPoint.iterateUntilFound(i,"PhoneBaseNumber");
 		long phoneNumber = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"Email");
+		i = dataPoint.iterateUntilFound(i,"Email");
 		String email = dataPoint.getEventAtIndex(++i).getData();
 		ArrayList<String> firstName = new ArrayList<>();
 		ArrayList<String> middleName = new ArrayList<>();
 		ArrayList<String> lastName = new ArrayList<>();
-		i = iterateUntilFound(i,dataPoint,"FirstName");
+		i = dataPoint.iterateUntilFound(i,"FirstName");
 		while(!(((event = dataPoint.getEventAtIndex(i).getEvent()).isEndElement()) && event.asEndElement().getName().getLocalPart().equals("RefrencePersonName"))) {
 			if(event.isStartElement()) {
 				start = event.asStartElement();
@@ -42,15 +42,15 @@ public class ClientAccess extends IdentifiedDataAccess<ClientData> {
 			}
 			i++;
 		}
-		i = iterateUntilFound(i,dataPoint,"StreetName");
+		i = dataPoint.iterateUntilFound(i,"StreetName");
 		String streetName = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"HouseNumber");
+		i = dataPoint.iterateUntilFound(i,"HouseNumber");
 		int houseNumber = Integer.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = iterateUntilFound(i,dataPoint,"City");
+		i = dataPoint.iterateUntilFound(i,"City");
 		String city = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"ZipCode");
+		i = dataPoint.iterateUntilFound(i,"ZipCode");
 		String zipCode = dataPoint.getEventAtIndex(++i).getData();
-		i = iterateUntilFound(i,dataPoint,"ActiveShipments");
+		i = dataPoint.iterateUntilFound(i,"ActiveShipments");
 		
 		ClientData client = new ClientData(dataPoint.getID(), companyName, countryCode, phoneNumber, email, firstName, middleName, lastName, streetName, city, houseNumber, zipCode);
 		

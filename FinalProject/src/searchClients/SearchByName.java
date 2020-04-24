@@ -2,16 +2,16 @@ package searchClients;
 
 import java.util.List;
 
-import XMLParser.ClientAccess;
 import objectsData.ClientData;
+import xmlParser.ClientXMLManipulation;
 
 public class SearchByName implements SearchClients{
-	private ClientAccess databaseClient;
+	private ClientXMLManipulation databaseClient;
 	private String name;
 	
 	
 	public SearchByName(String name) {
-		databaseClient = new ClientAccess();
+		databaseClient = new ClientXMLManipulation();
 		this.name = name;
 	}
 	

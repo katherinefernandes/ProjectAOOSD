@@ -1,15 +1,15 @@
 package updateContainer;
 
-import XMLParser.ContainerAccess;
-import XMLParser.HistoryAccess;
 import objectsData.ContainerData;
 import objectsData.HistoryData;
 import supportingClasses.UpdateHistory;
+import xmlParser.ContainerXMLManipulation;
+import xmlParser.HistoryXMLManipulation;
 
 public class UpdateStatus implements UpdateContainer{
 
 	private boolean setUpdate;
-	private ContainerAccess databaseContainer;
+	private ContainerXMLManipulation databaseContainer;
 	private UpdateHistory history;
 	private float temp;
 	private float hum;
@@ -20,7 +20,7 @@ public class UpdateStatus implements UpdateContainer{
 		this.hum = hum;
 		this.press = press;
 		this.setUpdate = false;
-		databaseContainer = new ContainerAccess();
+		databaseContainer = new ContainerXMLManipulation();
 		history = new UpdateHistory();
 	}
 	

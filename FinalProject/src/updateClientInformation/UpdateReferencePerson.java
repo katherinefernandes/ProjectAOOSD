@@ -2,22 +2,22 @@ package updateClientInformation;
 
 import java.util.ArrayList;
 
-import XMLParser.ClientAccess;
 import objectsData.ClientData;
+import xmlParser.ClientXMLManipulation;
 
 public class UpdateReferencePerson implements UpdateClient {
 	private ArrayList<String> firstName;
 	private ArrayList<String> middleName;
 	private ArrayList<String> lastName;
 	private boolean setUpdate;
-	private ClientAccess databaseClient;
+	private ClientXMLManipulation databaseClient;
 	
 	public UpdateReferencePerson(ArrayList<String> firstName, ArrayList<String> middleName, ArrayList<String> lastName) {
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.middleName=middleName;
 		this.setUpdate=false;
-		databaseClient= new ClientAccess();
+		databaseClient= new ClientXMLManipulation();
 	}
 	
 	@Override

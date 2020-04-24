@@ -2,16 +2,16 @@ package searchClients;
 
 import java.util.List;
 
-import XMLParser.ClientAccess;
 import objectsData.ClientData;
+import xmlParser.ClientXMLManipulation;
 
 public class SearchByPhone implements SearchClients{
-	private ClientAccess databaseClient;
+	private ClientXMLManipulation databaseClient;
 	private String phone;
 	
 	
 	public SearchByPhone(long phone) {
-		databaseClient = new ClientAccess();
+		databaseClient = new ClientXMLManipulation();
 		this.phone = Long.toString(phone);
 	}
 	

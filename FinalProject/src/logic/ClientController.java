@@ -7,7 +7,6 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import XMLParser.PortAccess;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
@@ -23,6 +22,7 @@ import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import users.CurrentClientV2;
+import xmlParser.PortXMLManipulation;
 
 public class ClientController {
 	private long clientID;
@@ -35,7 +35,7 @@ public class ClientController {
 	private ClientData client;
 	private ArrayList<ContainerData> container;
 	private long portID;
-	private PortAccess databasePort;
+	private PortXMLManipulation databasePort;
 	private long startPortID;
 	private long destinationPortID;
 	
@@ -43,7 +43,7 @@ public class ClientController {
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
 		currentClient = new CurrentClientV2(this.clientID);
-		databasePort = new PortAccess();
+		databasePort = new PortXMLManipulation();
 		clientmenu = new newClientStuff(this);
 		clientmenu.frame.setVisible(true);
 	}
