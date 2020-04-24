@@ -39,10 +39,9 @@ public class CurrentClientV2 extends User{
 	
 
 
-	public boolean updateClientInformation(UpdateClient Update) {
-		// TODO Auto-generated method stub
-		Update.updateInformation(client);
-		return Update.updated();
+	public boolean updateClientInformation(UpdateClient update) {
+		update.updateInformation(client);
+		return update.updated();
 	}
 
 

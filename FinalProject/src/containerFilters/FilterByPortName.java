@@ -16,6 +16,7 @@ public class FilterByPortName extends FilteringContainersForAClient{
 	@Override
 	public ArrayList<ContainerData> filterContainers() {
 		// TODO Auto-generated method stub
+		System.out.println("containers: "+containers.size());
 		for (int i=0;i<containers.size();i++) {
 			if (containers.get(i).getStartPortID()!=portID) {
 				containers.remove(i);

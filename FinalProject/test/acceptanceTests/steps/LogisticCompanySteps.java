@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import dataAccess.ClientAccess;
 import exceptions.ElementNotFoundException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,7 +24,19 @@ import updateContainer.UpdateStatus;
 import users.LogisticCompanyV2;
 
 public class LogisticCompanySteps {
+	
+	private long clientID;
+	private String companyname;
+	private String email;
+	private int countryCode;
+	private long phone;
+	private ArrayList<String> firstname;
+	private ArrayList<String> lastname;
+	private ArrayList<String> middlename;
+	private ClientAccess databaseClient = new ClientAccess();
+	private LogisticCompanyV2 logistic = new LogisticCompanyV2();
 	private ClientData client;
+	/*private ClientData client;
 	private LogisticCompanyV2 logistic = new LogisticCompanyV2();
 	private ValidInput validate = new ValidInput();
 	private String email;
@@ -50,9 +63,9 @@ public class LogisticCompanySteps {
 	private ArrayList<String> firstN;
 	private ArrayList<String> middleN;
 	private ArrayList<String> lastN;
-	private ReferenceName searchRefPerson;
+	private ReferenceName searchRefPerson; */
 	
-	@Given("the logistic Company enters the Client ID {long}")
+	/*@Given("the logistic Company enters the Client ID {long}")
 	public void theLogisticCompanyEntersTheClientID(long clientID)  {
 	    try {
 			logistic.getClient(clientID);
@@ -72,7 +85,7 @@ public class LogisticCompanySteps {
 	    client = logistic.viewClient();
 	    assertTrue(client.getCompanyName().equals(name));
 	    assertTrue(client.getEmail().equals(email));
-	}
+	} 
 	
 	@Given("the logistic Company decides to add a new client")
 	public void theLogisticCompanyDecidesToAddANewClient() {
@@ -235,6 +248,66 @@ public class LogisticCompanySteps {
 	public void theListOfClientsWithThisPhoneShouldAppear() {
 	  
 		assertNotEquals(logistic.search(optionPhone).size(), 0);
+	}*/
+	@Given("there exists a client with ID {long}")
+	public void thereExistsAClientWithID(long clientID) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.clientID=clientID;
 	}
+
+	@Given("the client name is {string}")
+	public void theClientNameIs(String companyName) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.companyname =companyName;
+	}
+
+	@Given("the email is {string}")
+	public void theEmailIs(String email) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.email =email;
+	}
+	@Given("the phonenumber is countrycode {int} phone {long}")
+	public void thePhonenumberIsCountrycodePhone(int countryCode, long phone) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.countryCode =countryCode;
+	    this.phone =phone;
+	}
+
+	@Given("the reference person is firstname {string} lastname {string}")
+	public void theReferencePersonIsFirstnameLastname(String firstname, String lastname) {
+	    // Write code here that turns the phrase above into concrete actions
+	    this.firstname = parseInput.parsingNames(firstname);
+	    this.lastname = parseInput.parsingNames(lastname);
+	    this.middlename = new ArrayList<String>();
+	    ClientData client = new ClientData(this.clientID,this.companyname,this.countryCode,this.phone,this.email,this.firstname,this.middlename,this.lastname,"g-11/2","islamabad",58,"1400");
+	    databaseClient.newEntry(client);
+	    databaseClient.flushActiveData();
+	}
+
+	@When("the logistic Company enters the Client ID {long}")
+	public void theLogisticCompanyEntersTheClientID(long clientID) {
+	    // Write code here that turns the phrase above into concrete actions
+		try {
+			 logistic.getClient(clientID);
+			 client = logistic.viewClient();
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			throw new Error(e);
+		}
+	}
+
+	@Then("the Client information is shown that the client name is {string}")
+	public void theClientInformationIsShownThatTheClientNameIs(String clientname) {
+	    // Write code here that turns the phrase above into concrete actions
+		assertTrue(client.getCompanyName().equals(clientname));
+	    assertTrue(client.getEmail().equals(email));
+	}
+
+	@Then("the email shown is {string}")
+	public void theEmailShownIs(String email) {
+	    // Write code here that turns the phrase above into concrete actions
+		assertTrue(client.getEmail().equals(email));
+	}
+	
 }
 
