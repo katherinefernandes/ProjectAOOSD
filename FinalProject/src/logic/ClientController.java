@@ -9,7 +9,7 @@ import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import exceptions.ElementNotFoundException;
-import graphicalInterface.newClientStuff;
+import graphicalInterface.newClientMenu;
 
 import objectsData.ClientData;
 import objectsData.ContainerData;
@@ -26,7 +26,7 @@ public class ClientController {
 	private long clientID;
 	private ClientApplication currentClient;
 	private ValidInput validate;
-	private newClientStuff clientmenu;
+	private newClientMenu clientmenu;
 	private ArrayList<String> firstNameList;
 	private ArrayList<String> middleNameList;
 	private ArrayList<String> lastNameList;
@@ -44,7 +44,7 @@ public class ClientController {
 		extractingPortID = new ExtractingPortID();
 		currentClient = new ClientApplication(this.clientID);
 		databasePort = new PortXMLManipulation();
-		clientmenu = new newClientStuff(this);
+		clientmenu = new newClientMenu(this);
 		clientmenu.frame.setVisible(true);
 	}
 	public void saveReferencePerson(String firstName, String middleName, String lastName) {
@@ -361,13 +361,11 @@ public class ClientController {
 	public String getMulitpleContainersData() {
 		// TODO Auto-generated method stub
 		String result ="Displaying Up to most 2 Containers: ";
-		int counter =0;
+		
 		for(int i=0;i<container.size();i++) {
 			result =result+containerDataToString(container.get(i));
-			counter++;
-			if(counter>1) {
-				break;
-			}
+			
+			
 		}
 		
 		
@@ -479,7 +477,7 @@ public class ClientController {
 		}
 		
 		checkMessage = validate.validateName(cargo);
-		
+		System.out.println(cargo+cargo.length());
 		if(checkMessage) {
 			checkMessage =checkFloat(atm);
 			checkMessage = checkFloat(temp);

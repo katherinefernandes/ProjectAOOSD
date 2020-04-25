@@ -21,10 +21,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JScrollBar;
 
 
 
-public class newClientStuff {
+public class newClientMenu {
 
 	//private long clientID;
 	
@@ -93,8 +94,10 @@ public class newClientStuff {
 	private ValidInput validate;
 	private JTextArea journeySuccessTextfield;
 	private JPanel viewContainerPanel;
+	private JScrollBar ActiveShipmentsScrollBar;
+	private JScrollBar multipleContainersScrollBar;
 	
-	public newClientStuff(ClientController controller) {
+	public newClientMenu(ClientController controller) {
 		this.controller = controller;
 		validate =new ValidInput();
 		initialize();
@@ -377,7 +380,7 @@ public class newClientStuff {
 		txtrNewPhoneNumber.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrNewPhoneNumber.setEditable(false);
 		txtrNewPhoneNumber.setText("New Phone Number:");
-		txtrNewPhoneNumber.setBounds(94, 139, 168, 16);
+		txtrNewPhoneNumber.setBounds(94, 188, 168, 16);
 		PhonePanel.add(txtrNewPhoneNumber);
 		
 		JButton savePhoneButton = new JButton("Save");
@@ -402,7 +405,7 @@ public class newClientStuff {
 		PhonePanel.add(savePhoneButton);
 		
 		newPhoneNumberText = new JTextField();
-		newPhoneNumberText.setBounds(291, 136, 198, 26);
+		newPhoneNumberText.setBounds(291, 185, 198, 26);
 		PhonePanel.add(newPhoneNumberText);
 		newPhoneNumberText.setColumns(10);
 		
@@ -411,11 +414,11 @@ public class newClientStuff {
 		txtrCountryCode.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrCountryCode.setEditable(false);
 		txtrCountryCode.setBackground(new Color(95, 158, 160));
-		txtrCountryCode.setBounds(94, 188, 168, 23);
+		txtrCountryCode.setBounds(94, 139, 168, 23);
 		PhonePanel.add(txtrCountryCode);
 		
 		countryCodeTextField = new JTextField();
-		countryCodeTextField.setBounds(291, 185, 198, 26);
+		countryCodeTextField.setBounds(291, 136, 198, 26);
 		PhonePanel.add(countryCodeTextField);
 		countryCodeTextField.setColumns(10);
 		
@@ -893,6 +896,10 @@ public class newClientStuff {
 		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 		ViewInfoPanel.add(viewActiveShipmentsTextField);
 		
+		ActiveShipmentsScrollBar = new JScrollBar();
+		ActiveShipmentsScrollBar.setBounds(546, 370, 15, 96);
+		ViewInfoPanel.add(ActiveShipmentsScrollBar);
+		
 		
 		
 		newMultipleContainersPanel = new JPanel();
@@ -904,9 +911,13 @@ public class newClientStuff {
 		multipleContainersTextField.setBackground(new Color(95, 158, 160));
 		multipleContainersTextField.setEditable(false);
 		multipleContainersTextField.setBounds(20, 25, 543, 432);
-		JScrollPane scroll = new JScrollPane(multipleContainersTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	//	JScrollPane scroll = new JScrollPane(multipleContainersTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		newMultipleContainersPanel.add(multipleContainersTextField);
-		newMultipleContainersPanel.add(scroll);
+		
+		multipleContainersScrollBar = new JScrollBar();
+		multipleContainersScrollBar.setBounds(534, 36, 15, 419);
+		newMultipleContainersPanel.add(multipleContainersScrollBar);
+		//newMultipleContainersPanel.add(scroll);
 	}
 	
 	public void switchPanels(JPanel panel) {
@@ -989,5 +1000,4 @@ public class newClientStuff {
 	public void containerSearchError() {
 		setTextVisibleTrue(noContainerError);
 	}
-
 }

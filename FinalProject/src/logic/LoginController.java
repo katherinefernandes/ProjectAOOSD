@@ -5,9 +5,9 @@ import java.util.*;
 
 import applications.ClientApplication;
 import exceptions.ElementNotFoundException;
-import graphicalInterface.Login_Window;
+import graphicalInterface.LoginWindow;
 import graphicalInterface.LogisticsMenu;
-import graphicalInterface.newClientStuff;
+import graphicalInterface.newClientMenu;
 import objectsData.ClientData;
 import supportingClasses.Security;
 import xmlParser.ClientXMLManipulation;
@@ -16,23 +16,30 @@ public class LoginController {
 	private String companyUsername = "admin";
 	private String companyPassword = "admin";
 	private ArrayList<String> clientIDs;
-	private Login_Window window;
+	private LoginWindow window;
 	private ClientXMLManipulation clientXMLManipulation;
 
 	public LoginController() {
+		System.out.println("Inside login controller");
 		clientXMLManipulation = new ClientXMLManipulation();
-		window = new Login_Window(this);
+		window = new LoginWindow(this);
+		window.errorMessage.setVisible(false);
 		window.openFrame();
+		
+		
 	}
 	
 	public boolean validClientInfo(String clientID) {
-		if (clientXMLManipulation.IDExists(clientID)) {
-			System.out.println("textfield in window: " +  clientID);
+			if (clientXMLManipulation.IDExists(clientID)) {
+				System.out.println("textfield in window: " +  clientID);
+				
+				return true;
+			} else {
+				
+				System.out.println("Invalid client id");
+				return false;
+		}}
 			
-			return true;
-		} else
-			return false;
-	}
 
 
 	private boolean validCompanyInfo(String companyUserNameIN, char[] companyPasswordIN) {
@@ -44,16 +51,12 @@ public class LoginController {
 	}
 	
 	public void loginButtonPressed(boolean clientChecked) {
-		if(clientChecked) {
-			login();
-         }
-		else {
-			
-		}
+		login();
 		
 	}
 	
 	public void login() { 
+		System.out.println("Inside the login thing");
 		boolean validLogin;
 		boolean isClient = window.isClientButtonChecked();
 		if(isClient) {
