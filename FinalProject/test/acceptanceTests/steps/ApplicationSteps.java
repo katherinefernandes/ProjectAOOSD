@@ -30,6 +30,7 @@ import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
 import supportingClasses.ExtractingPortID;
 import supportingClasses.Security;
+import supportingClasses.UpdateDestinationPort;
 import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
 import updateClientInformation.UpdateEmail;
@@ -89,9 +90,9 @@ public class ApplicationSteps {
 	@Before
 	public void IntialisePorts() {
 		Security IDgenerator = new Security();
-		PortData port1 = new PortData(IDgenerator.generateID(),"Pakistan","Gwadar",25.11f,62.33f);
-		PortData port2 = new PortData(IDgenerator.generateID(),"Denmark","Copenhagen",55.70f,12.59f);
-		PortData port3 = new PortData(IDgenerator.generateID(),"Singapore","Keppel",1.26f,103.83f);
+		PortData port1 = new PortData(357983327889100l,"Pakistan","Gwadar",25.11f,62.33f);
+		PortData port2 = new PortData(357983327946100l,"Denmark","Copenhagen",55.70f,12.59f);
+		PortData port3 = new PortData(357983327979100l,"Singapore","Keppel",1.26f,103.83f);
 		port2.save();
 		port1.save();
 		port3.save();
@@ -735,7 +736,6 @@ public class ApplicationSteps {
 	public void thatThePortNameIsEntered(String portName) {
 
 	    this.portName=portName;
-	    clientApplication = new ClientApplication(897841664590l);//will be deleted when the getportID is moved
 	}
 
 	@When("the database is asked to return the portID")
@@ -753,19 +753,18 @@ public class ApplicationSteps {
 	public void thatThePortIDIsEntered(long portID) {
 
 		this.portID=portID;
-		clientApplication = new ClientApplication(897841664590l);//will be deleted when the getportID is moved
 	}
 
 	@When("the database is asked to return the port data")
 	public void theDatabaseIsAskedToReturnThePortData() {
 
-	    result = clientApplication.updateDestinationPort(portID);
+		 result = new UpdateDestinationPort().updatePort(portID, 34569l);
 	}
 
 	@Then("error message is returned")
 	public void errorMessageIsReturned() {
 
-	    assertFalse(result);
+		assertFalse(result);
 	}
 	@When("the Client provides the new country code {int} which is of the valid length")
 	public void providesTheNewCountryCodeWhichIsOfTheValidLength(int countryCode) {
