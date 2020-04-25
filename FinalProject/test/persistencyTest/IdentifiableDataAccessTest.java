@@ -1,25 +1,23 @@
-package dataAccessTest;
+package persistencyTest;
 
 import java.util.*;
-
 import org.junit.jupiter.api.AfterEach;
-
 import exceptions.ElementNotFoundException;
 import objectsData.IdentifiableData;
-import objectsData.ObjectData;
-import xmlParser.GeneralXMLManipulation;
-import xmlParser.IdentifiableXMLManipulation;
 
-public abstract class IdentifiableDataAccessTest<T extends IdentifiableData, A extends IdentifiableXMLManipulation<T>> extends DataAccessTest<T,A>{
+public abstract class IdentifiableDataAccessTest<T extends IdentifiableData> extends DataAccessTest<T>{
 	public IdentifiableDataAccessTest() {
 		super();
 	}
+	
+	protected abstract void delete(long ID);
+	protected abstract T getObject(long ID) throws ElementNotFoundException;
 	
 	@Override
 	@AfterEach
 	public void cleanUp() {
 		for(long id : toBeDeleted) {
-			dataAccess.deleteEntry(id);
+			delete(id);
 		}
 		toBeDeleted = new ArrayList<>();
 	}
@@ -33,26 +31,18 @@ public abstract class IdentifiableDataAccessTest<T extends IdentifiableData, A e
 	@Override
 	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
 		insertData(data1);
-		
-		dataAccess.flushActiveData();
-		insertData(data1_v2);
-		
-		dataAccess.flushActiveData();
-		
-		T pulledData = dataAccess.getEntry(getDataID(data1));
-		
+		insertData(data1_v2);		
+		T pulledData = getObject(getDataID(data1));
 		assertEqualData(pulledData,data1_v2);
 	}
 	
 	public void editTest() throws ElementNotFoundException, NumberFormatException {
+		insertData(data1);
 		for(T data : sortTestData) {
 			insertData(data);
 		}
-		insertData(data1);
-		dataAccess.flushActiveData();
-		dataAccess.editEntry(data1_v2);
-		dataAccess.flushActiveData();
-		T pulledData = dataAccess.getEntry(getDataID(data1));
+		insertData(data1_v2);
+		T pulledData = getObject(getDataID(data1));
 		
 		assertEqualData(pulledData,data1_v2);
 	}

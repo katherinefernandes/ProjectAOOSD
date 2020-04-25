@@ -1,28 +1,24 @@
 package xmlParser;
 
 import java.util.*;
-
-import javax.xml.stream.XMLStreamException;
-
 import exceptions.ElementNotFoundException;
 import objectsData.IdentifiableData;
 
 public abstract class IdentifiableXMLManipulation<T extends IdentifiableData> extends GeneralXMLManipulation<T> {
 	private ActiveIdentifiableData<T> activeData;
 	
-	public IdentifiableXMLManipulation(String filename, String dataPointTagName, String collectionTagName) {
+	protected IdentifiableXMLManipulation(String filename, String dataPointTagName, String collectionTagName) {
 		super(filename, dataPointTagName, collectionTagName);
 		activeData = new ActiveIdentifiableData<>();
 	}
 	
-	protected abstract T dataFromEvents(DataPointParser dataPoint);
-	
-	@Override
 	public void newEntry(T newData) {
 		activeData.storeNewData(newData);
+		if (activeData.size() > 5) {
+			flushActiveData();
+		}
 	}
 
-	@Override
 	public List<T> searchEntries(String searchWord) {
 		List<T> matchingEntries = activeData.findMatchingEntriesFromActiveData(searchWord);
 		matchingEntries.addAll(findMatchingEntriesFromFile(searchWord));
@@ -37,11 +33,6 @@ public abstract class IdentifiableXMLManipulation<T extends IdentifiableData> ex
 		return matchingEntries.get(0);
 	}
 	
-	public void editEntry(T data) {
-		//Might implement checks for whether entry exists
-		newEntry(data);
-	}
-	
 	public void deleteEntry(long ID) {
 		activeData.removeDataWithID(ID);
 		
@@ -50,29 +41,34 @@ public abstract class IdentifiableXMLManipulation<T extends IdentifiableData> ex
 		io.finishWriteIO();
 	}
 	
-	public boolean IDExists(String ID) {
-		boolean exists = activeData.IDIsInActiveData(ID);
-		exists = exists || IDIsInFile(ID);
+	public boolean isSavedID(long ID) {
+		boolean exists = activeData.activeDataContainsID(ID);
+		exists = exists || fileContainsID(ID);
 		return exists;
 	}
 	
 	@Override
-	public void flushActiveData() {
+	protected DataPointParser dataPointFromObject(T data){
+		DataPointParser dataPoint = new DataPointParser(data.getTagname(),data.getID());
+		dataPoint.createDataPoint(data.getXML());
+		return dataPoint;
+	}
+	
+	@Override
+	protected void flushActiveData() {
 		io.initializeIO();
 		zipActiveDataToFile();
 		io.finishWriteIO();
 	}
 	
 	@Override
-	protected EventParser createStartTag(T data) {
-		EventParser startTag = EventParser.generateStart(dataPointTagName);
-		startTag.setIDAttribute(data.getID());
-		return startTag;
+	protected void wipeActiveData() {
+		activeData.wipeAllData();
 	}
 	
-	private boolean IDIsInFile(String ID) {
+	private boolean fileContainsID(long ID) {
 		io.initializeIO();
-		boolean isFound = searchFileForID(ID);
+		boolean isFound = searchFileForID(String.valueOf(ID));
 		io.finishReadIO();
 		return isFound;
 	}
@@ -98,7 +94,7 @@ public abstract class IdentifiableXMLManipulation<T extends IdentifiableData> ex
 			EventParser event = io.readEvent();
 			dataPointParser.handleMatchOnID(event);
 			if(dataPointParser.isCompleteDataPoint() && !dataPointParser.isCompleteMatchingDataPoint()) {
-				io.insertDataPoint(dataPointParser.getDataPoint());
+				io.insertDataPoint(dataPointParser);
 			}
 		}
 		io.writeEvent(EventParser.generateEnd(collectionTagName));
@@ -125,13 +121,13 @@ public abstract class IdentifiableXMLManipulation<T extends IdentifiableData> ex
 		if(event.isStartOfDataPoint(dataPointTagName)) {
 			insertAllLesserActiveData(dataPointParser);
 		}else if(event.isEndOfDataPoint(dataPointTagName) && !dataPointParser.isCompleteMatchingDataPoint()) {
-			io.insertDataPoint(dataPointParser.getDataPoint());
+			io.insertDataPoint(dataPointParser);
 		}
 		return dataPointParser;
 	}
 
 	private void transferFirstActiveDataToFile() {
-		io.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
+		io.insertDataPoint(dataPointFromObject(activeData.getDataAtIndex(0)));
 		activeData.removeDataAtIndex(0);
 	}
 
@@ -161,7 +157,7 @@ public abstract class IdentifiableXMLManipulation<T extends IdentifiableData> ex
 			EventParser event = io.readEvent();
 			currentDataPoint.handleMatchOnIDAndValue(event);
 			if(currentDataPoint.isCompleteMatchingDataPoint()) {
-				matchingEntries.add(dataFromEvents(currentDataPoint));
+				matchingEntries.add(objectFromDataPoint(currentDataPoint));
 			}
 		}
 		return matchingEntries;

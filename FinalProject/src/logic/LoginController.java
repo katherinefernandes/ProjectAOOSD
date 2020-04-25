@@ -3,32 +3,23 @@ package logic;
 import java.awt.EventQueue;
 import java.util.*;
 
-import exceptions.ElementNotFoundException;
+import dataBase.DataBase;
 import graphicalInterface.Login_Window;
 import graphicalInterface.LogisticsMenu;
-import graphicalInterface.newClientStuff;
-import objectsData.ClientData;
-import supportingClasses.Security;
-import users.CurrentClientV2;
-import xmlParser.ClientXMLManipulation;
 
 public class LoginController {
 	private String companyUsername = "admin";
 	private String companyPassword = "admin";
-	private ArrayList<String> clientIDs;
 	private Login_Window window;
-	private ClientXMLManipulation clientXMLManipulation;
 
 	public LoginController() {
-		clientXMLManipulation = new ClientXMLManipulation();
 		window = new Login_Window(this);
 		window.openFrame();
 	}
 	
 	public boolean validClientInfo(String clientID) {
-		if (clientXMLManipulation.IDExists(clientID)) {
+		if (DataBase.isSavedID(Long.valueOf(clientID))) {
 			System.out.println("textfield in window: " +  clientID);
-			
 			return true;
 		} else
 			return false;
@@ -68,12 +59,11 @@ public class LoginController {
 		if(!validLogin) {
 			window.invalidInput();
 		} else {
-			LoginController thisController = this;
 			if(isClient) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							ClientController clientController = new ClientController((window.getClientInput()));
+							new ClientController((window.getClientInput()));
 							window.closeFrame();
 							
 						
@@ -97,6 +87,4 @@ public class LoginController {
 				});
 			}} 
 	}
-	
-	
 }

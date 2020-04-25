@@ -10,6 +10,10 @@ class ActiveData<T extends ObjectDataInterface> {
 		dataList = new ArrayList<>();
 	}
 	
+	public int size() {
+		return dataList.size();
+	}
+	
 	public void storeNewData(T newData1) {
 		dataList.add(newData1);
 	}

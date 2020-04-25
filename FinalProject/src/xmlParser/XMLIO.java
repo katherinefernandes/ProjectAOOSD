@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
@@ -24,7 +23,7 @@ public class XMLIO implements IO{
 	
 	public XMLIO(String fileInPath) {
 		this.fileIn = new File(fileInPath);
-		fileOut = new File("storage/temp.xml");
+		fileOut = new File(fileInPath.substring(0, fileInPath.length() - 4) + "Temp.xml");
 	}
 	
 	public void initializeIO() {
@@ -66,9 +65,9 @@ public class XMLIO implements IO{
 		}
 	}
 	
-	public void insertDataPoint(List<EventParser> dataPoint) {
+	public void insertDataPoint(DataPointParser dataPoint) {
 		try {
-		for(EventParser event : dataPoint) {
+		for(EventParser event : dataPoint.getDataPoint()) {
 				writer.add(event.getEvent());
 			} 
 		} catch (XMLStreamException e) {

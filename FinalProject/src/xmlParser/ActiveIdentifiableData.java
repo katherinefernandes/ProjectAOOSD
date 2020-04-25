@@ -26,9 +26,10 @@ class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveData<T> {
 		}
 	}
 	
-	public boolean IDIsInActiveData(String ID) {
+	public boolean activeDataContainsID(long ID) {
+		String IDAsString = String.valueOf(ID);
 		for(T data : dataList) {
-			if (String.valueOf(data.getID()).equals(ID)){
+			if (String.valueOf(data.getID()).equals(IDAsString)){
 				return true;
 			}
 		}
@@ -56,7 +57,7 @@ class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveData<T> {
 	
 	private void removePossibleDuplicate(int index) {
 		if(insertionCreatedDuplicate(index)) {
-			removeDataAtIndex(index);
+			removeDataAtIndex(index + 1);
 		}
 	}
 	

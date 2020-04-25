@@ -1,7 +1,5 @@
 package xmlParser;
 
-import java.util.List;
-
 public interface IO {
 	
 	public void initializeIO();
@@ -12,7 +10,7 @@ public interface IO {
 	
 	public void finishWriteIO();
 	
-	public void insertDataPoint(List<EventParser> dataPoint);
+	public void insertDataPoint(DataPointParser dataPoint);
 	
 	public EventParser readEvent();
 	

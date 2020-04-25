@@ -3,6 +3,9 @@ package objectsData;
 import java.util.ArrayList;
 import java.util.List;
 
+import dataBase.DataBase;
+import xmlParser.XMLField;
+
 //TODO general problem with all subclasses: they don't follow open-close or single responsibility
 //-open-close because adding more datafields to a class means changing code in multiple classes and methods
 //-single responsibility because time updated is assigned automatically, which shouldn't be the job of these
@@ -21,6 +24,14 @@ public abstract class ObjectData implements ObjectDataInterface{
 			e.printStackTrace();
 		}
 		return values;
+	}
+	
+	public List<XMLField> getXML() {
+		return xmlFields;
+	}
+	
+	public String getTagname() {
+		return tagName;
 	}
 	
 	public boolean valuesContainSearchWord(String searchWord) {
@@ -58,13 +69,5 @@ public abstract class ObjectData implements ObjectDataInterface{
 			}
 			return;
 		}
-	}
-	
-	public List<XMLField> getXML() {
-		return xmlFields;
-	}
-	
-	public String getTagname() {
-		return tagName;
 	}
 }

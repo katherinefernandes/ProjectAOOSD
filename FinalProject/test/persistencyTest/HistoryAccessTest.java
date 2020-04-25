@@ -1,4 +1,4 @@
-package dataAccessTest;
+package persistencyTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,15 +10,14 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import objectsData.HistoryData;
-import xmlParser.HistoryXMLManipulation;
 
-public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryXMLManipulation> {
+public class HistoryAccessTest extends DataAccessTest<HistoryData> {
 	
 	public HistoryAccessTest() {
 		super();
-		dataAccess = new HistoryXMLManipulation();
 		data1 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
 		data1_v2 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
 		data2 = new HistoryData(LocalDateTime.of(2020, 3, 1, 13, 12, 14), 124321L, 123819L, 9173284L, 12839L, 1923819L, "crab", 24.F, 104.F, 90F, 112.F, 33.F);
@@ -43,29 +42,22 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryXMLMan
 		
 	}
 	
-	@Override
-	@AfterEach
-	public void cleanUp() {
-		dataAccess.wipeHistory();
-		toBeDeleted = new ArrayList<>();
-	}
+	
 	
 	@Override
 	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
 		insertData(data1);
 		insertData(data1_v2);
-		dataAccess.flushActiveData();
 		insertData(data2);
 		for(HistoryData data : sortTestData) {
 			insertData(data);
 		}
-		dataAccess.flushActiveData();
 	
-		HistoryData pulledData = dataAccess.searchEntries(data2.getTimeStamp().toString()).get(0);
+		HistoryData pulledData = DataBase.searchHistory(data2.getTimeStamp().toString()).get(0);
 		assertEqualData(pulledData,data2);
 	}
 	
-	@Test
+	//@Test
 	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
 		persistencyTest();
 	}
@@ -88,6 +80,15 @@ public class HistoryAccessTest extends DataAccessTest<HistoryData, HistoryXMLMan
 	
 	protected long getDataID(HistoryData data) {
 		return data.getTimeStamp().toEpochSecond(ZoneOffset.UTC);
+	}
+
+
+
+	@Override
+	@AfterEach
+	public void cleanUp() {
+		toBeDeleted = new ArrayList<>();
+		DataBase.wipeHistory();
 	}
 	
 }

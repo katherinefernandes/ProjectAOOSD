@@ -1,18 +1,13 @@
 package logic;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
+import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.newClientStuff;
-//import graphicalInterface.newClientStuff;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
@@ -22,7 +17,6 @@ import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import users.CurrentClientV2;
-import xmlParser.PortXMLManipulation;
 
 public class ClientController {
 	private long clientID;
@@ -35,7 +29,6 @@ public class ClientController {
 	private ClientData client;
 	private ArrayList<ContainerData> container;
 	private long portID;
-	private PortXMLManipulation databasePort;
 	private long startPortID;
 	private long destinationPortID;
 	
@@ -43,7 +36,6 @@ public class ClientController {
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
 		currentClient = new CurrentClientV2(this.clientID);
-		databasePort = new PortXMLManipulation();
 		clientmenu = new newClientStuff(this);
 		clientmenu.frame.setVisible(true);
 	}
@@ -152,7 +144,6 @@ public class ClientController {
 		
 	}
 	public String getCurrentPhoneNumber() {
-		// TODO Auto-generated method stub
 		String phone = "";
 		if(currentClient.getSetClient()) {
 			client = currentClient.viewClient();
@@ -161,7 +152,6 @@ public class ClientController {
 		return phone;
 	}
 	public String getCurrentEmail() {
-		// TODO Auto-generated method stub
 		String email ="";
 		if (currentClient.getSetClient()) {
 			client = currentClient.viewClient();
@@ -170,7 +160,6 @@ public class ClientController {
 		return email;
 	}
 	public String getCompanyName() {
-		// TODO Auto-generated method stub
 		String company="";
 		if (currentClient.getSetClient()) {
 			client = currentClient.viewClient();
@@ -179,7 +168,6 @@ public class ClientController {
 		return company;
 	}
 	public String getReferencePerson() {
-		// TODO Auto-generated method stub
 		String personname="";
 		if (currentClient.getSetClient()) {
 			client = currentClient.viewClient();
@@ -211,7 +199,6 @@ public class ClientController {
 	}
 	
 	public String getAddress() {
-		// TODO Auto-generated method stub
 		String address ="";
 		if (currentClient.getSetClient()) {
 			client = currentClient.viewClient();
@@ -223,7 +210,6 @@ public class ClientController {
 		return address;
 	}
 	public String getActiveShipments() {
-		// TODO Auto-generated method stub
 		String activeShipments ="The recently registered journeys: ";
 		
 		if (currentClient.getSetClient()) {
@@ -233,7 +219,6 @@ public class ClientController {
 		return activeShipments;
 	}
 	public boolean getContainerByContainerID(String containerID) {
-		// TODO Auto-generated method stub
 		container = new ArrayList<ContainerData>();
 		try {
 			currentClient.getContainer(Long.valueOf(containerID));
@@ -254,7 +239,6 @@ public class ClientController {
 		}
 	}
 	public boolean getContainerByJourneyID(String journeyID) {
-		// TODO Auto-generated method stub
 		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
@@ -273,7 +257,6 @@ public class ClientController {
 		}
 	}
 	public boolean getContainerByCargo(String cargo) {
-		// TODO Auto-generated method stub
 		FilterByCargoName filter = new FilterByCargoName(currentClient.viewClient(),cargo);
 		container = currentClient.getFilteredContainersOnAJourney(filter);
 		if(container.size()<=0) {
@@ -284,7 +267,6 @@ public class ClientController {
 		return true;
 	}
 	public boolean getContainerByPortName(String portname) {
-		// TODO Auto-generated method stub
 		portID = currentClient.getPortID(portname);
 		if (portID==1l) {
 			System.out.println("The portname is not present in the database");
@@ -303,38 +285,31 @@ public class ClientController {
 	}
 
 	public String getStartPortName() {
-		// TODO Auto-generated method stub
 		return getPortName(container.get(0).getStartPortID());
 	}
 	private String getPortName(long portID) {
 		PortData port;
 		try {
-			port = databasePort.getEntry(portID);
+			port = DataBase.getPort(portID);
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Cant find the port");
 			throw new Error(e);
 		}
 		return port.getPortName();
 	}
 	public String getDestinationPortName() {
-		// TODO Auto-generated method stub
 		return getPortName(container.get(0).getDestinationPortID());
 	}
 	public String getCargo() {
-		// TODO Auto-generated method stub
 		return container.get(0).getCargo();
 	}
 	public String getArrivalDate() {
-		// TODO Auto-generated method stub
 		return container.get(0).getArriveBy();
 	}
 	public String getLastUpdate() {
-		// TODO Auto-generated method stub
 		return container.get(0).getUpdated();
 	}
 	public String getInternalStatus() {
-		// TODO Auto-generated method stub
 		String temp= Float.toString(container.get(0).getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.get(0).getInternalStatus().getHumidity());
 		String pressure = Float.toString(container.get(0).getInternalStatus().getAtmosphere());
@@ -342,13 +317,11 @@ public class ClientController {
 		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
 	}
 	public String getCurrentLocation() {
-		// TODO Auto-generated method stub
 		String latitude = Float.toString(container.get(0).getCurrentPosition().getLatitude());
 		String longitude = Float.toString(container.get(0).getCurrentPosition().getlongitude());
 		return "Latitude: "+latitude+"  Longitude: "+longitude;
 	}
 	public String getMulitpleContainersData() {
-		// TODO Auto-generated method stub
 		String result ="Displaying Up to most 2 Containers: ";
 		int counter =0;
 		for(int i=0;i<container.size();i++) {
@@ -378,7 +351,6 @@ public class ClientController {
 		return result;
 	}
 	private String getInternalStatus(ContainerData container) {
-		// TODO Auto-generated method stub
 		String temp= Float.toString(container.getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.getInternalStatus().getHumidity());
 		String pressure = Float.toString(container.getInternalStatus().getAtmosphere());
@@ -386,7 +358,6 @@ public class ClientController {
 		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
 	}
 	public boolean checkStartPortName(String portname) {
-		// TODO Auto-generated method stub
 		startPortID = currentClient.getPortID(portname);
 		System.out.println("Checking if the port name exists");
 	   if (startPortID==1l) {
@@ -404,7 +375,6 @@ public class ClientController {
 		return false;
 	}
 	public boolean checkDestinationPortName(String portname) {
-		// TODO Auto-generated method stub
 		destinationPortID = currentClient.getPortID(portname);
 		if(destinationPortID==1l) {
 			System.out.println("Destination port does not exit");
@@ -417,7 +387,6 @@ public class ClientController {
 		return true;
 	}
 	public boolean checkFloat(String floatnumber) {
-		// TODO Auto-generated method stub
 		try {
 			Float.valueOf(floatnumber);
 			System.out.println("number value is correct");
@@ -443,7 +412,6 @@ public class ClientController {
 		return false;
 	}
 	public boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
-		// TODO Auto-generated method stub
 		float temperature = Float.valueOf(temp);
 		float humidity2 = Float.valueOf(humidity);
 		float atmosphere = Float.valueOf(atm);

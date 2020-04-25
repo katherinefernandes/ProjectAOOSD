@@ -1,62 +1,45 @@
 package xmlParser;
 
 import objectsData.ObjectDataInterface;
-import objectsData.XMLField;
-
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.*;
-
-import javax.xml.stream.*;
-import javax.xml.stream.events.*;
-import javax.xml.validation.*;
 
 public abstract class GeneralXMLManipulation<T extends ObjectDataInterface> {
 	protected String dataPointTagName;
 	protected String collectionTagName;
 	protected IO io;
 	
-	
-	public GeneralXMLManipulation(String filePath, String elementsName, String collectionsName) {
+	protected GeneralXMLManipulation(String filePath, String elementsName, String collectionsName) {
 		this.io = new XMLIO(filePath);
 		this.dataPointTagName = elementsName;
 		this.collectionTagName = collectionsName;
+		Thread shutDownFlush = new Thread(() -> flushActiveData());
+		Runtime.getRuntime().addShutdownHook(shutDownFlush);
+	}
+	
+	protected abstract void flushActiveData();
+	
+	protected abstract void wipeActiveData();
+	
+	protected abstract T objectFromDataPoint(DataPointParser dataPoint);
+	
+	protected DataPointParser dataPointFromObject(T object){
+		DataPointParser dataPoint = new DataPointParser(object.getTagname());
+		dataPoint.createDataPoint(object.getXML());
+		return dataPoint;
 	}
 	
 	
-	public abstract void newEntry(T data);
-	
-	public abstract List<T> searchEntries(String searchWord);
-
-	public abstract void flushActiveData();
-	
-	protected abstract EventParser createStartTag(T data);
-	
-	protected List<EventParser> eventsFromData(T data){
-		List<EventParser> events = new ArrayList<>();
-		addStartElement(data, events);
-		addAllFieldsAsEvents(data.getXML(), events);
-		addEndElement(data, events);
-		return events;
+	@Override
+	public void finalize() {
+		flushActiveData();
 	}
 	
-	private void addStartElement(T data, List<EventParser> events) {
-		events.add(createStartTag(data));
+	public void wipe() {
+		wipeActiveData();
+		io.initializeIO();
+		io.transferNext();
+		io.transferNext();
+		io.writeEvent(EventParser.generateEnd(collectionTagName));
+		io.writeEvent(EventParser.generateEndDoc());
+		io.finishWriteIO();
 	}
-	
-	private void addAllFieldsAsEvents(List<XMLField> xmlFields, List<EventParser> events) {
-		try {
-			for(XMLField field : xmlFields) {
-				events.addAll(field.fieldToEvent(new ArrayList<EventParser>()));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void addEndElement(T data, List<EventParser> events) {
-		events.add(EventParser.generateEnd(data.getTagname()));
-	}
-
 }

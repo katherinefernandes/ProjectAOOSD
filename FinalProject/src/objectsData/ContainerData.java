@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dataBase.DataBase;
 import supportingClasses.parseInput;
+import xmlParser.XMLField;
 
 public class ContainerData extends IdentifiableData {
 	private long containerID;
@@ -221,5 +223,8 @@ public class ContainerData extends IdentifiableData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public void save() {
+		DataBase.save(this);
 	}
 }

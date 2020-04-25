@@ -3,19 +3,16 @@ package containerFilters;
 import java.util.ArrayList;
 import java.util.List;
 
+import dataBase.DataBase;
 import objectsData.ClientData;
 import objectsData.ContainerData;
-import xmlParser.ContainerXMLManipulation;
 
 public abstract class FilteringContainersForAClient implements FilterContainer {
 
 	protected ArrayList<ContainerData> containers;
-	private ContainerXMLManipulation databaseContainer;
 	private ArrayList<Long> activeJourneys;
 	
 	public FilteringContainersForAClient(ClientData client) {
-		 databaseContainer = new ContainerXMLManipulation();
-		 
 		this.activeJourneys=client.getActiveShipment();
 		containers= new ArrayList<ContainerData>();
 		getContainersByActiveJourneyIDs();
@@ -26,7 +23,7 @@ public abstract class FilteringContainersForAClient implements FilterContainer {
 		System.out.println("activeJourneys: "+activeJourneys.size());
 		for(int i=0;i<this.activeJourneys.size();i++) {
 			String journeyIDInString = this.activeJourneys.get(i).toString();
-			containerExtractedByDataBase = databaseContainer.searchEntries(journeyIDInString);
+			containerExtractedByDataBase = DataBase.searchContainers(journeyIDInString);
 			this.containers.add(containerExtractedByDataBase.get(0));
 		}
 		//So this method ensures that the containers contain all the containers registered by the client which are on an active journey

@@ -2,6 +2,9 @@ package objectsData;
 
 import java.util.*;
 
+import dataBase.DataBase;
+import xmlParser.XMLField;
+
 public class PortData extends IdentifiableData{
 	private String country;
 	private String portName;
@@ -76,5 +79,8 @@ public class PortData extends IdentifiableData{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void save() {
+		DataBase.save(this);
 	}
 }

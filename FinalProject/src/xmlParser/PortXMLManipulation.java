@@ -1,16 +1,18 @@
 package xmlParser;
 
 import javax.xml.stream.events.XMLEvent;
+
+import dataBase.IdentifiablePersistency;
 import objectsData.PortData;
 
-public class PortXMLManipulation extends IdentifiableXMLManipulation<PortData> {
+public class PortXMLManipulation extends IdentifiableXMLManipulation<PortData> implements IdentifiablePersistency<PortData> {
 	
 	public PortXMLManipulation() {
 		super("storage/activeData/ports.xml","Port","Ports");
 	}
 
 	@Override
-	protected PortData dataFromEvents(DataPointParser dataPoint) {
+	protected PortData objectFromDataPoint(DataPointParser dataPoint) {
 		int i = 0;
 		XMLEvent event;
 		i = dataPoint.iterateUntilFound(i,"Country");

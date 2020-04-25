@@ -5,8 +5,11 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import dataBase.DataBase;
+import xmlParser.XMLField;
+
 public class HistoryData extends ObjectData {
-	private  LocalDateTime timeStamp ;
+	private LocalDateTime timeStamp ;
 	private long containerID;
 	private long journeyID;
 	private long clientID;
@@ -88,7 +91,8 @@ public class HistoryData extends ObjectData {
 	public Location getLocation() {
 		return this.location;
 	}
-	
-	
+	public void save() {
+		DataBase.save(this);
+	}
 	
 }

@@ -2,8 +2,6 @@ package users;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import searchClients.SearchClients;
 import updateContainer.UpdateContainer;
@@ -36,9 +34,7 @@ public class LogisticCompanyV2 extends User{
 		
 		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstName, middleName, lastName, street, city, houseNumber, postCode);
 		
-		databaseClient.newEntry(newClient);
-		
-		databaseClient.flushActiveData();
+		newClient.save();
 		
 		this.addNewClient = true;
 		

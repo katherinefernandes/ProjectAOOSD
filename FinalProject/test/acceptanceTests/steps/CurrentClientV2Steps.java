@@ -31,9 +31,6 @@ import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import users.CurrentClientV2;
 import users.User;
-import xmlParser.ClientXMLManipulation;
-import xmlParser.ContainerXMLManipulation;
-import xmlParser.PortXMLManipulation;
 
 public class CurrentClientV2Steps {
 	private CurrentClientV2 clientApplication = new CurrentClientV2(828300261636100l);
@@ -41,8 +38,6 @@ public class CurrentClientV2Steps {
 	private long containerID;
 	private long journeyID;
 	private long startPortID;
-	private ClientXMLManipulation databaseClient = new ClientXMLManipulation();
-	private ContainerXMLManipulation databaseContainer = new ContainerXMLManipulation();
 	private long destinationPortID;
 	private float latitude;
 	private float longitude;
@@ -53,7 +48,6 @@ public class CurrentClientV2Steps {
 	private float temperature;
 	private float humidity;
 	private ArrayList<ContainerData> Containers;
-	private PortXMLManipulation databasePort = new PortXMLManipulation();
 	private String startportname;
 	/*private ClientData client;
 	private int countryCode;
@@ -321,7 +315,7 @@ public class CurrentClientV2Steps {
 	    // Write code here that turns the phrase above into concrete actions
 		this.clientID =clientID;
 		client = new ClientData(this.clientID,"company",92,23789,"email@eh.com",parseInput.parsingNames("muna"),parseInput.parsingNames(""),parseInput.parsingNames("azam"),"g11/2","Islamabad",59,"2620");
-		databaseClient.newEntry(client);
+		client.save();
 	}
 
 	@Given("the client has a container with the journey ID {long} registered for a journey")
@@ -329,8 +323,7 @@ public class CurrentClientV2Steps {
 	    // Write code here that turns the phrase above into concrete actions
 	    this.journeyID=journeyID;
 	    client.addActiveShipment(this.journeyID);
-	    databaseClient.editEntry(client);
-	    databaseClient.flushActiveData();
+	    client.save();
 	}
 
 	@Given("the start port of the container was {string}")
@@ -371,8 +364,7 @@ public class CurrentClientV2Steps {
 	    // Write code here that turns the phrase above into concrete actions
 	    this.arriveBy =date;
 	    ContainerData container = new ContainerData (10849147913500l,this.clientID,this.journeyID,this.startPortID,this.destinationPortID,this.latitude,this.longitude,this.cargo,this.temperature,this.pressure,this.humidity,parseInput.getDate(date));
-	    databaseContainer.newEntry(container);
-	    databaseContainer.flushActiveData();
+	    container.save();
 	}
 	
 

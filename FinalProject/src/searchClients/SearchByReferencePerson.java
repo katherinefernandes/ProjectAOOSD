@@ -5,17 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dataBase.DataBase;
 import objectsData.ClientData;
 import objectsData.ReferenceName;
-import xmlParser.ClientXMLManipulation;
 
 public class SearchByReferencePerson implements SearchClients{
-	private ClientXMLManipulation databaseClient;
 	private ReferenceName referencePerson;
 	
 	
 	public SearchByReferencePerson(ReferenceName referencePerson) {
-		databaseClient = new ClientXMLManipulation();
 		this.referencePerson = referencePerson;
 	}
 	
@@ -28,7 +26,7 @@ public class SearchByReferencePerson implements SearchClients{
 		for(int i=0;i<referencePerson.getFirstName().size();i++) {
 			firstName=firstName+referencePerson.getFirstName().get(i);
 		};
-		firstClients = databaseClient.searchEntries(firstName);
+		firstClients = DataBase.searchClients(firstName);
 		for(int i=0;i<referencePerson.getMiddleName().size();i++) {
 			middleName=middleName+referencePerson.getMiddleName().get(i);
 		};

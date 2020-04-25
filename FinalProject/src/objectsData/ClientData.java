@@ -2,6 +2,9 @@ package objectsData;
 
 import java.util.*;
 
+import dataBase.DataBase;
+import xmlParser.XMLField;
+
 public class ClientData extends IdentifiableData{
 	private String companyName;
 	private PhoneNumber phoneNumber;
@@ -116,5 +119,8 @@ public class ClientData extends IdentifiableData{
 	}
 	public ArrayList<Long> getActiveShipment(){
 		return this.activeShipment;
+	}
+	public void save() {
+		DataBase.save(this);
 	}
 }

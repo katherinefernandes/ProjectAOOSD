@@ -1,24 +1,17 @@
 package simulation;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
 import supportingClasses.Security;
 import supportingClasses.UpdateHistory;
 import supportingClasses.parseInput;
-import xmlParser.ClientXMLManipulation;
-import xmlParser.ContainerXMLManipulation;
-import xmlParser.PortXMLManipulation;
 
 public class SimulatingData {
 
 	public static void main(String[] args) {
-		ClientXMLManipulation clientDataBase = new ClientXMLManipulation();
 		ArrayList<String> firstname = new ArrayList<String>();
 		ArrayList<String> middlename = new ArrayList<String>();
 		ArrayList<String> lastname = new ArrayList<String>();
@@ -33,16 +26,13 @@ public class SimulatingData {
 		middlename.add("middlename");
 		ClientData client2 = new ClientData(36836570081685l,"company",92,23789,"email@eh.com",firstname,middlename,lastname,"g11/2","Islamabad",59,"2620");
 		ClientData client3 = new ClientData(828300261636100l,"Companyname",98,23457890l,"company@email.com",firstname,middlename,lastname,"somestreet","somecity",89,"23890");
-		clientDataBase.newEntry(client1);
-		clientDataBase.newEntry(client2);
-		clientDataBase.newEntry(client3);
-		clientDataBase.newEntry(client4);
-		clientDataBase.flushActiveData();
+		client1.save();
+		client2.save();
+		client3.save();
+		client4.save();
 		Security IDgenerator = new Security();
 		PortData port1 = new PortData(IDgenerator.generateID(),"Pakistan","Gwadar",25.11f,62.33f);
 		PortData port2 = new PortData(IDgenerator.generateID(),"Denmark","Copenhagen",55.70f,12.59f);
-		PortXMLManipulation portDataBase = new PortXMLManipulation();
-		ContainerXMLManipulation containerDataBase = new ContainerXMLManipulation();
 		ContainerData container1 = new ContainerData(IDgenerator.generateID(),port1.getID(),25.11f,62.33f);
 		ContainerData container2 = new ContainerData(IDgenerator.generateID(),port1.getID(),25.11f,62.33f);
 		ContainerData container3 = new ContainerData(IDgenerator.generateID(),port1.getID(),25.11f,62.33f);
@@ -57,19 +47,18 @@ public class SimulatingData {
 		ClientData client5 = new ClientData(14618447211200l,"client4",45,40472098l,"client4@client.com",firstname,middlename,lastname,"randomstreet","somecity",98,"23909");
 		client5.addActiveShipment(container10.getJourneyID());
 		port1.addArrivingContainer(container10.getID());
-		clientDataBase.newEntry(client5);
-		clientDataBase.flushActiveData();
-		containerDataBase.newEntry(container11);
-		containerDataBase.newEntry(container9);
-		containerDataBase.newEntry(container1);
-		containerDataBase.newEntry(container2);
-		containerDataBase.newEntry(container3);
-		containerDataBase.newEntry(container4);
-		containerDataBase.newEntry(container5);
-		containerDataBase.newEntry(container6);
-		containerDataBase.newEntry(container7);
-		containerDataBase.newEntry(container8);
-		containerDataBase.newEntry(container10);
+		client5.save();
+		container11.save();
+		container9.save();
+		container1.save();
+		container2.save();
+		container3.save();
+		container4.save();
+		container5.save();
+		container6.save();
+		container7.save();
+		container8.save();
+		container10.save();
 		history.updateHistoryDataBase(container10);
 		history.updateHistoryDataBase(container11);
 		history.updateHistoryDataBase(container9);
@@ -91,11 +80,9 @@ public class SimulatingData {
 		port1.addStationedContainer(container2.getID());
 		port1.addStationedContainer(container1.getID());
 		PortData port3 = new PortData(IDgenerator.generateID(),"Singapore","Keppel",1.26f,103.83f);
-		portDataBase.newEntry(port2);
-		portDataBase.newEntry(port1);
-		portDataBase.newEntry(port3);
-		portDataBase.flushActiveData();
-		containerDataBase.flushActiveData();
+		port1.save();
+		port2.save();
+		port3.save();
 	
 	}
 	

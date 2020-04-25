@@ -1,6 +1,5 @@
 package acceptanceTests.steps;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
+
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -10,18 +9,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import objectsData.ClientData;
-import objectsData.ReferenceName;
-import searchClients.SearchByEmail;
-import searchClients.SearchByName;
-import searchClients.SearchByPhone;
-import searchClients.SearchByReferencePerson;
-import supportingClasses.ValidInput;
 import supportingClasses.parseInput;
-import updateClientInformation.UpdateEmail;
-import updateContainer.UpdateLocation;
-import updateContainer.UpdateStatus;
 import users.LogisticCompanyV2;
-import xmlParser.ClientXMLManipulation;
 
 public class LogisticCompanySteps {
 	
@@ -33,7 +22,6 @@ public class LogisticCompanySteps {
 	private ArrayList<String> firstname;
 	private ArrayList<String> lastname;
 	private ArrayList<String> middlename;
-	private ClientXMLManipulation databaseClient = new ClientXMLManipulation();
 	private LogisticCompanyV2 logistic = new LogisticCompanyV2();
 	private ClientData client;
 	/*private ClientData client;
@@ -280,8 +268,7 @@ public class LogisticCompanySteps {
 	    this.lastname = parseInput.parsingNames(lastname);
 	    this.middlename = new ArrayList<String>();
 	    ClientData client = new ClientData(this.clientID,this.companyname,this.countryCode,this.phone,this.email,this.firstname,this.middlename,this.lastname,"g-11/2","islamabad",58,"1400");
-	    databaseClient.newEntry(client);
-	    databaseClient.flushActiveData();
+	    client.save();
 	}
 
 	@When("the logistic Company enters the Client ID {long}")

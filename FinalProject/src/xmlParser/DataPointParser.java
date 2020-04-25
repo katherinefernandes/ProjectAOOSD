@@ -21,6 +21,23 @@ public class DataPointParser {
 		this.searchWord = searchWord;
 	}
 	
+	public DataPointParser(String dataPointTagName, long ID) {
+		this(dataPointTagName);
+		this.ID = ID;
+	}
+	
+	public void createDataPoint(List<XMLField> xmlFields) {
+		dataPoint.add(EventParser.generateStart(dataPointTagName));
+		for(XMLField field : xmlFields) {
+			dataPoint.addAll(field.fieldToEvent(new ArrayList<EventParser>()));
+		}
+		dataPoint.add(EventParser.generateEnd(dataPointTagName));
+		
+		if(ID != null) {
+			dataPoint.get(0).setIDAttribute(ID);
+		}
+	}
+	
 	public EventParser getEventAtIndex(int index) {
 		return dataPoint.get(index);
 	}

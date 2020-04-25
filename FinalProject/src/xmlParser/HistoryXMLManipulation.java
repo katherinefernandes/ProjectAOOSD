@@ -2,12 +2,10 @@ package xmlParser;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
-import javax.xml.stream.XMLStreamException;
-
+import dataBase.GeneralPersistency;
 import objectsData.HistoryData;
 
-public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> {
+public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> implements GeneralPersistency<HistoryData> {
 	private ActiveData<HistoryData> activeData;
 	public HistoryXMLManipulation() {
 		super("storage/activeData/history.xml","DataPoint","History");
@@ -27,37 +25,17 @@ public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> 
 	}
 
 	@Override
-	public void flushActiveData() {
+	protected void flushActiveData() {
 		io.initializeIO();
 		io.transferNext();
 		io.transferNext();
 		saveAllActiveData();
-		saveAllSavedData();
+		saveAllFileData();
 		io.finishWriteIO();
 	}
 	
-	public void wipeHistory() {
-		activeData.wipeAllData();
-		io.initializeIO();
-		io.transferNext();
-		io.transferNext();
-		io.writeEvent(EventParser.generateEnd(collectionTagName));
-		io.writeEvent(EventParser.generateEndDoc());
-		io.finishWriteIO();
-	}
-
-	private void saveAllSavedData() {
-		while(io.hasNext()) {
-			io.transferNext();
-		}
-	}
-
 	@Override
-	protected EventParser createStartTag(HistoryData data) {
-		return EventParser.generateStart(dataPointTagName);
-	}
-	
-	private HistoryData dataFromEvents(DataPointParser dataPoint) {
+	protected HistoryData objectFromDataPoint(DataPointParser dataPoint) {
 		int i = 0;
 		i = dataPoint.iterateUntilFound(i,"TimeStamp");
 		LocalDateTime timeStamp = LocalDateTime.parse(dataPoint.getEventAtIndex(++i).getData());
@@ -91,8 +69,14 @@ public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> 
 	
 	private void saveAllActiveData() {
 		while(!activeData.isEmpty()) {
-			io.insertDataPoint(eventsFromData(activeData.getDataAtIndex(0)));
+			io.insertDataPoint(dataPointFromObject(activeData.getDataAtIndex(0)));
 			activeData.removeDataAtIndex(0);
+		}
+	}
+	
+	private void saveAllFileData() {
+		while(io.hasNext()) {
+			io.transferNext();
 		}
 	}
 	
@@ -106,10 +90,16 @@ public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> 
 			EventParser event = io.readEvent();
 			dataPoint.handleMatchOnValue(event);
 			if(dataPoint.isCompleteMatchingDataPoint()) {
-				matchingEntries.add(dataFromEvents(dataPoint));
+				matchingEntries.add(objectFromDataPoint(dataPoint));
 			}
 		}	
 		io.finishReadIO();
 		return matchingEntries;
+	}
+
+	@Override
+	protected void wipeActiveData() {
+		activeData.wipeAllData();
+		
 	}
 }

@@ -1,17 +1,14 @@
 package updateClientInformation;
 
 import objectsData.ClientData;
-import xmlParser.ClientXMLManipulation;
 
 public class UpdateEmail implements UpdateClient {
 	private String email;
 	private boolean setUpdate;
-	private ClientXMLManipulation databaseClient;
 	
 	public UpdateEmail(String email) {
 		this.email=email;
 		this.setUpdate=false;
-		databaseClient= new ClientXMLManipulation();
 	}
 	
 	
@@ -25,8 +22,7 @@ public class UpdateEmail implements UpdateClient {
 	public ClientData updateInformation(ClientData client) {
 		// TODO Auto-generated method stub
 		client.setEmail(email);
-		databaseClient.editEntry(client);
-		databaseClient.flushActiveData();
+		client.save();
 		setUpdate = true;
 		return client;
 	}

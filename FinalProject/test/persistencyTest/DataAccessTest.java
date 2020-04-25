@@ -1,20 +1,16 @@
-package dataAccessTest;
+package persistencyTest;
 
 import java.util.*;
-
 import org.junit.jupiter.api.*;
-
 import exceptions.ElementNotFoundException;
 import objectsData.*;
-import xmlParser.GeneralXMLManipulation;
 
-public abstract class DataAccessTest<T extends ObjectDataInterface, A extends GeneralXMLManipulation<T>> {
+public abstract class DataAccessTest<T extends ObjectDataInterface> {
 	T data1;
 	T data2;
 	T data1_v2;
 	List<T> sortTestData;
 	List<Long> toBeDeleted;
-	A dataAccess;
 	Random random;
 	
 	public DataAccessTest() {
@@ -29,7 +25,7 @@ public abstract class DataAccessTest<T extends ObjectDataInterface, A extends Ge
 	public abstract void persistencyTest() throws NumberFormatException, ElementNotFoundException;
 	
 	public void insertData(T data){
-		dataAccess.newEntry(data);
+		data.save();
 	}
 	
 	protected abstract void assertEqualData(T data1, T data2);

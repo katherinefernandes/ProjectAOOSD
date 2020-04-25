@@ -1,25 +1,19 @@
-package dataAccessTest;
+package persistencyTest;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 import org.junit.jupiter.api.Test;
 
+import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 import supportingClasses.parseInput;
-import xmlParser.ContainerXMLManipulation;
 
-public class ContainerAccessTest extends IdentifiableDataAccessTest<ContainerData,ContainerXMLManipulation>{
+public class ContainerAccessTest extends IdentifiableDataAccessTest<ContainerData>{
 
 	public ContainerAccessTest() {
 		super();
-		dataAccess = new ContainerXMLManipulation();
 		
 		data1 = new ContainerData(20711569474800L, 102621L, 675465457L, 53354L, 755356L, 45.6F, 34.787F, "Fish n' chips", 3.5F, 108.2F, 66F,parseInput.getDate("10-04-2020"));
 		data2 = new ContainerData(6755L, 2530321L, 4533566L, 3434568L, 35668556L, 55.6F, 22.87F, "Lard", 7F, 102F, 44F, parseInput.getDate("12-04-2020"));
@@ -37,8 +31,16 @@ public class ContainerAccessTest extends IdentifiableDataAccessTest<ContainerDat
 	@Test
 	public void editTestT() throws NumberFormatException, ElementNotFoundException {
 		editTest(); }
-
 	
+	@Override
+	protected void delete(long ID) {
+		DataBase.deleteContainer(ID);
+	}
+	@Override
+	protected ContainerData getObject(long ID) throws ElementNotFoundException {
+		return DataBase.getContainer(ID);
+	}
+	@Override
 	public void assertEqualData(ContainerData container1, ContainerData container2) {
 		assertEquals(container1.getID(),container2.getID());
 		assertEquals(container1.getClientID(),container2.getClientID());

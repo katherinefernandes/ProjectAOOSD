@@ -1,20 +1,16 @@
-package dataAccessTest;
+package persistencyTest;
 
 import static org.junit.Assert.*;
-
 import java.util.*;
-
 import org.junit.jupiter.api.Test;
-
+import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import objectsData.ClientData;
-import xmlParser.ClientXMLManipulation;
 
-public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,ClientXMLManipulation>{
+public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 	
 	public ClientAccessTest() {
 		super();
-		dataAccess = new ClientXMLManipulation();
 
 		ArrayList<String> firstNames1 = new ArrayList<String>();
 		firstNames1.add("Rincewind");
@@ -73,6 +69,14 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData,Clie
 	public void editTestT() throws NumberFormatException, ElementNotFoundException {
 		editTest(); }
 	
+	@Override
+	protected void delete(long ID) {
+		DataBase.deleteClient(ID);
+	}
+	@Override
+	protected ClientData getObject(long ID) throws ElementNotFoundException {
+		return DataBase.getClient(ID);
+	}
 	@Override
 	protected void assertEqualData(ClientData clientY, ClientData clientX) {
 		assertEquals(clientY.getID(),clientX.getID());

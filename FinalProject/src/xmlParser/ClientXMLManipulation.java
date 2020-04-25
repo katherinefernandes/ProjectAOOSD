@@ -4,14 +4,16 @@ import objectsData.*;
 import java.util.*;
 import javax.xml.stream.events.*;
 
+import dataBase.IdentifiablePersistency;
 
-public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> {
+
+public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> implements IdentifiablePersistency<ClientData> {
 	public ClientXMLManipulation() {
 		super("storage/activeData/clients.xml", "Client","Clients");
 	}
 	
 	@Override
-	protected ClientData dataFromEvents(DataPointParser dataPoint) {
+	protected ClientData objectFromDataPoint(DataPointParser dataPoint) {
 		int i = 0;
 		XMLEvent event;
 		StartElement start;

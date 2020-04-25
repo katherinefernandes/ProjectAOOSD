@@ -1,8 +1,6 @@
-package objectsData;
+package xmlParser;
 
 import java.util.*;
-
-import xmlParser.EventParser;
 
 //TODO convert from overloaded type to a hierarchy of subclasses
 public class XMLField {

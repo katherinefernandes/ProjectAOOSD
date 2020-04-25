@@ -1,16 +1,16 @@
 package xmlParser;
 
 import objectsData.*;
-import java.time.LocalDateTime;
+import dataBase.IdentifiablePersistency;
 
-public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> {
+public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> implements IdentifiablePersistency<ContainerData> {
 	
 	public ContainerXMLManipulation() {
 		super("storage/activeData/containers.xml", "Container", "Containers");
 	}
 	
 	@Override
-	public ContainerData dataFromEvents(DataPointParser dataPoint) {
+	public ContainerData objectFromDataPoint(DataPointParser dataPoint) {
 		int i = 0;
 		i = dataPoint.iterateUntilFound(i,"ClientID");
 		long clientID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
