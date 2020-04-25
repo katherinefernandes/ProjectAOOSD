@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 import java.util.*;
 import dataBase.DataBase;
 import graphicalInterface.LoginWindow;
-import graphicalInterface.LogisticsMenu;
+import graphicalInterface.LogisticMenu;
 
 public class LoginController {
 	private String companyUsername = "admin";
@@ -77,7 +77,7 @@ public class LoginController {
 					public void run() {
 						try {
 							LogisticController logisticController = new LogisticController();
-							LogisticsMenu logistics = new LogisticsMenu(logisticController);
+							LogisticMenu logistics = new LogisticMenu(logisticController);
 							logistics.frame.setVisible(true);
 							window.closeFrame();
 						} catch (Exception e) {
