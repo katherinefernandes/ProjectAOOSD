@@ -25,7 +25,7 @@ public class ContainerDataTest {
 	private float t =36.8f;
 	private float a=1.2f;
 	private float h=78.0f;
-	private String arriveby = parseInput.getDate("03-02-2020");
+	private String arriveby = "09-08-2020";
 	
 	
 	@BeforeEach
@@ -39,7 +39,7 @@ public class ContainerDataTest {
 	@Test
 	public void testUseContainerAgain() {
 		assertSame(cargo,objectTest.getCargo());
-		objectTest.useContainerAgain(clid, jid, spid,  dpid,  lat,  lon,  "apple",  t,  a,  h, (arriveby));
+		objectTest.useContainerAgain(clid, jid, spid,  dpid,  "apple",  t,  a,  h, (arriveby));
 		assertSame("apple",objectTest.getCargo());
 	}
 

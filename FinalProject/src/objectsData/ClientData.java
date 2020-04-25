@@ -105,6 +105,21 @@ public class ClientData extends IdentifiableData{
 			e.printStackTrace();
 		}
 	}
+	public void removeActiveShipment(long JourneyID) {
+		this.activeShipments.remove(JourneyID);
+		List<String> values = new ArrayList<>();
+		for(long container : activeShipments) {
+			values.add(String.valueOf(container));
+		}
+		int index = indexOfTagname(xmlFields,"ActiveShipments");
+		try {
+			xmlFields.get(index).setValues(values, "JourneyID");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		///need to update the remove activeshipments in xmlfield... 
+	}
 	public void addFinishedShipment(long JourneyID) {
 		this.finishedShipments.add(JourneyID);
 		int index = indexOfTagname(xmlFields,"FinishedShipments");

@@ -80,6 +80,21 @@ public class PortData extends IdentifiableData{
 			e.printStackTrace();
 		}
 	}
+	public void updateArrivingContainers(long containerID) {
+		this.arrivingContainers.remove(containerID);
+		List<String> values = new ArrayList<>();
+		for(long container : arrivingContainers) {
+			values.add(String.valueOf(container));
+		}
+		int index = indexOfTagname(xmlFields,"ArrivingContainers");
+		try {
+			xmlFields.get(index).setValues(values, "ContainerID");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
+	
 	public void save() {
 		DataBase.save(this);
 	}

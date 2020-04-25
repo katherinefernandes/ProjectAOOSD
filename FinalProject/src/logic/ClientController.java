@@ -422,7 +422,7 @@ public class ClientController {
 
 		System.out.println("Checking arrive by");
 		try {
-			parseInput.getDate(date);
+			///date; -> Need to write return validate.validateDate(date)
 			return true;
 		}catch(DateTimeException e ){
 				System.out.println("Not accurate date format");

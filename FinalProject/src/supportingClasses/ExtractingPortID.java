@@ -6,7 +6,7 @@ import objectsData.PortData;
 
 public class ExtractingPortID {
 	
-	public long getPortID(String portname) {
+	public static long getPortID(String portname) {
 		
 		List<PortData> listOfPorts = DataBase.searchPorts(portname);
 		if (listOfPorts.size()>0) {

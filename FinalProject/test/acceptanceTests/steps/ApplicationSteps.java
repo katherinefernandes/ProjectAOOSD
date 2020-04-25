@@ -15,6 +15,7 @@ import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import containerFilters.FilteringContainersForAClient;
+import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -37,6 +38,7 @@ import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import updateContainer.UpdateLocation;
+import updateContainer.UpdatePort;
 import updateContainer.UpdateStatus;
 
 public class ApplicationSteps {
@@ -86,6 +88,7 @@ public class ApplicationSteps {
 	private String portName;
 	private long portID;
 	private boolean result;
+	private long visitedPortID;
 
 	@Before
 	public void IntialisePorts() {
@@ -822,6 +825,97 @@ public class ApplicationSteps {
 		assertTrue("Should be true as the information has been changed",clientApplication.updateClientInformation(update));
 	}
 	
+	@When("the port name is given {string}")
+	public void thePortNameIsGiven(String portname) {
+		this.visitedPortID = new ExtractingPortID().getPortID(portname);
+		assertNotEquals(visitedPortID,1l);
+	}
+
+	@Then("the port visited for the container is updated")
+	public void thePortVisitedForTheContainerIsUpdated() {
+		UpdatePort update = new UpdatePort(this.visitedPortID);
+		assertTrue("This should be true now as the port has been updated",logistic.updateContainerInformation(update));
+
+		
+	}
+
+	@Then("the new port is {string}")
+	public void theNewPortIs(String portname) {
+		
+		List<PortData> ports = DataBase.searchPorts(Long.toString(logistic.viewContainer().getLastVisitedPortID()));
+		boolean contains =false;
+		for (PortData port: ports) {
+			if(port.getPortName().contains(portname)) {
+				contains = true;
+			}
+		}
+		assertTrue(contains);
+	}
 	
+	@Given("there is a container with assigned ID {long}")
+	public void thereIsAContainerWithAssignedID(long containerID) {
+		this.containerID=containerID;
+		
+	}
+
+	@Given("the container has the assigned journey ID {long}")
+	public void theContainerHasTheAssignedJourneyID(long ID) {
+		this.journeyID=ID;
+		
+	}
+
+	@Given("the container has the assigned client ID {long}")
+	public void theContainerHasTheAssignedClientID(long ID) {
+		this.clientID =ID;
+		
+		ClientData client = new ClientData(ID, "company",92,23789,"email@eh.com",parseInput.parsingNames("firstname"),parseInput.parsingNames("middlename"),parseInput.parsingNames("lastname"),"g11/2","Islamabad",59,"2620");
+		client.save();
+		
+		
+	}
+
+	@Given("the start port is assigned {string}")
+	public void theStartPortIsAssigned(String portname) {
+		this.startPortID = ExtractingPortID.getPortID(portname);
+	}
+
+	@Given("the destination port is assigned {string}")
+	public void theDestinationPortIsAssigned(String portname) {
+		this.destinationPortID=ExtractingPortID.getPortID(portname);
+	}
+
+	@Given("the current location of the container assigned is {float} latitude and {float} longitude")
+	public void theCurrentLocationOfTheContainerAssignedIsLatitudeAndLongitude(float lat, float longitude) {
+	    this.longitude=longitude;
+	    this.latitude=lat;
+	}
+
+	@Given("the container has cargo assigned as  {string}")
+	public void theContainerHasCargoAssignedAs(String string) {
+		
+		this.cargo=string;
+	}
+
+	@Given("its optimal internal Status assigned is {float} atm {float} celsius {float} % humidity")
+	public void itsOptimalInternalStatusAssignedIsAtmCelsiusHumidity(float atm, float temp, float humid) {
+
+		this.temperature=temp;
+		this.pressure=atm;
+		this.humidity=humid;
+	}
+
+	@Given("its arrival date assigned is {string}")
+	public void itsArrivalDateAssignedIs(String string) {
+		
+		this.arriveBy=string;
+		ContainerData container = new ContainerData (this.containerID,this.clientID,this.journeyID,this.startPortID,this.destinationPortID,this.latitude,this.longitude,this.cargo,this.temperature,this.pressure,this.humidity,(this.arriveBy));
+		container.save();
+	}
+	
+	
+	
+	
+	
+
 	
 }

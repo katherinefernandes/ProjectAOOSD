@@ -73,15 +73,8 @@ public class ClientApplication extends Application{
 
 	public void registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy) {
-
 		containerRegistered=false;
-		container.setClientID(client.getID());
-		container.setStartPortID(startPortID);
-		container.setDestinationPortID(destinationPortID);
-		container.setCargo(cargo);
-		container.setStatus(pressure, temperature, humidity);
-		container.setArriveBy(parseInput.getDate(arriveBy));
-		container.setJourneyID(ssecurity.generateID());
+		container.useContainerAgain(client.getID(),ssecurity.generateID() , startPortID, destinationPortID,  cargo, temperature, pressure, humidity, arriveBy);
 		container.save();
 		history.updateHistoryDataBase(container);
 		client.addActiveShipment(container.getJourneyID());

@@ -35,7 +35,7 @@ public class ContainerData extends IdentifiableData {
 		this.cargo="none";
 		this.status=new InternalState(1f,35f,75f);
 		this.updated=parseInput.getDate(LocalDate.now()); 
-		this.arriveBy=parseInput.getDate("03-02-2020"); 
+		this.arriveBy="03-02-2020";
 		setXMLFields();
 	}
 	public void setClientID(long clientID) {
@@ -83,7 +83,6 @@ public class ContainerData extends IdentifiableData {
 			e.printStackTrace();
 		}
 	}
-	////
 	
 
 	public ContainerData(long containerID, long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String arriveBy) {
@@ -93,11 +92,12 @@ public class ContainerData extends IdentifiableData {
 		this.clientID=clientID;
 		this.journeyID=journeyID;
 		this.startPortID=startPortID;
+		this.lastVisitedPortID=startPortID;
 		this.destinationPortID=destinationPortID;
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo=cargo;
 		this.status=new InternalState(atmosphere, temperature, humidity);
-		this.updated=parseInput.getDate("03-02-2020"); 
+		this.updated="03-02-2020";
 		this.arriveBy=arriveBy;
 		setXMLFields();
 	}
@@ -110,12 +110,11 @@ public class ContainerData extends IdentifiableData {
 		
 	}//- to here
 	
-	public void useContainerAgain(long clid, long jid,long spid, long dpid, float lat, float lon, String cargo, float t, float a, float h, String arriveby) {
+	public void useContainerAgain(long clid, long jid,long spid, long dpid, String cargo, float t, float a, float h, String arriveby) {
 		this.clientID=clid;
 		this.journeyID=jid;
 		this.startPortID=spid;
 		this.destinationPortID=dpid;
-		this.currentPosition= new Location(lat,lon);
 		this.cargo=cargo;
 		this.status=new InternalState(a, t, h);
 		this.updated=parseInput.getDate(LocalDate.now());
