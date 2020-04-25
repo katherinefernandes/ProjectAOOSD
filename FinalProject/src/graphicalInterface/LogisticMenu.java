@@ -15,8 +15,10 @@ import logic.LogisticController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
-public class LogisticsMenu {
+public class LogisticMenu {
 
 	public JFrame frame;
 	public JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10;
@@ -46,13 +48,15 @@ public class LogisticsMenu {
 	private JTextArea viewClientTextField;
 	private JButton getClientIfoButton;
 	private JPanel viewClientPanel;
+	private JButton viewJourneysButton;
     
-    public LogisticsMenu(LogisticController controller) {
+    public LogisticMenu(LogisticController controller) {
 		this.controller = controller;
 		initialize();
 	}
 	private void initialize() {
 		frame = new JFrame();
+		frame.setBackground(new Color(95, 158, 160));
 		frame.setBounds(100, 100, 698, 434);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -77,6 +81,8 @@ public class LogisticsMenu {
 		getInfoButton = new JButton("Update Container Status");
 		getInfoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				statusError.setVisible(false);
+				successStatus.setVisible(false);
 				switchPanels(StatusPanel);
 			}
 		});
@@ -86,6 +92,8 @@ public class LogisticsMenu {
 		UpdateContainerButton = new JButton("Update container Position");
 		UpdateContainerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				positionError.setVisible(false);
+				successPosition.setVisible(false);
 				switchPanels(ContainePositionrPanel);
 			}
 		});
@@ -93,7 +101,7 @@ public class LogisticsMenu {
 		panel.add(UpdateContainerButton);
 		
 		logoutButton = new JButton("Log Out");
-		logoutButton.setBounds(19, 298, 187, 29);
+		logoutButton.setBounds(19, 266, 187, 29);
 		logoutButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -124,80 +132,80 @@ public class LogisticsMenu {
 		newClientPanel.setLayout(null);
 		
 		JTextArea txtrCompanyName = new JTextArea();
+		txtrCompanyName.setBounds(24, 26, 112, 16);
 		txtrCompanyName.setText("Company Name:");
 		txtrCompanyName.setEditable(false);
 		txtrCompanyName.setBackground(new Color(95, 158, 160));
-		txtrCompanyName.setBounds(24, 26, 112, 16);
 		newClientPanel.add(txtrCompanyName);
 		
 		JTextArea txtrEmail = new JTextArea();
+		txtrEmail.setBounds(24, 60, 112, 16);
 		txtrEmail.setText("E-mail:");
 		txtrEmail.setEditable(false);
 		txtrEmail.setBackground(new Color(95, 158, 160));
-		txtrEmail.setBounds(24, 60, 112, 16);
 		newClientPanel.add(txtrEmail);
 		
 		JTextArea txtrCountryCode = new JTextArea();
+		txtrCountryCode.setBounds(24, 88, 112, 16);
 		txtrCountryCode.setText("Country Code:");
 		txtrCountryCode.setEditable(false);
 		txtrCountryCode.setBackground(new Color(95, 158, 160));
-		txtrCountryCode.setBounds(24, 88, 112, 16);
 		newClientPanel.add(txtrCountryCode);
 		
 		JTextArea txtrPhoneNumber = new JTextArea();
+		txtrPhoneNumber.setBounds(24, 118, 112, 16);
 		txtrPhoneNumber.setText("Phone Number:");
 		txtrPhoneNumber.setEditable(false);
 		txtrPhoneNumber.setBackground(new Color(95, 158, 160));
-		txtrPhoneNumber.setBounds(24, 118, 112, 16);
 		newClientPanel.add(txtrPhoneNumber);
 		
 		JTextArea txtrFirstName = new JTextArea();
+		txtrFirstName.setBounds(24, 146, 112, 16);
 		txtrFirstName.setText("First Name:");
 		txtrFirstName.setEditable(false);
 		txtrFirstName.setBackground(new Color(95, 158, 160));
-		txtrFirstName.setBounds(24, 146, 112, 16);
 		newClientPanel.add(txtrFirstName);
 		
 		JTextArea txtrMiddleName = new JTextArea();
+		txtrMiddleName.setBounds(24, 174, 112, 16);
 		txtrMiddleName.setText("Middle Name:");
 		txtrMiddleName.setEditable(false);
 		txtrMiddleName.setBackground(new Color(95, 158, 160));
-		txtrMiddleName.setBounds(24, 174, 112, 16);
 		newClientPanel.add(txtrMiddleName);
 		
 		JTextArea txtrLastName = new JTextArea();
+		txtrLastName.setBounds(24, 204, 112, 16);
 		txtrLastName.setText("Last Name:");
 		txtrLastName.setEditable(false);
 		txtrLastName.setBackground(new Color(95, 158, 160));
-		txtrLastName.setBounds(24, 204, 112, 16);
 		newClientPanel.add(txtrLastName);
 		
 		JTextArea txtrStreet = new JTextArea();
+		txtrStreet.setBounds(24, 232, 112, 16);
 		txtrStreet.setText("Street:");
 		txtrStreet.setEditable(false);
 		txtrStreet.setBackground(new Color(95, 158, 160));
-		txtrStreet.setBounds(24, 232, 112, 16);
 		newClientPanel.add(txtrStreet);
 		
 		JTextArea txtrCity = new JTextArea();
+		txtrCity.setBounds(24, 260, 112, 16);
 		txtrCity.setText("City:");
 		txtrCity.setEditable(false);
 		txtrCity.setBackground(new Color(95, 158, 160));
-		txtrCity.setBounds(24, 260, 112, 16);
 		newClientPanel.add(txtrCity);
 		
 		JTextArea txtrBuilding = new JTextArea();
+		txtrBuilding.setBounds(24, 291, 112, 16);
 		txtrBuilding.setText("Building:");
 		txtrBuilding.setEditable(false);
 		txtrBuilding.setBackground(new Color(95, 158, 160));
-		txtrBuilding.setBounds(24, 291, 112, 16);
 		newClientPanel.add(txtrBuilding);
 		
 		JTextArea txtrPostalCode = new JTextArea();
+		txtrPostalCode.setBounds(24, 319, 112, 16);
 		txtrPostalCode.setText("Postal Code:");
 		txtrPostalCode.setEditable(false);
 		txtrPostalCode.setBackground(new Color(95, 158, 160));
-		txtrPostalCode.setBounds(24, 319, 112, 16);
 		newClientPanel.add(txtrPostalCode);
 		
 		textField = new JTextField();
@@ -275,20 +283,20 @@ public class LogisticsMenu {
 		newClientPanel.add(Save1);
 		
 		txtrSuccess = new JTextArea();
+		txtrSuccess.setBounds(92, 356, 82, 16);
 		txtrSuccess.setBackground(new Color(95, 158, 160));
 		txtrSuccess.setForeground(new Color(124, 252, 0));
 		txtrSuccess.setText("Success");
 		txtrSuccess.setEditable(false);
-		txtrSuccess.setBounds(92, 356, 82, 16);
 		newClientPanel.add(txtrSuccess);
 		txtrSuccess.setVisible(false);
 		
 		txtrSomethingWentWrong = new JTextArea();
+		txtrSomethingWentWrong.setBounds(93, 375, 236, 16);
 		txtrSomethingWentWrong.setText("Something went wrong. Try again");
 		txtrSomethingWentWrong.setBackground(new Color(95, 158, 160));
 		txtrSomethingWentWrong.setForeground(new Color(255, 0, 0));
 		txtrSomethingWentWrong.setEditable(false);
-		txtrSomethingWentWrong.setBounds(93, 375, 236, 16);
 		newClientPanel.add(txtrSomethingWentWrong);
 		txtrSomethingWentWrong.setVisible(false);
 		
@@ -337,6 +345,10 @@ public class LogisticsMenu {
 					return;
 				}else {
 					controller.updateContainerPosition(textField_16.getText(),textField_14.getText(),textField_15.getText());
+				}
+				if(controller.checkMessage()) {
+					viewContainerText.setText(controller.getContainerData());
+					switchPanels(viewContainerPanel);
 				}
 				clearDataFields(textField_16,textField_14,textField_15);
 			
@@ -437,6 +449,12 @@ public class LogisticsMenu {
 					return;
 				}else {
 					controller.updateContainerStatus(containerIDtextstatus.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText());
+					
+				}
+				if(controller.checkMessage()){
+					viewContainerText.setText(controller.getContainerData());
+					switchPanels(viewContainerPanel);
+					
 				}
 				
 				clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
@@ -601,7 +619,7 @@ public class LogisticsMenu {
 		arrivaltext.setBounds(209, 274, 137, 16);
 		ContainerInfoPanel.add(arrivaltext);
 		
-		 viewContainerPanel = new JPanel();
+		viewContainerPanel = new JPanel();
 		layeredPane.setLayer(viewContainerPanel, 0);
 		viewContainerPanel.setBackground(new Color(95, 158, 160));
 		viewContainerPanel.setBounds(0, 0, 486, 412);
@@ -634,6 +652,8 @@ public class LogisticsMenu {
 		});
 		getClientIfoButton.setBounds(19, 186, 187, 29);
 		panel.add(getClientIfoButton);
+		
+		
 		
 		JTextArea txtrSearchByThe = new JTextArea();
 		txtrSearchByThe.setBackground(new Color(95, 158, 160));
@@ -721,7 +741,12 @@ public class LogisticsMenu {
 				searchError.setVisible(false);
 				successSearch.setVisible(false);
 				controller.searchClient(clientemailTextField.getText(),companyNameTextField.getText(),clientPhoneTextField.getText(),firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
+				if(controller.checkMessage()) {
+					viewClientTextField.setText(controller.getclientsview());
+					switchPanels(viewClientPanel);
+				}
 				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField,firstNameTextField,middlenameTextField,lastNameTextField);
+				
 			}
 			
 		});
@@ -752,11 +777,33 @@ public class LogisticsMenu {
 		layeredPane.add(viewClientPanel);
 		viewClientPanel.setLayout(null);
 		
-		 viewClientTextField = new JTextArea();
+		viewClientTextField = new JTextArea();
 		viewClientTextField.setEditable(false);
 		viewClientTextField.setBackground(new Color(95, 158, 160));
 		viewClientTextField.setBounds(17, 16, 452, 375);
 		viewClientPanel.add(viewClientTextField);
+		
+		JScrollPane viewJourneysPanel = new JScrollPane();
+		viewJourneysPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		layeredPane.setLayer(viewJourneysPanel, 0);
+		viewJourneysPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(viewJourneysPanel);
+		
+		JTextArea viewJourneysTextArea = new JTextArea();
+		viewJourneysTextArea.setLineWrap(true);
+		viewJourneysTextArea.setBackground(new Color(95, 158, 160));
+		viewJourneysPanel.setViewportView(viewJourneysTextArea);
+		
+		viewJourneysButton = new JButton("View all Journeys");
+		viewJourneysButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewJourneysTextArea.setText(controller.getAllJourneys());
+				switchPanels(viewJourneysPanel);
+			
+			}
+		});
+		viewJourneysButton.setBounds(19, 225, 187, 29);
+		panel.add(viewJourneysButton);
 	}
 	
 	public void setFieldsClientData() {
@@ -764,12 +811,22 @@ public class LogisticsMenu {
 		viewClientTextField.setText(controller.getclientsview());
 	}
 	public void switchPanels(JPanel panel) {
+		System.out.println("in switch panels");
 		layeredPane.removeAll();
 		layeredPane.add(panel);
 		layeredPane.repaint();
 		layeredPane.revalidate();
+		System.out.println("in switch pannels");
 		
 	}
+	
+	public void switchPanels(JScrollPane pane) {
+		System.out.println("in switch panels");
+		layeredPane.removeAll();
+		layeredPane.add(pane);
+		layeredPane.repaint();
+		layeredPane.revalidate();
+		System.out.println("in switch pannels");}
 	public void clearDataFields(JTextField...fields) {
 		for(JTextField field : fields) {
 			field.setText("");
@@ -797,8 +854,9 @@ public class LogisticsMenu {
 		setTextVisibleTrue(positionError);
 	}
 	public void viewContainerPanelTrue() {
+		System.out.println("trying to swtich pannels now");
 		switchPanels(viewContainerPanel);
-		successPosition.setVisible(false);
+		
 	}
 	public void successStatusUpdate() {
 		setTextVisibleTrue(successStatus);
@@ -817,5 +875,4 @@ public class LogisticsMenu {
 		switchPanels(viewClientPanel);
 		successSearch.setVisible(true);// switch it to false once the panel works
 	}
-	
 }

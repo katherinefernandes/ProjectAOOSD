@@ -6,7 +6,7 @@ import java.util.*;
 import applications.ClientApplication;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.LoginWindow;
-import graphicalInterface.LogisticsMenu;
+import graphicalInterface.LogisticMenu;
 import graphicalInterface.newClientMenu;
 import objectsData.ClientData;
 import supportingClasses.Security;
@@ -90,7 +90,7 @@ public class LoginController {
 					public void run() {
 						try {
 							LogisticController logisticController = new LogisticController();
-							LogisticsMenu logistics = new LogisticsMenu(logisticController);
+							LogisticMenu logistics = new LogisticMenu(logisticController);
 							logistics.frame.setVisible(true);
 							window.closeFrame();
 						} catch (Exception e) {

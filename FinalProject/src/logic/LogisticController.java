@@ -6,7 +6,7 @@ import java.util.List;
 
 import applications.CompanyApplication;
 import exceptions.ElementNotFoundException;
-import graphicalInterface.LogisticsMenu;
+import graphicalInterface.LogisticMenu;
 import objectsData.ClientData;
 import objectsData.ContainerData;
 import objectsData.PortData;
@@ -20,6 +20,7 @@ import supportingClasses.parseInput;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 import xmlParser.PortXMLManipulation;
+
 
 public class LogisticController {
 	private CompanyApplication logistic;
@@ -46,13 +47,14 @@ public class LogisticController {
 	private ArrayList<String> lastN;
 	private ReferenceName searchRefPerson;
 	private SearchByReferencePerson optionRefPerson;
-	private LogisticsMenu logisticMenu;
+	private LogisticMenu logisticMenu;
+	private boolean	checkMessage ;
 	
 	public LogisticController(){
 		logistic = new CompanyApplication();
 		validate = new ValidInput();
 		databasePort=new PortXMLManipulation();
-		logisticMenu = new LogisticsMenu(this);
+		logisticMenu = new LogisticMenu(this);
 		
 	}
 
@@ -460,7 +462,7 @@ public class LogisticController {
 
 	public void updateContainerPosition(String containerID, String logitude, String latitude) {
 
-		boolean	checkMessage = setContainerForUpdate(containerID);
+		checkMessage = setContainerForUpdate(containerID);
 		if (checkMessage){
 			checkMessage = updatePosition(logitude,latitude);
 		}else {
@@ -469,10 +471,11 @@ public class LogisticController {
 			return;
 		}
 		if(checkMessage) {
-			logisticMenu.successPositionUpdate();
-			logisticMenu.setViewContainerText();
-			logisticMenu.viewContainerPanelTrue();
+			System.out.println("Valid info");
+			
+			
 		}else {
+			
 			System.out.println("Something went wrong in update..");
 			logisticMenu.errorPositionUpdate(); 
 		}
@@ -481,7 +484,7 @@ public class LogisticController {
 
 	public void updateContainerStatus(String containerID, String press, String humid, String temp) {
 		
-		boolean	checkMessage = setContainerForUpdate(containerID);
+		checkMessage = setContainerForUpdate(containerID);
 		
 		if (checkMessage){
 			checkMessage =updateStatus(press,humid,temp);
@@ -491,9 +494,8 @@ public class LogisticController {
 			return;
 		}
 		if(checkMessage) {
-			logisticMenu.successStatusUpdate();
-			logisticMenu.setViewContainerText();
-			logisticMenu.viewContainerPanelTrue();
+			System.out.println("Valid info");
+			
 			return;
 		}else {
 			System.out.println("Something went wrong in status update");
@@ -502,11 +504,15 @@ public class LogisticController {
 		}
 		
 	}
+	
+	public boolean checkMessage() {
+		return checkMessage;
+	}
 
 
 	public void searchClient(String email, String company, String phone, String firstname, String middle, String last) {
 	
-		boolean checkMessage=false;
+		checkMessage=false;
 		if (!email.isEmpty()) {
 			checkMessage = getClientByEmail(email);
 			
@@ -528,14 +534,20 @@ public class LogisticController {
 		
 		if(checkMessage) {
 			System.out.println("Success search");
-			logisticMenu.successSearch();
-			logisticMenu.setFieldsClientData();
-			logisticMenu.viewClient();
+//			logisticMenu.successSearch();
+//			logisticMenu.setFieldsClientData();
+//			logisticMenu.viewClient();
 			return;
 		}else {
 			System.out.println("Not success");
 			logisticMenu.errorSearch();
 		}
+	}
+
+
+	public String getAllJourneys() {
+		
+		return "";
 	}
 	
 }
