@@ -361,9 +361,13 @@ public class ClientController {
 	public String getMulitpleContainersData() {
 		// TODO Auto-generated method stub
 		String result ="Displaying Up to most 2 Containers: ";
-		
+		int contains = 0;
 		for(int i=0;i<container.size();i++) {
 			result =result+containerDataToString(container.get(i));
+			contains++;
+			if(contains>2) {
+				break;
+			}
 			
 			
 		}
@@ -536,6 +540,10 @@ public class ClientController {
 			clientmenu.containerSearchError();
 		}
 		
+	}
+	public String setSuccessfulJourneys() {
+		
+		return "";
 	}
 	
 }

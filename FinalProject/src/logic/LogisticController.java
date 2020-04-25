@@ -53,7 +53,7 @@ public class LogisticController {
 		validate = new ValidInput();
 		databasePort=new PortXMLManipulation();
 		logisticMenu = new LogisticsMenu(this);
-		logisticMenu.frame.setVisible(true);
+		
 	}
 
 

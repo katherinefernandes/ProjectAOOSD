@@ -46,6 +46,7 @@ public class newClientMenu {
 	private JTextField textField_10;
 	private JTextField textField_11;
 	private JTextField textField_12;
+	private JButton successfulJourneysButton ;
 	private JTextField textField_13;
 	private JTextField textField_14;
 	private JTextField containterIDsearch;
@@ -91,15 +92,12 @@ public class newClientMenu {
 	private JTextArea multipleContainersTextField;
 	private JButton saveJourney;
 	private JTextArea JourneyErrorText;
-	private ValidInput validate;
 	private JTextArea journeySuccessTextfield;
 	private JPanel viewContainerPanel;
-	private JScrollBar ActiveShipmentsScrollBar;
-	private JScrollBar multipleContainersScrollBar;
+	private JTextArea successfulJourneysTextArea;
 	
 	public newClientMenu(ClientController controller) {
 		this.controller = controller;
-		validate =new ValidInput();
 		initialize();
 	}
 	private void initialize() {
@@ -111,7 +109,7 @@ public class newClientMenu {
 		
 		ButtonPanel = new JPanel();
 		ButtonPanel.setBackground(new Color(128, 128, 128));
-		ButtonPanel.setBounds(0, 0, 291, 478);
+		ButtonPanel.setBounds(0, 0, 297, 478);
 		frame.getContentPane().add(ButtonPanel);
 		ButtonPanel.setLayout(null);
 		
@@ -175,7 +173,7 @@ public class newClientMenu {
 			}
 			
 		});
-		LogOutButton.setBounds(55, 318, 196, 29);
+		LogOutButton.setBounds(55, 359, 196, 29);
 		ButtonPanel.add(LogOutButton);
 		
 		JButton viewOwnInfoButton = new JButton("View Personal Info");
@@ -187,6 +185,9 @@ public class newClientMenu {
 		});
 		viewOwnInfoButton.setBounds(55, 277, 196, 29);
 		ButtonPanel.add(viewOwnInfoButton);
+		
+	
+		
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(95, 158, 160));
@@ -564,8 +565,8 @@ public class newClientMenu {
 					return;
 				}else {
 					System.out.println("All the text fields are entered, thus will now try to save the journey");
-					clearDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
 					controller.saveJourney(textField_8.getText(),textField_9.getText(),textField_10.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText(),textField_14.getText());
+					clearDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
 				}
 				
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
@@ -896,10 +897,6 @@ public class newClientMenu {
 		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 		ViewInfoPanel.add(viewActiveShipmentsTextField);
 		
-		ActiveShipmentsScrollBar = new JScrollBar();
-		ActiveShipmentsScrollBar.setBounds(546, 370, 15, 96);
-		ViewInfoPanel.add(ActiveShipmentsScrollBar);
-		
 		
 		
 		newMultipleContainersPanel = new JPanel();
@@ -914,9 +911,37 @@ public class newClientMenu {
 	//	JScrollPane scroll = new JScrollPane(multipleContainersTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		newMultipleContainersPanel.add(multipleContainersTextField);
 		
-		multipleContainersScrollBar = new JScrollBar();
-		multipleContainersScrollBar.setBounds(534, 36, 15, 419);
-		newMultipleContainersPanel.add(multipleContainersScrollBar);
+		JPanel SuccessfulJourneysPane = new JPanel();
+		SuccessfulJourneysPane.setBackground(new Color(95, 158, 160));
+		layeredPane.add(SuccessfulJourneysPane, "name_39999955779610");
+		SuccessfulJourneysPane.setLayout(null);
+		
+		
+		successfulJourneysButton = new JButton("Successful Journeys");
+		successfulJourneysButton.setBounds(55, 318, 196, 29);
+		ButtonPanel.add(successfulJourneysButton);
+		successfulJourneysButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				successfulJourneysTextArea.setText(controller.setSuccessfulJourneys());
+				switchPanels(SuccessfulJourneysPane);
+			}
+		});
+		
+		successfulJourneysTextArea = new JTextArea();
+		successfulJourneysTextArea.setColumns(1);
+		successfulJourneysTextArea.setEnabled(false);
+		successfulJourneysTextArea.setBackground(new Color(95, 158, 160));
+		successfulJourneysTextArea.setBounds(30, 38, 534, 421);
+		SuccessfulJourneysPane.add(successfulJourneysTextArea);
+		
+		JTextArea txtrMostRecentSuccessful = new JTextArea();
+		txtrMostRecentSuccessful.setBackground(new Color(95, 158, 160));
+		txtrMostRecentSuccessful.setForeground(new Color(0, 0, 0));
+		txtrMostRecentSuccessful.setEnabled(true);
+		txtrMostRecentSuccessful.setEditable(false);
+		txtrMostRecentSuccessful.setText("Most Recent Successful Journeys");
+		txtrMostRecentSuccessful.setBounds(26, 10, 236, 16);
+		SuccessfulJourneysPane.add(txtrMostRecentSuccessful);
 		//newMultipleContainersPanel.add(scroll);
 	}
 	
