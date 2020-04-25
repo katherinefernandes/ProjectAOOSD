@@ -3,7 +3,7 @@ package xmlParser;
 import objectsData.*;
 import dataBase.IdentifiablePersistency;
 
-public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> implements IdentifiablePersistency<ContainerData> {
+ public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> implements IdentifiablePersistency<ContainerData> {
 	
 	public ContainerXMLManipulation() {
 		super("storage/activeData/containers.xml", "Container", "Containers");

@@ -21,12 +21,13 @@ Feature: Register Container
  Description: The Client can register containers for journeys
 
  
-#Scenario: Client can register a container for a journey
-#	Given that the client enters the ID 897841664500 that exists in the memory
-#	When the client provides a port name "Gwadar" from where the journey will start
-#	And provides a destination port name "Copenhagen" 
-#	And provides the name of the cargo "Mangoes" being transported
-#	And provides the optimal internal state for the cargo which is 10.0 temperature, 1.0 atm pressure and 90.0% humidity
-#	And provides the expected arrival date which is "30-04-2020"
-#  Then a container is registered for the journey and the client is provided with a container ID to track the journey. 
+Scenario: Client can register a container for a journey
+	Given there is a client with ID 36836570081685 
+	When that the client with the ID 36836570081685 is logged into the clientApplication
+	And the client provides a port name "Gwadar" from where the journey will start
+	And provides a destination port name "Copenhagen" 
+	And provides the name of the cargo "Mangoes" being transported
+	And provides the optimal internal state for the cargo which is 10.0 temperature, 1.0 atm pressure and 90.0% humidity
+	And provides the expected arrival date which is "30-04-2020"
+  Then a container is registered for the journey and the client is provided with a journey ID to track the container. 
 

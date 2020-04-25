@@ -1,37 +1,47 @@
-#Author: your.email@your.domain.com
-#Keywords Summary :
-#Feature: List of scenarios.
-#Scenario: Business rule through list of steps with arguments.
-#Given: Some precondition step
-#When: Some key actions
-#Then: To observe outcomes or validation
-#And,But: To enumerate more Given,When,Then steps
-#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
-#Examples: Container for s table
-#Background: List of steps run before each of the scenarios
-#""" (Doc Strings)
-#| (Data Tables)
-#@ (Tags/Labels):To group Scenarios
-#<> (placeholder)
-#""
-## (Comments)
-#Sample Feature Definition Template
+
 
 Feature: Search clients
 Description: The Logistic Company should be able to search for clients.
  
-#Scenario: Logistic Company can search by client's name
-#Given that the logistic company enters the client's name "White notebook"
-#Then the list of clients with this name should appear
+Scenario: Logistic Company can search by clients name
+ Given that there exists a client with ID 555555555555
+	And the client name is "White notebook"
+	And the email is "whitenotebook@wn.com"
+	And the phonenumber is countrycode 45 phone 85665565
+	And the reference person is firstname "muna" middlename "" lastname "azam" 
+  When that the logistic company enters the clients name "White notebook"
+  Then the list of clients with this name should appear
+  And the list should include the client with ID 555555555555
 
-#Scenario: Logistic Company can search by client's email
-#Given that the logistic company enters the client's email "whitenotebook@wn.com"
-#Then the list of clients with this email should appear
+Scenario: Logistic Company can search by clients email
+	Given that there exists a client with ID 555555555555
+	And the client name is "White notebook"
+	And the email is "whitenotebook@wn.com"
+	And the phonenumber is countrycode 45 phone 85665565
+	And the reference person is firstname "muna" middlename "" lastname "azam"
+	When that the logistic company enters the clients email "whitenotebook@wn.com"
+	Then the list of clients with this email should appear
+	And the list should include the client with ID 555555555555
 
-#Scenario: Logistic Company can search by client's reference person
-#Given that the logistic company enters the client's reference person "muna" "" "azam"
-#Then the list of clients with this reference person should appear
+Scenario: Logistic Company can search by clients reference person
+	Given that there exists a client with ID 555555555555
+	And the client name is "White notebook"
+	And the email is "whitenotebook@wn.com"
+	And the phonenumber is countrycode 45 phone 85665565
+	And the reference person is firstname "muna" middlename "" lastname "azam"
+	When that the logistic company enters the clients reference person "muna" "" "azam"
+	Then the list of clients with this reference person should appear
+	And the list should include the client with ID 555555555555
 
-#Scenario: Logistic Company can search by client's phone
-#Given that the logistic company enters the client's phone 85665565
-#Then the list of clients with this phone should appear
+Scenario: Logistic Company can search by clients phone
+	Given that there exists a client with ID 555555555555
+	And the client name is "White notebook"
+	And the email is "whitenotebook@wn.com"
+	And the phonenumber is countrycode 45 phone 85665565
+	And the reference person is firstname "muna" middlename "" lastname "azam"
+	When that the logistic company enters the clients phone 85665565
+	Then the list of clients with this phone should appear
+	And the list should include the client with ID 555555555555
+	
+	
+	

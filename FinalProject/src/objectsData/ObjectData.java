@@ -36,7 +36,7 @@ public abstract class ObjectData implements ObjectDataInterface{
 	
 	public boolean valuesContainSearchWord(String searchWord) {
 		for(String value : dumpValues()) {
-			if(value.contains(searchWord)) {
+			if(value != null && value.contains(searchWord)) {
 				return true;
 			}
 		}

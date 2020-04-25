@@ -66,8 +66,10 @@ public class LogisticsMenu {
 		newClientButton = new JButton("Add a new Client");
 		newClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtrSuccess.setVisible(false);
+				txtrSomethingWentWrong.setVisible(false);
 				switchPanels(newClientPanel);
-			}
+			} 
 		});
 		newClientButton.setBounds(19, 69, 187, 29);
 		panel.add(newClientButton);
@@ -257,58 +259,17 @@ public class LogisticsMenu {
 		Save1.setBounds(213, 351, 117, 29);
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean checkMessage = false;
 				txtrSuccess.setVisible(false);
 				txtrSomethingWentWrong.setVisible(false);
-				if(!textField.getText().isEmpty()) {
-					checkMessage = controller.setCompanyName(textField.getText());
-				}
-				if(checkMessage&&!textField_1.getText().isEmpty()) {
-					checkMessage = controller.setEmail(textField_1.getText());
-				}
-				if(checkMessage&&!textField_2.getText().isEmpty()) {
-					checkMessage = controller.setCountryCode(textField_2.getText());
-				}
-				if(checkMessage&&!textField_3.getText().isEmpty()) {
-					checkMessage = controller.setPhoneNumber(textField_3.getText());
-				}
-				if (checkMessage&&!textField_4.getText().isEmpty()) {
-					checkMessage = controller.setFirstName(textField_4.getText());
-				}
-				if (checkMessage&&!textField_5.getText().isEmpty()) {
-					checkMessage = controller.setMiddleName(textField_5.getText());
-				}
-				if (checkMessage&&!textField_6.getText().isEmpty()) {
-					checkMessage = controller.setLastName(textField_6.getText());
-				}
-				if(checkMessage&&!textField_7.getText().isEmpty()) {
-					checkMessage = controller.setStreetName(textField_7.getText());
-				}
-				if(checkMessage&&!textField_8.getText().isEmpty()) {
-					checkMessage = controller.setCity(textField_8.getText());
-				}
-				if(checkMessage&&!textField_9.getText().isEmpty()) {
-					checkMessage = controller.setBuilding(textField_9.getText());
-				}
-				if(checkMessage&&!textField_10.getText().isEmpty()) {
-					checkMessage = controller.setPostcode(textField_10.getText());
-				}
-				if(textField_10.getText().isEmpty()||textField_9.getText().isEmpty()||textField_8.getText().isEmpty()||textField_7.getText().isEmpty()||textField_6.getText().isEmpty()||textField_4.getText().isEmpty()||textField_3.getText().isEmpty()||textField_2.getText().isEmpty()||textField_1.getText().isEmpty()) {
-					checkMessage = false;
-				}
-				
-				if(checkMessage) {
-					checkMessage = controller.addClient();
-				}
-				if(checkMessage) {
-					txtrSuccess.setVisible(true);
-				}else {
+				if(textField_10.getText().isEmpty()||textField_9.getText().isEmpty()||textField_8.getText().isEmpty()||textField_7.getText().isEmpty()||textField_6.getText().isEmpty()||textField_4.getText().isEmpty()||textField_3.getText().isEmpty()||textField_2.getText().isEmpty()||textField_1.getText().isEmpty()||textField.getText().isEmpty()) {
+					System.out.println("One of the fields is empty, please try again");
 					txtrSomethingWentWrong.setVisible(true);
+					return;
+				}else {
+					controller.addNewClient(textField_10.getText(),textField_9.getText(),textField_8.getText(),textField_7.getText(),textField_6.getText(),textField_5.getText(),textField_4.getText(),textField_3.getText(),textField_2.getText(),textField_1.getText(),textField.getText());
 				}
 				
 				clearDataFields(textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10);
-				txtrSuccess.setVisible(false);
-				txtrSomethingWentWrong.setVisible(false);
 			}
 		});
 		newClientPanel.add(Save1);
@@ -368,23 +329,14 @@ public class LogisticsMenu {
 		Save2.setBounds(211, 193, 117, 29);
 		Save2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean checkMessage = false;
 				successPosition.setVisible(false);
 				positionError.setVisible(false);
-				
-				if (!textField_16.getText().isEmpty()) {
-					checkMessage = controller.setContainerForUpdate(textField_16.getText());
-				}
-				if (checkMessage&&!(textField_14.getText().isEmpty())&&!(textField_15.getText().isEmpty())){
-					checkMessage = controller.updatePosition(textField_14.getText(),textField_15.getText());
-				}
-				if(checkMessage) {
-					successPosition.setVisible(true);
-					setViewContainerText();
-					switchPanels(viewContainerPanel);
-					successPosition.setVisible(false);
-				}else {
+				if(textField_16.getText().isEmpty()||textField_14.getText().isEmpty()||textField_15.getText().isEmpty()) {
+					System.out.println("One of the text fields is empty, try again");
 					positionError.setVisible(true);
+					return;
+				}else {
+					controller.updateContainerPosition(textField_16.getText(),textField_14.getText(),textField_15.getText());
 				}
 				clearDataFields(textField_16,textField_14,textField_15);
 			
@@ -476,23 +428,17 @@ public class LogisticsMenu {
 		btnNewButton.setBounds(265, 225, 117, 29);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean checkMessage = false;
 				successStatus.setVisible(false);
 				statusError.setVisible(false);
-				if (!containerIDtextstatus.getText().isEmpty()) {
-					checkMessage = controller.setContainerForUpdate(containerIDtextstatus.getText());
-				}
-				if (checkMessage&&!(textField_11.getText().isEmpty())&&!(textField_12.getText().isEmpty())&&!(textField_13.getText().isEmpty())){
-					checkMessage = controller.updateStatus(textField_11.getText(),textField_12.getText(),textField_13.getText());
-				}
-				if(checkMessage) {
-					successStatus.setVisible(true);
-					setViewContainerText();
-					switchPanels(viewClientPanel);
-					successStatus.setVisible(false);
-				}else {
+				if(containerIDtextstatus.getText().isEmpty()||textField_11.getText().isEmpty()||textField_12.getText().isEmpty()||textField_13.getText().isEmpty()) {
+					System.out.println("One of the textfields is empty, try again");
 					statusError.setVisible(true);
+					clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
+					return;
+				}else {
+					controller.updateContainerStatus(containerIDtextstatus.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText());
 				}
+				
 				clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
 			
 		}});
@@ -774,35 +720,7 @@ public class LogisticsMenu {
 			public void actionPerformed(ActionEvent e) {
 				searchError.setVisible(false);
 				successSearch.setVisible(false);
-				boolean checkMessage=false;
-				if (!clientemailTextField.getText().isEmpty()) {
-					checkMessage = controller.getClientByEmail(clientemailTextField.getText());
-					
-				} 
-				if(!checkMessage&&!companyNameTextField.getText().isEmpty()) {
-					checkMessage = controller.getClientByCompanyName(companyNameTextField.getText());
-					
-				}
-				if(!checkMessage&&!clientPhoneTextField.getText().isEmpty()) {
-					checkMessage = controller.getClientByPhone(clientPhoneTextField.getText());
-				}
-				if(!checkMessage&&!(firstNameTextField.getText().isEmpty()&&lastNameTextField.getText().isEmpty())) {
-					if(middlenameTextField.getText().isEmpty()) {
-						checkMessage = controller.getClientByReferencePerson(firstNameTextField.getText(),"",lastNameTextField.getText());
-					}else {
-						checkMessage = controller.getClientByReferencePerson(firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
-					}
-				}
-				
-				if(checkMessage) {
-					successSearch.setVisible(true);
-					setFieldsClientData();
-					switchPanels(viewClientPanel);
-					successSearch.setVisible(false);
-					
-				}else {
-					searchError.setVisible(true);
-				}
+				controller.searchClient(clientemailTextField.getText(),companyNameTextField.getText(),clientPhoneTextField.getText(),firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
 				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField,firstNameTextField,middlenameTextField,lastNameTextField);
 			}
 			
@@ -841,8 +759,8 @@ public class LogisticsMenu {
 		viewClientPanel.add(viewClientTextField);
 	}
 	
-	protected void setFieldsClientData() {
-		// TODO Auto-generated method stub
+	public void setFieldsClientData() {
+		
 		viewClientTextField.setText(controller.getclientsview());
 	}
 	public void switchPanels(JPanel panel) {
@@ -857,8 +775,47 @@ public class LogisticsMenu {
 			field.setText("");
 		}
 	}
-	private void setViewContainerText() {
+	public void setViewContainerText() {
 		viewContainerText.setText(controller.getContainerData());
+		successPosition.setVisible(false);
 		successStatus.setVisible(false);
 	}
+	private void setTextVisibleTrue(JTextArea field) {
+		field.setVisible(true);
+	}
+	public void errorMessageForAddClient() {
+		setTextVisibleTrue(txtrSomethingWentWrong);
+	}
+
+	public void successFieldForAddClient() {
+		setTextVisibleTrue(txtrSuccess);
+	}
+	public void successPositionUpdate() {
+		setTextVisibleTrue(successPosition);
+	}
+	public void errorPositionUpdate() {
+		setTextVisibleTrue(positionError);
+	}
+	public void viewContainerPanelTrue() {
+		switchPanels(viewContainerPanel);
+		successPosition.setVisible(false);
+	}
+	public void successStatusUpdate() {
+		setTextVisibleTrue(successStatus);
+	}
+	public void errorStatusUpdate() {
+		setTextVisibleTrue(statusError);
+	}
+	public void successSearch() {
+		setTextVisibleTrue(successSearch);
+	}
+	public void errorSearch() {
+		setTextVisibleTrue(searchError);
+	}
+	public void viewClient() {
+		System.out.println("Switching panels");
+		switchPanels(viewClientPanel);
+		successSearch.setVisible(true);// switch it to false once the panel works
+	}
+	
 }

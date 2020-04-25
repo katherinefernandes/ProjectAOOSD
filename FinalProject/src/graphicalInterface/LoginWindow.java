@@ -23,7 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
-public class Login_Window {
+public class LoginWindow {
 
 	private JFrame frmLoginPage;
 	public JRadioButton clientMenuRdb, companyMenuRdb;
@@ -31,7 +31,6 @@ public class Login_Window {
 	public JTextField usernameTextField;
 	public JPasswordField passwordField;
 	public JTextPane errorMessage;
-	public JCheckBox checkbox;
 	
 	private JButton EnterButton;
 	private JPanel clientPanel, companyPanel;
@@ -40,7 +39,7 @@ public class Login_Window {
 	/**
 	 * Create the application.
 	 */
-	public Login_Window(LoginController controller) {
+	public LoginWindow(LoginController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -125,26 +124,9 @@ public class Login_Window {
 		clientPanel.add(IDtextField);
 		IDtextField.setColumns(10);
 
-		checkbox = new JCheckBox("");
-		
-		checkbox.setBackground(new Color(95, 158, 160));
-		checkbox.setBounds(59, 184, 28, 48);
-		frmLoginPage.getContentPane().add(checkbox);
-
 		EnterButton = new JButton("Enter");
-	
-		EnterButton.setEnabled(false);
 		EnterButton.setBounds(167, 227, 117, 29);
 		frmLoginPage.getContentPane().add(EnterButton);
-
-		
-		
-		JTextPane txtpnIAgreeTo = new JTextPane();
-		txtpnIAgreeTo.setBounds(99, 184, 313, 48);
-		txtpnIAgreeTo.setBackground(new Color(95, 158, 160));
-		txtpnIAgreeTo.setText(
-				"i agree to the terms and conditions and the privacy policy read the terms and conditions of use");
-		frmLoginPage.getContentPane().add(txtpnIAgreeTo);
 		
 		errorMessage = new JTextPane();
 		errorMessage.setEnabled(false);
@@ -166,15 +148,6 @@ public class Login_Window {
 	}
 	
 	private void setEventListeners() {
-
-		checkbox.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				if(checkbox.isSelected()) {
-					EnterButton.setEnabled(true);
-				}
-				else EnterButton.setEnabled(false);
- 			}
-		});
 		
 		
 		clientMenuRdb.addChangeListener(new ChangeListener() {
@@ -237,7 +210,7 @@ public class Login_Window {
 		IDtextField.setText("");
 		usernameTextField.setText("");
 		passwordField.setText("");
-		checkbox.setSelected(false);
+		
 	}
 	public void openFrame() {
 		frmLoginPage.setVisible(true);

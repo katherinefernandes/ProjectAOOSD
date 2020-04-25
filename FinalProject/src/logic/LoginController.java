@@ -2,28 +2,32 @@ package logic;
  
 import java.awt.EventQueue;
 import java.util.*;
-
 import dataBase.DataBase;
-import graphicalInterface.Login_Window;
+import graphicalInterface.LoginWindow;
 import graphicalInterface.LogisticsMenu;
 
 public class LoginController {
 	private String companyUsername = "admin";
 	private String companyPassword = "admin";
-	private Login_Window window;
+	private LoginWindow window;
 
 	public LoginController() {
-		window = new Login_Window(this);
+		System.out.println("Inside login controller");
+		window = new LoginWindow(this);
+		window.errorMessage.setVisible(false);
 		window.openFrame();
 	}
 	
 	public boolean validClientInfo(String clientID) {
 		if (DataBase.isSavedID(Long.valueOf(clientID))) {
 			System.out.println("textfield in window: " +  clientID);
+			
 			return true;
-		} else
+		} else {
+			
+			System.out.println("Invalid client id");
 			return false;
-	}
+	}}
 
 
 	private boolean validCompanyInfo(String companyUserNameIN, char[] companyPasswordIN) {
@@ -35,16 +39,12 @@ public class LoginController {
 	}
 	
 	public void loginButtonPressed(boolean clientChecked) {
-		if(clientChecked) {
-			login();
-         }
-		else {
-			
-		}
+		login();
 		
 	}
 	
 	public void login() { 
+		System.out.println("Inside the login thing");
 		boolean validLogin;
 		boolean isClient = window.isClientButtonChecked();
 		if(isClient) {

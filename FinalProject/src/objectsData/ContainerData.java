@@ -32,7 +32,7 @@ public class ContainerData extends IdentifiableData {
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo="none";
 		this.status=new InternalState(1f,35f,75f);
-		this.updated=parseInput.getDate("03-02-2020"); 
+		this.updated=parseInput.getDate(LocalDate.now()); 
 		this.arriveBy=parseInput.getDate("03-02-2020"); 
 		setXMLFields();
 	}
@@ -106,7 +106,7 @@ public class ContainerData extends IdentifiableData {
 		this.currentPosition= new Location(lat,lon);
 		this.cargo=cargo;
 		this.status=new InternalState(a, t, h);
-		this.updated=parseInput.getDate("03-02-2020");
+		this.updated=parseInput.getDate(LocalDate.now());
 		this.arriveBy=arriveby;
 		setXMLFields();
 	}
@@ -124,7 +124,7 @@ public class ContainerData extends IdentifiableData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setUpdated(parseInput.getDate("03-02-2020"));
+		setUpdated(parseInput.getDate(LocalDate.now()));
 	}
 	public void setStatus(float a, float t, float h) {
 		this.status.setAtmosphere(a);
@@ -140,7 +140,7 @@ public class ContainerData extends IdentifiableData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setUpdated(parseInput.getDate("03-02-2020"));
+		setUpdated(parseInput.getDate(LocalDate.now()));
 	}
 	
 	public void setUpdated(String time) {

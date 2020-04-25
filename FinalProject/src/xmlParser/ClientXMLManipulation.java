@@ -7,7 +7,7 @@ import javax.xml.stream.events.*;
 import dataBase.IdentifiablePersistency;
 
 
-public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> implements IdentifiablePersistency<ClientData> {
+ public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> implements IdentifiablePersistency<ClientData> {
 	public ClientXMLManipulation() {
 		super("storage/activeData/clients.xml", "Client","Clients");
 	}

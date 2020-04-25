@@ -5,7 +5,7 @@ import java.util.*;
 import dataBase.GeneralPersistency;
 import objectsData.HistoryData;
 
-public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> implements GeneralPersistency<HistoryData> {
+ public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> implements GeneralPersistency<HistoryData> {
 	private ActiveData<HistoryData> activeData;
 	public HistoryXMLManipulation() {
 		super("storage/activeData/history.xml","DataPoint","History");
