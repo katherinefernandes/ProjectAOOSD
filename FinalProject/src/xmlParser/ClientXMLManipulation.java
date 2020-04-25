@@ -6,8 +6,7 @@ import javax.xml.stream.events.*;
 
 import dataBase.IdentifiablePersistency;
 
-
- public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> implements IdentifiablePersistency<ClientData> {
+public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> implements IdentifiablePersistency<ClientData> {
 	public ClientXMLManipulation() {
 		super("storage/activeData/clients.xml", "Client","Clients");
 	}
@@ -51,12 +50,19 @@ import dataBase.IdentifiablePersistency;
 		i = dataPoint.iterateUntilFound(i,"City");
 		String city = dataPoint.getEventAtIndex(++i).getData();
 		i = dataPoint.iterateUntilFound(i,"ZipCode");
-		String zipCode = dataPoint.getEventAtIndex(++i).getData();
-		i = dataPoint.iterateUntilFound(i,"ActiveShipments");
+		String zipCode = dataPoint.getEventAtIndex(++i).getData();		
 		
 		ClientData client = new ClientData(dataPoint.getID(), companyName, countryCode, phoneNumber, email, firstName, middleName, lastName, streetName, city, houseNumber, zipCode);
 		
+		i = dataPoint.iterateUntilFound(i,"ActiveShipments");
 		while(!((event = dataPoint.getEventAtIndex(i).getEvent()).isEndElement() && event.asEndElement().getName().getLocalPart().equals("ActiveShipments"))) {
+			if(event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("JourneyID")) {
+				client.addActiveShipment(Long.valueOf(dataPoint.getEventAtIndex(++i).getData()));
+			}
+			i++;
+		}
+		i = dataPoint.iterateUntilFound(i,"FinishedShipments");
+		while(!((event = dataPoint.getEventAtIndex(i).getEvent()).isEndElement() && event.asEndElement().getName().getLocalPart().equals("FinishedShipments"))) {
 			if(event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("JourneyID")) {
 				client.addActiveShipment(Long.valueOf(dataPoint.getEventAtIndex(++i).getData()));
 			}

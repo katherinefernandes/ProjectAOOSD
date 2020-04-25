@@ -10,10 +10,10 @@ import objectsData.ContainerData;
 public abstract class FilteringContainersForAClient implements FilterContainer {
 
 	protected ArrayList<ContainerData> containers;
-	private ArrayList<Long> activeJourneys;
+	private List<Long> activeJourneys;
 	
 	public FilteringContainersForAClient(ClientData client) {
-		this.activeJourneys=client.getActiveShipment();
+		this.activeJourneys=client.getActiveShipments();
 		containers= new ArrayList<ContainerData>();
 		getContainersByActiveJourneyIDs();
 	}

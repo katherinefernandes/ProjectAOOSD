@@ -3,7 +3,7 @@ package xmlParser;
 import objectsData.*;
 import dataBase.IdentifiablePersistency;
 
- public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> implements IdentifiablePersistency<ContainerData> {
+public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> implements IdentifiablePersistency<ContainerData> {
 	
 	public ContainerXMLManipulation() {
 		super("storage/activeData/containers.xml", "Container", "Containers");
@@ -18,6 +18,8 @@ import dataBase.IdentifiablePersistency;
 		long journeyID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
 		i = dataPoint.iterateUntilFound(i,"StartPortID");
 		long startPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
+		i = dataPoint.iterateUntilFound(i,"LastVisitedPortID");
+		long lastVisitedPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
 		i = dataPoint.iterateUntilFound(i,"DestinationPortID");
 		long destinationPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
 		i = dataPoint.iterateUntilFound(i,"Latitude");
@@ -37,7 +39,7 @@ import dataBase.IdentifiablePersistency;
 		i = dataPoint.iterateUntilFound(i,"ArriveBy");
 		String arriveBy = dataPoint.getEventAtIndex(++i).getData();	
 		
-		ContainerData container = new ContainerData(dataPoint.getID(), clientID, journeyID, startPortID, destinationPortID, latitude, longitude, cargo, temperature, atmosphere, humidity, updated, arriveBy);
+		ContainerData container = new ContainerData(dataPoint.getID(), clientID, journeyID, startPortID, lastVisitedPortID, destinationPortID, latitude, longitude, cargo, temperature, atmosphere, humidity, updated, arriveBy);
 		
 		return container;
 	}

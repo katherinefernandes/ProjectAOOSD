@@ -72,9 +72,9 @@ public class ClientDataTest {
 	@Test
 	public void testGetActiveShipment() {
 		
-		assertTrue(objectTest.getActiveShipment().isEmpty());
+		assertTrue(objectTest.getActiveShipments().isEmpty());
 		objectTest.addActiveShipment(3090l);
-		assertFalse(objectTest.getActiveShipment().isEmpty());
+		assertFalse(objectTest.getActiveShipments().isEmpty());
 		
 	}
 

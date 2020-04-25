@@ -30,10 +30,10 @@ public abstract class IdentifiableDataAccessTest<T extends IdentifiableData> ext
 	
 	@Override
 	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
-		insertData(data1);
-		insertData(data1_v2);		
+		insertData(data1_v2);
+		insertData(data1);		
 		T pulledData = getObject(getDataID(data1));
-		assertEqualData(pulledData,data1_v2);
+		assertEqualData(pulledData,data1);
 	}
 	
 	public void editTest() throws ElementNotFoundException, NumberFormatException {

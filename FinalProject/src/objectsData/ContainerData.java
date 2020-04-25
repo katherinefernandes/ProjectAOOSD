@@ -14,6 +14,7 @@ public class ContainerData extends IdentifiableData {
 	private long clientID;
 	private long journeyID;
 	private long startPortID;
+	private long lastVisitedPortID;
 	private long destinationPortID;
 	private Location currentPosition;
 	private String cargo;
@@ -28,6 +29,7 @@ public class ContainerData extends IdentifiableData {
 		this.clientID=0l;
 		this.journeyID=0l;
 		this.startPortID=portID;
+		this.lastVisitedPortID = portID;
 		this.destinationPortID=portID;
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo="none";
@@ -72,6 +74,15 @@ public class ContainerData extends IdentifiableData {
 			e.printStackTrace();
 		}
 	}
+	public void setLastVisitedPort(long portID) {
+		lastVisitedPortID = portID;
+		int index = indexOfTagname(xmlFields, "LastVisitedPortID");
+		try {
+			xmlFields.get(index).setValue(String.valueOf(portID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	////
 	
 
@@ -92,8 +103,9 @@ public class ContainerData extends IdentifiableData {
 	}
 	
 	//Overloaded constructor added by Simon to handle values of updated that are not right now, for example when getting a container from the xml files. new code from here -
-	public ContainerData(long containerID, long clientId, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String updated, String arriveby) {
+	public ContainerData(long containerID, long clientId, long journeyID,long startPortID, long lastVisitedPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String updated, String arriveby) {
 		this(containerID,clientId,journeyID,startPortID,destinationPortID,latitude,longitude,cargo,temperature,atmosphere,humidity,arriveby);
+		setLastVisitedPort(lastVisitedPortID);
 		setUpdated(updated);
 		
 	}//- to here
@@ -173,6 +185,9 @@ public class ContainerData extends IdentifiableData {
 	public long getDestinationPortID() {
 		return this.destinationPortID;
 	}
+	public long getLastVisitedPortID() {
+		return lastVisitedPortID;
+	}
 	public long getStartPortID() {
 		return this.startPortID;
 	}
@@ -187,6 +202,7 @@ public class ContainerData extends IdentifiableData {
 		XMLField clientIDXML = new XMLField("ClientID",String.valueOf(clientID));
 		XMLField journeyIDXML = new XMLField("JourneyID",String.valueOf(journeyID));
 		XMLField startPortIDXML = new XMLField("StartPortID",String.valueOf(startPortID));
+		XMLField lastVisitedPortIDXML = new XMLField("LastVisitedPortID",String.valueOf(lastVisitedPortID));
 		XMLField destinationPortIDXML = new XMLField("DestinationPortID",String.valueOf(destinationPortID));
 		List<XMLField> positionList = new ArrayList<>();
 		positionList.add(new XMLField("Latitude",String.valueOf(currentPosition.getLatitude())));
@@ -201,7 +217,7 @@ public class ContainerData extends IdentifiableData {
 		XMLField updatedXML = new XMLField("Updated",updated);
 		XMLField arriveByXML = new XMLField("ArriveBy",arriveBy);
 		
-		XMLField[] array = {clientIDXML,journeyIDXML,startPortIDXML,destinationPortIDXML,positionXML,cargoXML,statusXML,updatedXML,arriveByXML};
+		XMLField[] array = {clientIDXML,journeyIDXML,startPortIDXML,lastVisitedPortIDXML,destinationPortIDXML,positionXML,cargoXML,statusXML,updatedXML,arriveByXML};
 		xmlFields = Arrays.asList(array);
 	}
 	public void setCargo(String cargo) {

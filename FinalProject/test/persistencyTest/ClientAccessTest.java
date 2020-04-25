@@ -48,6 +48,9 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 		data1.addActiveShipment(1766465L);
 		data1.addActiveShipment(8923892L);
 		data1.addActiveShipment(10390101L);
+		data1.addFinishedShipment(2342355L);
+		data1.addFinishedShipment(32564364L);
+		data1.addFinishedShipment(1243252364L);
 		
 		for (int i = 0; i < 20; i++) {
 			long ID = Math.abs(random.nextLong());
@@ -91,9 +94,9 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 		assertEquals(clientY.getAddress().getCity(),clientX.getAddress().getCity());
 		assertEquals(clientY.getAddress().getHouseNumber(),clientX.getAddress().getHouseNumber());
 		assertEquals(clientY.getAddress().getZipCode(),clientX.getAddress().getZipCode());
-		List<Long> journeyIDsX = clientX.getActiveShipment();
-		List<Long> journeyIDsY = clientY.getActiveShipment();
-		assertEquals(journeyIDsX,journeyIDsY);
+		assertEquals(clientX.getActiveShipments(),clientY.getActiveShipments());
+		assertEquals(clientX.getFinishedShipments(),clientY.getFinishedShipments());
+		
 	}
 	
 	protected long getDataID(ClientData clientData) {

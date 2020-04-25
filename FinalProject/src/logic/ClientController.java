@@ -2,6 +2,7 @@ package logic;
 
 import java.time.DateTimeException;
 import java.util.ArrayList;
+import java.util.List;
 
 import applications.ClientApplication;
 import containerFilters.FilterByCargoName;
@@ -199,11 +200,11 @@ public class ClientController {
 		return Name;
 	}
 	
-	private String arrayListJourneyToString(ArrayList<Long> shipments) {
+	private String arrayListJourneyToString(List<Long> list) {
 		String IDs="";
 		int counter=0;
-		for (int i=0;i<shipments.size();i++) {
-			IDs = IDs+"\nJourney: "+shipments.get(i);
+		for (int i=0;i<list.size();i++) {
+			IDs = IDs+"\nJourney: "+list.get(i);
 			System.out.println(IDs);
 			counter=counter+1;
 			if(counter>2) {
@@ -229,7 +230,7 @@ public class ClientController {
 		
 		if (currentClient.getSetClient()) {
 			client = currentClient.viewClient();
-			activeShipments = activeShipments+arrayListJourneyToString(client.getActiveShipment());
+			activeShipments = activeShipments + arrayListJourneyToString(client.getActiveShipments());
 		}
 		return activeShipments;
 	}

@@ -11,7 +11,8 @@ public class ClientData extends IdentifiableData{
 	private String email;
 	private ReferenceName person;
 	private Address address;
-	private ArrayList<Long> activeShipment;
+	private List<Long> activeShipments;
+	private List<Long> finishedShipments;
 
 	//TODO make names follow naming-conventions
 	public ClientData(long cid, String companyname, int country, long phone, String email, ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln, String street, String city, int house, String zip) {
@@ -22,7 +23,8 @@ public class ClientData extends IdentifiableData{
 		this.email= email;
 		this.person= new ReferenceName(fn,mn,ln);
 		this.address= new Address(street,house,city,zip);
-		this.activeShipment= new ArrayList<Long>();
+		this.activeShipments= new ArrayList<Long>();
+		this.finishedShipments = new ArrayList<>();
 		XMLField companyName = new XMLField("CompanyName",companyname);
 		XMLField countryCode = new XMLField("CountryCode",String.valueOf(country));
 		XMLField baseNumber = new XMLField("PhoneBaseNumber",String.valueOf(phone));
@@ -48,8 +50,9 @@ public class ClientData extends IdentifiableData{
 		addressList.add(new XMLField("City",city));
 		addressList.add(new XMLField("ZipCode",String.valueOf(zip)));
 		XMLField addressXML = new XMLField("Address",addressList);
-		XMLField shipments = new XMLField("ActiveShipments","JourneyID",new ArrayList<String>());
-		XMLField[] array = {companyName,phoneNumber,emailXML,nameXML,addressXML,shipments};
+		XMLField activeShipments = new XMLField("ActiveShipments","JourneyID",new ArrayList<String>());
+		XMLField finishedShipments = new XMLField("FinishedShipments","JourneyID",new ArrayList<String>());
+		XMLField[] array = {companyName,phoneNumber,emailXML,nameXML,addressXML,activeShipments,finishedShipments};
 		xmlFields = Arrays.asList(array);
 	}
 	public void setPhoneNumber(int country,long phone) {
@@ -93,9 +96,18 @@ public class ClientData extends IdentifiableData{
 			e.printStackTrace();
 		}
 	}
-	public void addActiveShipment(Long JourneyID) {
-		this.activeShipment.add(JourneyID);
+	public void addActiveShipment(long JourneyID) {
+		this.activeShipments.add(JourneyID);
 		int index = indexOfTagname(xmlFields,"ActiveShipments");
+		try {
+			xmlFields.get(index).addValue(String.valueOf(JourneyID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void addFinishedShipment(long JourneyID) {
+		this.finishedShipments.add(JourneyID);
+		int index = indexOfTagname(xmlFields,"FinishedShipments");
 		try {
 			xmlFields.get(index).addValue(String.valueOf(JourneyID));
 		} catch (Exception e) {
@@ -117,8 +129,11 @@ public class ClientData extends IdentifiableData{
 	public Address getAddress() {
 		return this.address;
 	}
-	public ArrayList<Long> getActiveShipment(){
-		return this.activeShipment;
+	public List<Long> getActiveShipments(){
+		return this.activeShipments;
+	}
+	public List<Long> getFinishedShipments(){
+		return this.finishedShipments;
 	}
 	public void save() {
 		DataBase.save(this);
