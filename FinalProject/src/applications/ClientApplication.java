@@ -7,6 +7,7 @@ import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import objectsData.ContainerData;
 import objectsData.PortData;
+import supportingClasses.UpdateDestinationPort;
 import supportingClasses.UpdateHistory;
 import supportingClasses.parseInput;
 import updateClientInformation.UpdateClient;
@@ -65,18 +66,8 @@ public class ClientApplication extends Application{
 	}
 
 	
-	//this method could be moved to anotherclass
 	public boolean updateDestinationPort(long destinationPortID) {
-
-		try {
-			destinationPort = DataBase.getPort(destinationPortID);
-			destinationPort.addArrivingContainer(containerID);
-			destinationPort.save();
-			return true;
-		} catch (ElementNotFoundException e) {
-
-			return false;
-		}
+		return new UpdateDestinationPort().updatePort(destinationPortID, containerID);
 		
 	}
 
