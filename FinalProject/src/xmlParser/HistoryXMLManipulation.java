@@ -40,7 +40,7 @@ public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> 
 		i = dataPoint.iterateUntilFound(i,"TimeStamp");
 		LocalDateTime timeStamp = LocalDateTime.parse(dataPoint.getEventAtIndex(++i).getData());
 		i = dataPoint.iterateUntilFound(i,"ContainerID");
-		long containerID = Integer.valueOf(dataPoint.getEventAtIndex(++i).getData());
+		long containerID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
 		i = dataPoint.iterateUntilFound(i,"JourneyID");
 		long journeyID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
 		i = dataPoint.iterateUntilFound(i,"ClientID");

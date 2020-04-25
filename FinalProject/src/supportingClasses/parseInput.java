@@ -1,6 +1,7 @@
 package supportingClasses;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +23,16 @@ public class parseInput {
 	    String formattedDate = myDateObj2.format(myFormatObj);  
 	    return formattedDate;
 	}// this needs to be deleted.. instead have a validation for the date, need to make sure that the date>=localdate.now()
-	*/public static String getDate(LocalDate myDateObj) { //using this for generating last updated...
+	*/public static String getDate(LocalDateTime localDateTime) { //using this for generating last updated...
 		
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
-	    String formattedDate = myDateObj.format(myFormatObj);  
+	    String formattedDate = localDateTime.format(myFormatObj);  
 	    return formattedDate;
 	}
-
+public static String getDate(LocalDate localDate) { //using this for generating last updated...
+		
+	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
+	    String formattedDate = localDate.format(myFormatObj);  
+	    return formattedDate;
+	}
 }
