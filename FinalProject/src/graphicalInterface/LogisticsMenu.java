@@ -66,6 +66,8 @@ public class LogisticsMenu {
 		newClientButton = new JButton("Add a new Client");
 		newClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtrSuccess.setVisible(false);
+				txtrSomethingWentWrong.setVisible(false);
 				switchPanels(newClientPanel);
 			} 
 		});

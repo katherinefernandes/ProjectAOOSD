@@ -474,7 +474,7 @@ public class LogisticController {
 			logisticMenu.viewContainerPanelTrue();
 		}else {
 			System.out.println("Something went wrong in update..");
-			logisticMenu.errorPositionUpdate();
+			logisticMenu.errorPositionUpdate(); 
 		}
 	}
 
