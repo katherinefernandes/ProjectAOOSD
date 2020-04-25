@@ -37,7 +37,7 @@ public class UpdatePort implements UpdateContainer {
 		return container;
 	}
 	private void containerHasReachedDestination(ContainerData container) {
-		System.out.println("Trying to update client");
+		    System.out.println("Trying to update client");
 			try {
 				client = DataBase.getClient(container.getClientID());
 			} catch (ElementNotFoundException e) {
@@ -45,6 +45,7 @@ public class UpdatePort implements UpdateContainer {
 			}
 			client.removeActiveShipment(container.getJourneyID());
 			client.addFinishedShipment(container.getJourneyID());
+			client.save();
 			new UpdateDestinationPort().updatedestinationPortAtEndOfJourney(container.getDestinationPortID(), container.getID());
 			container.useContainerAgain(0000000l, 00000l, container.getDestinationPortID(), container.getDestinationPortID(), "none", 0, 0, 0, "1-1-2020");
 			container.save();

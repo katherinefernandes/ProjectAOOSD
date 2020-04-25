@@ -13,6 +13,7 @@ import exceptions.ElementNotFoundException;
 import graphicalInterface.newClientMenu;
 import objectsData.ClientData;
 import objectsData.ContainerData;
+import objectsData.HistoryData;
 import objectsData.PortData;
 import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
@@ -521,8 +522,30 @@ public class ClientController {
 		
 	}
 	public String setSuccessfulJourneys() {
-		
+		String result = "---------------------------------------";
+		for(long journeys : currentClient.viewClient().getFinishedShipments()) {
+			result = result +"\nJourney ID: "+journeys;
+			result = result +"\nContained: "+getCargoByJourneyID(journeys);
+			result = result +"\nReached: "+getFinalDestinationByJourneyID(journeys);
+			 result =result + "---------------------------------------";
+		}
 		return "";
+	}
+	private String getFinalDestinationByJourneyID(long journeys) {
+		List<HistoryData> containers = DataBase.searchHistory(Long.toString(journeys));
+		if (containers.size()>0) {
+			return getPortName(containers.get(0).getDestinationPortID());
+		}
+		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		return "Unknown";
+	}
+	private String getCargoByJourneyID(long journeys) {
+		List<HistoryData> containers = DataBase.searchHistory(Long.toString(journeys));
+		if (containers.size()>0) {
+			return containers.get(0).getCargo();
+		}
+		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		return "Unknown";
 	}
 	
 }

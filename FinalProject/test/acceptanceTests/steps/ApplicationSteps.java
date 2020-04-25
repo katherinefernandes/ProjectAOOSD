@@ -29,6 +29,7 @@ import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
+import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ExtractingPortID;
 import supportingClasses.Security;
 import supportingClasses.UpdateDestinationPort;
@@ -89,6 +90,7 @@ public class ApplicationSteps {
 	private long portID;
 	private boolean result;
 	private long visitedPortID;
+	private DataForViewAllJourneys viewJourneys;
 
 	@Before
 	public void IntialisePorts() {
@@ -869,9 +871,8 @@ public class ApplicationSteps {
 		this.clientID =ID;
 		
 		ClientData client = new ClientData(ID, "company",92,23789,"email@eh.com",parseInput.parsingNames("firstname"),parseInput.parsingNames("middlename"),parseInput.parsingNames("lastname"),"g11/2","Islamabad",59,"2620");
+		client.addActiveShipment(journeyID);
 		client.save();
-		
-		
 	}
 
 	@Given("the start port is assigned {string}")
@@ -911,8 +912,19 @@ public class ApplicationSteps {
 		ContainerData container = new ContainerData (this.containerID,this.clientID,this.journeyID,this.startPortID,this.destinationPortID,this.latitude,this.longitude,this.cargo,this.temperature,this.pressure,this.humidity,(this.arriveBy));
 		container.save();
 	}
+	@When("the logistic company decides to view all the active Journeys")
+	public void theLogisticCompanyDecidesToViewAllTheActiveJourneys() {
+		viewJourneys = new DataForViewAllJourneys();
+		
+	}
+
+	@Then("all the active journey IDs are returned which also contains the Journey ID {long}")
+	public void allTheActiveJourneyIDsAreReturnedWhichAlsoContainsTheJourneyID(long journeyID) {
+		System.out.println(viewJourneys.getResult());
+		assertTrue(viewJourneys.getResult().contains(Long.toString(journeyID)));
+	}
 	
-	
+
 	
 	
 	
