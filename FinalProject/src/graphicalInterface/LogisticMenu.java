@@ -4,12 +4,15 @@ package graphicalInterface;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.EventQueue;
+
 import javax.swing.JButton;
 import java.awt.CardLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import logic.GraphController;
 import logic.LoginController;
 import logic.LogisticController;
 
@@ -49,6 +52,7 @@ public class LogisticMenu {
 	private JButton getClientIfoButton;
 	private JPanel viewClientPanel;
 	private JButton viewJourneysButton;
+    private String containerIDForGraphs;
     
     public LogisticMenu(LogisticController controller) {
 		this.controller = controller;
@@ -274,6 +278,7 @@ public class LogisticMenu {
 					txtrSomethingWentWrong.setVisible(true);
 					return;
 				}else {
+					
 					controller.addNewClient(textField_10.getText(),textField_9.getText(),textField_8.getText(),textField_7.getText(),textField_6.getText(),textField_5.getText(),textField_4.getText(),textField_3.getText(),textField_2.getText(),textField_1.getText(),textField.getText());
 				}
 				
@@ -344,6 +349,7 @@ public class LogisticMenu {
 					positionError.setVisible(true);
 					return;
 				}else {
+					containerIDForGraphs=textField_16.getText();
 					controller.updateContainerPosition(textField_16.getText(),textField_14.getText(),textField_15.getText());
 				}
 				if(controller.checkMessage()) {
@@ -448,6 +454,7 @@ public class LogisticMenu {
 					clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
 					return;
 				}else {
+					containerIDForGraphs=containerIDtextstatus.getText();
 					controller.updateContainerStatus(containerIDtextstatus.getText(),textField_11.getText(),textField_12.getText(),textField_13.getText());
 					
 				}
@@ -634,6 +641,21 @@ public class LogisticMenu {
 		
 		JButton graphsbutton = new JButton("Graphs");
 		graphsbutton.setBounds(330, 352, 117, 29);
+		/*graphsbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							GraphController graphscontroller = new GraphController(containerIDForGraphs);
+							Graphs showGraphs = new Graphs(graphscontroller);
+							showGraphs.frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
+			}});*/
 		viewContainerPanel.add(graphsbutton);
 		
 		JPanel searchClientPanel = new JPanel();
@@ -826,7 +848,9 @@ public class LogisticMenu {
 		layeredPane.add(pane);
 		layeredPane.repaint();
 		layeredPane.revalidate();
-		System.out.println("in switch pannels");}
+		System.out.println("in switch pannels");
+		}
+	
 	public void clearDataFields(JTextField...fields) {
 		for(JTextField field : fields) {
 			field.setText("");

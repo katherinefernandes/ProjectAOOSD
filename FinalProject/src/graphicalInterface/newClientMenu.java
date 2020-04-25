@@ -1,10 +1,8 @@
 package graphicalInterface;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -14,7 +12,6 @@ import javax.swing.JTextArea;
 
 import logic.ClientController;
 import logic.LoginController;
-import supportingClasses.ValidInput;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -49,7 +46,6 @@ public class newClientMenu {
 	private JButton successfulJourneysButton ;
 	private JTextField textField_13;
 	private JTextField textField_14;
-	private JTextField containterIDsearch;
 	private ClientController controller;
 	private JButton LogOutButton;
 	private JTextArea txtrCountryCode;
@@ -706,6 +702,21 @@ public class newClientMenu {
 		
 		JButton GraphsButton = new JButton("Graphs");
 		GraphsButton.setBounds(424, 420, 117, 29);
+		/*graphsbutton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						GraphController graphscontroller = new GraphController(containerIDForGraphs);
+						Graphs showGraphs = new Graphs(graphscontroller);
+						showGraphs.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+		}});*/
 		viewContainerPanel.add(GraphsButton);
 		
 		DataPanel = new JPanel();
@@ -713,25 +724,29 @@ public class newClientMenu {
 		layeredPane.add(DataPanel, "name_7969757405032");
 		DataPanel.setLayout(null);
 		
-		/*JTextArea txtrContainerId = new JTextArea();
-		txtrContainerId.setBounds(66, 85, 95, 19);
-		txtrContainerId.setText("Container ID:");
-		txtrContainerId.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		txtrContainerId.setEditable(false);
-		txtrContainerId.setBackground(new Color(95, 158, 160));
-		DataPanel.add(txtrContainerId);
 		
-		containterIDsearch = new JTextField();
-		containterIDsearch.setBounds(206, 82, 199, 26);
-		DataPanel.add(containterIDsearch);
-		containterIDsearch.setColumns(10);*/
+		JourneyIDsearch = new JTextField();
+		JourneyIDsearch.setColumns(10);
+		JourneyIDsearch.setBounds(206, 127, 199, 26);
+		DataPanel.add(JourneyIDsearch);
+		
+		CargoIDsearch = new JTextField();
+		CargoIDsearch.setColumns(10);
+		CargoIDsearch.setBounds(206, 174, 199, 26);
+		DataPanel.add(CargoIDsearch);
+		
+		PortNamesearch = new JTextField();
+		PortNamesearch.setColumns(10);
+		PortNamesearch.setBounds(206, 217, 199, 26);
+		DataPanel.add(PortNamesearch);
+		
 		
 		JButton Enterbutton = new JButton("Enter");
 		Enterbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				noContainerError.setVisible(false);
 				controller.searchContainer(JourneyIDsearch.getText(),CargoIDsearch.getText(),PortNamesearch.getText());
-				clearDataFields(containterIDsearch,JourneyIDsearch,CargoIDsearch,PortNamesearch);
+				clearDataFields(JourneyIDsearch,CargoIDsearch,PortNamesearch);
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
 			
@@ -763,20 +778,6 @@ public class newClientMenu {
 		txtrPortName.setBounds(66, 220, 95, 19);
 		DataPanel.add(txtrPortName);
 		
-		JourneyIDsearch = new JTextField();
-		JourneyIDsearch.setColumns(10);
-		JourneyIDsearch.setBounds(206, 127, 199, 26);
-		DataPanel.add(JourneyIDsearch);
-		
-		CargoIDsearch = new JTextField();
-		CargoIDsearch.setColumns(10);
-		CargoIDsearch.setBounds(206, 174, 199, 26);
-		DataPanel.add(CargoIDsearch);
-		
-		PortNamesearch = new JTextField();
-		PortNamesearch.setColumns(10);
-		PortNamesearch.setBounds(206, 217, 199, 26);
-		DataPanel.add(PortNamesearch);
 		
 		txtrSearchByOne = new JTextArea();
 		txtrSearchByOne.setText(" Search by one of the following criteria.\n Remember that priority will be given to the topmost field correctly entered.");
