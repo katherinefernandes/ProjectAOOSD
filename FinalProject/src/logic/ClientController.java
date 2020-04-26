@@ -260,8 +260,13 @@ public class ClientController {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
 		    container= currentClient.filterContainersOnAJourney(filter);
-			System.out.println("Container found, now the data can be read");
-			return true;
+		    if (container.size()>0) {
+		    	System.out.println("Container found, now the data can be read");
+				return true;
+		    }else {
+		    	System.out.println("No containers were found");
+		    	return false;
+		    }
 		}
 		return false;
 	}
@@ -515,12 +520,14 @@ public class ClientController {
 			clientmenu.setFieldsContainerData();
 			
 			if(checkCriteria) {
+				clientmenu.setFieldsContainerData();
 				System.out.println("Container ID for graphs");
 				System.out.println(container.get(0).getID());
 				containerID=container.get(0).getID();
 				clientmenu.viewOneContainerPanel();
 				
 			}else {
+				clientmenu.setFieldsContainerData();
 				clientmenu.viewMultipleContainerPanel();
 			}
 		}else {

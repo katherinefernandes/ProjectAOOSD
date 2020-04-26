@@ -15,8 +15,11 @@ public class FilterByJourneyID  extends FilteringContainersForAClient{
 
 	@Override
 	public ArrayList<ContainerData> filterContainers() {
-		for (int i=0;i<containers.size();i++) {
+		for (int i=0;i<this.containers.size();i++) {
+			System.out.println("Journey ID entered: "+journeyID);
+			System.out.println("Journey ID in container"+containers.get(i).getJourneyID());
 			if (containers.get(i).getJourneyID()!=journeyID) {
+				System.out.println("Removing the container");
 				containers.remove(i);
 			}
 		}

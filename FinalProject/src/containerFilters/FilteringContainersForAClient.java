@@ -25,8 +25,9 @@ public abstract class FilteringContainersForAClient implements FilterContainer {
 			String journeyIDInString = this.activeJourneys.get(i).toString();
 			containerExtractedByDataBase = DataBase.searchContainers(journeyIDInString);
 			//Need to check if there is actually a container
-			System.out.println(containerExtractedByDataBase.size());
+			System.out.println("Containers found "+containerExtractedByDataBase.size());
 			if(containerExtractedByDataBase.size()>0) {
+				System.out.println(containerExtractedByDataBase.get(0).getJourneyID());
 				this.containers.add(containerExtractedByDataBase.get(0));
 			}
 		}
