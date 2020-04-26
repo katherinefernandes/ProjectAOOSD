@@ -110,7 +110,9 @@ public class DataPointParser {
 	}
 	
 	public void addTextEvent(String text) {
-		dataPoint.add(EventParser.generateText(text));
+		if(text != null) {
+			dataPoint.add(EventParser.generateText(text));
+		}
 	}
 	
 	public void addEndEvent(String tagName) {
@@ -119,7 +121,9 @@ public class DataPointParser {
 	
 	public void addCompleteElement(String tagName, Object value) {
 		dataPoint.add(EventParser.generateStart(tagName));
-		dataPoint.add(EventParser.generateText(value.toString()));
+		if(value != null) {
+			dataPoint.add(EventParser.generateText(String.valueOf(value)));
+		}
 		dataPoint.add(EventParser.generateEnd(tagName));
 	}
 	
