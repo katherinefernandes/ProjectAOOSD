@@ -18,7 +18,15 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
+import graphsForInternalStatus.LineGraphHumidity;
+import graphsForInternalStatus.LineGraphPressure;
+import graphsForInternalStatus.LineGraphTemperature;
+
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 
 
@@ -91,6 +99,13 @@ public class newClientMenu {
 	private JTextArea journeySuccessTextfield;
 	private JPanel viewContainerPanel;
 	private JTextArea successfulJourneysTextArea;
+	private JButton tempGraphButton;
+	private JButton pressureGraphButton;
+	private JButton humidityGraphButton;
+	private String containerIDForGraphs;
+	private JButton activeJourneysButton;
+	private JScrollPane scrollPane;
+	private JTextArea allActiveJourneysTextArea;
 	
 	public newClientMenu(ClientController controller) {
 		this.controller = controller;
@@ -116,7 +131,7 @@ public class newClientMenu {
 				switchPanels(emailPanel);
 			}
 		});
-		emailButton.setBounds(55, 111, 196, 29);
+		emailButton.setBounds(55, 89, 196, 29);
 		ButtonPanel.add(emailButton);
 		
 		AddJourneyButton = new JButton("Add Journey");
@@ -126,7 +141,7 @@ public class newClientMenu {
 				switchPanels(JourneyPanel);
 			}
 		});
-		AddJourneyButton.setBounds(55, 195, 196, 29);
+		AddJourneyButton.setBounds(55, 171, 196, 29);
 		ButtonPanel.add(AddJourneyButton);
 		
 		ReferencepersonButton = new JButton("Reference Person");
@@ -136,7 +151,7 @@ public class newClientMenu {
 				switchPanels(referencePanel);
 			}
 		}); 
-		ReferencepersonButton.setBounds(55, 68, 196, 29);
+		ReferencepersonButton.setBounds(55, 48, 196, 29);
 		ButtonPanel.add(ReferencepersonButton);
 		
 		ContainerButton = new JButton("Container Data");
@@ -146,7 +161,7 @@ public class newClientMenu {
 				switchPanels(DataPanel);
 			}
 		});
-		ContainerButton.setBounds(55, 236, 196, 29);
+		ContainerButton.setBounds(55, 212, 196, 29);
 		ButtonPanel.add(ContainerButton);
 		
 		JButton btnNewButton_1 = new JButton("Phone Number");
@@ -156,7 +171,7 @@ public class newClientMenu {
 				switchPanels(PhonePanel);
 			}
 		});
-		btnNewButton_1.setBounds(55, 154, 196, 29);
+		btnNewButton_1.setBounds(55, 130, 196, 29);
 		ButtonPanel.add(btnNewButton_1);
 		
 		LogOutButton = new JButton("Log Out");
@@ -169,7 +184,7 @@ public class newClientMenu {
 			}
 			
 		});
-		LogOutButton.setBounds(55, 359, 196, 29);
+		LogOutButton.setBounds(55, 376, 196, 29);
 		ButtonPanel.add(LogOutButton);
 		
 		JButton viewOwnInfoButton = new JButton("View Personal Info");
@@ -179,7 +194,7 @@ public class newClientMenu {
 				switchPanels(ViewInfoPanel);
 			}
 		});
-		viewOwnInfoButton.setBounds(55, 277, 196, 29);
+		viewOwnInfoButton.setBounds(55, 253, 196, 29);
 		ButtonPanel.add(viewOwnInfoButton);
 		
 	
@@ -700,24 +715,59 @@ public class newClientMenu {
 		currentLocationTextField.setBounds(231, 292, 346, 19);
 		viewContainerPanel.add(currentLocationTextField);
 		
-		JButton GraphsButton = new JButton("Graphs");
-		GraphsButton.setBounds(424, 420, 117, 29);
-		/*graphsbutton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						GraphController graphscontroller = new GraphController(containerIDForGraphs);
-						Graphs showGraphs = new Graphs(graphscontroller);
-						showGraphs.frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			
-		}});*/
-		viewContainerPanel.add(GraphsButton);
+		tempGraphButton = new JButton("Temperature");
+		tempGraphButton.setBounds(33, 426, 117, 29);
+		viewContainerPanel.add(tempGraphButton);
+		tempGraphButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				   SwingUtilities.invokeLater(() -> { 
+					      System.out.println(containerIDForGraphs);
+					      LineGraphTemperature example = new LineGraphTemperature("Temperature Fluctuations", containerIDForGraphs);  
+					      example.setAlwaysOnTop(true);  
+					      example.pack();  
+					      example.setSize(600, 400);  
+					      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+					      example.setVisible(true);  
+					    }); 
+				
+			}
+		});
+		
+		
+		pressureGraphButton = new JButton("Pressure");
+		pressureGraphButton.setBounds(231, 426, 117, 29);
+		viewContainerPanel.add(pressureGraphButton);
+		pressureGraphButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				    SwingUtilities.invokeLater(() -> {  
+					System.out.println(containerIDForGraphs);
+				      LineGraphPressure example = new LineGraphPressure("Pressure Fluctuations",containerIDForGraphs);  
+				      example.setAlwaysOnTop(true);  
+				      example.pack();  
+				      example.setSize(600, 400);  
+				      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+				      example.setVisible(true);  
+				    });  
+			}
+		});
+		
+		
+		humidityGraphButton = new JButton("Humidity");
+		humidityGraphButton.setBounds(414, 426, 117, 29);
+		viewContainerPanel.add(humidityGraphButton);
+		humidityGraphButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    SwingUtilities.invokeLater(() -> {  
+				System.out.println(containerIDForGraphs);
+				LineGraphHumidity example = new LineGraphHumidity("Humidity Fluctuations",containerIDForGraphs);  
+			      example.setAlwaysOnTop(true);  
+			      example.pack();  
+			      example.setSize(600, 400);  
+			      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+			      example.setVisible(true);  
+			    });  
+		}
+	});
 		
 		DataPanel = new JPanel();
 		DataPanel.setBackground(new Color(95, 158, 160));
@@ -743,9 +793,10 @@ public class newClientMenu {
 		
 		JButton Enterbutton = new JButton("Enter");
 		Enterbutton.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				noContainerError.setVisible(false);
-				controller.searchContainer(JourneyIDsearch.getText(),CargoIDsearch.getText(),PortNamesearch.getText());
+				containerIDForGraphs=controller.searchContainer(JourneyIDsearch.getText(),CargoIDsearch.getText(),PortNamesearch.getText());
 				clearDataFields(JourneyIDsearch,CargoIDsearch,PortNamesearch);
 				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
@@ -919,8 +970,11 @@ public class newClientMenu {
 		
 		
 		successfulJourneysButton = new JButton("Successful Journeys");
-		successfulJourneysButton.setBounds(55, 318, 196, 29);
+		successfulJourneysButton.setBounds(55, 294, 196, 29);
 		ButtonPanel.add(successfulJourneysButton);
+		
+		
+		
 		successfulJourneysButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				successfulJourneysTextArea.setText(controller.setSuccessfulJourneys());
@@ -943,12 +997,41 @@ public class newClientMenu {
 		txtrMostRecentSuccessful.setText("Most Recent Successful Journeys");
 		txtrMostRecentSuccessful.setBounds(26, 10, 236, 16);
 		SuccessfulJourneysPane.add(txtrMostRecentSuccessful);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		layeredPane.add(scrollPane, "name_53637577574604");
+		
+		
+		allActiveJourneysTextArea = new JTextArea();
+		allActiveJourneysTextArea.setEditable(false);
+		allActiveJourneysTextArea.setBackground(new Color(95, 158, 160));
+		scrollPane.setViewportView(allActiveJourneysTextArea);
 		//newMultipleContainersPanel.add(scroll);
+		
+		
+		activeJourneysButton = new JButton("Active Journeys");
+		activeJourneysButton.setBounds(55, 335, 196, 29);
+		ButtonPanel.add(activeJourneysButton);
+		activeJourneysButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				allActiveJourneysTextArea.setText(controller.getAllActiveShipments());
+				switchPane(scrollPane);
+			}
+		});
 	}
 	
 	public void switchPanels(JPanel panel) {
 		layeredPane.removeAll();
 		layeredPane.add(panel);
+		layeredPane.repaint();
+		layeredPane.revalidate();
+		
+	}
+	
+	public void switchPane(JScrollPane pane) {
+		layeredPane.removeAll();
+		layeredPane.add(pane);
 		layeredPane.repaint();
 		layeredPane.revalidate();
 		

@@ -52,14 +52,14 @@ public class LineGraphPressure extends JFrame {
     return dataset;  
   }  
   
-  public static void main(String[] args) {  
-    SwingUtilities.invokeLater(() -> {  
-      LineGraphPressure example = new LineGraphPressure("Pressure Fluctuations",Long.toString(10849147913510l));  
-      example.setAlwaysOnTop(true);  
-      example.pack();  
-      example.setSize(600, 400);  
-      example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
-      example.setVisible(true);  
-    });  
-  }  
+//  public static void main(String[] args) {  
+//    SwingUtilities.invokeLater(() -> {  
+//      LineGraphPressure example = new LineGraphPressure("Pressure Fluctuations",Long.toString(10849147913510l));  
+//      example.setAlwaysOnTop(true);  
+//      example.pack();  
+//      example.setSize(600, 400);  
+//      example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+//      example.setVisible(true);  
+//    });  
+//  }  
 }  

@@ -327,6 +327,8 @@ public class ClientController {
 		return container.get(0).getUpdated();
 	}
 	public String getInternalStatus() {
+		System.out.println("size");
+		System.out.println(container.size());
 		String temp= Float.toString(container.get(0).getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.get(0).getInternalStatus().getHumidity());
 		String pressure = Float.toString(container.get(0).getInternalStatus().getAtmosphere());
@@ -495,9 +497,10 @@ public class ClientController {
 		}
 		
 	}
-	public void searchContainer(String journeyID, String cargo, String portName) {
+	public String searchContainer(String journeyID, String cargo, String portName) {
 		boolean checkCriteria = false;
 		boolean checkMessage = false;
+		long containerID = 1L;
 		if(!journeyID.isEmpty()) {
 			checkMessage = getContainerByJourneyID(journeyID);
 			checkCriteria =true;
@@ -510,8 +513,13 @@ public class ClientController {
 		}
 		if(checkMessage) {
 			clientmenu.setFieldsContainerData();
+			
 			if(checkCriteria) {
+				System.out.println("Container ID for graphs");
+				System.out.println(container.get(0).getID());
+				containerID=container.get(0).getID();
 				clientmenu.viewOneContainerPanel();
+				
 			}else {
 				clientmenu.viewMultipleContainerPanel();
 			}
@@ -519,6 +527,7 @@ public class ClientController {
 			System.out.println("no container found by the above criterias");
 			clientmenu.containerSearchError();
 		}
+		return Long.toString(containerID);
 		
 	}
 	public String setSuccessfulJourneys() {
@@ -546,6 +555,13 @@ public class ClientController {
 		}
 		System.out.println("Could not find the container in history for the journey ID: "+journeys);
 		return "Unknown";
+	}
+	public String getAllActiveShipments() {
+		String result = "";
+		for(long Journeys : currentClient.viewClient().getActiveShipments()) {
+			result = result+"\nJourney ID: "+Journeys;
+		}
+		return result;
 	}
 	
 }

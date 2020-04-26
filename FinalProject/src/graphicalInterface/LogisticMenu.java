@@ -12,7 +12,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import logic.GraphController;
+
 import logic.LoginController;
 import logic.LogisticController;
 
@@ -20,6 +20,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
+import graphsForInternalStatus.LineGraphHumidity;
+import graphsForInternalStatus.LineGraphPressure;
+import graphsForInternalStatus.LineGraphTemperature;
 
 public class LogisticMenu {
 
@@ -53,6 +59,10 @@ public class LogisticMenu {
 	private JPanel viewClientPanel;
 	private JButton viewJourneysButton;
     private String containerIDForGraphs;
+	private JButton temperatureGraphButton;
+	private JButton atmosphereGraphButton;
+	private JButton humidityGraphButton;
+	private JPanel searchClientPanel;
     
     public LogisticMenu(LogisticController controller) {
 		this.controller = controller;
@@ -633,32 +643,68 @@ public class LogisticMenu {
 		layeredPane.add(viewContainerPanel);
 		viewContainerPanel.setLayout(null);
 		
-		 viewContainerText = new JTextArea();
+		viewContainerText = new JTextArea();
 		viewContainerText.setBackground(new Color(95, 158, 160));
 		viewContainerText.setEditable(false);
 		viewContainerText.setBounds(18, 6, 450, 322);
 		viewContainerPanel.add(viewContainerText);
 		
-		JButton graphsbutton = new JButton("Graphs");
-		graphsbutton.setBounds(330, 352, 117, 29);
-		/*graphsbutton.addActionListener(new ActionListener() {
+		temperatureGraphButton = new JButton("Temperature");
+		temperatureGraphButton.setBounds(18, 362, 117, 29);
+		viewContainerPanel.add(temperatureGraphButton);
+		temperatureGraphButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							GraphController graphscontroller = new GraphController(containerIDForGraphs);
-							Graphs showGraphs = new Graphs(graphscontroller);
-							showGraphs.frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
+				   SwingUtilities.invokeLater(() -> { 
+					      System.out.println(containerIDForGraphs);
+					      LineGraphTemperature example = new LineGraphTemperature("Temperature Fluctuations", containerIDForGraphs);  
+					      example.setAlwaysOnTop(true);  
+					      example.pack();  
+					      example.setSize(600, 400);  
+					      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+					      example.setVisible(true);  
+					    }); 
 				
-			}});*/
-		viewContainerPanel.add(graphsbutton);
+			}
+		});
 		
-		JPanel searchClientPanel = new JPanel();
+		
+		atmosphereGraphButton = new JButton("Pressure");
+		atmosphereGraphButton.setBounds(190, 362, 117, 29);
+		viewContainerPanel.add(atmosphereGraphButton);
+		atmosphereGraphButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				    SwingUtilities.invokeLater(() -> {  
+					System.out.println(containerIDForGraphs);
+				      LineGraphPressure example = new LineGraphPressure("Pressure Fluctuations",containerIDForGraphs);  
+				      example.setAlwaysOnTop(true);  
+				      example.pack();  
+				      example.setSize(600, 400);  
+				      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+				      example.setVisible(true);  
+				    });  
+			}
+		});
+		
+		humidityGraphButton = new JButton("Humidity");
+		humidityGraphButton.setBounds(351, 362, 117, 29);
+		viewContainerPanel.add(humidityGraphButton);
+		humidityGraphButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    SwingUtilities.invokeLater(() -> {  
+				System.out.println(containerIDForGraphs);
+				LineGraphHumidity example = new LineGraphHumidity("Humidity Fluctuations",containerIDForGraphs);  
+			      example.setAlwaysOnTop(true);  
+			      example.pack();  
+			      example.setSize(600, 400);  
+			      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+			      example.setVisible(true);  
+			    });  
+		}
+	});
+		
+		
+		
+		searchClientPanel = new JPanel();
 		layeredPane.setLayer(searchClientPanel, 0);
 		searchClientPanel.setBackground(new Color(95, 158, 160));
 		searchClientPanel.setBounds(0, 0, 486, 406);
