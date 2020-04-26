@@ -564,9 +564,11 @@ public class ClientController {
 		return "Unknown";
 	}
 	public String getAllActiveShipments() {
-		String result = "";
+		String result = "All Active Journeys: ";
+		
 		for(long Journeys : currentClient.viewClient().getActiveShipments()) {
 			result = result+"\nJourney ID: "+Journeys;
+			result = result +"-----------------------------------------------------";
 		}
 		return result;
 	}

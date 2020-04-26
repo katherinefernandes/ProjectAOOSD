@@ -37,7 +37,9 @@ public class DataForViewAllJourneys {
 	private String getContainerID(long journey) {
 		List<ContainerData> containers = DataBase.searchContainers(Long.toString(journey));
 		for (ContainerData container : containers) {
-			return Long.toString(container.getID());
+			if (container.getJourneyID()==journey) {
+				return Long.toString(container.getID());
+			}
 		}
 		return "Unknown";
 	}
