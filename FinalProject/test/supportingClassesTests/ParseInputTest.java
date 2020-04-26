@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 
 class ParseInputTest {
 	
 	@Test
 	public void testParsingNames() {
-		assertSame(new ArrayList<String>(Arrays.asList("muna")).size(),parseInput.parsingNames("muna").size());
+		assertSame(new ArrayList<String>(Arrays.asList("muna")).size(),InputParser.parsingNames("muna").size());
 	}
 
 }

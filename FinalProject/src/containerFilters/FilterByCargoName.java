@@ -6,11 +6,8 @@ import businessObjects.Client;
 import businessObjects.Container;
 
 public class FilterByCargoName extends FilteringContainersForAClient{
-	
 	private String cargo;
-	
-	
-	
+
 	public FilterByCargoName(Client client,String cargo) {
 		super(client);
 		this.cargo=cargo;

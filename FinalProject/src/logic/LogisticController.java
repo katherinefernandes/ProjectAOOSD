@@ -18,7 +18,7 @@ import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
 import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ValidInput;
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 
@@ -98,20 +98,20 @@ public class LogisticController {
 
 	private boolean setFirstName(String name1) {
 
-		firstName = parseInput.parsingNames(name1);
+		firstName = InputParser.parsingNames(name1);
 		return validate.validateName(name1);
 	}
 
 
 	private boolean setMiddleName(String name2) {
 
-		middleName = parseInput.parsingNames(name2);
+		middleName = InputParser.parsingNames(name2);
 		return validate.validateName(name2);
 	}
 
 
 	private boolean setLastName(String name) {
-		lastName = parseInput.parsingNames(name);
+		lastName = InputParser.parsingNames(name);
 		return validate.validateName(name);
 	}
 
@@ -313,11 +313,11 @@ public class LogisticController {
 
 
 	public boolean getClientByReferencePerson(String text, String string, String text2) {
-		firstN = parseInput.parsingNames(text);
+		firstN = InputParser.parsingNames(text);
 		
-		middleN = parseInput.parsingNames(string);
+		middleN = InputParser.parsingNames(string);
 		
-		lastN = parseInput.parsingNames(text2);
+		lastN = InputParser.parsingNames(text2);
 		
 		searchRefPerson = new ReferenceName(firstN, middleN, lastN);
 		

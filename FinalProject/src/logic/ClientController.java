@@ -15,7 +15,7 @@ import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.newClientMenu;import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
@@ -45,9 +45,9 @@ public class ClientController {
 		System.out.println("inside the method savereferencePerson");
 		boolean checkMessage = false;
 		if(checkNameValidity(firstName) && validate.validateName(middleName) && checkNameValidity(lastName)){
-			firstNameList = parseInput.parsingNames(firstName);
-			middleNameList = parseInput.parsingNames(middleName);
-			lastNameList = parseInput.parsingNames(lastName);
+			firstNameList = InputParser.parsingNames(firstName);
+			middleNameList = InputParser.parsingNames(middleName);
+			lastNameList = InputParser.parsingNames(lastName);
 			UpdateReferencePerson update = new UpdateReferencePerson(firstNameList,middleNameList,lastNameList);
 			System.out.println("Going to try to update information");
 			if (currentClient.updateClientInformation(update)) {
@@ -77,7 +77,7 @@ public class ClientController {
 	
 	private boolean checkNameValidity(String name) {
 		System.out.println(name);
-		ArrayList<String> Name = parseInput.parsingNames(name); 
+		ArrayList<String> Name = InputParser.parsingNames(name); 
 		for(int i=0;i<Name.size();i++) {
 			if(!validate.validateName(Name.get(i))) {
 				return false;

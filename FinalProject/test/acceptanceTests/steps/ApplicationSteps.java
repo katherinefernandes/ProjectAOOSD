@@ -33,7 +33,7 @@ import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ExtractingPortID;
 import supportingClasses.UpdateDestinationPort;
 import supportingClasses.ValidInput;
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
@@ -135,9 +135,9 @@ public class ApplicationSteps {
 	public void theReferencePersonIsFirstnameLastname(String firstname, String middlename,String lastname) {
 
 		
-		this.firstname = parseInput.parsingNames(firstname);
-	    this.lastname = parseInput.parsingNames(lastname);
-	    this.middlename = parseInput.parsingNames(middlename);
+		this.firstname = InputParser.parsingNames(firstname);
+	    this.lastname = InputParser.parsingNames(lastname);
+	    this.middlename = InputParser.parsingNames(middlename);
 	    Client client = new Client(this.clientID,this.companyname,this.countryCode,this.phone,this.email,this.firstname,this.middlename,this.lastname,"g-11/2","islamabad",58,"1400");
 	    client.save();
 	}
@@ -201,8 +201,8 @@ public class ApplicationSteps {
 	@Then("that the reference person is firstname {string} lastname {string}")
 	public void thatTheReferencePersonIsFirstnameLastname(String firstname, String lastname) {
 		
-		assertEquals(parseInput.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
-	    assertEquals(parseInput.parsingNames(lastname).size(),client.getPerson().getLastName().size());
+		assertEquals(InputParser.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
+	    assertEquals(InputParser.parsingNames(lastname).size(),client.getPerson().getLastName().size());
 	
 	}
 	
@@ -211,7 +211,7 @@ public class ApplicationSteps {
 	public void thereIsAClientWithID(long clientID) {
 
 		this.clientID =clientID;
-		client = new Client(this.clientID,"company",92,23789,"email@eh.com",parseInput.parsingNames("muna"),parseInput.parsingNames(""),parseInput.parsingNames("azam"),"g11/2","Islamabad",59,"2620");
+		client = new Client(this.clientID,"company",92,23789,"email@eh.com",InputParser.parsingNames("muna"),InputParser.parsingNames(""),InputParser.parsingNames("azam"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		clientApplication =  new ClientApplication(clientID);
 	}
@@ -411,9 +411,9 @@ public class ApplicationSteps {
 		assertTrue(validate.validateName(name2));
 	    assertTrue(validate.validateName(name3));
 		   
-	   this.firstName = parseInput.parsingNames(name1);
-	   this.middleName = parseInput.parsingNames(name2);
-	   this.lastName = parseInput.parsingNames(name3);
+	   this.firstName = InputParser.parsingNames(name1);
+	   this.middleName = InputParser.parsingNames(name2);
+	   this.lastName = InputParser.parsingNames(name3);
 	}
 
 	@When("the address is provided street: {string} house number: {int} city: {string} zipcode: {string}")
@@ -471,11 +471,11 @@ public class ApplicationSteps {
 	@When("that the logistic company enters the clients reference person {string} {string} {string}")
 	public void thatTheLogisticCompanyEntersTheClientsReferencePerson(String string, String string2, String string3) {
 	    	
-		this.firstname = parseInput.parsingNames(string);
+		this.firstname = InputParser.parsingNames(string);
 		
-		this.middlename = parseInput.parsingNames(string2);
+		this.middlename = InputParser.parsingNames(string2);
 		
-		this.lastName = parseInput.parsingNames(string3);
+		this.lastName = InputParser.parsingNames(string3);
 		
 		searchRefPerson = new ReferenceName(firstname, middlename, lastName);
 		
@@ -799,19 +799,19 @@ public class ApplicationSteps {
 
 	@When("the client provides the new firstname {string} which is valid")
 	public void providesTheNewFirstnameWhichIsValid(String firstName) {
-		this.firstName = parseInput.parsingNames(firstName);
+		this.firstName = InputParser.parsingNames(firstName);
 		assertTrue(validate.validateName(firstName));
 	}
 
 	@When("provides the new middlename {string} which is also valid")
 	public void providesTheNewMiddlenameWhichIsAlsoValid(String middleName) {
-		this.middleName = parseInput.parsingNames(middleName);
+		this.middleName = InputParser.parsingNames(middleName);
 		assertTrue(validate.validateName(middleName));
 	}
 
 	@When("provides the new lastname {string} which is also valid")
 	public void providesTheNewLastnameWhichIsAlsoValid(String lastName) {
-		this.lastName = parseInput.parsingNames(lastName);
+		this.lastName = InputParser.parsingNames(lastName);
 		assertTrue(validate.validateName(lastName));
 	}
 
@@ -864,7 +864,7 @@ public class ApplicationSteps {
 	public void theContainerHasTheAssignedClientID(long ID) {
 		this.clientID =ID;
 		
-		Client client = new Client(ID, "company",92,23789,"email@eh.com",parseInput.parsingNames("firstname"),parseInput.parsingNames("middlename"),parseInput.parsingNames("lastname"),"g11/2","Islamabad",59,"2620");
+		Client client = new Client(ID, "company",92,23789,"email@eh.com",InputParser.parsingNames("firstname"),InputParser.parsingNames("middlename"),InputParser.parsingNames("lastname"),"g11/2","Islamabad",59,"2620");
 		client.addActiveShipment(journeyID);
 		client.save();
 	}
