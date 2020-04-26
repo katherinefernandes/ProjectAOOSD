@@ -9,16 +9,13 @@ import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import supportingClasses.UpdateDestinationPort;
 import supportingClasses.UpdateHistory;
-import supportingClasses.InputParser;
 import updateClientInformation.UpdateClient;
 
 public class ClientApplication extends Application{
 	private Port startPort;
-	private Port destinationPort;
 	private boolean foundContainer;
 	private long containerID;
 	private boolean containerRegistered;
-	private UpdateHistory history;
 
 	public ClientApplication(long ID) {
 		super();
@@ -27,7 +24,6 @@ public class ClientApplication extends Application{
 		} catch (ElementNotFoundException e) {
 			throw new Error(e);
 		}
-		history = new UpdateHistory();
 	}
 
 	
@@ -73,17 +69,10 @@ public class ClientApplication extends Application{
 
 	public void registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy) {
-
-		containerRegistered=false;
-		container.setClientID(client.getID());
-		container.setStartPortID(startPortID);
-		container.setDestinationPortID(destinationPortID);
-		container.setCargo(cargo);
-		container.setInternalStatus(pressure, temperature, humidity);
-		container.setArriveBy(InputParser.getDate(arriveBy));
-		container.setJourneyID(ssecurity.generateID());
+		containerRegistered=false;		
+		container.useContainerAgain(client.getID(),ssecurity.generateID() , startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
 		container.save();
-		history.updateHistoryDataBase(container);
+		UpdateHistory.updateHistoryDataBase(container);
 		client.addActiveShipment(container.getJourneyID());
 		client.save();
 		containerRegistered=true;

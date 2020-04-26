@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel; 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.SpringLayout;
 
@@ -14,7 +13,6 @@ import logic.LoginController;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox; 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent; 

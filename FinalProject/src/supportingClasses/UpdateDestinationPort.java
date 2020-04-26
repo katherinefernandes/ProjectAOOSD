@@ -19,5 +19,15 @@ public class UpdateDestinationPort {
 			return false;
 		}
 	}
+	public void updatedestinationPortAtEndOfJourney(long destinationID, long containerID) {
+		try {
+			destinationPort = DataBase.getPort(destinationID);
+			destinationPort.addStationedContainer(containerID);
+			destinationPort.removeArrivingContainer(containerID);
+			destinationPort.save();
+		} catch (ElementNotFoundException e) {
+			throw new Error(e);
+		}
+	}
 	
 }

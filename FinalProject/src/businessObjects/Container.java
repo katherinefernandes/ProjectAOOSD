@@ -1,12 +1,12 @@
 package businessObjects;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import dataBase.DataBase;
 import dataWrappers.InternalState;
 import dataWrappers.Location;
-import supportingClasses.InputParser;
 
 public class Container implements BusinessObject {
 	private long ID;
@@ -18,8 +18,8 @@ public class Container implements BusinessObject {
 	private Location currentPosition = new Location(0F,0F);
 	private String cargo = " ";
 	private InternalState internalStatus = new InternalState(0F,0F,0F);
-	private String updated = InputParser.getDate("1-1-2000");
-	private String arriveBy = InputParser.getDate("1-1-2000");
+	private String updated = LocalDateTime.of(2000, 1, 1, 0, 0).toString();
+	private String arriveBy = LocalDateTime.of(2000, 1, 1, 0, 0).toString();
 
 
 	public Container(long containerID) {
@@ -84,12 +84,11 @@ public class Container implements BusinessObject {
 	public void setArriveBy(String arriveBy) {
 		this.arriveBy=arriveBy;
 	}
-	public void useContainerAgain(long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String arriveby) {
+	public void useContainerAgain(long clientID, long journeyID,long startPortID, long destinationPortID, String cargo, float temperature, float atmosphere, float humidity, String arriveby) {
 		setClientID(clientID);
 		setJourneyID(journeyID);
 		setStartPortID(startPortID);
 		setDestinationPortID(destinationPortID);
-		setCurrentPosition(latitude,longitude);
 		setCargo(cargo);
 		setInternalStatus(atmosphere, temperature, humidity);
 		setArriveBy(arriveby);

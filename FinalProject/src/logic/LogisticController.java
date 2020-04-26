@@ -16,8 +16,9 @@ import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
+import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ValidInput;
-import supportingClasses.InputParser;
+import supportingClasses.parseInput;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 
@@ -57,21 +58,21 @@ public class LogisticController {
 
 
 	private boolean setCompanyName(String text) {
-		// TODO Auto-generated method stub
+
 		this.companyName=text;
 		return true;
 	}
 
 
 	private boolean setEmail(String email) {
-		// TODO Auto-generated method stub
+
 		this.email = email;
 		return validate.validateEmail(email);
 	}
 
 
 	private boolean setCountryCode(String countryCode) {
-		// TODO Auto-generated method stub
+
 		try {
 			cc = Integer.valueOf(countryCode);
 			System.out.println("string is correct");
@@ -96,43 +97,41 @@ public class LogisticController {
 
 
 	private boolean setFirstName(String name1) {
-		// TODO Auto-generated method stub
-		
-		firstName = InputParser.parsingNames(name1);
+
+		firstName = parseInput.parsingNames(name1);
 		return validate.validateName(name1);
 	}
 
 
 	private boolean setMiddleName(String name2) {
-		// TODO Auto-generated method stub
-		middleName = InputParser.parsingNames(name2);
+
+		middleName = parseInput.parsingNames(name2);
 		return validate.validateName(name2);
 	}
 
 
 	private boolean setLastName(String name) {
-		// TODO Auto-generated method stub
-		lastName = InputParser.parsingNames(name);
+		lastName = parseInput.parsingNames(name);
 		return validate.validateName(name);
 	}
 
 
 	private boolean setStreetName(String street) {
-		// TODO Auto-generated method stub
+
 		this.street=street;
 		return true;
 	}
 
 
 	private boolean setCity(String text) {
-		// TODO Auto-generated method stub
+
 		this.city = text;
 		return validate.validateName(text);
 	}
 
 
 	private boolean setBuilding(String text) {
-		// TODO Auto-generated method stub
+
 		try {
 			this.building = Integer.valueOf(text);
 			System.out.println("Building number is correct");
@@ -145,14 +144,14 @@ public class LogisticController {
 
 
 	private boolean setPostcode(String postcode) {
-		// TODO Auto-generated method stub
+
 		this.zipcode= postcode;
 		return validate.validatePostCode(postcode);
 	}
 
 
 	private boolean addClient() {
-		// TODO Auto-generated method stub
+
 		logistic.setAddNewClient();
 		logistic.addClient(email, companyName, cc, phonenumber, firstName, middleName, lastName, street, city, zipcode, building);
 		return logistic.getAddNewClient();
@@ -160,7 +159,7 @@ public class LogisticController {
 
 
 	private boolean setContainerForUpdate(String text) {
-		// TODO Auto-generated method stub
+
 		try {
 			containerID= Long.valueOf(text);
 			System.out.println("String is correct");
@@ -204,8 +203,7 @@ public class LogisticController {
 				System.out.println("the pressure is not valid");
 				return false;
 			}
-		UpdateStatus update = new UpdateStatus(pres, temp, humi);
-		
+		UpdateStatus update = new UpdateStatus( temp, humi,pres);
 		
 		return logistic.updateContainerInformation(update);
 	}
@@ -214,7 +212,7 @@ public class LogisticController {
 		try {
 			port = DataBase.getPort(portID);
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			System.out.println("Cant find the port");
 			throw new Error(e);
 		}
@@ -222,7 +220,6 @@ public class LogisticController {
 	}
 
 	public String getContainerData() {
-		// TODO Auto-generated method stub
 		Container container = logistic.viewContainer();
 		String result="\n";
 		result = result +"\nJourney ID: "+container.getJourneyID();
@@ -237,9 +234,8 @@ public class LogisticController {
 		result = result +"\nLast Updated: "+container.getUpdated();
 		return result;
 	}
-	private String getInternalStatus(Container container) {
-		// TODO Auto-generated method stub
-		String temp= Float.toString(container.getInternalStatus().getTemperature());
+
+	private String getInternalStatus(Container container) {		String temp= Float.toString(container.getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.getInternalStatus().getHumidity());
 		String pressure = Float.toString(container.getInternalStatus().getAtmosphere());
 		
@@ -248,7 +244,7 @@ public class LogisticController {
 
 
 	private boolean updatePosition(String longitude, String latitude) {
-		// TODO Auto-generated method stub
+
 		float longit;
 		float lati;
 		try {
@@ -274,7 +270,7 @@ public class LogisticController {
 
 
 	public boolean getClientByEmail(String searchEmail) {
-		// TODO Auto-generated method stub
+
 		optionEmail = new SearchByEmail(searchEmail);
 		clients= logistic.search(optionEmail);
 		if (clients.size()>0) {
@@ -287,7 +283,7 @@ public class LogisticController {
 
 
 	public boolean getClientByCompanyName(String searchName) {
-		// TODO Auto-generated method stub
+
 		optionName = new SearchByName(searchName);
 		clients = logistic.search(optionName);
 		if(clients.size()>0) {
@@ -298,7 +294,7 @@ public class LogisticController {
 
 
 	public boolean getClientByPhone(String phone) {
-		// TODO Auto-generated method stub
+
 		long phonenumber;
 		try {
 			phonenumber= Long.valueOf(phone);
@@ -317,12 +313,11 @@ public class LogisticController {
 
 
 	public boolean getClientByReferencePerson(String text, String string, String text2) {
-		// TODO Auto-generated method stub
-		firstN = InputParser.parsingNames(text);
+		firstN = parseInput.parsingNames(text);
 		
-		middleN = InputParser.parsingNames(string);
+		middleN = parseInput.parsingNames(string);
 		
-		lastN = InputParser.parsingNames(text2);
+		lastN = parseInput.parsingNames(text2);
 		
 		searchRefPerson = new ReferenceName(firstN, middleN, lastN);
 		
@@ -337,13 +332,13 @@ public class LogisticController {
 
 
 	public String getclientsview() {
-		// TODO Auto-generated method stub
+
 		String result ="Displaying Up to most 3 Clients: ";
 		int counter =0;
 		for(int i=0;i<clients.size();i++) {
 			result =result+clientDataToString(clients.get(i));
 			counter++;
-			if(counter>3) {
+			if(counter>2) {
 				break;
 			}
 		}
@@ -531,9 +526,6 @@ public class LogisticController {
 		
 		if(checkMessage) {
 			System.out.println("Success search");
-//			logisticMenu.successSearch();
-//			logisticMenu.setFieldsClientData();
-//			logisticMenu.viewClient();
 			return;
 		}else {
 			System.out.println("Not success");
@@ -544,7 +536,7 @@ public class LogisticController {
 
 	public String getAllJourneys() {
 		
-		return "";
+		return new DataForViewAllJourneys().getResult();
 	}
 	
 

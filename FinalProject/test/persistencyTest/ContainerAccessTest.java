@@ -11,21 +11,20 @@ import org.junit.jupiter.api.Test;
 import businessObjects.Container;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import supportingClasses.InputParser;
 
 public class ContainerAccessTest extends IdentifiableDataAccessTest<Container>{
 
 	public ContainerAccessTest() {
 		super();
 		
-		data1 = new Container(20711569474800L, 102621L, 675465457L, 53354L, 755356L, 1724637126L, 45.6F, 34.787F, "Fish n' chips", 3.5F, 108.2F, 66F,InputParser.getDate("10-04-2020"),LocalDateTime.now().toString());
-		data2 = new Container(6755L, 2530321L, 4533566L, 3434568L, 35668556L, 32764273472L, 55.6F, 22.87F, "Lard", 7F, 102F, 44F, InputParser.getDate("12-04-2020"),LocalDateTime.now().toString());
-		data1_v2 = new Container(20711569474800L, 182321L, 675465457L, 755356L, 7783874L, 23172351252L, 55.6F, 36.787F, "Fish n' lard", 3.8F, 100.2F, 86F, InputParser.getDate(("14-04-2020")),LocalDateTime.now().toString());
+		data1 = new Container(20711569474800L, 102621L, 675465457L, 53354L, 755356L, 1724637126L, 45.6F, 34.787F, "Fish n' chips", 3.5F, 108.2F, 66F,LocalDateTime.of(2020, 2, 11, 14, 24).toString(),LocalDateTime.now().toString());
+		data2 = new Container(6755L, 2530321L, 4533566L, 3434568L, 35668556L, 32764273472L, 55.6F, 22.87F, "Lard", 7F, 102F, 44F,LocalDateTime.of(2020, 5, 21, 12, 34).toString(),LocalDateTime.now().toString());
+		data1_v2 = new Container(20711569474800L, 182321L, 675465457L, 755356L, 7783874L, 23172351252L, 55.6F, 36.787F, "Fish n' lard", 3.8F, 100.2F, 86F, LocalDateTime.of(2020, 5, 21, 12, 34).toString(),LocalDateTime.now().toString());
 		data1.setLastVisitedPort(1241524123L);
 		
 		for(int i = 0; i < 20; i++) {
 			long ID = random.nextLong();
-			sortTestData.add(new Container(ID, 1L, 1L, 1L, 1L, 1L, 1F, 1F, "a", 1F, 1F, 1F, InputParser.getDate("01-04-2020"),LocalDateTime.now().toString()));
+			sortTestData.add(new Container(ID, 1L, 1L, 1L, 1L, 1L, 1F, 1F, "a", 1F, 1F, 1F, LocalDateTime.of(2020, 6, 12, 21, 1).toString(),LocalDateTime.now().toString()));
 		}
 	}
 	

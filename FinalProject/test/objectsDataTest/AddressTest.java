@@ -1,8 +1,6 @@
 package objectsDataTest;
 
 import static org.junit.Assert.*;
-
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 import dataWrappers.Address;

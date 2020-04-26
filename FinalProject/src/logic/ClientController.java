@@ -13,10 +13,9 @@ import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import graphicalInterface.newClientMenu;
-import supportingClasses.ExtractingPortID;
+import graphicalInterface.newClientMenu;import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
-import supportingClasses.InputParser;
+import supportingClasses.parseInput;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
@@ -34,12 +33,10 @@ public class ClientController {
 	private long portID;
 	private long startPortID;
 	private long destinationPortID;
-	private ExtractingPortID extractingPortID;
 
 	public ClientController(String clientID){
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
-		extractingPortID = new ExtractingPortID();
 		currentClient = new ClientApplication(this.clientID);
 		clientmenu = new newClientMenu(this);
 		clientmenu.frame.setVisible(true);
@@ -48,9 +45,9 @@ public class ClientController {
 		System.out.println("inside the method savereferencePerson");
 		boolean checkMessage = false;
 		if(checkNameValidity(firstName) && validate.validateName(middleName) && checkNameValidity(lastName)){
-			firstNameList = InputParser.parsingNames(firstName);
-			middleNameList = InputParser.parsingNames(middleName);
-			lastNameList = InputParser.parsingNames(lastName);
+			firstNameList = parseInput.parsingNames(firstName);
+			middleNameList = parseInput.parsingNames(middleName);
+			lastNameList = parseInput.parsingNames(lastName);
 			UpdateReferencePerson update = new UpdateReferencePerson(firstNameList,middleNameList,lastNameList);
 			System.out.println("Going to try to update information");
 			if (currentClient.updateClientInformation(update)) {
@@ -80,7 +77,7 @@ public class ClientController {
 	
 	private boolean checkNameValidity(String name) {
 		System.out.println(name);
-		ArrayList<String> Name = InputParser.parsingNames(name); 
+		ArrayList<String> Name = parseInput.parsingNames(name); 
 		for(int i=0;i<Name.size();i++) {
 			if(!validate.validateName(Name.get(i))) {
 				return false;
@@ -259,8 +256,13 @@ public class ClientController {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
 		    container= currentClient.filterContainersOnAJourney(filter);
-			System.out.println("Container found, now the data can be read");
-			return true;
+		    if (container.size()>0) {
+		    	System.out.println("Container found, now the data can be read");
+				return true;
+		    }else {
+		    	System.out.println("No containers were found");
+		    	return false;
+		    }
 		}
 		return false;
 	}
@@ -283,7 +285,7 @@ public class ClientController {
 		return true;
 	}
 	public boolean getContainerByPortName(String portname) {
-		portID = extractingPortID.getPortID(portname);
+		portID = ExtractingPortID.getPortID(portname);
 		if (portID==1l) {
 			System.out.println("The portname is not present in the database");
 			return false;
@@ -326,6 +328,8 @@ public class ClientController {
 		return container.get(0).getUpdated();
 	}
 	public String getInternalStatus() {
+		System.out.println("size");
+		System.out.println(container.size());
 		String temp= Float.toString(container.get(0).getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.get(0).getInternalStatus().getHumidity());
 		String pressure = Float.toString(container.get(0).getInternalStatus().getAtmosphere());
@@ -377,7 +381,7 @@ public class ClientController {
 	}
 
 	private boolean checkStartPortName(String portname) {
-		startPortID = extractingPortID.getPortID(portname);
+		startPortID = ExtractingPortID.getPortID(portname);
 		System.out.println("Checking if the port name exists");
 	   if (startPortID==1l) {
 		   System.out.println("Port name doesnot exist");
@@ -395,7 +399,7 @@ public class ClientController {
 	}
 	
 	private boolean checkDestinationPortName(String portname) {
-		destinationPortID = extractingPortID.getPortID(portname);
+		destinationPortID = ExtractingPortID.getPortID(portname);
 		if(destinationPortID==1l) {
 			System.out.println("Destination port does not exit");
 			return false;
@@ -422,7 +426,7 @@ public class ClientController {
 
 		System.out.println("Checking arrive by");
 		try {
-			InputParser.getDate(date);
+			///date; -> Need to write return validate.validateDate(date)
 			return true;
 		}catch(DateTimeException e ){
 				System.out.println("Not accurate date format");
@@ -487,16 +491,17 @@ public class ClientController {
 		}
 		if(checkMessage) {
 			clientmenu.successFieldForAddJourney();
-			clientmenu.updateActiveShipments();
+			//clientmenu.updateActiveShipments();
 		}else {
 			System.out.println("something went wrong when registering the journey");
 			clientmenu.errorMessageForAddJourney();
 		}
 		
 	}
-	public void searchContainer(String journeyID, String cargo, String portName) {
+	public String searchContainer(String journeyID, String cargo, String portName) {
 		boolean checkCriteria = false;
 		boolean checkMessage = false;
+		long containerID = 1L;
 		if(!journeyID.isEmpty()) {
 			checkMessage = getContainerByJourneyID(journeyID);
 			checkCriteria =true;
@@ -509,20 +514,59 @@ public class ClientController {
 		}
 		if(checkMessage) {
 			clientmenu.setFieldsContainerData();
+			
 			if(checkCriteria) {
+				clientmenu.setFieldsContainerData();
+				System.out.println("Container ID for graphs");
+				System.out.println(container.get(0).getID());
+				containerID=container.get(0).getID();
 				clientmenu.viewOneContainerPanel();
+				
 			}else {
+				clientmenu.setFieldsContainerData();
 				clientmenu.viewMultipleContainerPanel();
 			}
 		}else {
 			System.out.println("no container found by the above criterias");
 			clientmenu.containerSearchError();
 		}
+		return Long.toString(containerID);
 		
 	}
 	public String setSuccessfulJourneys() {
-		
+		String result = "---------------------------------------";
+		for(long journeys : currentClient.viewClient().getFinishedShipments()) {
+			result = result +"\nJourney ID: "+journeys;
+			result = result +"\nContained: "+getCargoByJourneyID(journeys);
+			result = result +"\nReached: "+getFinalDestinationByJourneyID(journeys);
+			 result =result + "---------------------------------------";
+		}
 		return "";
+	}
+	private String getFinalDestinationByJourneyID(long journeys) {
+		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
+		if (containers.size()>0) {
+			return getPortName(containers.get(0).getDestinationPortID());
+		}
+		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		return "Unknown";
+	}
+	private String getCargoByJourneyID(long journeys) {
+		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
+		if (containers.size()>0) {
+			return containers.get(0).getCargo();
+		}
+		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		return "Unknown";
+	}
+	public String getAllActiveShipments() {
+		String result = "All Active Journeys: ";
+		
+		for(long Journeys : currentClient.viewClient().getActiveShipments()) {
+			result = result+"\nJourney ID: "+Journeys;
+			result = result +"-----------------------------------------------------";
+		}
+		return result;
 	}
 	
 }

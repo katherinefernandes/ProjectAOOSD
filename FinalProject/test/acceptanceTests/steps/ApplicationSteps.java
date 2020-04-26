@@ -19,6 +19,7 @@ import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import containerFilters.FilteringContainersForAClient;
 import dataWrappers.ReferenceName;
+import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -28,20 +29,20 @@ import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
+import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ExtractingPortID;
-import supportingClasses.Security;
 import supportingClasses.UpdateDestinationPort;
 import supportingClasses.ValidInput;
-import supportingClasses.InputParser;
+import supportingClasses.parseInput;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
 import updateContainer.UpdateLocation;
+import updateContainer.UpdatePort;
 import updateContainer.UpdateStatus;
 
 public class ApplicationSteps {
-	
-	private ExtractingPortID extractingPortID = new ExtractingPortID();
+
 	private ValidInput validate =new ValidInput();
 	private long clientID;
 	private String companyname;
@@ -86,10 +87,11 @@ public class ApplicationSteps {
 	private String portName;
 	private long portID;
 	private boolean result;
+	private long visitedPortID;
+	private DataForViewAllJourneys viewJourneys;
 
 	@Before
 	public void IntialisePorts() {
-		Security IDgenerator = new Security();
 		Port port1 = new Port(357983327889100l,"Pakistan","Gwadar",25.11f,62.33f);
 		Port port2 = new Port(357983327946100l,"Denmark","Copenhagen",55.70f,12.59f);
 		Port port3 = new Port(357983327979100l,"Singapore","Keppel",1.26f,103.83f);
@@ -133,9 +135,9 @@ public class ApplicationSteps {
 	public void theReferencePersonIsFirstnameLastname(String firstname, String middlename,String lastname) {
 
 		
-		this.firstname = InputParser.parsingNames(firstname);
-	    this.lastname = InputParser.parsingNames(lastname);
-	    this.middlename = InputParser.parsingNames(middlename);
+		this.firstname = parseInput.parsingNames(firstname);
+	    this.lastname = parseInput.parsingNames(lastname);
+	    this.middlename = parseInput.parsingNames(middlename);
 	    Client client = new Client(this.clientID,this.companyname,this.countryCode,this.phone,this.email,this.firstname,this.middlename,this.lastname,"g-11/2","islamabad",58,"1400");
 	    client.save();
 	}
@@ -199,8 +201,8 @@ public class ApplicationSteps {
 	@Then("that the reference person is firstname {string} lastname {string}")
 	public void thatTheReferencePersonIsFirstnameLastname(String firstname, String lastname) {
 		
-		assertEquals(InputParser.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
-	    assertEquals(InputParser.parsingNames(lastname).size(),client.getPerson().getLastName().size());
+		assertEquals(parseInput.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
+	    assertEquals(parseInput.parsingNames(lastname).size(),client.getPerson().getLastName().size());
 	
 	}
 	
@@ -209,7 +211,7 @@ public class ApplicationSteps {
 	public void thereIsAClientWithID(long clientID) {
 
 		this.clientID =clientID;
-		client = new Client(this.clientID,"company",92,23789,"email@eh.com",InputParser.parsingNames("muna"),InputParser.parsingNames(""),InputParser.parsingNames("azam"),"g11/2","Islamabad",59,"2620");
+		client = new Client(this.clientID,"company",92,23789,"email@eh.com",parseInput.parsingNames("muna"),parseInput.parsingNames(""),parseInput.parsingNames("azam"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		clientApplication =  new ClientApplication(clientID);
 	}
@@ -225,13 +227,13 @@ public class ApplicationSteps {
 	@Given("the start port of the container was {string}")
 	public void theStartPortOfTheContainerWas(String portname) {
 
-		this.startPortID = extractingPortID.getPortID(portname);
+		this.startPortID = ExtractingPortID.getPortID(portname);
 	}
 
 	@Given("the destination port is {string}")
 	public void theDestinationPortIs(String portname) {
 
-		this.destinationPortID = extractingPortID.getPortID(portname);
+		this.destinationPortID = ExtractingPortID.getPortID(portname);
 	}
 
 	@Given("the current location of the container is {float} latitude and {float} longitude")
@@ -296,7 +298,7 @@ public class ApplicationSteps {
 	
 	@When("the client provides the port name {string}")
 	public void theClientProvidesThePortName(String portname) {
-		startPortID = extractingPortID.getPortID(portname);
+		startPortID = ExtractingPortID.getPortID(portname);
 		System.out.println("Startport ID: "+startPortID);
 		assertNotEquals(startPortID,1l);
 	}
@@ -325,7 +327,7 @@ public class ApplicationSteps {
 	@When("the client provides a port name {string} from where the journey will start")
 	public void theClientProvidesAPortNameFromWhereTheJourneyWillStart(String portname) {
 	    // Write code here that turns the phrase above into concrete actions
-		 startPortID = extractingPortID.getPortID(portname);
+		 startPortID = ExtractingPortID.getPortID(portname);
 		 assertNotEquals(startPortID,1l);
 		 clientApplication.getAContainer(startPortID);
 		 assertTrue(clientApplication.getFoundContainer());
@@ -334,7 +336,7 @@ public class ApplicationSteps {
 	@When("provides a destination port name {string}")
 	public void providesADestinationPortName(String portname) {
 
-		destinationPortID =extractingPortID.getPortID(portname);
+		destinationPortID =ExtractingPortID.getPortID(portname);
 		assertNotEquals(destinationPortID,1l);// the startPortID would be 1 if the portname is not valid
 		clientApplication.updateDestinationPort(destinationPortID);
 	}
@@ -409,9 +411,9 @@ public class ApplicationSteps {
 		assertTrue(validate.validateName(name2));
 	    assertTrue(validate.validateName(name3));
 		   
-	   this.firstName = InputParser.parsingNames(name1);
-	   this.middleName = InputParser.parsingNames(name2);
-	   this.lastName = InputParser.parsingNames(name3);
+	   this.firstName = parseInput.parsingNames(name1);
+	   this.middleName = parseInput.parsingNames(name2);
+	   this.lastName = parseInput.parsingNames(name3);
 	}
 
 	@When("the address is provided street: {string} house number: {int} city: {string} zipcode: {string}")
@@ -469,11 +471,11 @@ public class ApplicationSteps {
 	@When("that the logistic company enters the clients reference person {string} {string} {string}")
 	public void thatTheLogisticCompanyEntersTheClientsReferencePerson(String string, String string2, String string3) {
 	    	
-		this.firstname = InputParser.parsingNames(string);
+		this.firstname = parseInput.parsingNames(string);
 		
-		this.middlename = InputParser.parsingNames(string2);
+		this.middlename = parseInput.parsingNames(string2);
 		
-		this.lastName = InputParser.parsingNames(string3);
+		this.lastName = parseInput.parsingNames(string3);
 		
 		searchRefPerson = new ReferenceName(firstname, middlename, lastName);
 		
@@ -513,7 +515,7 @@ public class ApplicationSteps {
 
 	@Given("the start port is given {string}")
 	public void theStartPortIsGiven(String portname) {
-		startPortID = extractingPortID.getPortID(portname); // need to move the getPortID to a supporting class class
+		startPortID = ExtractingPortID.getPortID(portname); // need to move the getPortID to a supporting class class
 		System.out.println("Startport ID: "+startPortID);
 		assertNotEquals(startPortID,1l);
 		
@@ -521,7 +523,7 @@ public class ApplicationSteps {
 
 	@Given("the destination port is given {string}")
 	public void theDestinationPortIsGiven(String portname) {
-		this.destinationPortID = extractingPortID.getPortID(portname);
+		this.destinationPortID = ExtractingPortID.getPortID(portname);
 	    
 	}
 
@@ -563,7 +565,6 @@ public class ApplicationSteps {
 				logistic.getContainer(this.containerID);
 				System.out.println(this.containerID);
 			} catch (ElementNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new Error(e);
 			}
@@ -601,7 +602,6 @@ public class ApplicationSteps {
 		try {
 			logistic.getContainer(this.containerID);
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new Error(e);
 		}
@@ -645,7 +645,6 @@ public class ApplicationSteps {
 		try {
 			logistic.getContainer(this.containerID);
 		} catch (ElementNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new Error(e);
 		}
@@ -741,7 +740,7 @@ public class ApplicationSteps {
 	@When("the database is asked to return the portID")
 	public void theDatabaseIsAskedToReturnThePortID() {
 
-		this.portID = extractingPortID.getPortID(portName);
+		this.portID = ExtractingPortID.getPortID(portName);
 	}
 
 	@Then("the ID {long} is returned which means that port name is not valid")
@@ -800,19 +799,19 @@ public class ApplicationSteps {
 
 	@When("the client provides the new firstname {string} which is valid")
 	public void providesTheNewFirstnameWhichIsValid(String firstName) {
-		this.firstName = InputParser.parsingNames(firstName);
+		this.firstName = parseInput.parsingNames(firstName);
 		assertTrue(validate.validateName(firstName));
 	}
 
 	@When("provides the new middlename {string} which is also valid")
 	public void providesTheNewMiddlenameWhichIsAlsoValid(String middleName) {
-		this.middleName = InputParser.parsingNames(middleName);
+		this.middleName = parseInput.parsingNames(middleName);
 		assertTrue(validate.validateName(middleName));
 	}
 
 	@When("provides the new lastname {string} which is also valid")
 	public void providesTheNewLastnameWhichIsAlsoValid(String lastName) {
-		this.lastName = InputParser.parsingNames(lastName);
+		this.lastName = parseInput.parsingNames(lastName);
 		assertTrue(validate.validateName(lastName));
 	}
 
@@ -822,6 +821,107 @@ public class ApplicationSteps {
 		assertTrue("Should be true as the information has been changed",clientApplication.updateClientInformation(update));
 	}
 	
+	@When("the port name is given {string}")
+	public void thePortNameIsGiven(String portname) {
+		this.visitedPortID = ExtractingPortID.getPortID(portname);
+		assertNotEquals(visitedPortID,1l);
+	}
+
+	@Then("the port visited for the container is updated")
+	public void thePortVisitedForTheContainerIsUpdated() {
+		UpdatePort update = new UpdatePort(this.visitedPortID);
+		assertTrue("This should be true now as the port has been updated",logistic.updateContainerInformation(update));
+
+		
+	}
+
+	@Then("the new port is {string}")
+	public void theNewPortIs(String portname) {
+		
+		List<Port> ports = DataBase.searchPorts(Long.toString(logistic.viewContainer().getLastVisitedPortID()));
+		boolean contains =false;
+		for (Port port: ports) {
+			if(port.getPortName().contains(portname)) {
+				contains = true;
+			}
+		}
+		assertTrue(contains);
+	}
 	
+	@Given("there is a container with assigned ID {long}")
+	public void thereIsAContainerWithAssignedID(long containerID) {
+		this.containerID=containerID;
+		
+	}
+
+	@Given("the container has the assigned journey ID {long}")
+	public void theContainerHasTheAssignedJourneyID(long ID) {
+		this.journeyID=ID;
+		
+	}
+
+	@Given("the container has the assigned client ID {long}")
+	public void theContainerHasTheAssignedClientID(long ID) {
+		this.clientID =ID;
+		
+		Client client = new Client(ID, "company",92,23789,"email@eh.com",parseInput.parsingNames("firstname"),parseInput.parsingNames("middlename"),parseInput.parsingNames("lastname"),"g11/2","Islamabad",59,"2620");
+		client.addActiveShipment(journeyID);
+		client.save();
+	}
+
+	@Given("the start port is assigned {string}")
+	public void theStartPortIsAssigned(String portname) {
+		this.startPortID = ExtractingPortID.getPortID(portname);
+	}
+
+	@Given("the destination port is assigned {string}")
+	public void theDestinationPortIsAssigned(String portname) {
+		this.destinationPortID=ExtractingPortID.getPortID(portname);
+	}
+
+	@Given("the current location of the container assigned is {float} latitude and {float} longitude")
+	public void theCurrentLocationOfTheContainerAssignedIsLatitudeAndLongitude(float lat, float longitude) {
+	    this.longitude=longitude;
+	    this.latitude=lat;
+	}
+
+	@Given("the container has cargo assigned as  {string}")
+	public void theContainerHasCargoAssignedAs(String string) {
+		
+		this.cargo=string;
+	}
+
+	@Given("its optimal internal Status assigned is {float} atm {float} celsius {float} % humidity")
+	public void itsOptimalInternalStatusAssignedIsAtmCelsiusHumidity(float atm, float temp, float humid) {
+
+		this.temperature=temp;
+		this.pressure=atm;
+		this.humidity=humid;
+	}
+
+	@Given("its arrival date assigned is {string}")
+	public void itsArrivalDateAssignedIs(String string) {
+		
+		this.arriveBy=string;
+		Container container = new Container (this.containerID,this.clientID,this.journeyID,this.startPortID,this.destinationPortID,this.latitude,this.longitude,this.cargo,this.temperature,this.pressure,this.humidity,(this.arriveBy));
+		container.save();
+	}
+	@When("the logistic company decides to view all the active Journeys")
+	public void theLogisticCompanyDecidesToViewAllTheActiveJourneys() {
+		viewJourneys = new DataForViewAllJourneys();
+		
+	}
+
+	@Then("all the active journey IDs are returned which also contains the Journey ID {long}")
+	public void allTheActiveJourneyIDsAreReturnedWhichAlsoContainsTheJourneyID(long journeyID) {
+		System.out.println(viewJourneys.getResult());
+		assertTrue(viewJourneys.getResult().contains(Long.toString(journeyID)));
+	}
+	
+
+	
+	
+	
+
 	
 }
