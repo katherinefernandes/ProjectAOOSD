@@ -13,7 +13,7 @@ import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import graphicalInterface.newClientMenu;import supportingClasses.ExtractingPortID;
+import graphicalInterface.ClientMenu;import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
 import supportingClasses.InputParser;
 import updateClientInformation.UpdateEmail;
@@ -24,7 +24,7 @@ public class ClientController {
 	private long clientID;
 	private ClientApplication currentClient;
 	private ValidInput validate;
-	private newClientMenu clientmenu;
+	private ClientMenu clientmenu;
 	private ArrayList<String> firstNameList;
 	private ArrayList<String> middleNameList;
 	private ArrayList<String> lastNameList;
@@ -38,10 +38,14 @@ public class ClientController {
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
 		currentClient = new ClientApplication(this.clientID);
-		clientmenu = new newClientMenu(this);
+		clientmenu = new ClientMenu(this);
 		clientmenu.frame.setVisible(true);
 	}
-	public void saveReferencePerson(String firstName, String middleName, String lastName) {
+	//TODO unify way of sending information from interface to controller
+	//TODO reduce method to one level of abstraction
+	//TODO there should only be level of "if", "while" and "for" statements in each method.
+	//TODO methods called in interface should have names that of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
+	public void saveReferencePerson(String firstName, String middleName, String lastName) { 
 		System.out.println("inside the method savereferencePerson");
 		boolean checkMessage = false;
 		if(checkNameValidity(firstName) && validate.validateName(middleName) && checkNameValidity(lastName)){
@@ -74,7 +78,7 @@ public class ClientController {
 	}
 	
 	
-	
+	//TODO is validity checking the responsibility of controller or model?
 	private boolean checkNameValidity(String name) {
 		System.out.println(name);
 		ArrayList<String> Name = InputParser.parsingNames(name); 
@@ -106,7 +110,8 @@ public class ClientController {
 			System.out.println("Updating information");
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("Everything went alright");
-				currentClient = new ClientApplication(this.clientID);
+				//TODO why would we create an entirely new clientApplication when updating a single field? seems to go against what an application is supposed to be
+				currentClient = new ClientApplication(this.clientID); 
 				checkMessage = true;
 			}else {
 				System.out.println("Something went wrong with the database update");
@@ -231,6 +236,7 @@ public class ClientController {
 		}
 		return activeShipments;
 	}
+	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
 	public boolean getContainerByContainerID(String containerID) {
 		container = new ArrayList<Container>();
 		try {
@@ -251,6 +257,7 @@ public class ClientController {
 			return false;
 		}
 	}
+	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
 	public boolean getContainerByJourneyID(String journeyID) {
 		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
@@ -268,12 +275,9 @@ public class ClientController {
 	}
 	private boolean checkIfJourneyIDisPartOfActiveShipment(String journeyID) {
 		String activeShipments = this.getActiveShipments();
-		if (activeShipments.contains(journeyID)) {
-			return true;
-		} else {
-			return false;
-		}
+		return activeShipments.contains(journeyID);
 	}
+	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
 	public boolean getContainerByCargo(String cargo) {
 		FilterByCargoName filter = new FilterByCargoName(currentClient.viewClient(),cargo);
 		container = currentClient.filterContainersOnAJourney(filter);
@@ -284,6 +288,7 @@ public class ClientController {
 		System.out.println("Found some containers containing this cargo");
 		return true;
 	}
+	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
 	public boolean getContainerByPortName(String portname) {
 		portID = ExtractingPortID.getPortID(portname);
 		if (portID==1l) {
@@ -344,18 +349,14 @@ public class ClientController {
 	public String getMulitpleContainersData() {
 		String result ="Displaying Up to most 2 Containers: ";
 		int contains = 0;
+		//TODO Try to avoid breaks. Place the test in the for declaration instead
 		for(int i=0;i<container.size();i++) {
 			result =result+containerDataToString(container.get(i));
 			contains++;
 			if(contains>2) {
 				break;
 			}
-			
-			
 		}
-		
-		
-		
 		return result;
 	}
 	private String containerDataToString(Container container) {
@@ -450,6 +451,7 @@ public class ClientController {
 	public void saveJourney(String startPortName, String destinationPortName, String cargo, String atm, String temp, String humidity,
 			String arriveby) {
 		boolean checkMessage = checkStartPortName( startPortName);
+		//TODO Waaay to many if statements checking the same thing. If checkMessage is changed during execution it's not made clear enough
 		if (checkMessage) {
 			checkMessage = checkDestinationPortName(destinationPortName);
 		}else  {

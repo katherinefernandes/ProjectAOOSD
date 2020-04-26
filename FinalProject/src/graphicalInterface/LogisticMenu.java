@@ -27,8 +27,9 @@ import graphsForInternalStatus.LineGraphHumidity;
 import graphsForInternalStatus.LineGraphPressure;
 import graphsForInternalStatus.LineGraphTemperature;
 
+//TODO I think there should only be one search field for. Makes no sense to restrict what a user can search for
 public class LogisticMenu {
-
+	//TODO add field for timestamp on update of internal status and position of container. "Leave blank for current time" should be written somewhere.
 	public JFrame frame;
 	public JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10;
 	public JTextField textField_11,textField_12,textField_13,textField_14,textField_15;

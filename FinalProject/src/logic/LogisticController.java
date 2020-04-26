@@ -56,7 +56,11 @@ public class LogisticController {
 		logisticMenu = new LogisticMenu(this);
 	}
 
-
+	//TODO unify way of sending information from interface to controller
+	//TODO reduce method to one level of abstraction
+	//TODO methods called in interface should have names that of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
+	//TODO Is it really valuable to have all these getters and setters return booleans? Seems largely unnecessary, and in conflict with the single responsibility principle
+	//It could be okay in some contexts, but I don't think we should follow the pattern as a rule.
 	private boolean setCompanyName(String text) {
 
 		this.companyName=text;
@@ -131,7 +135,6 @@ public class LogisticController {
 
 
 	private boolean setBuilding(String text) {
-
 		try {
 			this.building = Integer.valueOf(text);
 			System.out.println("Building number is correct");
@@ -244,7 +247,7 @@ public class LogisticController {
 
 
 	private boolean updatePosition(String longitude, String latitude) {
-
+		//TODO try to avoid abbreviations in names
 		float longit;
 		float lati;
 		try {
@@ -268,7 +271,7 @@ public class LogisticController {
 		return false;
 	}
 
-
+	//TODO names of methods returning booleans shouldn't start with get
 	public boolean getClientByEmail(String searchEmail) {
 
 		optionEmail = new SearchByEmail(searchEmail);
@@ -362,9 +365,9 @@ public class LogisticController {
 	}
 
 
-	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,
-			String firstname, String phone, String countrycode, String email,String companyname) {
-		
+	
+	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
+		//TODO waaay to many if statements. This is impossible to read
 		boolean	checkMessage = setCompanyName(companyname);
 		if(checkMessage) {
 			checkMessage = setEmail(email);
@@ -503,7 +506,7 @@ public class LogisticController {
 
 
 	public void searchClient(String email, String company, String phone, String firstname, String middle, String last) {
-	
+		//TODO this could probably be done in a for loop
 		checkMessage=false;
 		if (!email.isEmpty()) {
 			checkMessage = getClientByEmail(email);

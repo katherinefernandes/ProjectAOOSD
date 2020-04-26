@@ -181,7 +181,7 @@ public class LoginWindow {
 		EnterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) { 
-				controller.loginButtonPressed(EnterButton.isEnabled());
+				controller.loginButtonPressed();
 			}
 		});
 	}

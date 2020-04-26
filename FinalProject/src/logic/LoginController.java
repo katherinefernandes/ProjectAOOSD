@@ -6,6 +6,8 @@ import dataBase.DataBase;
 import graphicalInterface.LoginWindow;
 import graphicalInterface.LogisticMenu;
 
+//TODO unify the way we get information for the interface. Either send it as parameters when calling controller methods in the interface, 
+//or pull it from the interface by calling interface methods from the controller. Right now we're doing both.
 public class LoginController {
 	private String companyUsername = "admin";
 	private String companyPassword = "admin";
@@ -19,32 +21,15 @@ public class LoginController {
 	}
 	
 	public boolean validClientInfo(String clientID) {
-		if (DataBase.isSavedID(Long.valueOf(clientID))) {
-			System.out.println("textfield in window: " +  clientID);
-			
-			return true;
-		} else {
-			
-			System.out.println("Invalid client id");
-			return false;
-	}}
-
+		return DataBase.isSavedID(Long.valueOf(clientID));
+	}
 
 	private boolean validCompanyInfo(String companyUserNameIN, char[] companyPasswordIN) {
-		if (companyUserNameIN.equals(companyUsername)
-				&& Arrays.equals(companyPasswordIN, companyPassword.toCharArray())) {
-			return true;
-		} else
-			return false;
+		return companyUserNameIN.equals(companyUsername) && Arrays.equals(companyPasswordIN, companyPassword.toCharArray());
 	}
 	
-	public void loginButtonPressed(boolean clientChecked) {
-		login();
-		
-	}
-	
-	public void login() { 
-		System.out.println("Inside the login thing");
+	//TODO there should only be level of "if", "while" and "for" statements in each method.
+	public void loginButtonPressed() { //TODO this should be reduced to one level of abstraction
 		boolean validLogin;
 		boolean isClient = window.isClientButtonChecked();
 		if(isClient) {

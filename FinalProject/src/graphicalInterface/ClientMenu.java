@@ -28,9 +28,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-
-
-public class newClientMenu {
+//TODO I think there should only be one search field for. Makes no sense to restrict what a user can search for, as long the information belongs to them
+public class ClientMenu {
 
 	//private long clientID;
 	
@@ -105,7 +104,7 @@ public class newClientMenu {
 	private JScrollPane scrollPane;
 	private JTextArea allActiveJourneysTextArea;
 	
-	public newClientMenu(ClientController controller) {
+	public ClientMenu(ClientController controller) {
 		this.controller = controller;
 		initialize();
 	}
@@ -177,7 +176,7 @@ public class newClientMenu {
 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("The logout button has been pressed, now need to swtich windows");
-				LoginController login = new LoginController();
+				LoginController login = new LoginController(); //TODO this line is logic, and should therefore be in controller
 				frame.setVisible(false);
 			}
 			
