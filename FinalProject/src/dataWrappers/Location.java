@@ -1,4 +1,4 @@
-package objectsData;
+package dataWrappers;
 
 public class Location {
 	private float latitude;
@@ -10,13 +10,13 @@ public class Location {
 	public float getLatitude() {
 		return latitude;
 	}
-	public float getlongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
 	public void setLatitude(float latitude) {
 		this.latitude=latitude;
 	}
-	public void setlongitude(float longitude) {
+	public void setLongitude(float longitude) {
 		this.longitude=longitude;
 	}
 }

@@ -2,8 +2,8 @@ package searchClients;
 
 import java.util.List;
 
+import businessObjects.Client;
 import dataBase.DataBase;
-import objectsData.ClientData;
 
 public class SearchByPhone implements SearchClients{
 	private String phone;
@@ -14,7 +14,7 @@ public class SearchByPhone implements SearchClients{
 	}
 	
 	@Override
-	public List<ClientData> getClients() {
+	public List<Client> getClients() {
 		return DataBase.searchClients(phone);
 	}
 	

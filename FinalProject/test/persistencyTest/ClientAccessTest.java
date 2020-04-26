@@ -3,11 +3,12 @@ package persistencyTest;
 import static org.junit.Assert.*;
 import java.util.*;
 import org.junit.jupiter.api.Test;
+
+import businessObjects.Client;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import objectsData.ClientData;
 
-public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
+public class ClientAccessTest extends IdentifiableDataAccessTest<Client>{
 	
 	public ClientAccessTest() {
 		super();
@@ -21,7 +22,7 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 		ArrayList<String> lastNames1 = new ArrayList<String>();
 		lastNames1.add("Marx");
 
-		data1 = new ClientData(555555555557L,"Washington cleaning",45,
+		data1 = new Client(555555555557L,"Washington cleaning",45,
 								123456789,"clean.your.pipes@wash.com",
 								firstNames1,middleNames1,lastNames1,
 								"Bakerstreet","Derry",42,"1213");
@@ -36,12 +37,12 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 		lastNames2.add("the");
 		lastNames2.add("Third");
 
-		data2 = new ClientData(2530321L,"Trucking brothers AS",47,
+		data2 = new Client(2530321L,"Trucking brothers AS",47,
 								666663436,"trucker.m.f@gmail.com",
 								firstNames2,middleNames2,lastNames2,
 								"Elm street","Arkham",33,"2000");
 		
-		data1_v2 = new ClientData(555555555557L,"new Washington cleansing",46,
+		data1_v2 = new Client(555555555557L,"new Washington cleansing",46,
 									123456789,"clean.your.pipes@wash.com",
 									firstNames1,middleNames1,lastNames1,
 									"Bakerstreet","Darry",42,"1216");
@@ -61,7 +62,7 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 			middleName.add("a");
 			lastName.add("a");
 			
-			sortTestData.add(new ClientData(ID,"a",1,1,"a",firstName,middleName,lastName,"a","a",1,"1"));
+			sortTestData.add(new Client(ID,"a",1,1,"a",firstName,middleName,lastName,"a","a",1,"1"));
 		}
 	}
 	
@@ -77,11 +78,11 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 		DataBase.deleteClient(ID);
 	}
 	@Override
-	protected ClientData getObject(long ID) throws ElementNotFoundException {
+	protected Client getObject(long ID) throws ElementNotFoundException {
 		return DataBase.getClient(ID);
 	}
 	@Override
-	protected void assertEqualData(ClientData clientY, ClientData clientX) {
+	protected void assertEqualData(Client clientY, Client clientX) {
 		assertEquals(clientY.getID(),clientX.getID());
 		assertEquals(clientY.getCompanyName(),clientX.getCompanyName());
 		assertEquals(clientY.getPhoneNumber().getCountryCode(),clientX.getPhoneNumber().getCountryCode());
@@ -99,7 +100,7 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<ClientData>{
 		
 	}
 	
-	protected long getDataID(ClientData clientData) {
-		return clientData.getID();
+	protected long getDataID(Client client) {
+		return client.getID();
 	}
 }

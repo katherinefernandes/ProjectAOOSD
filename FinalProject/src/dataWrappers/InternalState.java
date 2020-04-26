@@ -1,4 +1,4 @@
-package objectsData;
+package dataWrappers;
 
 public class InternalState  {
 	private float Atmosphere;

@@ -3,9 +3,9 @@ package dataBase;
 
 import java.util.List;
 
-import objectsData.ObjectDataInterface;
+import businessObjects.BusinessObject;
 
-public interface GeneralPersistency<T extends ObjectDataInterface> {
+public interface GeneralPersistency<T extends BusinessObject> {
 	public abstract void newEntry(T data);
 	
 	public abstract List<T> searchEntries(String searchWord);

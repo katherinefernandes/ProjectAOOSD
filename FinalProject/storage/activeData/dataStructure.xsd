@@ -135,7 +135,8 @@
     
     <xsd:complexType name="HistoryType">
     	<xsd:sequence>
-    		<xsd:element name="DataPoint" type="DataPointType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+
+    		<xsd:element name="Container" type="ContainerType"></xsd:element>
     	</xsd:sequence>
     </xsd:complexType>
 

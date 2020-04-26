@@ -1,12 +1,12 @@
 package supportingClasses;
 
+import businessObjects.Port;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import objectsData.PortData;
 
 public class UpdateDestinationPort {
 
-	private PortData destinationPort;
+	private Port destinationPort;
 
 	public boolean updatePort(long destinationID,long containerID) {
 		try {

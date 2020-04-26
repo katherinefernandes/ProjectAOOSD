@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
-import objectsData.ClientData;
+import businessObjects.Client;
 
 public class ClientDataTest {
-	private ClientData objectTest;
+	private Client objectTest;
 	private ArrayList<String> middlename = new ArrayList<String>();
 	private ArrayList<String> firstname = new ArrayList<String>();
 	private ArrayList<String> lastname = new ArrayList<String>();
@@ -19,7 +19,7 @@ public class ClientDataTest {
 	public void testClientData() {
 		firstname.add("Muna");
 		lastname.add("azam");
-		objectTest = new ClientData(31l,"company",92,23789,"email@eh.com",firstname,middlename,lastname,"g11/2","Islamabad",59,"2620");
+		objectTest = new Client(31l,"company",92,23789,"email@eh.com",firstname,middlename,lastname,"g11/2","Islamabad",59,"2620");
 	}
 
 	

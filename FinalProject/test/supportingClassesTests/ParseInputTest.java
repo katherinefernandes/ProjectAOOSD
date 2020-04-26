@@ -9,14 +9,14 @@ import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 
 class ParseInputTest {
-	private static parseInput parser;
+	private static InputParser parser;
 	
 	@BeforeEach
 	public void parseInputTest() {
-		parser = new parseInput();
+		parser = new InputParser();
 	}
 	
 	@Test

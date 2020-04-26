@@ -1,7 +1,8 @@
 package updateClientInformation;
 
 import java.util.ArrayList;
-import objectsData.ClientData;
+
+import businessObjects.Client;
 
 public class UpdateReferencePerson implements UpdateClient {
 	private ArrayList<String> firstName;
@@ -22,7 +23,7 @@ public class UpdateReferencePerson implements UpdateClient {
 	}
 
 	@Override
-	public ClientData updateInformation(ClientData client) {
+	public Client updateInformation(Client client) {
 		client.setPerson(firstName, middleName, lastName);
 		client.save();
 		setUpdate= true;

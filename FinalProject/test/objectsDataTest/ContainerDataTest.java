@@ -8,12 +8,13 @@ import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
-import objectsData.ContainerData;
-import supportingClasses.parseInput;
+import businessObjects.Container;
+import businessObjects.Port;
+import supportingClasses.InputParser;
 
 public class ContainerDataTest {
-	private ContainerData objectTest;
-	private ContainerData objectTest2;
+	private Container objectTest;
+	private Container objectTest2;
 	private long cid =78l;
 	private long clid=87l;
 	private long jid=74l;
@@ -21,18 +22,19 @@ public class ContainerDataTest {
 	private long dpid=72l; 
 	private float lat= 8.7f;
 	private float lon= 78.9f;
+	private Port startPort = new Port(spid, "Denmark", "Nyhavn", lat, lon);
 	private String cargo="banana";
 	private float t =36.8f;
 	private float a=1.2f;
 	private float h=78.0f;
-	private String arriveby = parseInput.getDate("03-02-2020");
+	private String arriveby = InputParser.getDate("03-02-2020");
 	
 	
 	@BeforeEach
 	public void testContainerData() {
 		
-		objectTest = new ContainerData( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, (arriveby));
-		objectTest2 = new ContainerData(cid,spid, lat, lon);
+		objectTest = new Container( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, (arriveby));
+		objectTest2 = new Container(cid,startPort);
 		
 	}
 	
@@ -53,7 +55,7 @@ public class ContainerDataTest {
 	@Test
 	public void testSetStatus() {
 		assertEquals((int)t,(int)objectTest.getInternalStatus().getTemperature());
-		objectTest.setStatus(a, 32.0f, h);
+		objectTest.setInternalStatus(a, 32.0f, h);
 		assertEquals((int)32.0f,(int)objectTest.getInternalStatus().getTemperature());
 	
 	}

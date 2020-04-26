@@ -1,9 +1,9 @@
 package dataBase;
 
+import businessObjects.BusinessObject;
 import exceptions.ElementNotFoundException;
-import objectsData.IdentifiableData;
 
-public interface IdentifiablePersistency<T extends IdentifiableData> extends GeneralPersistency<T>{
+public interface IdentifiablePersistency<T extends BusinessObject> extends GeneralPersistency<T>{
 	public T getEntry(long ID) throws ElementNotFoundException;
 	
 	public void deleteEntry(long ID);

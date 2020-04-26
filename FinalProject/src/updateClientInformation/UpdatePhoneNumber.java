@@ -1,6 +1,6 @@
 package updateClientInformation;
 
-import objectsData.ClientData;
+import businessObjects.Client;
 
 public class UpdatePhoneNumber implements UpdateClient {
 	private int countryCode;
@@ -20,7 +20,7 @@ public class UpdatePhoneNumber implements UpdateClient {
 	}
 
 	@Override
-	public ClientData updateInformation(ClientData client) {
+	public Client updateInformation(Client client) {
 		client.setPhoneNumber(countryCode, phone);
 		client.save();
 		this.setUpdate=true;

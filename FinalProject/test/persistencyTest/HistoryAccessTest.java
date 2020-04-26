@@ -4,82 +4,62 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import businessObjects.Container;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import objectsData.HistoryData;
+import supportingClasses.InputParser;
 
-public class HistoryAccessTest extends DataAccessTest<HistoryData> {
+public class HistoryAccessTest extends DataAccessTest<Container> {
 	
 	public HistoryAccessTest() {
 		super();
-		data1 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
-		data1_v2 = new HistoryData(LocalDateTime.now(), 124321L, 123819L, 9173284L, 12839L, 1923819L, "Fish", 24.F, 104.F, 90F, 112.F, 33.F);
-		data2 = new HistoryData(LocalDateTime.of(2020, 3, 1, 13, 12, 14), 124321L, 123819L, 9173284L, 12839L, 1923819L, "crab", 24.F, 104.F, 90F, 112.F, 33.F);
-		for(int i = 0; i < 40; i++) {
-			LocalDateTime timeStamp = LocalDateTime.now();
-			long containerID = random.nextLong();
-			long journeyID = random.nextLong();
-			long clientID = random.nextLong();
-			long destinationPortID = random.nextLong();
-			long startPortID = random.nextLong();
-			String cargo = String.valueOf(random.nextLong());
-			float temperature = random.nextFloat() * 40;
-			float atmosphere = random.nextFloat() * 40 + 80;
-			float humidity = random.nextFloat() * 100;
-			float latitude = random.nextFloat() * 180 - 90;
-			float longitude = random.nextFloat() * 360 - 180;
-			HistoryData dataPoint = new HistoryData(timeStamp,containerID,journeyID,clientID,
-					destinationPortID,startPortID,cargo,temperature,atmosphere,humidity,latitude,longitude);
-			sortTestData.add(dataPoint);
-		}
 		
+		data1 = new Container(20711569474800L, 102621L, 675465457L, 53354L, 755356L, 4L, 45.6F, 34.787F, "Fish n' chips", 3.5F, 108.2F, 66F,InputParser.getDate("10-04-2020"),LocalDateTime.now().toString());
+		data2 = new Container(6755L, 2530321L, 4533566L, 3434568L, 35668556L, 3527582L, 55.6F, 22.87F, "Lard", 7F, 102F, 44F, InputParser.getDate("12-04-2020"),LocalDateTime.now().toString());
+		data1_v2 = new Container(23984529359L, 182321L, 675465457L, 755356L, 7783874L, 23775293L, 55.6F, 36.787F, "Fish n' lard", 3.8F, 100.2F, 86F, InputParser.getDate(("14-04-2020")),LocalDateTime.now().toString());
+		data1.setLastVisitedPort(1241524123L);
 		
-	}
-	
-	
-	
-	@Override
-	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
-		insertData(data1);
-		insertData(data1_v2);
-		insertData(data2);
-		for(HistoryData data : sortTestData) {
-			insertData(data);
+		for(int i = 0; i < 20; i++) {
+			long ID = random.nextLong();
+			sortTestData.add(new Container(ID, 1L, 1L, 1L, 1L, 1L, 1F, 1F, "a", 1F, 1F, 1F, InputParser.getDate("01-04-2020"),LocalDateTime.now().toString()));
 		}
-	
-		HistoryData pulledData = DataBase.searchHistory(data2.getTimeStamp().toString()).get(0);
-		assertEqualData(pulledData,data2);
 	}
 	
 	//@Test
 	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
-		persistencyTest();
+		persistencyTest(); }
+	
+	@Override
+	protected Container getObject(long ID) throws ElementNotFoundException {
+		return DataBase.searchHistory(String.valueOf(ID)).get(0);
 	}
 	
-	
-	public void assertEqualData(HistoryData history1, HistoryData history2) {
-		assertTrue(history1.getTimeStamp().equals(history2.getTimeStamp()));
-		assertEquals(history1.getContainerID(),history2.getContainerID());
-		assertEquals(history1.getJourneyID(),history2.getJourneyID());
-		assertEquals(history1.getClientID(),history2.getClientID());
-		assertEquals(history1.getDestinationPortID(),history2.getDestinationPortID());
-		assertEquals(history1.getStartPortID(),history2.getStartPortID());
-		assertEquals(history1.getCargo(),history2.getCargo());
-		assertEquals(history1.getInternalStatus().getTemperature(),history2.getInternalStatus().getTemperature());
-		assertEquals(history1.getInternalStatus().getAtmosphere(),history2.getInternalStatus().getAtmosphere());
-		assertEquals(history1.getInternalStatus().getHumidity(),history2.getInternalStatus().getHumidity());
-		assertEquals(history1.getLocation().getLatitude(),history2.getLocation().getLatitude());
-		assertEquals(history1.getLocation().getlongitude(),history2.getLocation().getlongitude());
+	@Override
+	protected void insertData(Container container) {
+		DataBase.saveToHistory(container);
 	}
 	
-	protected long getDataID(HistoryData data) {
-		return data.getTimeStamp().toEpochSecond(ZoneOffset.UTC);
+	@Override
+	public void assertEqualData(Container container1, Container container2) {
+		assertEquals(container1.getID(),container2.getID());
+		assertEquals(container1.getClientID(),container2.getClientID());
+		assertEquals(container1.getJourneyID(),container2.getJourneyID());
+		assertEquals(container1.getStartPortID(),container2.getStartPortID());
+		assertEquals(container1.getLastVisitedPortID(),container2.getLastVisitedPortID());
+		assertEquals(container1.getDestinationPortID(),container2.getDestinationPortID());
+		assertEquals(container1.getCurrentPosition().getLatitude(),container2.getCurrentPosition().getLatitude());
+		assertEquals(container1.getCurrentPosition().getLongitude(),container2.getCurrentPosition().getLongitude());
+		assertEquals(container1.getCargo(),container2.getCargo());
+		assertEquals(container1.getInternalStatus().getTemperature(),container2.getInternalStatus().getTemperature());
+		assertEquals(container1.getInternalStatus().getAtmosphere(),container2.getInternalStatus().getAtmosphere());
+		assertEquals(container1.getInternalStatus().getHumidity(),container2.getInternalStatus().getHumidity());
+		assertTrue(container1.getUpdated().equals(container2.getUpdated()));
+		assertTrue(container1.getArriveBy().equals(container2.getArriveBy()));
 	}
 
 

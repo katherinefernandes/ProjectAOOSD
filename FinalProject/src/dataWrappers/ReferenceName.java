@@ -1,4 +1,4 @@
-package objectsData;
+package dataWrappers;
 
 import java.util.ArrayList;
 

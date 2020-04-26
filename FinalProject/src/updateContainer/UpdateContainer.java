@@ -1,11 +1,11 @@
 package updateContainer;
 
-import objectsData.ContainerData;
+import businessObjects.Container;
 
 public interface UpdateContainer {
 	
 	boolean updated();
 	
-	ContainerData updateInformation(ContainerData container);
+	Container updateInformation(Container container);
 	
 }

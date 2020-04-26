@@ -1,6 +1,6 @@
 package updateClientInformation;
 
-import objectsData.ClientData;
+import businessObjects.Client;
 
 public class UpdateEmail implements UpdateClient {
 	private String email;
@@ -19,7 +19,7 @@ public class UpdateEmail implements UpdateClient {
 	}
 
 	@Override
-	public ClientData updateInformation(ClientData client) {
+	public Client updateInformation(Client client) {
 		// TODO Auto-generated method stub
 		client.setEmail(email);
 		client.save();

@@ -1,9 +1,10 @@
 package xmlParser;
 
 import java.util.*;
-import objectsData.ObjectDataInterface;
 
-class ActiveData<T extends ObjectDataInterface> {
+import businessObjects.BusinessObject;
+
+class ActiveData<T extends BusinessObject> {
 	List<T> dataList;
 	
 	public ActiveData() {
@@ -37,16 +38,31 @@ class ActiveData<T extends ObjectDataInterface> {
 	public void wipeAllData() {
 		dataList = new ArrayList<>();
 	}
-	
-	private List<T> addDataIfMatch(List<T> matchingEntries, T data, String searchWord) {
-		if(data.valuesContainSearchWord(searchWord)) {
-			matchingEntries.add(data);
-		}
-		return matchingEntries;
+
+	public void storeDataAtEnd(T data) {
+		dataList.add(data);
 	}
 	
-	protected void storeDataAtEnd(T data) {
-		dataList.add(data);
+	public void removeDataWithID(long ID) {
+		for(int i = 0; i < dataList.size(); i++) {
+			long currentID = getDataAtIndex(i).getID();
+			if(currentID == ID) {
+				removeDataAtIndex(i);
+				break;
+			}else if(currentID > ID) {
+				break;
+			}
+		}
+	}
+	
+	public boolean activeDataContainsID(long ID) {
+		String IDAsString = String.valueOf(ID);
+		for(T data : dataList) {
+			if (String.valueOf(data.getID()).equals(IDAsString)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	protected void storeDataAtIndex(int index, T data) {
@@ -56,6 +72,22 @@ class ActiveData<T extends ObjectDataInterface> {
 	
 	protected void removeDataAtIndex(int index) {
 		dataList.remove(index);
+	}
+	
+	private List<T> addDataIfMatch(List<T> matchingEntries, T data, String searchWord) {
+		if(valuesContainSearchWord(data,searchWord)) {
+			matchingEntries.add(data);
+		}
+		return matchingEntries;
+	}
+	
+	private boolean valuesContainSearchWord(T data, String searchWord){
+		for(String value : data.getAllValues()) {
+			if(value.contains(searchWord)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

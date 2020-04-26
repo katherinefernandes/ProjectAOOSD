@@ -26,18 +26,6 @@ public class DataPointParser {
 		this.ID = ID;
 	}
 	
-	public void createDataPoint(List<XMLField> xmlFields) {
-		dataPoint.add(EventParser.generateStart(dataPointTagName));
-		for(XMLField field : xmlFields) {
-			dataPoint.addAll(field.fieldToEvent(new ArrayList<EventParser>()));
-		}
-		dataPoint.add(EventParser.generateEnd(dataPointTagName));
-		
-		if(ID != null) {
-			dataPoint.get(0).setIDAttribute(ID);
-		}
-	}
-	
 	public EventParser getEventAtIndex(int index) {
 		return dataPoint.get(index);
 	}
@@ -109,6 +97,30 @@ public class DataPointParser {
 			index++;
 		}
 		return index;
+	}
+	
+	public void addStartEvent(String tagName) {
+		dataPoint.add(EventParser.generateStart(tagName));
+	}
+	
+	public void addStartEvent(String tagName, long ID) {
+		EventParser event = EventParser.generateStart(tagName);
+		event.setIDAttribute(ID);
+		dataPoint.add(event);
+	}
+	
+	public void addTextEvent(String text) {
+		dataPoint.add(EventParser.generateText(text));
+	}
+	
+	public void addEndEvent(String tagName) {
+		dataPoint.add(EventParser.generateEnd(tagName));
+	}
+	
+	public void addCompleteElement(String tagName, Object value) {
+		dataPoint.add(EventParser.generateStart(tagName));
+		dataPoint.add(EventParser.generateText(value.toString()));
+		dataPoint.add(EventParser.generateEnd(tagName));
 	}
 	
 	private boolean searchWordIsInID(Attribute IDattribute) {

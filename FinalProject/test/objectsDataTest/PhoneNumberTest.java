@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.*;
 
-import objectsData.PhoneNumber;
+import dataWrappers.PhoneNumber;
 
 public class PhoneNumberTest {
 

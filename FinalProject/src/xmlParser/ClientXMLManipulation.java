@@ -1,18 +1,18 @@
 package xmlParser;
 
-import objectsData.*;
 import java.util.*;
 import javax.xml.stream.events.*;
 
+import businessObjects.*;
 import dataBase.IdentifiablePersistency;
 
-public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientData> implements IdentifiablePersistency<ClientData> {
+public class ClientXMLManipulation extends GeneralXMLManipulation<Client> implements IdentifiablePersistency<Client> {
 	public ClientXMLManipulation() {
 		super("storage/activeData/clients.xml", "Client","Clients");
 	}
 	
 	@Override
-	protected ClientData objectFromDataPoint(DataPointParser dataPoint) {
+	protected Client objectFromDataPoint(DataPointParser dataPoint) {
 		int i = 0;
 		XMLEvent event;
 		StartElement start;
@@ -52,7 +52,7 @@ public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientDat
 		i = dataPoint.iterateUntilFound(i,"ZipCode");
 		String zipCode = dataPoint.getEventAtIndex(++i).getData();		
 		
-		ClientData client = new ClientData(dataPoint.getID(), companyName, countryCode, phoneNumber, email, firstName, middleName, lastName, streetName, city, houseNumber, zipCode);
+		Client client = new Client(dataPoint.getID(), companyName, countryCode, phoneNumber, email, firstName, middleName, lastName, streetName, city, houseNumber, zipCode);
 		
 		i = dataPoint.iterateUntilFound(i,"ActiveShipments");
 		while(!((event = dataPoint.getEventAtIndex(i).getEvent()).isEndElement() && event.asEndElement().getName().getLocalPart().equals("ActiveShipments"))) {
@@ -69,6 +69,54 @@ public class ClientXMLManipulation extends IdentifiableXMLManipulation<ClientDat
 			i++;
 		}
 		return client;
+	}
+
+	@Override
+	protected DataPointParser dataPointFromObject(Client client) {
+		DataPointParser dataPoint = new DataPointParser(dataPointTagName);
+		dataPoint.addStartEvent(dataPointTagName, client.getID());
+		dataPoint.addCompleteElement("CompanyName",client.getCompanyName());
+		
+		dataPoint.addStartEvent("PhoneNumber");
+		dataPoint.addCompleteElement("CountryCode", client.getPhoneNumber().getCountryCode());
+		dataPoint.addCompleteElement("PhoneBaseNumber", client.getPhoneNumber().getPhone());
+		dataPoint.addEndEvent("PhoneNumber");
+		
+		dataPoint.addCompleteElement("Email",client.getEmail());
+		
+		dataPoint.addStartEvent("RefrencePersonName");
+		for(String name : client.getPerson().getFirstName()) {
+			dataPoint.addCompleteElement("FirstName",name);
+		}
+		for(String name : client.getPerson().getMiddleName()) {
+			dataPoint.addCompleteElement("MiddleName",name);
+		}
+		for(String name : client.getPerson().getLastName()) {
+			dataPoint.addCompleteElement("LastName",name);
+		}
+		dataPoint.addEndEvent("RefrencePersonName");
+		
+		dataPoint.addStartEvent("Address");
+		dataPoint.addCompleteElement("StreetName", client.getAddress().getStreetName());
+		dataPoint.addCompleteElement("HouseNumber", client.getAddress().getHouseNumber());
+		dataPoint.addCompleteElement("City", client.getAddress().getCity());
+		dataPoint.addCompleteElement("ZipCode", client.getAddress().getZipCode());
+		dataPoint.addEndEvent("Address");
+		
+		dataPoint.addStartEvent("ActiveShipments");
+		for(long ID : client.getActiveShipments()) {
+			dataPoint.addCompleteElement("JourneyID",ID);
+		}
+		dataPoint.addEndEvent("ActiveShipments");
+		
+		dataPoint.addStartEvent("FinishedShipments");
+		for(long ID : client.getFinishedShipments()) {
+			dataPoint.addCompleteElement("JourneyID",ID);
+		}
+		dataPoint.addEndEvent("FinishedShipments");
+		
+		dataPoint.addEndEvent(dataPointTagName);
+		return dataPoint;
 	}
 }
 

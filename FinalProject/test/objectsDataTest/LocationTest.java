@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
-import objectsData.Location;
+import dataWrappers.Location;
 
 public class LocationTest {
 	private Location location;
@@ -25,8 +25,8 @@ public class LocationTest {
 
 	@Test
 	public void testgetLongitude() {
-		assertEquals(36.99f,location.getlongitude(),delta);
-		location.setlongitude(367.0f);
-		assertNotSame((int)36.99f,(int)location.getlongitude());
+		assertEquals(36.99f,location.getLongitude(),delta);
+		location.setLongitude(367.0f);
+		assertNotSame((int)36.99f,(int)location.getLongitude());
 	}
 }

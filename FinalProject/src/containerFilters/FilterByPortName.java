@@ -2,19 +2,19 @@ package containerFilters;
 
 import java.util.ArrayList;
 
-import objectsData.ClientData;
-import objectsData.ContainerData;
+import businessObjects.Client;
+import businessObjects.Container;
 
 public class FilterByPortName extends FilteringContainersForAClient{
 	private long portID;
 	
-	public FilterByPortName(ClientData client,long portID) {
+	public FilterByPortName(Client client,long portID) {
 		super(client);
 		this.portID=portID;
 	}
 
 	@Override
-	public ArrayList<ContainerData> filterContainers() {
+	public ArrayList<Container> filterContainers() {
 
 		System.out.println("containers: "+containers.size());
 		for (int i=0;i<containers.size();i++) {

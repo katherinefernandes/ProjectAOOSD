@@ -2,10 +2,11 @@ package persistencyTest;
 
 import java.util.*;
 import org.junit.jupiter.api.*;
-import exceptions.ElementNotFoundException;
-import objectsData.*;
 
-public abstract class DataAccessTest<T extends ObjectDataInterface> {
+import businessObjects.*;
+import exceptions.ElementNotFoundException;
+
+public abstract class DataAccessTest<T extends BusinessObject> {
 	T data1;
 	T data2;
 	T data1_v2;
@@ -22,9 +23,15 @@ public abstract class DataAccessTest<T extends ObjectDataInterface> {
 	@AfterEach
 	public abstract void cleanUp();
 	
-	public abstract void persistencyTest() throws NumberFormatException, ElementNotFoundException;
+	protected abstract T getObject(long ID) throws ElementNotFoundException;
+
+	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
+		insertData(data1);		
+		T pulledData = getObject(data1.getID());
+		assertEqualData(pulledData,data1);
+	}
 	
-	public void insertData(T data){
+	protected void insertData(T data){
 		data.save();
 	}
 	

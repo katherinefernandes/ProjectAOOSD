@@ -2,9 +2,9 @@ package containerFilters;
 
 import java.util.ArrayList;
 
-import objectsData.ContainerData;
+import businessObjects.Container;
 
 public interface FilterContainer {
 
-	ArrayList<ContainerData> filterContainers();
+	ArrayList<Container> filterContainers();
 }

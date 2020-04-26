@@ -1,8 +1,8 @@
 package updateClientInformation;
 
-import objectsData.ClientData;
+import businessObjects.Client;
 
 public interface UpdateClient {
 boolean updated();
-ClientData updateInformation(ClientData client);
+Client updateInformation(Client client);
 }

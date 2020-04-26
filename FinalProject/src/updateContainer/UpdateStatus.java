@@ -1,6 +1,6 @@
 package updateContainer;
 
-import objectsData.ContainerData;
+import businessObjects.Container;
 import supportingClasses.UpdateHistory;
 
 public class UpdateStatus implements UpdateContainer{
@@ -27,9 +27,9 @@ public class UpdateStatus implements UpdateContainer{
 	}
 	
 	@Override
-	public ContainerData updateInformation(ContainerData container) {
+	public Container updateInformation(Container container) {
 		// TODO Auto-generated method stub
-		container.setStatus(press, temp, hum);
+		container.setInternalStatus(press, temp, hum);
 		container.save();
 		history.updateHistoryDataBase(container);
 		setUpdate = true;

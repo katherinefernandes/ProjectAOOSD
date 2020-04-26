@@ -1,4 +1,4 @@
-package objectsData;
+package dataWrappers;
 
 public class Address {
   private String streetName;

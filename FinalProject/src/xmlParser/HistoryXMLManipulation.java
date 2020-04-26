@@ -1,27 +1,18 @@
 package xmlParser;
 
-import java.time.LocalDateTime;
 import java.util.*;
-import dataBase.GeneralPersistency;
-import objectsData.HistoryData;
 
-public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> implements GeneralPersistency<HistoryData> {
-	private ActiveData<HistoryData> activeData;
+import businessObjects.Container;
+
+public class HistoryXMLManipulation extends ContainerXMLManipulation{	
 	public HistoryXMLManipulation() {
-		super("storage/activeData/history.xml","DataPoint","History");
+		super("storage/activeData/history.xml","Container","History");
 		activeData = new ActiveData<>();
 	}
 
 	@Override
-	public void newEntry(HistoryData data) {
-		activeData.storeNewData(data);
-	}
-
-	@Override
-	public List<HistoryData> searchEntries(String searchWord) {
-		List<HistoryData> matchingEntries = activeData.findMatchingEntriesFromActiveData(searchWord);
-		matchingEntries.addAll(findMatchingEntriesFromFile(searchWord));
-		return matchingEntries;
+	public void newEntry(Container container) {
+		activeData.storeNewData(container);
 	}
 
 	@Override
@@ -32,39 +23,6 @@ public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> 
 		saveAllActiveData();
 		saveAllFileData();
 		io.finishWriteIO();
-	}
-	
-	@Override
-	protected HistoryData objectFromDataPoint(DataPointParser dataPoint) {
-		int i = 0;
-		i = dataPoint.iterateUntilFound(i,"TimeStamp");
-		LocalDateTime timeStamp = LocalDateTime.parse(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"ContainerID");
-		long containerID = Integer.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"JourneyID");
-		long journeyID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"ClientID");
-		long clientID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"DestinationPortID");
-		long destinationPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"StartPortID");
-		long startPortID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"Cargo");
-		String cargo = dataPoint.getEventAtIndex(++i).getData();
-		i = dataPoint.iterateUntilFound(i,"Temperature");
-		float temperature = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"Atmosphere");
-		float atmosphere = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"Humidity");
-		float humidity = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"Latitude");
-		float latitude = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		i = dataPoint.iterateUntilFound(i,"Longitude");
-		float longitude = Float.parseFloat(dataPoint.getEventAtIndex(++i).getData());
-		
-		HistoryData historyData = new HistoryData(timeStamp, containerID, journeyID, clientID, destinationPortID, startPortID, cargo, temperature, atmosphere, humidity, latitude, longitude);
-		
-		return historyData;
 	}
 	
 	private void saveAllActiveData() {
@@ -80,15 +38,16 @@ public class HistoryXMLManipulation extends GeneralXMLManipulation<HistoryData> 
 		}
 	}
 	
-	private List<HistoryData> findMatchingEntriesFromFile(String searchWord){
-		List<HistoryData> matchingEntries = new ArrayList<>();
+	@Override
+	protected List<Container> findMatchingEntriesFromFile(String searchWord){
+		List<Container> matchingEntries = new ArrayList<>();
 		DataPointParser dataPoint = new DataPointParser(dataPointTagName, searchWord);
 		io.initializeIO();
 		io.readEvent();
 		io.readEvent();
 		while(io.hasNext()) {
 			EventParser event = io.readEvent();
-			dataPoint.handleMatchOnValue(event);
+			dataPoint.handleMatchOnIDAndValue(event);
 			if(dataPoint.isCompleteMatchingDataPoint()) {
 				matchingEntries.add(objectFromDataPoint(dataPoint));
 			}

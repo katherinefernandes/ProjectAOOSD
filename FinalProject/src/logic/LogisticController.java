@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dataBase.DataBase;
+import dataWrappers.ReferenceName;
 import applications.CompanyApplication;
+import businessObjects.Client;
+import businessObjects.Container;
+import businessObjects.Port;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.LogisticMenu;
-import objectsData.ClientData;
-import objectsData.ContainerData;
-import objectsData.PortData;
-import objectsData.ReferenceName;
 import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
 import supportingClasses.ValidInput;
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 
@@ -38,7 +38,7 @@ public class LogisticController {
 	private String zipcode;
 	private long containerID;
 	private SearchByEmail optionEmail;
-	private List<ClientData> clients;
+	private List<Client> clients;
 	private SearchByName optionName;
 	private SearchByPhone optionPhone;
 	private ArrayList<String> firstN;
@@ -98,21 +98,21 @@ public class LogisticController {
 	private boolean setFirstName(String name1) {
 		// TODO Auto-generated method stub
 		
-		firstName = parseInput.parsingNames(name1);
+		firstName = InputParser.parsingNames(name1);
 		return validate.validateName(name1);
 	}
 
 
 	private boolean setMiddleName(String name2) {
 		// TODO Auto-generated method stub
-		middleName = parseInput.parsingNames(name2);
+		middleName = InputParser.parsingNames(name2);
 		return validate.validateName(name2);
 	}
 
 
 	private boolean setLastName(String name) {
 		// TODO Auto-generated method stub
-		lastName = parseInput.parsingNames(name);
+		lastName = InputParser.parsingNames(name);
 		return validate.validateName(name);
 	}
 
@@ -210,7 +210,7 @@ public class LogisticController {
 		return logistic.updateContainerInformation(update);
 	}
 	private String getPortName(long portID) {
-		PortData port;
+		Port port;
 		try {
 			port = DataBase.getPort(portID);
 		} catch (ElementNotFoundException e) {
@@ -223,7 +223,7 @@ public class LogisticController {
 
 	public String getContainerData() {
 		// TODO Auto-generated method stub
-		ContainerData container = logistic.viewContainer();
+		Container container = logistic.viewContainer();
 		String result="\n";
 		result = result +"\nJourney ID: "+container.getJourneyID();
 		result = result +"\nStart Port: "+getPortName(container.getStartPortID());
@@ -231,13 +231,13 @@ public class LogisticController {
 		result = result +"\nCargo: "+container.getCargo();
 		result = result +"\nInternal Status: "+getInternalStatus(container);
 		String latitude = Float.toString(container.getCurrentPosition().getLatitude());
-		String longitude = Float.toString(container.getCurrentPosition().getlongitude());
+		String longitude = Float.toString(container.getCurrentPosition().getLongitude());
 		result = result +"\nCurrent Location:"+"Latitude: "+latitude+" Longitude: "+longitude;
 		result = result +"\nArrival Date: "+container.getArriveBy();
 		result = result +"\nLast Updated: "+container.getUpdated();
 		return result;
 	}
-	private String getInternalStatus(ContainerData container) {
+	private String getInternalStatus(Container container) {
 		// TODO Auto-generated method stub
 		String temp= Float.toString(container.getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.getInternalStatus().getHumidity());
@@ -318,11 +318,11 @@ public class LogisticController {
 
 	public boolean getClientByReferencePerson(String text, String string, String text2) {
 		// TODO Auto-generated method stub
-		firstN = parseInput.parsingNames(text);
+		firstN = InputParser.parsingNames(text);
 		
-		middleN = parseInput.parsingNames(string);
+		middleN = InputParser.parsingNames(string);
 		
-		lastN = parseInput.parsingNames(text2);
+		lastN = InputParser.parsingNames(text2);
 		
 		searchRefPerson = new ReferenceName(firstN, middleN, lastN);
 		
@@ -349,7 +349,7 @@ public class LogisticController {
 		}
 		return result;
 	}
-	private String clientDataToString(ClientData client) {
+	private String clientDataToString(Client client) {
 		String result ="\n";
 		result = result +"\nClient ID: "+client.getID();
 		result = result +"\nCompany Name: "+client.getCompanyName();

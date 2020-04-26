@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import businessObjects.Client;
 import dataBase.DataBase;
-import objectsData.ClientData;
-import objectsData.ReferenceName;
+import dataWrappers.ReferenceName;
 
 public class SearchByReferencePerson implements SearchClients{
 	private ReferenceName referencePerson;
@@ -18,11 +18,11 @@ public class SearchByReferencePerson implements SearchClients{
 	}
 	
 	@Override
-	public List<ClientData> getClients() {
+	public List<Client> getClients() {
 		String firstName="";
 		String middleName="";
 		String lastName ="";
-		List<ClientData> firstClients;
+		List<Client> firstClients;
 		for(int i=0;i<referencePerson.getFirstName().size();i++) {
 			firstName=firstName+referencePerson.getFirstName().get(i);
 		};
@@ -33,15 +33,15 @@ public class SearchByReferencePerson implements SearchClients{
 		for(int i=0;i<referencePerson.getLastName().size();i++) {
 			lastName=lastName+referencePerson.getLastName().get(i);
 		};
-		Set<ClientData> hSet = new HashSet<ClientData>(); 
-        for (ClientData x : firstClients ) {
+		Set<Client> hSet = new HashSet<Client>(); 
+        for (Client x : firstClients ) {
         	if(x.getPerson().getMiddleName().contains(middleName)&&x.getPerson().getLastName().contains(lastName)) {
         		hSet.add(x);
         	}
         }
        
-        List<ClientData> finalresult = new ArrayList<ClientData>();
-        for(ClientData x :hSet) {
+        List<Client> finalresult = new ArrayList<Client>();
+        for(Client x :hSet) {
         	finalresult.add(x);}
         
         return finalresult;

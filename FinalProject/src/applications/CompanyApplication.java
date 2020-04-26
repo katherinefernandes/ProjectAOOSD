@@ -2,7 +2,8 @@ package applications;
 
 import java.util.ArrayList;
 import java.util.List;
-import objectsData.ClientData;
+
+import businessObjects.Client;
 import searchClients.SearchClients;
 import updateContainer.UpdateContainer;
 
@@ -32,7 +33,7 @@ public class CompanyApplication extends Application{
 		long id = ssecurity.generateID();
 		
 		
-		ClientData newClient = new ClientData(id, name, countryCode, phone, email, firstName, middleName, lastName, street, city, houseNumber, postCode);
+		Client newClient = new Client(id, name, countryCode, phone, email, firstName, middleName, lastName, street, city, houseNumber, postCode);
 		
 		newClient.save();
 		
@@ -47,7 +48,7 @@ public class CompanyApplication extends Application{
 		return Update.updated();
 	}
 
-	public List<ClientData> search(SearchClients option){
+	public List<Client> search(SearchClients option){
 		return option.getClients();
 	}
 

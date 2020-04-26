@@ -2,8 +2,8 @@ package containerFilters;
 
 import java.util.ArrayList;
 
-import objectsData.ClientData;
-import objectsData.ContainerData;
+import businessObjects.Client;
+import businessObjects.Container;
 
 public class FilterByCargoName extends FilteringContainersForAClient{
 	
@@ -11,13 +11,13 @@ public class FilterByCargoName extends FilteringContainersForAClient{
 	
 	
 	
-	public FilterByCargoName(ClientData client,String cargo) {
+	public FilterByCargoName(Client client,String cargo) {
 		super(client);
 		this.cargo=cargo;
 	}
 
 	@Override
-	public ArrayList<ContainerData> filterContainers() {
+	public ArrayList<Container> filterContainers() {
 		
 		for (int i=0;i<containers.size();i++) {
 			if (!containers.get(i).getCargo().equals(cargo)) {

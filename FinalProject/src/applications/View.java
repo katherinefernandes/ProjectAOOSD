@@ -1,9 +1,9 @@
 package applications;
 
-import objectsData.ClientData;
-import objectsData.ContainerData;
+import businessObjects.Client;
+import businessObjects.Container;
 
 public interface View {
-	ClientData viewClient();
-	ContainerData viewContainer();
+	Client viewClient();
+	Container viewContainer();
 }

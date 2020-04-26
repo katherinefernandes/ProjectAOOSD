@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class parseInput {
+public class InputParser { //TODO Class names should be upper case
 	public static ArrayList<String> parsingNames(String name) {
 		ArrayList<String> aList= new ArrayList<String>(Arrays.asList(name.split(" ")));
 		return aList;

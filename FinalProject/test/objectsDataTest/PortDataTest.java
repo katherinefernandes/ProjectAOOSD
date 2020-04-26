@@ -6,16 +6,16 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
-import objectsData.PortData;
+import businessObjects.Port;
 
 public class PortDataTest {
 	
 	
-	private PortData objectTest;
+	private Port objectTest;
 	
 	@BeforeEach
 	public void testPortData() {
-		objectTest = new PortData(36l,"Pakistan","gawadar",36.0f,87.0f);
+		objectTest = new Port(36l,"Pakistan","gawadar",36.0f,87.0f);
 		
 	}
 

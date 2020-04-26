@@ -1,15 +1,15 @@
 package applications;
 
+import businessObjects.Client;
+import businessObjects.Container;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import objectsData.ClientData;
-import objectsData.ContainerData;
 import supportingClasses.Security;
 
 public class Application implements View{
 	//TODO what's the point of this class? Why are these fields together in a class with only getters and setters
-	protected ClientData client;
-	protected ContainerData container;
+	protected Client client;
+	protected Container container;
 	protected Security ssecurity;
 	protected boolean setClient;
 	protected boolean setContainer;
@@ -21,12 +21,12 @@ public class Application implements View{
 	}
 	
 	@Override
-	public ClientData viewClient(){
+	public Client viewClient(){
 		return this.client;
 	}
 	
 	@Override
-	public ContainerData viewContainer() {
+	public Container viewContainer() {
 		return this.container;
 	}
 	

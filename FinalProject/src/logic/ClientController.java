@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applications.ClientApplication;
+import businessObjects.Client;
+import businessObjects.Container;
+import businessObjects.Port;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
 import graphicalInterface.newClientMenu;
-import objectsData.ClientData;
-import objectsData.ContainerData;
-import objectsData.PortData;
 import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
@@ -29,8 +29,8 @@ public class ClientController {
 	private ArrayList<String> firstNameList;
 	private ArrayList<String> middleNameList;
 	private ArrayList<String> lastNameList;
-	private ClientData client;
-	private ArrayList<ContainerData> container;
+	private Client client;
+	private ArrayList<Container> container;
 	private long portID;
 	private long startPortID;
 	private long destinationPortID;
@@ -48,9 +48,9 @@ public class ClientController {
 		System.out.println("inside the method savereferencePerson");
 		boolean checkMessage = false;
 		if(checkNameValidity(firstName) && validate.validateName(middleName) && checkNameValidity(lastName)){
-			firstNameList = parseInput.parsingNames(firstName);
-			middleNameList = parseInput.parsingNames(middleName);
-			lastNameList = parseInput.parsingNames(lastName);
+			firstNameList = InputParser.parsingNames(firstName);
+			middleNameList = InputParser.parsingNames(middleName);
+			lastNameList = InputParser.parsingNames(lastName);
 			UpdateReferencePerson update = new UpdateReferencePerson(firstNameList,middleNameList,lastNameList);
 			System.out.println("Going to try to update information");
 			if (currentClient.updateClientInformation(update)) {
@@ -80,7 +80,7 @@ public class ClientController {
 	
 	private boolean checkNameValidity(String name) {
 		System.out.println(name);
-		ArrayList<String> Name = parseInput.parsingNames(name); 
+		ArrayList<String> Name = InputParser.parsingNames(name); 
 		for(int i=0;i<Name.size();i++) {
 			if(!validate.validateName(Name.get(i))) {
 				return false;
@@ -235,7 +235,7 @@ public class ClientController {
 		return activeShipments;
 	}
 	public boolean getContainerByContainerID(String containerID) {
-		container = new ArrayList<ContainerData>();
+		container = new ArrayList<Container>();
 		try {
 			currentClient.getContainer(Long.valueOf(containerID));
 			if (currentClient.getFoundContainer()) {
@@ -304,7 +304,7 @@ public class ClientController {
 		return getPortName(container.get(0).getStartPortID());
 	}
 	private String getPortName(long portID) {
-		PortData port;
+		Port port;
 		try {
 			port = DataBase.getPort(portID);
 		} catch (ElementNotFoundException e) {
@@ -334,7 +334,7 @@ public class ClientController {
 	}
 	public String getCurrentLocation() {
 		String latitude = Float.toString(container.get(0).getCurrentPosition().getLatitude());
-		String longitude = Float.toString(container.get(0).getCurrentPosition().getlongitude());
+		String longitude = Float.toString(container.get(0).getCurrentPosition().getLongitude());
 		return "Latitude: "+latitude+"  Longitude: "+longitude;
 	}
 	public String getMulitpleContainersData() {
@@ -354,7 +354,7 @@ public class ClientController {
 		
 		return result;
 	}
-	private String containerDataToString(ContainerData container) {
+	private String containerDataToString(Container container) {
 		String result="\n";
 		result = result +"\nJourney ID: "+container.getJourneyID();
 		result = result +"\nStart Port: "+getPortName(container.getStartPortID());
@@ -362,13 +362,13 @@ public class ClientController {
 		result = result +"\nCargo: "+container.getCargo();
 		result = result +"\nInternal Status: "+getInternalStatus(container);
 		String latitude = Float.toString(container.getCurrentPosition().getLatitude());
-		String longitude = Float.toString(container.getCurrentPosition().getlongitude());
+		String longitude = Float.toString(container.getCurrentPosition().getLongitude());
 		result = result +"\nCurrent Location:"+"Latitude: "+latitude+"Longitude: "+longitude;
 		result = result +"\nArrival Date: "+container.getArriveBy();
 		result = result +"\nLast Updated: "+container.getUpdated();
 		return result;
 	}
-	private String getInternalStatus(ContainerData container) {
+	private String getInternalStatus(Container container) {
 		String temp= Float.toString(container.getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.getInternalStatus().getHumidity());
 		String pressure = Float.toString(container.getInternalStatus().getAtmosphere());
@@ -422,7 +422,7 @@ public class ClientController {
 
 		System.out.println("Checking arrive by");
 		try {
-			parseInput.getDate(date);
+			InputParser.getDate(date);
 			return true;
 		}catch(DateTimeException e ){
 				System.out.println("Not accurate date format");

@@ -1,6 +1,6 @@
 package updateContainer;
 
-import objectsData.ContainerData;
+import businessObjects.Container;
 import supportingClasses.UpdateHistory;
 
 public class UpdateLocation implements UpdateContainer{
@@ -25,7 +25,7 @@ public class UpdateLocation implements UpdateContainer{
 	}
 	
 	@Override
-	public ContainerData updateInformation(ContainerData container) {
+	public Container updateInformation(Container container) {
 		// TODO Auto-generated method stub
 		container.setCurrentPosition(lat, lon);
 		container.save();

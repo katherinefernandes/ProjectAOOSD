@@ -3,11 +3,11 @@ package searchClients;
 
 import java.util.List;
 
-import objectsData.ClientData;
+import businessObjects.Client;
 
 public interface SearchClients {
 	
-	List<ClientData> getClients();
+	List<Client> getClients();
 	
 	
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
-import objectsData.ReferenceName;
+import dataWrappers.ReferenceName;
 
 public class ReferenceNameTest {
 	private ReferenceName name;

@@ -3,23 +3,23 @@ package containerFilters;
 import java.util.ArrayList;
 import java.util.List;
 
+import businessObjects.Client;
+import businessObjects.Container;
 import dataBase.DataBase;
-import objectsData.ClientData;
-import objectsData.ContainerData;
 
 public abstract class FilteringContainersForAClient implements FilterContainer {
 
-	protected ArrayList<ContainerData> containers;
+	protected ArrayList<Container> containers;
 	private List<Long> activeJourneys;
 	
-	public FilteringContainersForAClient(ClientData client) {
+	public FilteringContainersForAClient(Client client) {
 		this.activeJourneys=client.getActiveShipments();
-		containers= new ArrayList<ContainerData>();
+		containers= new ArrayList<Container>();
 		getContainersByActiveJourneyIDs();
 	}
 	
 	private  void getContainersByActiveJourneyIDs() {
-		List<ContainerData> containerExtractedByDataBase;
+		List<Container> containerExtractedByDataBase;
 		System.out.println("activeJourneys: "+activeJourneys.size());
 		for(int i=0;i<this.activeJourneys.size();i++) {
 			String journeyIDInString = this.activeJourneys.get(i).toString();
@@ -35,6 +35,6 @@ public abstract class FilteringContainersForAClient implements FilterContainer {
 	
 	
 	@Override
-	public abstract ArrayList<ContainerData> filterContainers();
+	public abstract ArrayList<Container> filterContainers();
 
 }

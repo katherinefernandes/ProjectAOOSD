@@ -2,19 +2,19 @@ package applications;
 
 import java.util.ArrayList;
 
+import businessObjects.Container;
+import businessObjects.Port;
 import containerFilters.FilteringContainersForAClient;
 import dataBase.DataBase;
 import exceptions.ElementNotFoundException;
-import objectsData.ContainerData;
-import objectsData.PortData;
 import supportingClasses.UpdateDestinationPort;
 import supportingClasses.UpdateHistory;
-import supportingClasses.parseInput;
+import supportingClasses.InputParser;
 import updateClientInformation.UpdateClient;
 
 public class ClientApplication extends Application{
-	private PortData startPort;
-	private PortData destinationPort;
+	private Port startPort;
+	private Port destinationPort;
 	private boolean foundContainer;
 	private long containerID;
 	private boolean containerRegistered;
@@ -49,10 +49,10 @@ public class ClientApplication extends Application{
 				containerID = startPort.getStationedContainers().get(0);
 				container = DataBase.getContainer(containerID);
 				foundContainer  = true;
-				startPort.updateStationedContainers(containerID);
+				startPort.removeStationedContainer(containerID);
 				startPort.save();
 			}else {
-				createANewContainer(startPortID);
+				createANewContainer();
 			}
 		} catch (ElementNotFoundException e) {
 			
@@ -79,8 +79,8 @@ public class ClientApplication extends Application{
 		container.setStartPortID(startPortID);
 		container.setDestinationPortID(destinationPortID);
 		container.setCargo(cargo);
-		container.setStatus(pressure, temperature, humidity);
-		container.setArriveBy(parseInput.getDate(arriveBy));
+		container.setInternalStatus(pressure, temperature, humidity);
+		container.setArriveBy(InputParser.getDate(arriveBy));
 		container.setJourneyID(ssecurity.generateID());
 		container.save();
 		history.updateHistoryDataBase(container);
@@ -96,17 +96,17 @@ public class ClientApplication extends Application{
 
 	
 
-	private void createANewContainer(long startPortID)  {
+	private void createANewContainer()  {
 
-		container = new ContainerData(this.ssecurity.generateID(),startPortID,startPort.getPosition().getLatitude(),startPort.getPosition().getlongitude());
+		container = new Container(this.ssecurity.generateID(),startPort);
 		containerID = container.getID();
 		startPort.addStationedContainer(containerID);
 		startPort.save();
 		container.save();
-		getAContainer(startPortID);
+		getAContainer(startPort.getID());
 	}
 
-	public ArrayList<ContainerData> filterContainersOnAJourney(FilteringContainersForAClient filter){
+	public ArrayList<Container> filterContainersOnAJourney(FilteringContainersForAClient filter){
 		return filter.filterContainers();
 	}
 	

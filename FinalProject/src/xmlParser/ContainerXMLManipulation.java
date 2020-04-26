@@ -1,16 +1,19 @@
 package xmlParser;
 
-import objectsData.*;
+import businessObjects.*;
 import dataBase.IdentifiablePersistency;
 
-public class ContainerXMLManipulation extends IdentifiableXMLManipulation<ContainerData> implements IdentifiablePersistency<ContainerData> {
+public class ContainerXMLManipulation extends GeneralXMLManipulation<Container> implements IdentifiablePersistency<Container> {
 	
 	public ContainerXMLManipulation() {
 		super("storage/activeData/containers.xml", "Container", "Containers");
 	}
+	public ContainerXMLManipulation(String filename, String dataPointTagName, String collectionTagName) {
+		super(filename, dataPointTagName, collectionTagName);
+	}
 	
 	@Override
-	public ContainerData objectFromDataPoint(DataPointParser dataPoint) {
+	public Container objectFromDataPoint(DataPointParser dataPoint) {
 		int i = 0;
 		i = dataPoint.iterateUntilFound(i,"ClientID");
 		long clientID = Long.valueOf(dataPoint.getEventAtIndex(++i).getData());
@@ -39,8 +42,39 @@ public class ContainerXMLManipulation extends IdentifiableXMLManipulation<Contai
 		i = dataPoint.iterateUntilFound(i,"ArriveBy");
 		String arriveBy = dataPoint.getEventAtIndex(++i).getData();	
 		
-		ContainerData container = new ContainerData(dataPoint.getID(), clientID, journeyID, startPortID, lastVisitedPortID, destinationPortID, latitude, longitude, cargo, temperature, atmosphere, humidity, updated, arriveBy);
+		Container container = new Container(dataPoint.getID(), clientID, journeyID, startPortID, lastVisitedPortID, destinationPortID, latitude, longitude, cargo, temperature, atmosphere, humidity, updated, arriveBy);
 		
 		return container;
+	}
+
+	@Override
+	protected DataPointParser dataPointFromObject(Container container) {
+		DataPointParser dataPoint = new DataPointParser(dataPointTagName);
+		dataPoint.addStartEvent(dataPointTagName, container.getID());
+		
+		dataPoint.addCompleteElement("ClientID", container.getClientID());
+		dataPoint.addCompleteElement("JourneyID", container.getJourneyID());
+		dataPoint.addCompleteElement("StartPortID", container.getStartPortID());
+		dataPoint.addCompleteElement("LastVisitedPortID", container.getLastVisitedPortID());
+		dataPoint.addCompleteElement("DestinationPortID", container.getDestinationPortID());
+		
+		dataPoint.addStartEvent("CurrentPosition");
+		dataPoint.addCompleteElement("Latitude", container.getCurrentPosition().getLatitude());
+		dataPoint.addCompleteElement("Longitude", container.getCurrentPosition().getLongitude());
+		dataPoint.addEndEvent("CurrentPosition");
+		
+		dataPoint.addCompleteElement("Cargo", container.getCargo());
+		
+		dataPoint.addStartEvent("InternalState");
+		dataPoint.addCompleteElement("Temperature", container.getInternalStatus().getTemperature());
+		dataPoint.addCompleteElement("Atmosphere", container.getInternalStatus().getAtmosphere());
+		dataPoint.addCompleteElement("Humidity", container.getInternalStatus().getHumidity());
+		dataPoint.addEndEvent("InternalState");
+		
+		dataPoint.addCompleteElement("Updated", container.getUpdated());
+		dataPoint.addCompleteElement("ArriveBy", container.getArriveBy());
+	
+		dataPoint.addEndEvent(dataPointTagName);
+		return dataPoint;
 	}
 }

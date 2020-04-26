@@ -1,8 +1,8 @@
 package xmlParser;
 
-import objectsData.IdentifiableData;
+import businessObjects.BusinessObject;
 
-class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveData<T> {
+class ActiveIDSortedData<T extends BusinessObject> extends ActiveData<T> {
 	
 	@Override
 	public void storeNewData(T newData) {
@@ -12,28 +12,6 @@ class ActiveIdentifiableData<T extends IdentifiableData> extends ActiveData<T> {
 		}else {
 			storeDataAtSupremum(newData);
 		}
-	}
-	
-	public void removeDataWithID(long ID) {
-		for(int i = 0; i < dataList.size(); i++) {
-			long currentID = getDataAtIndex(i).getID();
-			if(currentID == ID) {
-				removeDataAtIndex(i);
-				break;
-			}else if(currentID > ID) {
-				break;
-			}
-		}
-	}
-	
-	public boolean activeDataContainsID(long ID) {
-		String IDAsString = String.valueOf(ID);
-		for(T data : dataList) {
-			if (String.valueOf(data.getID()).equals(IDAsString)){
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	private void storeDataAtSupremum(T newData) {

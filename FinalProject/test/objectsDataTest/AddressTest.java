@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
-import objectsData.Address;
+import dataWrappers.Address;
 
 public class AddressTest {
 	private Address testclass;
