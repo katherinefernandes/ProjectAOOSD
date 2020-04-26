@@ -495,7 +495,7 @@ public class ClientController {
 		}
 		if(checkMessage) {
 			clientmenu.successFieldForAddJourney();
-			clientmenu.updateActiveShipments();
+			//clientmenu.updateActiveShipments();
 		}else {
 			System.out.println("something went wrong when registering the journey");
 			clientmenu.errorMessageForAddJourney();

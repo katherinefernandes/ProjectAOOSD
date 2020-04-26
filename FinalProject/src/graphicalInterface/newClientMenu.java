@@ -75,13 +75,11 @@ public class newClientMenu {
 	private JTextArea txtrEmail_1;
 	private JTextArea txtrReferencePerson;
 	private JTextArea txtrAddress;
-	private JTextArea txtrActiveShipmnts;
 	private JTextArea viewCompanyNameTextField;
 	private JTextArea viewPhoneTextField;
 	private JTextArea viewEmailTextField;
 	private JTextArea viewReferencePersonTextField;
 	private JTextArea viewAddressTextField;
-	private JTextArea viewActiveShipmentsTextField;
 	private JTextArea txtrCurrentLocation;
 	private JTextArea currentLocationTextField;
 	private JTextArea noContainerError;
@@ -580,7 +578,7 @@ public class newClientMenu {
 					clearDataFields(textField_8,textField_9,textField_10,textField_11,textField_12,textField_13,textField_14);
 				}
 				
-				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+				//viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}});
 		JourneyPanel.add(saveJourney);
 		
@@ -798,7 +796,7 @@ public class newClientMenu {
 				noContainerError.setVisible(false);
 				containerIDForGraphs=controller.searchContainer(JourneyIDsearch.getText(),CargoIDsearch.getText(),PortNamesearch.getText());
 				clearDataFields(JourneyIDsearch,CargoIDsearch,PortNamesearch);
-				viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+				//viewActiveShipmentsTextField.setText(controller.getActiveShipments());
 			}
 			
 		});
@@ -849,6 +847,7 @@ public class newClientMenu {
 		noContainerError.setVisible(false);
 		
 		ViewInfoPanel = new JPanel();
+		layeredPane.setLayer(ViewInfoPanel, 2);
 		ViewInfoPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.add(ViewInfoPanel, "name_37514469502135");
 		ViewInfoPanel.setLayout(null);
@@ -858,7 +857,7 @@ public class newClientMenu {
 		txtrComapnyName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrComapnyName.setEditable(false);
 		txtrComapnyName.setBackground(new Color(95, 158, 160));
-		txtrComapnyName.setBounds(44, 84, 127, 26);
+		txtrComapnyName.setBounds(44, 103, 127, 26);
 		ViewInfoPanel.add(txtrComapnyName);
 		
 		txtrCountry = new JTextArea();
@@ -866,7 +865,7 @@ public class newClientMenu {
 		txtrCountry.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrCountry.setEditable(false);
 		txtrCountry.setBackground(new Color(95, 158, 160));
-		txtrCountry.setBounds(44, 122, 127, 16);
+		txtrCountry.setBounds(44, 157, 127, 16);
 		ViewInfoPanel.add(txtrCountry);
 		
 		txtrEmail_1 = new JTextArea();
@@ -874,7 +873,7 @@ public class newClientMenu {
 		txtrEmail_1.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrEmail_1.setEditable(false);
 		txtrEmail_1.setBackground(new Color(95, 158, 160));
-		txtrEmail_1.setBounds(44, 161, 127, 16);
+		txtrEmail_1.setBounds(44, 206, 127, 16);
 		ViewInfoPanel.add(txtrEmail_1);
 		
 		txtrReferencePerson = new JTextArea();
@@ -882,7 +881,7 @@ public class newClientMenu {
 		txtrReferencePerson.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrReferencePerson.setEditable(false);
 		txtrReferencePerson.setBackground(new Color(95, 158, 160));
-		txtrReferencePerson.setBounds(44, 207, 127, 16);
+		txtrReferencePerson.setBounds(44, 258, 127, 16);
 		ViewInfoPanel.add(txtrReferencePerson);
 		
 		txtrAddress = new JTextArea();
@@ -890,22 +889,14 @@ public class newClientMenu {
 		txtrAddress.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		txtrAddress.setEditable(false);
 		txtrAddress.setBackground(new Color(95, 158, 160));
-		txtrAddress.setBounds(44, 274, 127, 16);
+		txtrAddress.setBounds(44, 332, 127, 16);
 		ViewInfoPanel.add(txtrAddress);
-		
-		txtrActiveShipmnts = new JTextArea();
-		txtrActiveShipmnts.setText("Active shipments:");
-		txtrActiveShipmnts.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		txtrActiveShipmnts.setEditable(false);
-		txtrActiveShipmnts.setBackground(new Color(95, 158, 160));
-		txtrActiveShipmnts.setBounds(44, 370, 127, 26);
-		ViewInfoPanel.add(txtrActiveShipmnts);
 		
 		viewCompanyNameTextField = new JTextArea();
 		viewCompanyNameTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewCompanyNameTextField.setEditable(false);
 		viewCompanyNameTextField.setBackground(new Color(95, 158, 160));
-		viewCompanyNameTextField.setBounds(206, 86, 356, 16);
+		viewCompanyNameTextField.setBounds(206, 103, 356, 45);
 		viewCompanyNameTextField.setText(controller.getCompanyName());
 		ViewInfoPanel.add(viewCompanyNameTextField);
 		
@@ -913,7 +904,7 @@ public class newClientMenu {
 		viewPhoneTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewPhoneTextField.setEditable(false);
 		viewPhoneTextField.setBackground(new Color(95, 158, 160));
-		viewPhoneTextField.setBounds(206, 124, 356, 16);
+		viewPhoneTextField.setBounds(206, 157, 356, 37);
 		viewPhoneTextField.setText(controller.getCurrentPhoneNumber());
 		ViewInfoPanel.add(viewPhoneTextField);
 		
@@ -921,7 +912,7 @@ public class newClientMenu {
 		viewEmailTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewEmailTextField.setEditable(false);
 		viewEmailTextField.setBackground(new Color(95, 158, 160));
-		viewEmailTextField.setBounds(206, 163, 356, 45);
+		viewEmailTextField.setBounds(206, 206, 356, 45);
 		viewEmailTextField.setText(controller.getCurrentEmail());
 		ViewInfoPanel.add(viewEmailTextField);
 		
@@ -929,7 +920,7 @@ public class newClientMenu {
 		viewReferencePersonTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewReferencePersonTextField.setEditable(false);
 		viewReferencePersonTextField.setBackground(new Color(95, 158, 160));
-		viewReferencePersonTextField.setBounds(206, 207, 356, 37);
+		viewReferencePersonTextField.setBounds(206, 258, 356, 37);
 		viewReferencePersonTextField.setText(controller.getReferencePerson());
 		ViewInfoPanel.add(viewReferencePersonTextField);
 		
@@ -937,17 +928,9 @@ public class newClientMenu {
 		viewAddressTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		viewAddressTextField.setEditable(false);
 		viewAddressTextField.setBackground(new Color(95, 158, 160));
-		viewAddressTextField.setBounds(206, 256, 356, 109);
+		viewAddressTextField.setBounds(206, 332, 356, 109);
 		viewAddressTextField.setText(controller.getAddress());
 		ViewInfoPanel.add(viewAddressTextField);
-		
-		viewActiveShipmentsTextField = new JTextArea();
-		viewActiveShipmentsTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		viewActiveShipmentsTextField.setEditable(false);
-		viewActiveShipmentsTextField.setBackground(new Color(95, 158, 160));
-		viewActiveShipmentsTextField.setBounds(206, 370, 371, 102);
-		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
-		ViewInfoPanel.add(viewActiveShipmentsTextField);
 		
 		
 		
@@ -1103,9 +1086,9 @@ public class newClientMenu {
 	public void successFieldForAddJourney() {
 		setTextVisibleTrue(journeySuccessTextfield);
 	}
-	public void updateActiveShipments() {
-		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
-	}
+//	public void updateActiveShipments() {
+//		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
+//	}
 	public void containerSearchError() {
 		setTextVisibleTrue(noContainerError);
 	}
