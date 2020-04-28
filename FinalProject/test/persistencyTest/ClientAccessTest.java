@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import businessObjects.Client;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public class ClientAccessTest extends IdentifiableDataAccessTest<Client>{
 	
@@ -67,10 +67,10 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<Client>{
 	}
 	
 	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
+	public void persistencyTestT() throws NumberFormatException, ElementSelectionException {
 		persistencyTest(); }
 	@Test
-	public void editTestT() throws NumberFormatException, ElementNotFoundException {
+	public void editTestT() throws NumberFormatException, ElementSelectionException {
 		editTest(); }
 	
 	@Override
@@ -78,7 +78,7 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<Client>{
 		DataBase.deleteClient(ID);
 	}
 	@Override
-	protected Client getObject(long ID) throws ElementNotFoundException {
+	protected Client getObject(long ID) throws ElementSelectionException {
 		return DataBase.getClient(ID);
 	}
 	@Override

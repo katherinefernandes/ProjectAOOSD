@@ -20,7 +20,7 @@ import containerFilters.FilterByPortName;
 import containerFilters.FilteringContainersForAClient;
 import dataWrappers.ReferenceName;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -149,7 +149,7 @@ public class ApplicationSteps {
 		try {
 			 logistic.getClient(clientID);
 			 client = logistic.viewClient();
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 
 			throw new Error(e);
 		}
@@ -564,7 +564,7 @@ public class ApplicationSteps {
 		    try {
 				logistic.getContainer(this.containerID);
 				System.out.println(this.containerID);
-			} catch (ElementNotFoundException e) {
+			} catch (ElementSelectionException e) {
 				e.printStackTrace();
 				throw new Error(e);
 			}
@@ -601,7 +601,7 @@ public class ApplicationSteps {
 	public void theNewTemperatureValueIs(float temp) {
 		try {
 			logistic.getContainer(this.containerID);
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 			e.printStackTrace();
 			throw new Error(e);
 		}
@@ -644,7 +644,7 @@ public class ApplicationSteps {
 	public void theNewLatitudeIs(float double1) {
 		try {
 			logistic.getContainer(this.containerID);
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 			e.printStackTrace();
 			throw new Error(e);
 		}
@@ -700,7 +700,7 @@ public class ApplicationSteps {
 	    try {
 			user.getClient(clientID);
 			errorMessage = "none";
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 
 			errorMessage = "ElementNotFoundException";
 		}
@@ -726,7 +726,7 @@ public class ApplicationSteps {
 		   try {
 				user.getContainer(containerID);
 				errorMessage = "none";
-			} catch (ElementNotFoundException e) {
+			} catch (ElementSelectionException e) {
 
 				errorMessage = "ElementNotFoundException";
 			}

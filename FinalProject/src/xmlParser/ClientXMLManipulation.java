@@ -64,7 +64,7 @@ public class ClientXMLManipulation extends GeneralXMLManipulation<Client> implem
 		i = dataPoint.iterateUntilFound(i,"FinishedShipments");
 		while(!((event = dataPoint.getEventAtIndex(i).getEvent()).isEndElement() && event.asEndElement().getName().getLocalPart().equals("FinishedShipments"))) {
 			if(event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("JourneyID")) {
-				client.addActiveShipment(Long.valueOf(dataPoint.getEventAtIndex(++i).getData()));
+				client.addFinishedShipment(Long.valueOf(dataPoint.getEventAtIndex(++i).getData()));
 			}
 			i++;
 		}

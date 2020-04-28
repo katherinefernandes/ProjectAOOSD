@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import businessObjects.Port;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public class PortAccessTest extends IdentifiableDataAccessTest<Port>{
 
@@ -42,11 +42,11 @@ public class PortAccessTest extends IdentifiableDataAccessTest<Port>{
 	}
 	
 	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
+	public void persistencyTestT() throws NumberFormatException, ElementSelectionException {
 		persistencyTest(); 
 		 }
 	@Test
-	public void editTestT() throws NumberFormatException, ElementNotFoundException {
+	public void editTestT() throws NumberFormatException, ElementSelectionException {
 		editTest(); }
 	
 	public void assertEqualData(Port portData1, Port portData2) {
@@ -78,7 +78,7 @@ public class PortAccessTest extends IdentifiableDataAccessTest<Port>{
 	}
 
 	@Override
-	protected Port getObject(long ID) throws ElementNotFoundException {
+	protected Port getObject(long ID) throws ElementSelectionException {
 		return DataBase.getPort(ID);
 	}
 	

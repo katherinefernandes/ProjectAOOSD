@@ -1,14 +1,27 @@
 package simulation;
-
+//4900 first names
+//11000 last names
+//7700 words
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.*;
+import businessObjects.*;
+import dataBase.DataBase;
+
 
 public class RandomGenerator {
 	private Random random;
 	private RandomAccessFile firstNames;
 	private RandomAccessFile lastNames;
 	private RandomAccessFile words;
+	private static int bytesInFirstNames = 40000;
+	private static int bytesInLastNames = 91000;
+	private static int bytesInWords = 62000;
+	//more efficient to pull a selection of business objects at construction than every time a method is used
+	private List<Client> randomClientSelection;
+	private List<Container> randomContainerSelection;
+	private List<Port> randomPortSelection;
 	
 	public RandomGenerator() {
 		try {
@@ -19,5 +32,204 @@ public class RandomGenerator {
 			throw new Error(e);
 		}
 		random = new Random();
+		
+		pullRandomClients();
+		pullRandomContainers();
+		pullRandomPorts();
+	}
+
+	public String getRandomFirstName() {
+		try {
+			return getRandomLine(firstNames,bytesInFirstNames);
+		} catch (IOException e) {
+			throw new Error(e);
+		}
+	}
+
+	public String getRandomLastName() {
+		try {
+			return getRandomLine(lastNames,bytesInLastNames);
+		} catch (IOException e) {
+			throw new Error(e);
+		}
+	}
+	
+	public String getRandomWord() {
+		try {
+			return getRandomLine(words,bytesInWords);
+		} catch (IOException e) {
+			throw new Error(e);
+		}
+	}
+	
+	public List<List<String>> generateRandomRefrenceName() {
+		List<List<String>> refrenceName = new ArrayList<>();
+		for(int i = 0; i < 3; i++) {
+			refrenceName.add(new ArrayList<String>());
+		}
+		int numberOfFirstNames = random.nextInt(2) + 1;
+		int numberOfMiddleNames = random.nextInt(3);
+		int numberOfLastNames = 1;
+		
+		for(int i = 0; i < numberOfFirstNames; i++) {
+			refrenceName.get(0).add(getRandomFirstName());
+		}
+		for(int i = 0; i < numberOfMiddleNames; i++) {
+			refrenceName.get(1).add(getRandomFirstName());
+		}
+		for(int i = 0; i < numberOfLastNames; i++) {
+			refrenceName.get(2).add(getRandomLastName());
+		}
+		return refrenceName;
+	}
+	
+	public String generateRandomEmail() {
+		String[] domains = {"gmail","hotmail","yahoo","outlook","student.dtu"};
+		String[] tld = {"no","dk","jp","com","org","net","co.uk"};
+		String email = getRandomFirstName();
+		if(random.nextBoolean()) {
+			email += "." + getRandomFirstName();
+		}
+		email += "@" + domains[random.nextInt(domains.length)];
+		email += "." + tld[random.nextInt(tld.length)];
+		return email;
+	}
+	
+	public String generateCompanyName() {
+		String[] companyTypes = {"Inc.", "Ltd.","LLC","Corp.","A/S","& Co"};
+		String companyName = getRandomLastName() + "'s ";
+		companyName += getRandomWord() + "s ";
+		companyName += companyTypes[random.nextInt(companyTypes.length)];
+		return companyName;
+	}
+	
+	public int generateCountryCode() {
+		return random.nextInt(100);
+	}
+	
+	public long generatePhoneNumber() {
+		return (long) (1000000. + 998999999. * random.nextDouble());
+	}
+	
+	public String generateStreetName() {
+		String[] streetTypes = {"gade","street","vej","main","road","avenue","bypass","row","way","boulevard"};
+		String streetName = "";
+		if(random.nextBoolean()) {
+			streetName += getRandomLastName();
+		}else {
+			streetName += getRandomWord();
+		}
+		streetName += "-" + streetTypes[random.nextInt(streetTypes.length)];
+		return streetName;
+	}
+	
+	public int generateHouseNumber() {
+		return random.nextInt(300);
+	}
+	
+	public String generateCity() {
+		String[] cityTypes = {" town","ville","topia"," village"," city", "dale", "by", " borough"};
+		String city = "";
+		if(random.nextDouble() < 0.25){
+			city += "New ";
+		}
+		if(random.nextBoolean()) {
+			city += getRandomLastName();
+		}else {
+			city += getRandomWord();
+		}
+		city += cityTypes[random.nextInt(cityTypes.length)];
+		return city;
+	}
+	
+	public String generateZipCode() {
+		char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
+		char[] numbers = "1234567890".toCharArray();
+		String zipCode = "";
+		int zipLength = 3 + random.nextInt(4);
+		for(int i = 0; i < zipLength; i++) {
+			if(random.nextDouble() < 0.33) {
+				zipCode += alphabet[random.nextInt(alphabet.length)];
+			}else {
+				zipCode += numbers[random.nextInt(numbers.length)];
+			}
+		}
+		return zipCode;
+	}
+	
+	public float generateTemperature() {
+		return random.nextFloat()*100F - 5F;
+	}
+	public float generateHumidity() {
+		return random.nextFloat()*100F;
+	}
+	public float generateAtmosphere() {
+		return random.nextFloat()*1F - 5F;
+	}
+	
+	public Client getRandomClient() {
+		return randomClientSelection.get(random.nextInt(randomClientSelection.size()));
+	}
+	
+	public Container getRandomContainer() {
+		return randomContainerSelection.get(random.nextInt(randomContainerSelection.size()));
+	}
+	
+	public Port getRandomPort() {
+		return randomPortSelection.get(random.nextInt(randomPortSelection.size()));
+	}
+	
+	public void addClientToSelection(Client client) {
+		randomClientSelection.add(client);
+	}
+	
+	public void addPortToSelection(Port port) {
+		randomPortSelection.add(port);
+	}
+	
+	public void addContainerToSelection(Container container) {
+		randomContainerSelection.add(container);
+	}
+	
+	private String getRandomLine(RandomAccessFile file, int bytesInFile) throws IOException {
+		int randomPosition = random.nextInt(bytesInFile);
+		file.seek(randomPosition);
+		file.readLine();
+		return file.readLine();
+	}
+	
+	private void pullRandomPorts() {
+		randomPortSelection = new ArrayList<>();
+		List<Port> allPorts = DataBase.searchPorts("");
+		
+		int transfered = 0;
+		while(transfered < 100 && !allPorts.isEmpty()) {
+			Port port = allPorts.remove(random.nextInt(allPorts.size()));
+			randomPortSelection.add(port);
+		}
+		
+		
+	}
+
+	private void pullRandomContainers() {
+		randomContainerSelection = new ArrayList<>();
+		List<Container> allContainers = DataBase.searchContainers("");
+		
+		int transfered = 0;
+		while(transfered < 100 && !allContainers.isEmpty()) {
+			Container container = allContainers.remove(random.nextInt(allContainers.size()));
+			randomContainerSelection.add(container);
+		}
+	}
+
+	private void pullRandomClients() {
+		randomClientSelection = new ArrayList<>();
+		List<Client> allClients = DataBase.searchClients("");
+		
+		int transfered = 0;
+		while(transfered < 100 && !allClients.isEmpty()) {
+			Client client = allClients.remove(random.nextInt(allClients.size()));
+			randomClientSelection.add(client);
+		}
 	}
 }

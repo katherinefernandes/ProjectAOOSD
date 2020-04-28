@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 
 import businessObjects.Container;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public class HistoryAccessTest extends DataAccessTest<Container> {
 	
@@ -29,11 +29,11 @@ public class HistoryAccessTest extends DataAccessTest<Container> {
 	}
 	
 	//@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
+	public void persistencyTestT() throws NumberFormatException, ElementSelectionException {
 		persistencyTest(); }
 	
 	@Override
-	protected Container getObject(long ID) throws ElementNotFoundException {
+	protected Container getObject(long ID) throws ElementSelectionException {
 		return DataBase.searchHistory(String.valueOf(ID)).get(0);
 	}
 	

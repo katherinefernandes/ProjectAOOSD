@@ -3,7 +3,7 @@ package dataBase;
 import java.util.*;
 
 import businessObjects.*;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 import xmlParser.*;
 
 public class DataBase {
@@ -30,15 +30,15 @@ public class DataBase {
 		return historyAccess.searchEntries(searchWord);
 	}
 	
-	public static Client getClient(long ID) throws ElementNotFoundException {
+	public static Client getClient(long ID) throws ElementSelectionException {
 		return clientAccess.getEntry(ID);
 	}
 	
-	public static Container getContainer(long ID) throws ElementNotFoundException {
+	public static Container getContainer(long ID) throws ElementSelectionException {
 		return containerAccess.getEntry(ID);
 	}
 	
-	public static Port getPort(long ID) throws ElementNotFoundException {
+	public static Port getPort(long ID) throws ElementSelectionException {
 		return portAccess.getEntry(ID);
 	}
 	

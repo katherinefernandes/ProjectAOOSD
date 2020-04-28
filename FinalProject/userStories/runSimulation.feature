@@ -3,7 +3,7 @@ Feature: Run simulation
 
 
  Scenario: The simulation can create a new client
-    Given that the logistics company is logged in
+    Given that the logistics company is logged in in logist bla bla bla
  		And that the simulation is activated with a speed of 6 hours/second
  		And that the logistics company is viewing all clients
     When the simulation decides to create a new client

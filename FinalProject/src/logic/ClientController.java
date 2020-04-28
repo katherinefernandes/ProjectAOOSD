@@ -12,7 +12,7 @@ import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 import graphicalInterface.ClientMenu;import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
 import supportingClasses.InputParser;
@@ -44,7 +44,8 @@ public class ClientController {
 	//TODO unify way of sending information from interface to controller
 	//TODO reduce method to one level of abstraction
 	//TODO there should only be level of "if", "while" and "for" statements in each method.
-	//TODO methods called in interface should have names that of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
+	//TODO methods called in interface should have names of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
+	//TODO Way too many public methods. This should be viewed as the top level class. It is the one calling, not being called.
 	public void saveReferencePerson(String firstName, String middleName, String lastName) { 
 		System.out.println("inside the method savereferencePerson");
 		boolean checkMessage = false;
@@ -140,6 +141,7 @@ public class ClientController {
 		if(checkEmailValidity(email)) {
 			System.out.println("The email type is valid, now going to try setting it");
 			UpdateEmail update = new UpdateEmail(email);
+			//TODO too much error checking
 			if (currentClient.updateClientInformation(update)) {
 				System.out.println("The email has been successfully updated");
 				currentClient = new ClientApplication(this.clientID);
@@ -194,7 +196,7 @@ public class ClientController {
 		}
 		return personname;
 	}
-	private String arrayListToString(ArrayList<String> name) {
+	private String arrayListToString(List<String> name) {
 		String Name="";
 		for(int i=0;i<name.size();i++) {
 			Name =Name+" "+name.get(i);
@@ -252,7 +254,7 @@ public class ClientController {
 		}catch(NumberFormatException e) {
 			System.out.println("The value in the containerID field is not valid format");
 			return false;
-		}catch(ElementNotFoundException e) {
+		}catch(ElementSelectionException e) {
 			System.out.println("The counterID is not correct");
 			return false;
 		}
@@ -314,7 +316,7 @@ public class ClientController {
 		Port port;
 		try {
 			port = DataBase.getPort(portID);
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 			System.out.println("Cant find the port");
 			throw new Error(e);
 		}

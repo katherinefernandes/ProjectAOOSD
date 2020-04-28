@@ -2,7 +2,7 @@ package supportingClasses;
 
 import businessObjects.Port;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public class UpdateDestinationPort {
 
@@ -14,7 +14,7 @@ public class UpdateDestinationPort {
 			destinationPort.addArrivingContainer(containerID);
 			destinationPort.save();
 			return true;
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 
 			return false;
 		}
@@ -25,7 +25,7 @@ public class UpdateDestinationPort {
 			destinationPort.addStationedContainer(containerID);
 			destinationPort.removeArrivingContainer(containerID);
 			destinationPort.save();
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 			throw new Error(e);
 		}
 	}

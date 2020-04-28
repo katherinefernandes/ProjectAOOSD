@@ -3,7 +3,7 @@ package applications;
 import businessObjects.Client;
 import businessObjects.Container;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 import supportingClasses.Security;
 
 public class Application implements View{
@@ -31,11 +31,11 @@ public class Application implements View{
 	}
 	
 	
-	public void getClient (long clientID) throws ElementNotFoundException {
+	public void getClient (long clientID) throws ElementSelectionException {
 			client = DataBase.getClient(clientID);
 			setClient = true;
 	}
-	public void getContainer(long containerID) throws ElementNotFoundException {
+	public void getContainer(long containerID) throws ElementSelectionException {
 		
 			container = DataBase.getContainer(containerID); 
 			setContainer= true;

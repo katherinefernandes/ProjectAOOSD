@@ -4,7 +4,7 @@ import java.util.*;
 import org.junit.jupiter.api.*;
 
 import businessObjects.*;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public abstract class DataAccessTest<T extends BusinessObject> {
 	T data1;
@@ -23,9 +23,9 @@ public abstract class DataAccessTest<T extends BusinessObject> {
 	@AfterEach
 	public abstract void cleanUp();
 	
-	protected abstract T getObject(long ID) throws ElementNotFoundException;
+	protected abstract T getObject(long ID) throws ElementSelectionException;
 
-	public void persistencyTest() throws NumberFormatException, ElementNotFoundException {
+	public void persistencyTest() throws NumberFormatException, ElementSelectionException {
 		insertData(data1);		
 		T pulledData = getObject(data1.getID());
 		assertEqualData(pulledData,data1);

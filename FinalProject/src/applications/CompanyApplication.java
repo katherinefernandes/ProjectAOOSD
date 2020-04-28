@@ -7,7 +7,7 @@ import businessObjects.Client;
 import searchClients.SearchClients;
 import updateContainer.UpdateContainer;
 
-public class CompanyApplication extends Application{
+public class CompanyApplication extends Application {
 	private boolean addNewClient;
 	public CompanyApplication() {
 		super();

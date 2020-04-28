@@ -1,17 +1,26 @@
 package applications;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import businessObjects.Container;
 import businessObjects.Port;
 import containerFilters.FilteringContainersForAClient;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 import supportingClasses.UpdateDestinationPort;
 import supportingClasses.UpdateHistory;
 import updateClientInformation.UpdateClient;
 
-public class ClientApplication extends Application{
+public class ClientApplication extends Application {
+	//TODO what is the meaning of these fields? When fields are saved permanently inside an object
+	//it should be because their status has something to do with the purpose of the object.
+	//I can't understand in what way a startport fundamentally relates to a session where the user is a client
+	//A meaningful field would be for example Client saving the currently logged in client, which you seem
+	//have saved in the supertype for some reason. This is weird as the logistics company cannot log in as
+	//a specific client.
+	//TODO what methods correspond directly to actions the user can perform? Since this is application layer, that should be
+	//very clear, probably through an interface
 	private Port startPort;
 	private boolean foundContainer;
 	private long containerID;
@@ -21,13 +30,14 @@ public class ClientApplication extends Application{
 		super();
 		try {
 			this.getClient(ID);
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 			throw new Error(e);
 		}
 	}
 
 	
-	
+	//TODO why can't updateInformation be called directly on the update instance, which you necessitate the 
+	//caller having anyways
 	public boolean updateClientInformation(UpdateClient update) {
 		update.updateInformation(client);
 		return update.updated();
@@ -35,7 +45,10 @@ public class ClientApplication extends Application{
 
 
 
-	
+	/**
+	 * 
+	 * @param startPortID
+	 */
 
 	public void getAContainer(long startPortID) {
 		foundContainer = false;
@@ -50,7 +63,7 @@ public class ClientApplication extends Application{
 			}else {
 				createANewContainer();
 			}
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 			
 			throw new Error(e);
 		}
@@ -94,15 +107,12 @@ public class ClientApplication extends Application{
 		container.save();
 		getAContainer(startPort.getID());
 	}
-
+	
+	//TODO what is this? If someone already have an instance of filter, why can't they just call its method directly?
 	public ArrayList<Container> filterContainersOnAJourney(FilteringContainersForAClient filter){
 		return filter.filterContainers();
 	}
-	
-
 
 	
-
 	
-
 }

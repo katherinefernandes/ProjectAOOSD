@@ -3,7 +3,7 @@ package updateContainer;
 import businessObjects.Client;
 import businessObjects.Container;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 import supportingClasses.UpdateDestinationPort;
 import supportingClasses.UpdateHistory;
 
@@ -38,7 +38,7 @@ public class UpdatePort implements UpdateContainer {
 		    System.out.println("Trying to update client");
 			try {
 				client = DataBase.getClient(container.getClientID());
-			} catch (ElementNotFoundException e) {
+			} catch (ElementSelectionException e) {
 				throw new Error(e);
 			}
 			client.removeActiveShipment(container.getJourneyID());

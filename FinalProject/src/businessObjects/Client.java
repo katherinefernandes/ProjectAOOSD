@@ -16,10 +16,11 @@ public class Client implements BusinessObject{
 	private List<Long> activeShipments;
 	private List<Long> finishedShipments;
 
-	public Client(long ID, String companyName, int country, long phone, String email, ArrayList<String> firstName, ArrayList<String> middleName, ArrayList<String> lastName, String street, String city, int house, String zip) {
+	public Client(long ID, String companyName, int countryCode, long phoneNumber, String email, List<String> firstName,
+			List<String> middleName, List<String> lastName, String street, String city, int house, String zip) {
 		this.ID = ID;
 		this.companyName = companyName;
-		this.phoneNumber = new PhoneNumber(country,phone);
+		this.phoneNumber = new PhoneNumber(countryCode,phoneNumber);
 		this.email = email;
 		this.person = new ReferenceName(firstName,middleName,lastName);
 		this.address = new Address(street,house,city,zip);

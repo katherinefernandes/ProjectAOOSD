@@ -1,23 +1,23 @@
 package dataWrappers;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class ReferenceName {
-	private ArrayList<String> firstName;
-	private ArrayList<String> middleName;
-	private ArrayList<String> lastName;
-	public ReferenceName(ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln) {
+	private List<String> firstName;
+	private List<String> middleName;
+	private List<String> lastName;
+	public ReferenceName(List<String> fn, List<String> mn, List<String> ln) {
 		this.firstName=fn;
 		this.middleName=mn;
 		this.lastName=ln;
 	}
-	public ArrayList<String> getFirstName() {
+	public List<String> getFirstName() {
 		return this.firstName;
 	}
-	public ArrayList<String> getMiddleName() {
+	public List<String> getMiddleName() {
 		return this.middleName;
 	}
-	public ArrayList<String> getLastName() {
+	public List<String> getLastName() {
 		return this.lastName;
 	}
 }

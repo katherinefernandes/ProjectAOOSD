@@ -4,7 +4,7 @@ import java.util.*;
 import org.junit.jupiter.api.AfterEach;
 
 import businessObjects.BusinessObject;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public abstract class IdentifiableDataAccessTest<T extends BusinessObject> extends DataAccessTest<T>{
 	public IdentifiableDataAccessTest() {
@@ -28,7 +28,7 @@ public abstract class IdentifiableDataAccessTest<T extends BusinessObject> exten
 		toBeDeleted.add(data.getID());
 	}
 	
-	public void editTest() throws ElementNotFoundException, NumberFormatException {
+	public void editTest() throws ElementSelectionException, NumberFormatException {
 		insertData(data1);
 		for(T data : sortTestData) {
 			insertData(data);

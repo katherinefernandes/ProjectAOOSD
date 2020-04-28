@@ -10,7 +10,7 @@ import applications.CompanyApplication;
 import businessObjects.Client;
 import businessObjects.Container;
 import businessObjects.Port;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 import graphicalInterface.LogisticMenu;
 import searchClients.SearchByEmail;
 import searchClients.SearchByName;
@@ -171,7 +171,7 @@ public class LogisticController {
 			}catch(NumberFormatException e) {
 				System.out.println("the containerID is not valid");
 				return false;
-			}catch(ElementNotFoundException e) {
+			}catch(ElementSelectionException e) {
 				System.out.println("The counterID is not correct");
 				return false;
 			}
@@ -214,7 +214,7 @@ public class LogisticController {
 		Port port;
 		try {
 			port = DataBase.getPort(portID);
-		} catch (ElementNotFoundException e) {
+		} catch (ElementSelectionException e) {
 
 			System.out.println("Cant find the port");
 			throw new Error(e);
@@ -356,7 +356,7 @@ public class LogisticController {
 		result = result +"\nPhone number: "+Integer.toString(client.getPhoneNumber().getCountryCode())+Long.toString(client.getPhoneNumber().getPhone());
 		return result;
 	}
-	private String arraylisttostring(ArrayList<String> string) {
+	private String arraylisttostring(List<String> string) {
 		String result="";
 		for(int i=0;i<string.size();i++) {
 			result = result +" "+ string.get(i);

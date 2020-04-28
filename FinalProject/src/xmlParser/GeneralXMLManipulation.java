@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import businessObjects.BusinessObject;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public abstract class GeneralXMLManipulation<T extends BusinessObject> {
 	protected String dataPointTagName;
@@ -34,15 +34,18 @@ public abstract class GeneralXMLManipulation<T extends BusinessObject> {
 	}
 
 	public List<T> searchEntries(String searchWord) {
-		List<T> matchingEntries = activeData.findMatchingEntriesFromActiveData(searchWord);
+		List<T> matchingEntries = new ArrayList<>();
+		flushActiveData();
 		matchingEntries.addAll(findMatchingEntriesFromFile(searchWord));
 		return matchingEntries;
 	}
 
-	public T getEntry(long ID) throws ElementNotFoundException {
+	public T getEntry(long ID) throws ElementSelectionException {
 		List<T> matchingEntries = searchEntries(String.valueOf(ID));
 		if(matchingEntries.size() == 0) {
-			throw new ElementNotFoundException("Given element could not be found in database");
+			throw new ElementSelectionException("Given element could not be found in database");
+		}else if(matchingEntries.size() > 1) {
+			throw new ElementSelectionException("More than one element matched with given ID");
 		}
 		return matchingEntries.get(0);
 	}

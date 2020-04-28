@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import businessObjects.Container;
 import dataBase.DataBase;
-import exceptions.ElementNotFoundException;
+import exceptions.ElementSelectionException;
 
 public class ContainerAccessTest extends IdentifiableDataAccessTest<Container>{
 
@@ -29,10 +29,10 @@ public class ContainerAccessTest extends IdentifiableDataAccessTest<Container>{
 	}
 	
 	@Test
-	public void persistencyTestT() throws NumberFormatException, ElementNotFoundException {
+	public void persistencyTestT() throws NumberFormatException, ElementSelectionException {
 		persistencyTest(); }
 	@Test
-	public void editTestT() throws NumberFormatException, ElementNotFoundException {
+	public void editTestT() throws NumberFormatException, ElementSelectionException {
 		editTest(); }
 	
 	@Override
@@ -40,7 +40,7 @@ public class ContainerAccessTest extends IdentifiableDataAccessTest<Container>{
 		DataBase.deleteContainer(ID);
 	}
 	@Override
-	protected Container getObject(long ID) throws ElementNotFoundException {
+	protected Container getObject(long ID) throws ElementSelectionException {
 		return DataBase.getContainer(ID);
 	}
 	@Override
