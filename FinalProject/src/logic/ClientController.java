@@ -19,7 +19,11 @@ import supportingClasses.InputParser;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
-
+/**
+ * public class ClientController{}
+ * connects the graphical User Interface to the logic behind the client menu 
+ *
+ */
 public class ClientController {
 	private long clientID;
 	private ClientApplication currentClient;
@@ -33,7 +37,11 @@ public class ClientController {
 	private long portID;
 	private long startPortID;
 	private long destinationPortID;
-
+/**
+ * public ClientController(){}
+ * ClientController is a construct of the ClientController Class which initialises the clientID (the object)
+ * @param clientID gives the unique time stamp based ID representative for each client.
+ */
 	public ClientController(String clientID){
 		this.clientID = Long.valueOf(clientID);
 		validate = new ValidInput();
@@ -41,11 +49,24 @@ public class ClientController {
 		clientmenu = new ClientMenu(this);
 		clientmenu.frame.setVisible(true);
 	}
+	
+	
 	//TODO unify way of sending information from interface to controller
 	//TODO reduce method to one level of abstraction
 	//TODO there should only be level of "if", "while" and "for" statements in each method.
 	//TODO methods called in interface should have names of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
 	//TODO Way too many public methods. This should be viewed as the top level class. It is the one calling, not being called.
+	
+	
+	
+	/**
+	 * public void saveReferencePerson(){}
+	 * This method checks if the user input for the reference person is valid and depending on the outcome, either returns a success message and 
+	 * saves the Reference Person into the database or returns an error message.
+	 * @param firstName String representing the first name of the reference person
+	 * @param middleName String representing the middleName of the reference person
+	 * @param lastName String representing the lastName of the reference person
+	 */
 	public void saveReferencePerson(String firstName, String middleName, String lastName) { 
 		System.out.println("inside the method savereferencePerson");
 		boolean checkMessage = false;
@@ -79,7 +100,14 @@ public class ClientController {
 	}
 	
 	
-	//TODO is validity checking the responsibility of controller or model?
+	//TODO is validity checking the responsibility of controller or model? -- It is logic so i guess it's the controller -Dani
+	
+	/**
+	 * private boolean checkNameValidity(){}
+	 * This method is checking the validity of the name and returns a boolean depending on the situation
+	 * @param name the Name inputed by the user (could be either first name, middle name or last name)
+	 * @return true if the name is valid and false if the name is invalod
+	 */
 	private boolean checkNameValidity(String name) {
 		System.out.println(name);
 		ArrayList<String> Name = InputParser.parsingNames(name); 
@@ -91,6 +119,14 @@ public class ClientController {
 		return true;
 	}
 	
+	
+	
+	/**
+	 * private boolean checkPhoneValidity(){}
+	 * This method returns a boolean value and calls the validatePhone method to check if the phone number inputed by the user is valid 
+	 * @param phone the phone number inputed by the user
+	 * @return false if the phone number is invalid and true if the phone number is valid
+	 */
 	private boolean checkPhoneValidity(String phone) {
 		try {
 			return validate.validatePhone(Long.valueOf(phone));
@@ -98,11 +134,28 @@ public class ClientController {
 			return false;
 		}
 	}
+	
+	/**
+	 * private boolean checkCountryCodeValidity(){}
+	 * This method calls the validateCountryCode() method from the ValidInput class and returns a boolean 
+	 * @param CountryCode the variable taking the country code input from the user
+	 * @return false if the country code  is valid and false if the country code is invalid
+	 */
 	private boolean checkCountryCodeValidity(String CountryCode) {
 		return validate.validateCountryCode(Integer.valueOf(CountryCode));
 	}
 	
 	
+	
+	/**
+	 * public void savePhoneNumber(){}
+	 * This method saves the phone number into the data base if the boolean value returned in the checkPhoneValidity() and the boolean value returned
+	 * in the checkCountryCodeValidity are true. If both boolean value are true a success message will be displayed in the gui, else an error message
+	 * will be displayed.
+	 * 
+	 * @param countryCode represents the country code input from the user
+	 * @param phone represents the phone number inputed by the user
+	 */
 	public void savePhoneNumber(String countryCode,String phone) {
 		boolean checkMessage =false;
 		if(checkPhoneValidity(phone)&&checkCountryCodeValidity(countryCode)) {
@@ -132,10 +185,28 @@ public class ClientController {
 		
 	}
 	
+	
+	
+	
+	
+	/**
+	 * private boolean checkEmailValidity(){}
+	 * This method checks validity of the inputed email
+	 * @param email represents the email address inputed by the user
+	 * @return a true or false statement by calling the validateEmail() method from the ValidInput class.
+	 */
 	private boolean checkEmailValidity(String email) {
 		return validate.validateEmail(email);
 	}
 	
+	
+	
+	/**
+	 * public void saveEmail(){}
+	 * This method saves the email into the data base and displays a success message if the new inputed email is valid. If it is not valid 
+	 * there will be a error message displayed
+	 * @param email represents the new email imputed by the user
+	 */
 	public void saveEmail(String email) {
 		boolean checkMessage =false;
 		if(checkEmailValidity(email)) {
@@ -163,6 +234,14 @@ public class ClientController {
 		}
 		
 	}
+	
+	
+	
+	/**
+	 * public String getCurrentPhoneNumber(){}
+	 * This method is responsible for storing the phone number information inputed by the user
+	 * @return the complete phone number which includes the country code as well
+	 */
 	public String getCurrentPhoneNumber() {
 		String phone = "";
 		if(currentClient.getSetClient()) {
@@ -171,6 +250,13 @@ public class ClientController {
 		}
 		return phone;
 	}
+	
+	
+	/**
+	 * public String getCurrentEmail(){}
+	 * This method stores the current user email
+	 * @return the current email the user has
+	 */
 	public String getCurrentEmail() {
 		String email ="";
 		if (currentClient.getSetClient()) {
@@ -179,6 +265,13 @@ public class ClientController {
 		}
 		return email;
 	}
+	
+	
+	/**
+	 * public String getCompanyName(){}
+	 * This method stores the Company name information
+	 * @return the company Name by calling the getComapanyName() method.
+	 */
 	public String getCompanyName() {
 		String company="";
 		if (currentClient.getSetClient()) {
@@ -187,6 +280,14 @@ public class ClientController {
 		}
 		return company;
 	}
+	
+	
+	
+	/**
+	 * public String getReferencePerson(){}
+	 * This method combines all the reference person information (first name, middle name, last name) into one string
+	 * @return String containing the full name of the reference person
+	 */
 	public String getReferencePerson() {
 		String personname="";
 		if (currentClient.getSetClient()) {
@@ -196,6 +297,14 @@ public class ClientController {
 		}
 		return personname;
 	}
+	
+	
+	/**
+	 * private String arrayListToString(){}
+	 * This method converts an array list into a String
+	 * @param name the array list storing the name information
+	 * @return the String Name containing the name information
+	 */
 	private String arrayListToString(List<String> name) {
 		String Name="";
 		for(int i=0;i<name.size();i++) {
@@ -204,6 +313,14 @@ public class ClientController {
 		return Name;
 	}
 	
+	
+	
+	/**
+	 * private String arrayListJourneyToString(){}
+	 * This method converts an array List into a String
+	 * @param list represents the list containing the long type IDs
+	 * @return The String holding the ID information
+	 */
 	private String arrayListJourneyToString(List<Long> list) {
 		String IDs="";
 		int counter=0;
@@ -218,6 +335,13 @@ public class ClientController {
 		return IDs;
 	}
 	
+	
+	
+	/**
+	 * public String getAddress(){}
+	 * This method stores the address information into a string containing the City, Street, Building and zipCode information
+	 * @return The string holding the full address information
+	 */
 	public String getAddress() {
 		String address ="";
 		if (currentClient.getSetClient()) {
@@ -229,6 +353,13 @@ public class ClientController {
 		}
 		return address;
 	}
+	
+	/**
+	 * public String getActiveShipments(){}
+	 * This method stores the active shipments information by calling the getActiveShipments() Method
+	 * 
+	 * @return a String holding the active Shipments information
+	 */
 	public String getActiveShipments() {
 		String activeShipments ="The recently registered journeys: ";
 		
@@ -238,7 +369,17 @@ public class ClientController {
 		}
 		return activeShipments;
 	}
+	
+	
+	
 	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+	
+	/**
+	 * public boolean getContainerByContainerID(){}
+	 * This method returns a true statement if the containerID inputed exists and a false statement if the containerID doesn't exist into the data base
+	 * @param containerID holds the String ID representative for the container
+	 * @return a boolean value depending on the validity of the inputed container
+	 */
 	public boolean getContainerByContainerID(String containerID) {
 		container = new ArrayList<Container>();
 		try {
@@ -260,6 +401,13 @@ public class ClientController {
 		}
 	}
 	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+	
+	/**
+	 * public boolean getContainerByJourneyID(){}
+	 * This method returns a boolean value depending whether the journeyID inputed exists in the database
+	 * @param journeyID the String holding the journeyID
+	 * @return a boolean value depending on the user input.
+	 */
 	public boolean getContainerByJourneyID(String journeyID) {
 		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
@@ -275,11 +423,25 @@ public class ClientController {
 		}
 		return false;
 	}
+	
+	/**
+	 * private boolean checkIfJourneyIDisPartOfActiveShipment(){}
+	 * This method checks if the journey is a part of the active shipments
+	 * @param journeyID the String ID representative for the journey
+	 * @return a boolean value depending whether the journey is a part of the active shipments or not
+	 */
 	private boolean checkIfJourneyIDisPartOfActiveShipment(String journeyID) {
 		String activeShipments = this.getActiveShipments();
 		return activeShipments.contains(journeyID);
 	}
 	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+	
+	/**
+	 * public boolean getContainerByCargo(){}
+	 * This method returns a boolean value depending on whether the cargo inputed by the user exists in the database.
+	 * @param cargo the string holding the cargo information
+	 * @return boolean value depending whether the inputed cargo exists in the database or not
+	 */
 	public boolean getContainerByCargo(String cargo) {
 		FilterByCargoName filter = new FilterByCargoName(currentClient.viewClient(),cargo);
 		container = currentClient.filterContainersOnAJourney(filter);
@@ -291,6 +453,13 @@ public class ClientController {
 		return true;
 	}
 	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+	
+	/**
+	 * public boolean getContainerByPortName(){}
+	 * This method checks if there are active containers at a specific port and returns a boolean value depending on the outcome
+	 * @param portname the String holding the Port Name information
+	 * @return a boolean value showing whether there are containers present in a specific port or not
+	 */
 	public boolean getContainerByPortName(String portname) {
 		portID = ExtractingPortID.getPortID(portname);
 		if (portID==1l) {
@@ -309,9 +478,21 @@ public class ClientController {
 		}
 	}
 
+	/**
+	 * public String getStartPortName(){}
+	 * This method holds the Start port information
+	 * @return the start port name by searching the port based on the start port ID
+	 */
 	public String getStartPortName() {
 		return getPortName(container.get(0).getStartPortID());
 	}
+	
+	/**
+	 * private String getPortName(){}
+	 * This method returns the port name based on the port ID
+	 * @param portID long holding the ID of the port
+	 * @return a String holding the Port Name
+	 */
 	private String getPortName(long portID) {
 		Port port;
 		try {
@@ -322,18 +503,52 @@ public class ClientController {
 		}
 		return port.getPortName();
 	}
+	
+	/**
+	 * public String getDestinationPortName(){}
+	 * This method stores the name of the Destination Port
+	 * @return the Port Name besed on the destination port ID
+	 */
 	public String getDestinationPortName() {
 		return getPortName(container.get(0).getDestinationPortID());
 	}
+	
+	/**
+	 * public String getCargo(){}
+	 * This method holds the Cargo information
+	 * @return a String value holding the Cargo information
+	 */
 	public String getCargo() {
 		return container.get(0).getCargo();
 	}
+	
+	
+	/**
+	 * public String getArrivalDate(){}
+	 * This method accesses the arrival date Information
+	 * @return a String holding the arrival date information
+	 */
 	public String getArrivalDate() {
 		return container.get(0).getArriveBy();
 	}
+	
+	
+	/**
+	 * public String getLastUpdate(){}
+	 * This methos holds the last updates by calling the getUpdated() method
+	 * @return a String golding the last Updates
+	 */
 	public String getLastUpdate() {
 		return container.get(0).getUpdated();
 	}
+	
+	
+	
+	/**
+	 * public String getInternalStatus(){}
+	 * This method accesses the internal status of a specific container, by getting the temperature, humidity and pressure information
+	 * @return a String holding the internal status of the container
+	 */
 	public String getInternalStatus() {
 		System.out.println("size");
 		System.out.println(container.size());
@@ -343,11 +558,25 @@ public class ClientController {
 		
 		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
 	}
+	
+	
+	/**
+	 * public String getCurrentLocation(){}
+	 * This method accesses the current location of a container by getting the latitude and longitude information
+	 * @return a String holding the position of a specific container
+	 */
 	public String getCurrentLocation() {
 		String latitude = Float.toString(container.get(0).getCurrentPosition().getLatitude());
 		String longitude = Float.toString(container.get(0).getCurrentPosition().getLongitude());
 		return "Latitude: "+latitude+"  Longitude: "+longitude;
 	}
+	
+	
+	/**
+	 * public String getMulitpleContainersData(){}
+	 * This method limits the String holding the container information to up to 2 containers only.
+	 * @return a String holding the information about the containers
+	 */
 	public String getMulitpleContainersData() {
 		String result ="Displaying Up to most 2 Containers: ";
 		int contains = 0;
@@ -361,6 +590,13 @@ public class ClientController {
 		}
 		return result;
 	}
+	
+	/**
+	 * private String containerDataToString(){}
+	 * This method converts the container information to a string 
+	 * @param container the object holding the container data
+	 * @return the string containing the container information
+	 */
 	private String containerDataToString(Container container) {
 		String result="\n";
 		result = result +"\nJourney ID: "+container.getJourneyID();
@@ -375,6 +611,14 @@ public class ClientController {
 		result = result +"\nLast Updated: "+container.getUpdated();
 		return result;
 	}
+	
+	
+	/**
+	 * private String getInternalStatus(){}
+	 * This method accesses the internal status of a container
+	 * @param container the object holding the container information
+	 * @return a String holding the internal status of a container
+	 */
 	private String getInternalStatus(Container container) {
 		String temp= Float.toString(container.getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.getInternalStatus().getHumidity());
@@ -383,6 +627,13 @@ public class ClientController {
 		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
 	}
 
+	
+	/**
+	 * private boolean checkStartPortName(){}
+	 * This method checks is the Start Port exists in the database  and if the port exists it checks if there's an available container at that port
+	 * @param portname String holding the port name information
+	 * @return a boolean value depending on the outcome
+	 */
 	private boolean checkStartPortName(String portname) {
 		startPortID = ExtractingPortID.getPortID(portname);
 		System.out.println("Checking if the port name exists");
@@ -401,6 +652,14 @@ public class ClientController {
 		return false;
 	}
 	
+	
+	
+	/**
+	 * private boolean checkDestinationPortName(){}
+	 * This method checks if the destination port inputed by the user is a port present into the database
+	 * @param portname String holding the destination port Name
+	 * @return a boolean value depending whether the port exists or not
+	 */
 	private boolean checkDestinationPortName(String portname) {
 		destinationPortID = ExtractingPortID.getPortID(portname);
 		if(destinationPortID==1l) {
@@ -414,6 +673,14 @@ public class ClientController {
 		return true;
 	}
 	
+	
+	
+	/**
+	 * private boolean checkFloat(){}
+	 * This method converts the inputed string into a float and check it's validity
+	 * @param floatnumber String holding the internal status value
+	 * @return a boolean value depending on the validity of the input
+	 */
 	private boolean checkFloat(String floatnumber) {
 
 		try {
@@ -425,6 +692,14 @@ public class ClientController {
 			return false;
 		}
 	}
+	
+	
+	/**
+	 * private boolean setArriveByString(){}
+	 * This method sets the Arrival date of a container by taking a date input from the user and checking it's validity
+	 * @param date String holding the inputed arrival date
+	 * @return boolean value depending whether the date format is acceptable or not
+	 */
 	private boolean setArriveByString(String date) {
 
 		System.out.println("Checking arrive by");
@@ -439,6 +714,16 @@ public class ClientController {
 		return false;
 	}
 	
+	/**
+	 * private boolean registerJourney(){}
+	 * This method registers a new journey by asking the user to input specific information about the container.
+	 * @param cargo String holding the cargo information
+	 * @param atm String holding the pressure information
+	 * @param temp String holding the optimal temperature information
+	 * @param humidity String holding the optimal humidity information
+	 * @param arriveby String holding the arrival date information
+	 * @return boolean returning whether the container was registered or not
+	 */
 	private boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
 
 		float temperature = Float.valueOf(temp);
@@ -450,6 +735,20 @@ public class ClientController {
 		currentClient = new ClientApplication(this.clientID);
 		return result;
 	}
+	
+	
+	
+	/**
+	 * public void saveJourney(){}
+	 * This method registers a new journey by asking the user to input different information and checks  
+	 * @param startPortName
+	 * @param destinationPortName
+	 * @param cargo
+	 * @param atm
+	 * @param temp
+	 * @param humidity
+	 * @param arriveby
+	 */
 	public void saveJourney(String startPortName, String destinationPortName, String cargo, String atm, String temp, String humidity,
 			String arriveby) {
 		boolean checkMessage = checkStartPortName( startPortName);
@@ -502,6 +801,15 @@ public class ClientController {
 		}
 		
 	}
+	
+	/**
+	 * public String searchContainer(){}
+	 * This method searches a container based on either the JourneyID, the cargo or the port name
+	 * @param journeyID String containing the journey ID
+	 * @param cargo String containing the cargo information
+	 * @param portName String containing the port name
+	 * @return returns the ID of the container that matches the criteria inputed by the user
+	 */
 	public String searchContainer(String journeyID, String cargo, String portName) {
 		boolean checkCriteria = false;
 		boolean checkMessage = false;
@@ -537,6 +845,13 @@ public class ClientController {
 		return Long.toString(containerID);
 		
 	}
+	
+	
+	/**
+	 * public String setSuccessfulJourneys() {}
+	 * This method collects the information about a successful journey and stores it into a variable called result
+	 * @return result which storest the successful journey information
+	 */
 	public String setSuccessfulJourneys() {
 		String result = "---------------------------------------";
 		for(long journeys : currentClient.viewClient().getFinishedShipments()) {
@@ -547,6 +862,15 @@ public class ClientController {
 		}
 		return "";
 	}
+	
+	
+	
+	/**
+	 * private String getFinalDestinationByJourneyID(){}
+	 * This method returns the final destination port characterising a specific journey or if the port doesn't exist it returns an error
+	 * @param journeys stores the journey ID 
+	 * @return either the port name or a string "Unknown" 
+	 */
 	private String getFinalDestinationByJourneyID(long journeys) {
 		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
 		if (containers.size()>0) {
@@ -555,6 +879,14 @@ public class ClientController {
 		System.out.println("Could not find the container in history for the journey ID: "+journeys);
 		return "Unknown";
 	}
+	
+	
+	/**
+	 * private String getCargoByJourneyID(){}
+	 * This method holds the information about the cargo of a specific ID from the history
+	 * @param journeys Long storing the journey ID
+	 * @return the cargo of the container or the "unknown" message.
+	 */
 	private String getCargoByJourneyID(long journeys) {
 		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
 		if (containers.size()>0) {
@@ -563,6 +895,13 @@ public class ClientController {
 		System.out.println("Could not find the container in history for the journey ID: "+journeys);
 		return "Unknown";
 	}
+	
+	
+	/**
+	 * public String getAllActiveShipments(){}
+	 * This method holds the information about all the active Shipments
+	 * @return all the current active shipments.
+	 */
 	public String getAllActiveShipments() {
 		String result = "All Active Journeys: ";
 		
