@@ -22,6 +22,7 @@ import updateClientInformation.UpdateReferencePerson;
 /**
  * public class ClientController{}
  * connects the graphical User Interface to the logic behind the client menu 
+ * @author daniela
  *
  */
 public class ClientController {
@@ -51,11 +52,6 @@ public class ClientController {
 	}
 	
 	
-	//TODO unify way of sending information from interface to controller
-	//TODO reduce method to one level of abstraction
-	//TODO there should only be level of "if", "while" and "for" statements in each method.
-	//TODO methods called in interface should have names of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
-	//TODO Way too many public methods. This should be viewed as the top level class. It is the one calling, not being called.
 	
 	
 	
@@ -76,14 +72,7 @@ public class ClientController {
 			lastNameList = InputParser.parsingNames(lastName);
 			UpdateReferencePerson update = new UpdateReferencePerson(firstNameList,middleNameList,lastNameList);
 			System.out.println("Going to try to update information");
-			if (currentClient.updateClientInformation(update)) {
-				System.out.println("Update success, trying to display message");
-				currentClient = new ClientApplication(this.clientID);
-				checkMessage = true;
-			} else {
-				System.out.println("Some thing went wrong, try again");
-				checkMessage = false;
-			}
+			checkMessage = updateReferencePersonInformation(update);
 		}
 		else {
 			System.out.println("The names are not valid");
@@ -98,15 +87,33 @@ public class ClientController {
 		
 		
 	}
+
+    /**
+     * private boolean updateReferencePersonInformation(){}
+     * This method stores a boolean value representing whether the Information was saved successfully or not 
+     * @param update the object holding the new reference person information
+     * @return variable holding the information whether the data was updated successfully or not
+     */
+	private boolean updateReferencePersonInformation(UpdateReferencePerson update) {
+		boolean checkMessage;
+		if (currentClient.updateClientInformation(update)) {
+			System.out.println("Update success, trying to display message");
+			currentClient = new ClientApplication(this.clientID);
+			checkMessage = true;
+		} else {
+			System.out.println("Some thing went wrong, try again");
+			checkMessage = false;
+		}
+		return checkMessage;
+	}
 	
 	
-	//TODO is validity checking the responsibility of controller or model? -- It is logic so i guess it's the controller -Dani
 	
 	/**
 	 * private boolean checkNameValidity(){}
 	 * This method is checking the validity of the name and returns a boolean depending on the situation
 	 * @param name the Name inputed by the user (could be either first name, middle name or last name)
-	 * @return true if the name is valid and false if the name is invalod
+	 * @return true if the name is valid and false if the name is invalid
 	 */
 	private boolean checkNameValidity(String name) {
 		System.out.println(name);
@@ -162,15 +169,7 @@ public class ClientController {
 			System.out.println("The phone number and country code were valid, now going to update information");
 			UpdatePhoneNumber update = new UpdatePhoneNumber(Integer.valueOf(countryCode),Long.valueOf(phone));
 			System.out.println("Updating information");
-			if (currentClient.updateClientInformation(update)) {
-				System.out.println("Everything went alright");
-				//TODO why would we create an entirely new clientApplication when updating a single field? seems to go against what an application is supposed to be
-				currentClient = new ClientApplication(this.clientID); 
-				checkMessage = true;
-			}else {
-				System.out.println("Something went wrong with the database update");
-				checkMessage = false;
-			}
+			checkMessage = updatePhoneNumberInformation(update);
 			
 		}
 		else {
@@ -183,6 +182,25 @@ public class ClientController {
 			clientmenu.errorMessageForPhone();
 		}
 		
+	}
+
+    /**
+     * private boolean updatePhoneNumberInformation(){}
+     * This method checks if the phone number information was successfully updated into the data base
+     * @param update the object holding the new phone number information
+     * @return boolean value stating whether the phone number was successfully updated or not
+     */
+	private boolean updatePhoneNumberInformation(UpdatePhoneNumber update) {
+		boolean checkMessage;
+		if (currentClient.updateClientInformation(update)) {
+			System.out.println("Everything went alright");
+			currentClient = new ClientApplication(this.clientID); 
+			checkMessage = true;
+		}else {
+			System.out.println("Something went wrong with the database update");
+			checkMessage = false;
+		}
+		return checkMessage;
 	}
 	
 	
@@ -212,15 +230,7 @@ public class ClientController {
 		if(checkEmailValidity(email)) {
 			System.out.println("The email type is valid, now going to try setting it");
 			UpdateEmail update = new UpdateEmail(email);
-			//TODO too much error checking
-			if (currentClient.updateClientInformation(update)) {
-				System.out.println("The email has been successfully updated");
-				currentClient = new ClientApplication(this.clientID);
-				checkMessage = true;
-			} else {
-				System.out.println("Something went wrong with the database");
-				checkMessage = false;
-			}
+			checkMessage = updateEmail(update);
 			
 		}
 		else {
@@ -233,6 +243,25 @@ public class ClientController {
 			clientmenu.errorMessageForEmail();
 		}
 		
+	}
+
+    /**
+     * private boolean updateEmail(){}
+     * This method checks if the email was successfully updated into the data base
+     * @param update the object holding the new updated information
+     * @return boolean value stating whether the email was successfully updated or not
+     */
+	private boolean updateEmail(UpdateEmail update) {
+		boolean checkMessage;
+		if (currentClient.updateClientInformation(update)) {
+			System.out.println("The email has been successfully updated");
+			currentClient = new ClientApplication(this.clientID);
+			checkMessage = true;
+		} else {
+			System.out.println("Something went wrong with the database");
+			checkMessage = false;
+		}
+		return checkMessage;
 	}
 	
 	
@@ -372,7 +401,7 @@ public class ClientController {
 	
 	
 	
-	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+	
 	
 	/**
 	 * public boolean getContainerByContainerID(){}
@@ -380,18 +409,11 @@ public class ClientController {
 	 * @param containerID holds the String ID representative for the container
 	 * @return a boolean value depending on the validity of the inputed container
 	 */
-	public boolean getContainerByContainerID(String containerID) {
+	public boolean checkContainerByContainerID(String containerID) {
 		container = new ArrayList<Container>();
 		try {
 			currentClient.getContainer(Long.valueOf(containerID));
-			if (currentClient.getFoundContainer()) {
-				container.add(currentClient.viewContainer());
-				System.out.println("The container has been found, now the data can be displayed safely");
-				return true;
-			}else {
-				System.out.println("The container does not exist");
-				return false;
-			}
+			return checkIfContainerExists();
 		}catch(NumberFormatException e) {
 			System.out.println("The value in the containerID field is not valid format");
 			return false;
@@ -400,7 +422,22 @@ public class ClientController {
 			return false;
 		}
 	}
-	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+
+    /**
+     * private boolean checkIfContainerExists(){}
+     * This method checks if such a container exists in the data base
+     * @return boolean value depending whether the container exists in the data base or not
+     */
+	private boolean checkIfContainerExists() {
+		if (currentClient.getFoundContainer()) {
+			container.add(currentClient.viewContainer());
+			System.out.println("The container has been found, now the data can be displayed safely");
+			return true;
+		}else {
+			System.out.println("The container does not exist");
+			return false;
+		}
+	}
 	
 	/**
 	 * public boolean getContainerByJourneyID(){}
@@ -408,20 +445,29 @@ public class ClientController {
 	 * @param journeyID the String holding the journeyID
 	 * @return a boolean value depending on the user input.
 	 */
-	public boolean getContainerByJourneyID(String journeyID) {
+	public boolean findContainerByJourneyID(String journeyID) {
 		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
 		    container= currentClient.filterContainersOnAJourney(filter);
-		    if (container.size()>0) {
-		    	System.out.println("Container found, now the data can be read");
-				return true;
-		    }else {
-		    	System.out.println("No containers were found");
-		    	return false;
-		    }
+		    return findContainerByID();
 		}
 		return false;
+	}
+
+    /**
+     * private boolean findContainerByID(){}
+     * This method checks if the array contains any containers
+     * @return boolean value depending on the outcome
+     */
+	private boolean findContainerByID() {
+		if (container.size()>0) {
+			System.out.println("Container found, now the data can be read");
+			return true;
+		}else {
+			System.out.println("No containers were found");
+			return false;
+		}
 	}
 	
 	/**
@@ -815,7 +861,7 @@ public class ClientController {
 		boolean checkMessage = false;
 		long containerID = 1L;
 		if(!journeyID.isEmpty()) {
-			checkMessage = getContainerByJourneyID(journeyID);
+			checkMessage = findContainerByJourneyID(journeyID);
 			checkCriteria =true;
 		}
 		if(!checkMessage&&!cargo.isEmpty()) {
