@@ -330,7 +330,7 @@ public class LogisticController {
 			
 			return true;
 		}
-		return false;
+		return false; 
 		
 	}
 
@@ -417,12 +417,13 @@ public class LogisticController {
 
 	
 	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
+		setCompanyName(companyName);
 		if(validate.validateEmail(email)) {
 			setEmail(email);
 		}
 		
 		else {
-			System.out.println("Company name has error");
+			System.out.println("email name has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
@@ -433,19 +434,19 @@ public class LogisticController {
 		}
 		
 		else {
-			System.out.println("email has error");
+			System.out.println("country code has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
 		
-		
+		 
 		if(validate.validatePhone(Long.valueOf(phone))) {
 			setPhoneNumber(phone);
 		}
 		
 		
 		else {
-			System.out.println("Countrycode has error");
+			System.out.println("phonenumber has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
@@ -490,7 +491,7 @@ public class LogisticController {
 			setBuilding(building);
 			
 		}else {
-			System.out.println("city has error");
+			System.out.println("cbuilding has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
