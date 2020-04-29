@@ -1,7 +1,7 @@
 package updateContainer;
 
 import businessObjects.Container;
-import supportingClasses.UpdateHistory;
+import dataBase.DataBase;
 
 public class UpdateStatus implements UpdateContainer{
 
@@ -29,7 +29,7 @@ public class UpdateStatus implements UpdateContainer{
 		// TODO Auto-generated method stub
 		container.setInternalStatus(press, temp, hum);
 		container.save();
-		UpdateHistory.updateHistoryDataBase(container);
+		DataBase.saveToHistory(container);
 		setUpdate = true;
 		return container;
 	}

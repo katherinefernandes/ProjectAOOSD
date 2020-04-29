@@ -418,7 +418,7 @@ public class ClientController {
 			System.out.println("The value in the containerID field is not valid format");
 			return false;
 		}catch(ElementSelectionException e) {
-			System.out.println("The counterID is not correct");
+			System.out.println("The containerID is not correct");
 			return false;
 		}
 	}
@@ -429,7 +429,7 @@ public class ClientController {
      * @return boolean value depending whether the container exists in the data base or not
      */
 	private boolean checkIfContainerExists() {
-		if (currentClient.getFoundContainer()) {
+		if (currentClient.getSetContainer()) {// Changed this from foundContainer to getSetContainer
 			container.add(currentClient.viewContainer());
 			System.out.println("The container has been found, now the data can be displayed safely");
 			return true;
@@ -688,14 +688,15 @@ public class ClientController {
 		   return false;
 	   };
 	   System.out.println("Port name is valid");
-	    currentClient.getAContainer(startPortID);
-	    System.out.println("Checking if the container is set");
-	    if (currentClient.getFoundContainer()) {
-	    	System.out.println("Container found");
-	    	return true;
-	    }
-	    System.out.println("Container not found nor set, something wrong with currentclient method");
-		return false;
+	  //  currentClient.getAContainer(startPortID); // commenting all this part as there will always be a container set if the startport exists - muna
+	   // System.out.println("Checking if the container is set");
+	   // if (currentClient.getFoundContainer()) {
+	   // 	System.out.println("Container found");
+	   // 	return true;
+	   // }
+	  //  System.out.println("Container not found nor set, something wrong with currentclient method");
+		
+	    return true;
 	}
 	
 	
@@ -713,9 +714,6 @@ public class ClientController {
 			return false;
 		}
 		System.out.println("Destination port exists");
-		currentClient.updateDestinationPort(destinationPortID);
-		
-		
 		return true;
 	}
 	
@@ -768,7 +766,7 @@ public class ClientController {
 	 * @param temp String holding the optimal temperature information
 	 * @param humidity String holding the optimal humidity information
 	 * @param arriveby String holding the arrival date information
-	 * @return boolean returning whether the container was registered or not
+	 *@return boolean returning whether the container was registered or not//removing this
 	 */
 	private boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
 
@@ -777,9 +775,10 @@ public class ClientController {
 		float atmosphere = Float.valueOf(atm);
 		System.out.println("Going to try registering");
 		currentClient.registerContainerForAJourney(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, arriveby);
-		boolean result = currentClient.getContainerRegistered();
-		currentClient = new ClientApplication(this.clientID);
-		return result;
+		//boolean result = currentClient.getContainerRegistered();// removing the boolean as the container can always be registered if the values are valid
+	
+		//currentClient = new ClientApplication(this.clientID); dont need this step anymore
+		return true;// this method needs to return void
 	}
 	
 	
