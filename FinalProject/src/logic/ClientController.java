@@ -86,7 +86,7 @@ public class ClientController {
 		}
 		
 		
-		
+		 
 	}
 
     /**
@@ -769,18 +769,14 @@ public class ClientController {
 	 * @param arriveby String holding the arrival date information
 	 *@return boolean returning whether the container was registered or not//removing this
 	 */
-	private boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
-        currentClient.getAContainer(startPortID); // this line will be deleted 
+	private void registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
 		float temperature = Float.valueOf(temp);
 		float humidity2 = Float.valueOf(humidity);
 		float atmosphere = Float.valueOf(atm);
 		System.out.println("Going to try registering");
 		currentClient.registerContainerForAJourney(startPortID, destinationPortID, cargo, temperature, atmosphere, humidity2, arriveby);
-		//boolean result = currentClient.getContainerRegistered();// removing the boolean as the container can always be registered if the values are valid
-	
-		//currentClient = new ClientApplication(this.clientID); dont need this step anymore
-		return true;// this method needs to return void
 	}
+	
 	
 	
 	
@@ -798,7 +794,6 @@ public class ClientController {
 	public void saveJourney(String startPortName, String destinationPortName, String cargo, String atm, String temp, String humidity,
 			String arriveby) {
 		boolean checkMessage = checkStartPortName( startPortName);
-		//TODO Waaay to many if statements checking the same thing. If checkMessage is changed during execution it's not made clear enough
 		if (checkMessage) {
 			checkMessage = checkDestinationPortName(destinationPortName);
 		}else  {
@@ -832,18 +827,12 @@ public class ClientController {
 		}
 		if(checkMessage) {
 			System.out.println("Everything is valid, now trying to register");
-			checkMessage = registerJourney(cargo,  atm, temp,  humidity, arriveby);
+			registerJourney(cargo,  atm, temp,  humidity, arriveby);
+			clientmenu.successFieldForAddJourney();
 		}else {
 			System.out.println("Arriveby is not valid");
 			clientmenu.errorMessageForAddJourney();
 			return;
-		}
-		if(checkMessage) {
-			clientmenu.successFieldForAddJourney();
-			//clientmenu.updateActiveShipments();
-		}else {
-			System.out.println("something went wrong when registering the journey");
-			clientmenu.errorMessageForAddJourney();
 		}
 		
 	}
@@ -896,7 +885,7 @@ public class ClientController {
 	/**
 	 * public String setSuccessfulJourneys() {}
 	 * This method collects the information about a successful journey and stores it into a variable called result
-	 * @return result which storest the successful journey information
+	 * @return result which stores the successful journey information
 	 */
 	public String setSuccessfulJourneys() {
 		String result = "---------------------------------------";

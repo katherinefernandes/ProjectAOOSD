@@ -235,7 +235,7 @@ public class LogisticController {
 	public boolean updateStatus(String pressure, String humidity, String temperature) {
 		float temp;
 		float humi;
-		float pres;
+		float pres; 
 		try {
 			temp= Float.valueOf(temperature);
 			System.out.println("Correct temperature");
@@ -261,7 +261,9 @@ public class LogisticController {
 		
 		return logistic.updateContainerInformation(update);
 	}
-	private String getPortName(long portID) {
+	
+	
+	private String getPortName(long portID) { 
 		Port port;
 		try {
 			port = DataBase.getPort(portID);
@@ -295,7 +297,7 @@ public class LogisticController {
 		
 		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
 	}
-
+ 
 
 	private boolean updatePosition(String longitude, String latitude) {
 		//TODO try to avoid abbreviations in names
@@ -321,16 +323,16 @@ public class LogisticController {
 		}
 		return false;
 	}
-
+//
 	public boolean findClientByEmail(String searchEmail) {
 
 		optionEmail = new SearchByEmail(searchEmail);
 		clients= logistic.search(optionEmail);
-		if (clients.size()>0) {
+		if (clients.size()>0) { 
 			
 			return true;
 		}
-		return false;
+		return false; 
 		
 	}
 
@@ -417,13 +419,13 @@ public class LogisticController {
 
 	
 	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
-        //why don't you call the company name here???
+		setCompanyName(companyName);
 		if(validate.validateEmail(email)) {
 			setEmail(email);
 		}
 		
 		else {
-			System.out.println("Company name has error");
+			System.out.println("email name has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
@@ -434,19 +436,19 @@ public class LogisticController {
 		}
 		
 		else {
-			System.out.println("email has error");
+			System.out.println("country code has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
 		
-		
+		 
 		if(validate.validatePhone(Long.valueOf(phone))) {
 			setPhoneNumber(phone);
 		}
 		
 		
 		else {
-			System.out.println("Countrycode has error");
+			System.out.println("phonenumber has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
@@ -491,7 +493,7 @@ public class LogisticController {
 			setBuilding(building);
 			
 		}else {
-			System.out.println("city has error");
+			System.out.println("cbuilding has error");
 			logisticMenu.errorMessageForAddClient();
 			return;
 		}
