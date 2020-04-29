@@ -181,7 +181,14 @@ public class LoginWindow {
 		EnterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) { 
-				controller.loginButtonPressed();
+				if(!isClientButtonChecked()) {
+					controller.setCompnyName(getCompanyUsername());
+					controller.setCompanyPassword(getComapnyPassword());
+				}
+				else {
+					controller.setClientText(getClientInput());
+				}
+				controller.loginButtonPressed(isClientButtonChecked());
 			}
 		});
 	}
@@ -217,4 +224,5 @@ public class LoginWindow {
 	public void closeFrame() {
 		frmLoginPage.setVisible(false);
 	}
+	
 }
