@@ -811,7 +811,7 @@ public class LogisticMenu {
 				successSearch.setVisible(false);
 				controller.searchClient(clientemailTextField.getText(),companyNameTextField.getText(),clientPhoneTextField.getText(),firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
 				if(controller.checkMessage()) {
-					viewClientTextField.setText(controller.getclientsview());
+					viewClientTextField.setText(controller.viewClient());
 					switchPanels(viewClientPanel);
 				}
 				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField,firstNameTextField,middlenameTextField,lastNameTextField);
@@ -877,7 +877,7 @@ public class LogisticMenu {
 	
 	public void setFieldsClientData() {
 		
-		viewClientTextField.setText(controller.getclientsview());
+		viewClientTextField.setText(controller.viewClient());
 	}
 	public void switchPanels(JPanel panel) {
 		System.out.println("in switch panels");

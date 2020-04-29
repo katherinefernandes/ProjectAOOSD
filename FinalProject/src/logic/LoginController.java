@@ -14,6 +14,9 @@ public class LoginController {
 	private String companyUsername = "admin";
 	private String companyPassword = "admin";
 	private LoginWindow window;
+	private String clientText;
+	private String companyName;
+	private char[] companyPasswordIN;
     
 	/**
 	 * This controller initialises the login system
@@ -41,25 +44,28 @@ public class LoginController {
 	 * @param companyPasswordIN holds the value of the inputed password
 	 * @return a boolean statement depending on the outcome
 	 */
-	private boolean validCompanyInfo(String companyUserNameIN, char[] companyPasswordIN) {
+	public boolean validCompanyInfo(String companyUserNameIN, char[] companyPasswordIN) {
 		return companyUserNameIN.equals(companyUsername) && Arrays.equals(companyPasswordIN, companyPassword.toCharArray());
 	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * public void loginButtonPressed(){}
 	 * This method check which menu is selected when the enter button is pressed and invoked the next frame 
 	 */
-	public void loginButtonPressed() { 
+	public void loginButtonPressed(boolean isClient) { 
 		boolean validLogin;
-		boolean isClient = window.isClientButtonChecked();
+		//boolean isClient = window.isClientButtonChecked();
 		if(isClient) {
-			String clientText=window.getClientInput();
 			validLogin = validClientInfo(clientText);
 		}
 		else {
-			String companyName = window.getCompanyUsername();
-			char[] companyPassword = window.getComapnyPassword();
-			validLogin =validCompanyInfo(companyName,companyPassword);
+			
+			validLogin =validCompanyInfo(companyName,companyPasswordIN);
 		}
 		if(!validLogin) {
 			window.invalidInput();
@@ -67,6 +73,19 @@ public class LoginController {
 			invokeNextFrame(isClient);} 
 	}
 	
+	
+	public void setClientText(String text) {
+		this.clientText = text;
+	}
+	
+	
+	public void setCompnyName(String companyName) {
+		this.companyName = companyName;
+	}
+	
+	public void setCompanyPassword(char[] companyPassword) {
+		this.companyPasswordIN = companyPassword;
+	}
 	
     /**
      * private void invokeNextFrame(){}
@@ -107,7 +126,7 @@ public class LoginController {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new ClientController((window.getClientInput()));
+					new ClientController(clientText);
 					window.closeFrame();
 					
 				

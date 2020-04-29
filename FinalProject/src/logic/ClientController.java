@@ -55,6 +55,7 @@ public class ClientController {
 	
 	
 	
+	
 	/**
 	 * public void saveReferencePerson(){}
 	 * This method checks if the user input for the reference person is valid and depending on the outcome, either returns a success message and 
@@ -771,7 +772,7 @@ public class ClientController {
 	 * @return boolean returning whether the container was registered or not
 	 */
 	private boolean registerJourney(String cargo, String atm, String temp, String humidity, String arriveby) {
-
+        currentClient.getAContainer(startPortID); // this line will be deleted 
 		float temperature = Float.valueOf(temp);
 		float humidity2 = Float.valueOf(humidity);
 		float atmosphere = Float.valueOf(atm);
