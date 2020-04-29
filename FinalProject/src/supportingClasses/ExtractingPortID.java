@@ -7,6 +7,12 @@ import dataBase.DataBase;
 
 public class ExtractingPortID {
 	
+	
+	/**
+	 * For the given port name, this method returns the port ID
+	 * @param portname
+	 * @return either port ID or 1l if the port if not found in the database
+	 */
 	public static long getPortID(String portname) {
 		
 		List<Port> listOfPorts = DataBase.searchPorts(portname);

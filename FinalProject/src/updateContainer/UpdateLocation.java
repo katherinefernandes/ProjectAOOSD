@@ -1,7 +1,7 @@
 package updateContainer;
 
 import businessObjects.Container;
-import supportingClasses.UpdateHistory;
+import dataBase.DataBase;
 
 public class UpdateLocation implements UpdateContainer{
 
@@ -27,7 +27,7 @@ public class UpdateLocation implements UpdateContainer{
 		// TODO Auto-generated method stub
 		container.setCurrentPosition(lat, lon);
 		container.save();
-		UpdateHistory.updateHistoryDataBase(container);
+		DataBase.saveToHistory(container);
 		setUpdate = true;
 		return container;
 	}

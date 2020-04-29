@@ -5,7 +5,6 @@ import businessObjects.Container;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
 import supportingClasses.UpdateDestinationPort;
-import supportingClasses.UpdateHistory;
 
 public class UpdatePort implements UpdateContainer {
 	private boolean update;
@@ -30,7 +29,7 @@ public class UpdatePort implements UpdateContainer {
 			containerHasReachedDestination(container);
 		}
 		container.save();
-		UpdateHistory.updateHistoryDataBase(container);
+		DataBase.saveToHistory(container);
 		update = true;
 		return container;
 	}

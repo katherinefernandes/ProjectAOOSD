@@ -329,16 +329,13 @@ public class ApplicationSteps {
 	    // Write code here that turns the phrase above into concrete actions
 		 startPortID = ExtractingPortID.getPortID(portname);
 		 assertNotEquals(startPortID,1l);
-		 clientApplication.getAContainer(startPortID);
-		 assertTrue(clientApplication.getFoundContainer());
 	}
 
 	@When("provides a destination port name {string}")
 	public void providesADestinationPortName(String portname) {
 
 		destinationPortID =ExtractingPortID.getPortID(portname);
-		assertNotEquals(destinationPortID,1l);// the startPortID would be 1 if the portname is not valid
-		clientApplication.updateDestinationPort(destinationPortID);
+		assertNotEquals(destinationPortID,1l);
 	}
 
 	@When("provides the name of the cargo {string} being transported")
@@ -366,7 +363,8 @@ public class ApplicationSteps {
 	public void aContainerIsRegisteredForTheJourneyAndTheClientIsProvidedWithAJourneyIDToTrackTheContainer() {
 	    
 		clientApplication.registerContainerForAJourney(startPortID,destinationPortID,cargo,temperature,pressure,humidity,arriveBy);
-	    assertTrue(clientApplication.getContainerRegistered());
+		assertTrue(DataBase.searchContainers(cargo).size()>0);
+		
 	}
 	@Given("the logistic Company decides to add a new client")
 	public void theLogisticCompanyDecidesToAddANewClient() {
