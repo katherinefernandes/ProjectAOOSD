@@ -261,9 +261,7 @@ public class LogisticController {
 		
 		return logistic.updateContainerInformation(update);
 	}
-	
-	
-	private String getPortName(long portID) { 
+	private String getPortName(long portID) {
 		Port port;
 		try {
 			port = DataBase.getPort(portID);
@@ -297,7 +295,7 @@ public class LogisticController {
 		
 		return "Temperature: "+temp+"\nHumidity: "+humidity+"\nPressure: "+pressure;
 	}
- 
+
 
 	private boolean updatePosition(String longitude, String latitude) {
 		//TODO try to avoid abbreviations in names
@@ -323,12 +321,12 @@ public class LogisticController {
 		}
 		return false;
 	}
-//
+
 	public boolean findClientByEmail(String searchEmail) {
 
 		optionEmail = new SearchByEmail(searchEmail);
 		clients= logistic.search(optionEmail);
-		if (clients.size()>0) { 
+		if (clients.size()>0) {
 			
 			return true;
 		}
