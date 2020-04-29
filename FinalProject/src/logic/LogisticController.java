@@ -235,7 +235,7 @@ public class LogisticController {
 	public boolean updateStatus(String pressure, String humidity, String temperature) {
 		float temp;
 		float humi;
-		float pres;
+		float pres; 
 		try {
 			temp= Float.valueOf(temperature);
 			System.out.println("Correct temperature");
@@ -417,7 +417,6 @@ public class LogisticController {
 
 	
 	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
-        //why don't you call the company name here???
 		if(validate.validateEmail(email)) {
 			setEmail(email);
 		}
