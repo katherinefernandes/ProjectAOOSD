@@ -8,22 +8,22 @@ import searchClients.SearchClients;
 import updateContainer.UpdateContainer;
 
 public class CompanyApplication extends Application {
-	private boolean addNewClient;
+	//private boolean addNewClient;
 	public CompanyApplication() {
 		super();
 		
 	}
 	
-	public boolean getAddNewClient() {
-		return addNewClient;
-	}
+//	public boolean getAddNewClient() {
+//		return addNewClient;
+//	}
 	
-
-	public void setAddNewClient() {
-		
-		this.addNewClient = false;
-	}
-	
+////delete method ---not used Muna
+//	public void setAddNewClient() {
+//		
+//		this.addNewClient = false;
+//	}
+//	
 
 	
 	public long addClient(String email, String name, int countryCode, long phone, ArrayList<String> firstName,
@@ -37,7 +37,7 @@ public class CompanyApplication extends Application {
 		
 		newClient.save();
 		
-		this.addNewClient = true;
+		//this.addNewClient = true;
 		
 		return id;
 	}

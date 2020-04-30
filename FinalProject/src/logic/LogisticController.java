@@ -110,6 +110,7 @@ public class LogisticController {
 	private boolean setMiddleName(String name2) {
 
 		middleName = InputParser.parsingNames(name2);
+		System.out.println(name2 + "Is the name");
 		return validate.validateName(name2);
 	}
 
@@ -136,6 +137,8 @@ public class LogisticController {
 
 	private boolean setBuilding(String text) {
 		try {
+			System.out.println("The set building number is----------------------------");
+			System.out.println(text);
 			this.building = Integer.valueOf(text);
 			System.out.println("Building number is correct");
 			return true;
@@ -153,11 +156,10 @@ public class LogisticController {
 	}
 
 
-	private boolean addClient() {
+	private void addClient() {
 
-		logistic.setAddNewClient();
 		logistic.addClient(email, companyName, cc, phonenumber, firstName, middleName, lastName, street, city, zipcode, building);
-		return logistic.getAddNewClient();
+		
 	}
 
 
@@ -366,91 +368,73 @@ public class LogisticController {
 
 
 	
-	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
-		//TODO waaay to many if statements. This is impossible to read
-		boolean	checkMessage = setCompanyName(companyname);
-		if(checkMessage) {
-			checkMessage = setEmail(email);
-		}else {
-			System.out.println("Company name has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
-		}
+	public boolean addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
+		setCompanyName(companyname);
+		boolean checkMessage=setEmail(email);
 		if(checkMessage) {
 			checkMessage = setCountryCode(countrycode);
 		}else {
 			System.out.println("email has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if(checkMessage) {
 			checkMessage = setPhoneNumber(phone);
 		}else {
 			System.out.println("Countrycode has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if (checkMessage) {
 			checkMessage =setFirstName(firstname);
 		}else {
 			System.out.println("phone has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if (checkMessage) {
 			checkMessage =setMiddleName(middlename);
 		}else {
 			System.out.println("firstname has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if (checkMessage) {
 			checkMessage = setLastName(lastname);
 		}else {
 			System.out.println("middlename has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if(checkMessage) {
 			checkMessage = setStreetName(street);
 		}else {
 			System.out.println("lastname has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if(checkMessage) {
 			checkMessage = setCity(city);
 		}else {
 			System.out.println("street has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if(checkMessage) {
 			checkMessage =setBuilding(building);
+			System.out.println("Building,"+checkMessage);
 		}else {
 			System.out.println("city has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if(checkMessage) {
 			checkMessage =setPostcode(postcode);
 		}else {
 			System.out.println("building has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
 		if(checkMessage) {
-			checkMessage =addClient();
+			addClient();
+			System.out.println("Client was added successfully");
+			return true;
 		}else {
 			System.out.println("postcode has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			return false;
 		}
-		if(checkMessage) {
-			logisticMenu.successFieldForAddClient();
-		}else {
-			logisticMenu.errorMessageForAddClient();
-		}
+		
 		
 	}
 
@@ -467,7 +451,7 @@ public class LogisticController {
 		}
 		if(checkMessage) {
 			System.out.println("Valid info");
-			
+			System.out.println(logistic.viewContainer().getID());
 			
 		}else {
 			

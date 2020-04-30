@@ -36,26 +36,25 @@ Feature: Run simulation
 	#	And the humidity of the container with ID=10238493181 is changed from 24. by no more than 0.5 with max=100. and min=0.
 	#	And the atmosphere of the container with ID=10238493181 is changed from 1. by no more than 0.05 with max=3. and min=0.5
 
-Scenario: The simulation can finish a journey
-		Given that the following ports are defined:
-				| ID 			  | Country   | Port name     | Longitude | Latitude |
-				| 123456789 | "Denmark" | "Nyhavn"      | 55.       | 12.      |
-				| 987654321 | "China"   |"Tianjin port" | 39.				| 118.		 |
-		And the port with ID=987654321 has the arrriving container 10238493181
-		And that the following clients are defined:
-				| ID				  | Company name | Phone number | Email		    | Refrence person name | Street name   | House number | City 			   | Zip code |
-				| 12901394121 | "Sock co."   | 45 989128318 | "so@co.com" |	"John T. Smith"			 | "Long street" | 32						| "Copenhagen" | 2100			|
-		And that the client with ID=12901394121 has the active journey with ID=128938929
-		And that the following containers are defined 
-				| ID				  | ClientID    | JourneyID | StartPortID | LastVisitedPortID | DestinationPortID | Longitude | Latitude | Cargo   | Temperature | Humidity | Atmosphere |
-				| 10238493181 | 12901394121 | 128938929 | 123456789   | 123456789					| 987654321					| 39.05			| 117.95	 | "Socks" | 23.	 			 | 24.			| 1.				 |
-		When the simulation checks for finished journeys
-		Then the client with ID=12901394121 has the the finished journey with ID=128938929
-		And the client with ID=12901394121 does not have the active journey with ID=128938929
-		And the container with ID=10238493181 has journeyID=0
-		And the container with ID=10238493181 has lastVisitedPortID=987654321
-		And the container with ID=10238493181 has startPortID=987654321
-		And the container with ID=10238493181 has cargo=" "
-		And the port with ID=987654321 does not have the arrriving container 10238493181
-		And the port with ID=987654321 has the stationed container 10238493181
+#Scenario: The simulation can finish a journey
+#		Given that the following ports are defined:
+#				| ID 			  | Country   | Port name     | Longitude | Latitude |
+#				| 123456789 | "Denmark" | "Nyhavn"      | 55.       | 12.      |
+#				| 987654321 | "China"   |"Tianjin port" | 39.				| 118.		 |
+#		And the port with ID=987654321 has the arrriving container 10238493181
+#		And that the following clients are defined:
+#				| ID				  | Company name | Phone number | Email		    | Refrence person name | Street name   | House number | City 			   | Zip code |
+#				| 12901394121 | "Sock co."   | 45 989128318 | "so@co.com" |	"John T. Smith"			 | "Long street" | 32						| "Copenhagen" | 2100			|
+#		And that the client with ID=12901394121 has the active journey with ID=128938929
+#		And that the following containers are defined 
+#				| 10238493181 | 12901394121 | 128938929 | 123456789   | 123456789					| 987654321					| 39.05			| 117.95	 | "Socks" | 23.	 			 | 24.			| 1.				 |
+#		When the simulation checks for finished journeys
+#		Then the client with ID=12901394121 has the the finished journey with ID=128938929
+#		And the client with ID=12901394121 does not have the active journey with ID=128938929
+#		And the container with ID=10238493181 has journeyID=0
+#		And the container with ID=10238493181 has lastVisitedPortID=987654321
+#		And the container with ID=10238493181 has startPortID=987654321
+#		And the container with ID=10238493181 has cargo=" "
+#		And the port with ID=987654321 does not have the arrriving container 10238493181
+#		And the port with ID=987654321 has the stationed container 10238493181
 		
