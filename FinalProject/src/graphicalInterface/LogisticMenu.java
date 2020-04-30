@@ -369,7 +369,7 @@ public class LogisticMenu {
 				}
 				clearDataFields(textField_16,textField_14,textField_15);
 			
-		}});
+		}}); 
 		
 		ContainePositionrPanel.add(Save2);
 		
@@ -811,7 +811,7 @@ public class LogisticMenu {
 				successSearch.setVisible(false);
 				controller.searchClient(clientemailTextField.getText(),companyNameTextField.getText(),clientPhoneTextField.getText(),firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
 				if(controller.checkMessage()) {
-					viewClientTextField.setText(controller.viewClient());
+					viewClientTextField.setText(controller.getclientsview());
 					switchPanels(viewClientPanel);
 				}
 				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField,firstNameTextField,middlenameTextField,lastNameTextField);
@@ -877,7 +877,7 @@ public class LogisticMenu {
 	
 	public void setFieldsClientData() {
 		
-		viewClientTextField.setText(controller.viewClient());
+		viewClientTextField.setText(controller.getclientsview());
 	}
 	public void switchPanels(JPanel panel) {
 		System.out.println("in switch panels");
