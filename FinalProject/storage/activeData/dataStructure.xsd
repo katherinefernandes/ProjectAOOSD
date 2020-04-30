@@ -131,7 +131,7 @@
     	</xsd:sequence>
     </xsd:complexType>
 
-    <xsd:element name="History" type="HistoryType"></xsd:element>
+    <xsd:element name="History" type="ContainersType"></xsd:element>
     
     <xsd:complexType name="HistoryType">
     	<xsd:sequence>

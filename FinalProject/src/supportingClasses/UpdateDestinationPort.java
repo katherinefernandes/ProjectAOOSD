@@ -25,8 +25,7 @@ public class UpdateDestinationPort {
 			destinationPort.save();
 			return true;
 		} catch (ElementSelectionException e) {
-
-			throw new Error(e); 
+			return false;
 		}
 	}
 	
