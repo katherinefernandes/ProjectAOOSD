@@ -84,4 +84,19 @@ class LogisticsControllerTest {
 	    
 	    
 	}
+	
+	@Test
+	void testUpdateContainerPort() {
+		Container container = new Container(20711569474800L, 102621L, 675465457L, 357983327889100L, 357983327946100L, 357983327979100L, 45.6F, 34.787F, "Fish n' chips", 3.5F, 108.2F, 66F,LocalDateTime.of(2020, 2, 11, 14, 24).toString(),LocalDateTime.now().toString());
+	    container.save();
+	    assertFalse(controller.checkMessage());
+	    controller.updateContainerPort("20711569474800","Copenhagen");
+	    List<Container> containers = DataBase.searchContainers("20711569474800");
+	    assertEquals(containers.get(0).getCargo(),"Fish n' chips");
+	    String result = controller.getContainerData();
+	    assertTrue(result.contains("675465457"));
+	    assertTrue(controller.checkMessage());
+
+	}  
+
 }
