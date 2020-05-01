@@ -63,6 +63,10 @@ public class LogisticMenu {
 	private JButton atmosphereGraphButton;
 	private JButton humidityGraphButton;
 	private JPanel searchClientPanel;
+	private JPanel updateContainerPortPanel;
+	private JTextField updatePortContainerID;
+	private JTextField updatePortName;
+	private JTextArea updateCurrentPortError;
     
     public LogisticMenu(LogisticController controller) {
 		this.controller = controller;
@@ -115,7 +119,7 @@ public class LogisticMenu {
 		panel.add(UpdateContainerButton);
 		
 		logoutButton = new JButton("Log Out");
-		logoutButton.setBounds(19, 266, 187, 29);
+		logoutButton.setBounds(19, 301, 187, 29);
 		logoutButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -529,6 +533,75 @@ public class LogisticMenu {
 		StatusPanel.add(successStatus);
 		successStatus.setVisible(false);
 		
+		updateContainerPortPanel = new JPanel();
+		layeredPane.setLayer(updateContainerPortPanel, 0);
+		updateContainerPortPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(updateContainerPortPanel);
+		updateContainerPortPanel.setBackground(new Color(95, 158, 160));
+		updateContainerPortPanel.setLayout(null);
+		
+		JTextArea txtrContainerId_3 = new JTextArea();
+		txtrContainerId_3.setBackground(new Color(95, 158, 160));
+		txtrContainerId_3.setText("Container ID:");
+		txtrContainerId_3.setEditable(false);
+		txtrContainerId_3.setBounds(43, 73, 148, 16);
+		updateContainerPortPanel.add(txtrContainerId_3);
+		
+		JTextArea txtrContainerId_3_1 = new JTextArea();
+		txtrContainerId_3_1.setText("Port Name:");
+		txtrContainerId_3_1.setEditable(false);
+		txtrContainerId_3_1.setBackground(new Color(95, 158, 160));
+		txtrContainerId_3_1.setBounds(43, 115, 148, 16);
+		updateContainerPortPanel.add(txtrContainerId_3_1);
+		
+		updatePortContainerID = new JTextField();
+		updatePortContainerID.setBounds(242, 68, 217, 26);
+		updateContainerPortPanel.add(updatePortContainerID);
+		updatePortContainerID.setColumns(10);
+		
+		updatePortName = new JTextField();
+		updatePortName.setColumns(10);
+		updatePortName.setBounds(242, 106, 217, 26);
+		updateContainerPortPanel.add(updatePortName);
+		
+		JButton updatePortSaveButton = new JButton("Save");
+		updatePortSaveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateCurrentPortError.setVisible(false);
+				if(updatePortContainerID.getText().isEmpty()&&updatePortName.getText().isEmpty()) {
+					updateCurrentPortError.setVisible(true);
+					System.out.println("One of the text fields is empty");
+					clearDataFields(updatePortContainerID,updatePortName);
+					return;
+				}else {
+					containerIDForGraphs=updatePortContainerID.getText();
+					controller.updateContainerPort(updatePortContainerID.getText(),updatePortName.getText());
+					
+				}
+				if(controller.checkMessage()){
+					viewContainerText.setText(controller.getContainerData());
+					switchPanels(viewContainerPanel);
+					
+				}
+				else {
+					updateCurrentPortError.setVisible(true);
+				}
+				
+				clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
+			}
+		});
+		updatePortSaveButton.setBounds(342, 177, 117, 29);
+		updateContainerPortPanel.add(updatePortSaveButton);
+		
+		updateCurrentPortError = new JTextArea();
+		updateCurrentPortError.setForeground(new Color(165, 42, 42));
+		updateCurrentPortError.setText("Something went wrong. Try again!");
+		updateCurrentPortError.setBackground(new Color(95, 158, 160));
+		updateCurrentPortError.setEditable(false);
+		updateCurrentPortError.setBounds(56, 182, 274, 16);
+		updateContainerPortPanel.add(updateCurrentPortError);
+		
+		
 		ContainerInfoPanel = new JPanel();
 		ContainerInfoPanel.setBackground(new Color(95, 158, 160));
 		layeredPane.setLayer(ContainerInfoPanel, 0);
@@ -735,7 +808,7 @@ public class LogisticMenu {
 				
 			}
 		});
-		getClientIfoButton.setBounds(19, 186, 187, 29);
+		getClientIfoButton.setBounds(19, 229, 187, 29);
 		panel.add(getClientIfoButton);
 		
 		
@@ -887,8 +960,18 @@ public class LogisticMenu {
 			
 			}
 		});
-		viewJourneysButton.setBounds(19, 225, 187, 29);
+		viewJourneysButton.setBounds(19, 266, 187, 29);
 		panel.add(viewJourneysButton);
+		
+		JButton updatePortButton = new JButton("Update Current Port");
+		updatePortButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateCurrentPortError.setVisible(false);
+				switchPanels(updateContainerPortPanel);
+			}
+		});
+		updatePortButton.setBounds(19, 188, 187, 29);
+		panel.add(updatePortButton);
 	}
 	
 	public void setFieldsClientData() {
@@ -962,5 +1045,9 @@ public class LogisticMenu {
 		System.out.println("Switching panels");
 		switchPanels(viewClientPanel);
 		successSearch.setVisible(true);// switch it to false once the panel works
+	}
+	public void displayPortError() {
+		updateCurrentPortError.setVisible(true);
+		
 	}
 }

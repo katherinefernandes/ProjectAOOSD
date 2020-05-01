@@ -17,10 +17,12 @@ import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
 import supportingClasses.DataForViewAllJourneys;
+import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
 import supportingClasses.ValidInputType;
 import supportingClasses.InputParser;
 import updateContainer.UpdateLocation;
+import updateContainer.UpdatePort;
 import updateContainer.UpdateStatus;
 
 
@@ -52,6 +54,8 @@ public class LogisticController {
 	private boolean	checkMessage ;
 	private UpdateStatus updateStatus;
 	private UpdateLocation updatePosition;
+	private UpdatePort UpdatePort;
+	private updateContainer.UpdatePort updatePort;
 	
 	public LogisticController(){
 		logistic = new CompanyApplication();
@@ -440,6 +444,45 @@ public class LogisticController {
 	public String getAllJourneys() {
 		
 		return new DataForViewAllJourneys().getResult();
+	}
+
+	public void updateContainerPort(String containerID, String portName) {
+		checkMessage = false;
+		if(ValidInputType.validateLong(containerID)) {
+			setContainerForUpdate(containerID);
+		}else {
+			System.out.println("Container ID type is not valid");
+			logisticMenu.displayPortError();
+			return;
+		} 
+		long portID = ExtractingPortID.getPortID(portName);
+		boolean checks = logistic.getSetContainer()&& portID!=1l;
+		if (checks){
+			setPort(portID);
+		}else {
+			System.out.println("Container ID is invalid, try again");
+			logisticMenu.displayPortError();
+			return;
+		}
+		if(logistic.updateContainerInformation(updatePort)) {
+			System.out.println("Valid info");
+			System.out.println(logistic.viewContainer().getID());
+			checkMessage = true;
+			
+		}else {
+			System.out.println("Something went wrong in update..");
+			logisticMenu.displayPortError();
+			
+		}	
+	
+	
+	}
+
+	private void setPort(long portID) {	
+		updatePort = new UpdatePort(portID);
+		
+		
+		
 	}
 	
 
