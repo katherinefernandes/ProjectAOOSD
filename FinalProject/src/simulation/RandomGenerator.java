@@ -5,6 +5,7 @@ package simulation;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.time.LocalDate;
 import java.util.*;
 import businessObjects.*;
 import dataBase.DataBase;
@@ -62,7 +63,7 @@ public class RandomGenerator {
 		}
 	}
 	
-	public List<List<String>> generateRandomRefrenceName() {
+	public List<List<String>> generateRefrenceName() {
 		List<List<String>> refrenceName = new ArrayList<>();
 		for(int i = 0; i < 3; i++) {
 			refrenceName.add(new ArrayList<String>());
@@ -83,7 +84,7 @@ public class RandomGenerator {
 		return refrenceName;
 	}
 	
-	public String generateRandomEmail() {
+	public String generateEmail() {
 		String[] domains = {"gmail","hotmail","yahoo","outlook","student.dtu"};
 		String[] tld = {"no","dk","jp","com","org","net","co.uk"};
 		String email = getRandomFirstName();
@@ -167,6 +168,21 @@ public class RandomGenerator {
 		return random.nextFloat()*1F - 5F;
 	}
 	
+	public String generateCargo() {
+		String cargo = "";
+		cargo += getRandomWord() + "s";
+		if(random.nextBoolean()) {
+			cargo += " and " + getRandomWord() + "s";
+		}
+		return cargo;
+	}
+	
+	public String generateArriveBy() {
+		LocalDate now = LocalDate.now();
+		LocalDate arriveBy = now.plusDays(14 + random.nextInt(18)).plusMonths(random.nextInt(4));
+		return arriveBy.toString();
+	}
+	
 	public Client getRandomClient() {
 		return randomClientSelection.get(random.nextInt(randomClientSelection.size()));
 	}
@@ -177,6 +193,22 @@ public class RandomGenerator {
 	
 	public Port getRandomPort() {
 		return randomPortSelection.get(random.nextInt(randomPortSelection.size()));
+	}
+	
+	public float changeTemperature(float temperature) {
+		float newTemperature = temperature + (random.nextFloat() - 0.5F);
+		newTemperature = Math.min(90F, newTemperature);
+		return Math.max(-10F, newTemperature);
+	}
+	public float changeHumidity(float humidity) {
+		float newHumidity = humidity + (random.nextFloat() - 0.5F);
+		newHumidity = Math.min(100F, newHumidity);
+		return Math.max(0F, newHumidity);
+	}
+	public float changeAtmosphere(float atmosphere) {
+		float newAtmosphere = atmosphere + (random.nextFloat()*0.1F - 0.05F);
+		newAtmosphere = Math.min(3F, newAtmosphere);
+		return Math.max(0.5F, newAtmosphere);
 	}
 	
 	public void addClientToSelection(Client client) {

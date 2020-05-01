@@ -4,15 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.*;
 
-import dataWrappers.InternalState;
+import dataWrappers.InternalStatus;
 
 public class InternalStateTest {
 	
-	private InternalState testobject;
+	private InternalStatus testobject;
 	
 	@BeforeEach
 	public void testInternalState() {
-		testobject = new InternalState(1.0f,36.9f,75.0f);
+		testobject = new InternalStatus(1.0f,36.9f,75.0f);
 	}
 
 	@Test

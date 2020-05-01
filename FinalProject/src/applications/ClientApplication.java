@@ -1,7 +1,6 @@
 package applications;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import businessObjects.Container;
 import businessObjects.Port;

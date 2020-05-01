@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dataBase.DataBase;
-import dataWrappers.InternalState;
+import dataWrappers.InternalStatus;
 import dataWrappers.Location;
 
 public class Container implements BusinessObject {
@@ -17,7 +17,7 @@ public class Container implements BusinessObject {
 	private long destinationPortID = 0L;
 	private Location currentPosition = new Location(0F,0F);
 	private String cargo = " ";
-	private InternalState internalStatus = new InternalState(0F,0F,0F);
+	private InternalStatus internalStatus = new InternalStatus(0F,0F,0F);
 	private String updated = LocalDateTime.of(2000, 1, 1, 0, 0).toString();
 	private String arriveBy = LocalDateTime.of(2000, 1, 1, 0, 0).toString();
 
@@ -42,7 +42,7 @@ public class Container implements BusinessObject {
 		this.destinationPortID=destinationPortID;
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo=cargo;
-		this.internalStatus=new InternalState(atmosphere, temperature, humidity);
+		this.internalStatus=new InternalStatus(atmosphere, temperature, humidity);
 		this.arriveBy=arriveBy;
 	}
 	public Container(long containerID, long clientId, long journeyID,long startPortID, long lastVisitedPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String updated, String arriveby) {
@@ -120,7 +120,7 @@ public class Container implements BusinessObject {
 	public String getCargo() {
 		return this.cargo;
 	}
-	public InternalState getInternalStatus() {
+	public InternalStatus getInternalStatus() {
 		return this.internalStatus;
 	}
 
