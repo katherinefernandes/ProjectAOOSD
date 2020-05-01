@@ -35,8 +35,8 @@ public class Application implements View{
 			client = DataBase.getClient(clientID);
 			setClient = true;
 	}
-	public void getContainer(long containerID) throws ElementSelectionException {
-		
+	public void getContainer(long containerID) throws ElementSelectionException { //need to change the throws
+			setContainer = false;
 			container = DataBase.getContainer(containerID); 
 			setContainer= true;
 	}

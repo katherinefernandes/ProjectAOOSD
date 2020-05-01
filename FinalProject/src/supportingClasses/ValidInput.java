@@ -1,7 +1,6 @@
 package supportingClasses;
 
-
-
+import java.util.ArrayList;
 
 public class ValidInput {
 	//changed all methods to just public
@@ -47,5 +46,21 @@ public class ValidInput {
 		else {
 			return false;
 		}
+	}
+	/**
+	 * private boolean validateArrayOfNames(){}
+	 * This method is checking the validity of the name and returns a boolean depending on the situation
+	 * @param name the Name inputed by the user (could be either first name, middle name or last name)
+	 * @return true if the name is valid and false if the name is invalid
+	 */
+	public boolean validateArrayOfNames(String name) {
+		System.out.println(name);
+		ArrayList<String> Name = InputParser.parsingNames(name); 
+		for(int i=0;i<Name.size();i++) {
+			if(!validateName(Name.get(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

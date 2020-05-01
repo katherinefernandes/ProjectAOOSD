@@ -959,7 +959,7 @@ public class ClientMenu {
 		
 		successfulJourneysButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				successfulJourneysTextArea.setText(controller.setSuccessfulJourneys());
+				successfulJourneysTextArea.setText(controller.getSuccessfulJourneys());
 				switchPanels(SuccessfulJourneysPane);
 			}
 		});

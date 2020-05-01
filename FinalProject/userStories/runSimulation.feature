@@ -47,10 +47,7 @@ Feature: Run simulation
 #				| 12901394121 | "Sock co."   | 45 989128318 | "so@co.com" |	"John T. Smith"			 | "Long street" | 32						| "Copenhagen" | 2100			|
 #		And that the client with ID=12901394121 has the active journey with ID=128938929
 #		And that the following containers are defined 
-<<<<<<< HEAD
 #				| ID				  | ClientID    | JourneyID | StartPortID | LastVisitedPortID | DestinationPortID | Longitude | Latitude | Cargo   | Temperature | Humidity | Atmosphere |
-=======
->>>>>>> branch 'master' of git@github.com:katherinefernandes/ProjectAOOSD.git
 #				| 10238493181 | 12901394121 | 128938929 | 123456789   | 123456789					| 987654321					| 39.05			| 117.95	 | "Socks" | 23.	 			 | 24.			| 1.				 |
 #		When the simulation checks for finished journeys
 #		Then the client with ID=12901394121 has the the finished journey with ID=128938929

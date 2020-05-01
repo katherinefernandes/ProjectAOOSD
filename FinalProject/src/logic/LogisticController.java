@@ -18,6 +18,7 @@ import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
 import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ValidInput;
+import supportingClasses.ValidInputType;
 import supportingClasses.InputParser;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
@@ -39,7 +40,7 @@ public class LogisticController {
 	private String zipcode;
 	private long containerID;
 	private SearchByEmail optionEmail;
-	private List<Client> clients;
+	private List<Client> clients = new ArrayList<Client>();
 	private SearchByName optionName;
 	private SearchByPhone optionPhone;
 	private ArrayList<String> firstN;
@@ -49,6 +50,8 @@ public class LogisticController {
 	private SearchByReferencePerson optionRefPerson;
 	private LogisticMenu logisticMenu;
 	private boolean	checkMessage ;
+	private UpdateStatus updateStatus;
+	private UpdateLocation updatePosition;
 	
 	public LogisticController(){
 		logistic = new CompanyApplication();
@@ -56,103 +59,59 @@ public class LogisticController {
 		logisticMenu = new LogisticMenu(this);
 	}
 
-	//TODO unify way of sending information from interface to controller
-	//TODO reduce method to one level of abstraction
-	//TODO methods called in interface should have names that of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
-	//TODO Is it really valuable to have all these getters and setters return booleans? Seems largely unnecessary, and in conflict with the single responsibility principle
-	//It could be okay in some contexts, but I don't think we should follow the pattern as a rule.
-	private boolean setCompanyName(String text) {
-
+	private void setCompanyName(String text) {
 		this.companyName=text;
-		return true;
 	}
 
 
-	private boolean setEmail(String email) {
-
+	private void setEmail(String email) {
 		this.email = email;
-		return validate.validateEmail(email);
 	}
 
 
-	private boolean setCountryCode(String countryCode) {
-
-		try {
-			cc = Integer.valueOf(countryCode);
-			System.out.println("string is correct");
-			return validate.validateCountryCode(cc);
-		}catch(NumberFormatException e) {
-			System.out.println("the countrycode is not valid");
-			return false;
-		}
+	private void setCountryCode(String countryCode) {
+			this.cc= Integer.valueOf(countryCode);
 	}
 
 
-	private boolean setPhoneNumber(String phone) {
-			try {
-				phonenumber = Long.valueOf(phone);
-				System.out.println("string is correct");
-				return validate.validatePhone(phonenumber);
-				}catch(NumberFormatException e) {
-					System.out.println("the countrycode is not valid");
-					return false;
-				}
+	private void setPhoneNumber(String phone) {
+		phonenumber = Long.valueOf(phone);
 	}
 
 
-	private boolean setFirstName(String name1) {
-
+	private void setFirstName(String name1) {
 		firstName = InputParser.parsingNames(name1);
-		return validate.validateName(name1);
 	}
 
 
-	private boolean setMiddleName(String name2) {
-
+	private void setMiddleName(String name2) {
 		middleName = InputParser.parsingNames(name2);
-		System.out.println(name2 + "Is the name");
-		return validate.validateName(name2);
 	}
 
 
-	private boolean setLastName(String name) {
+	private void setLastName(String name) {
 		lastName = InputParser.parsingNames(name);
-		return validate.validateName(name);
 	}
 
 
-	private boolean setStreetName(String street) {
-
+	private void setStreetName(String street) {
 		this.street=street;
-		return true;
 	}
 
 
-	private boolean setCity(String text) {
+	private void setCity(String text) {
 
 		this.city = text;
-		return validate.validateName(text);
 	}
 
 
-	private boolean setBuilding(String text) {
-		try {
-			System.out.println("The set building number is----------------------------");
-			System.out.println(text);
-			this.building = Integer.valueOf(text);
-			System.out.println("Building number is correct");
-			return true;
-			}catch(NumberFormatException e) {
-				System.out.println("the building number is not valid");
-				return false;
-			}
+	private void setBuilding(String text) {	
+			this.building = Integer.valueOf(text);	
 	}
 
 
-	private boolean setPostcode(String postcode) {
-
+	private void setPostcode(String postcode) {
 		this.zipcode= postcode;
-		return validate.validatePostCode(postcode);
 	}
 
 
@@ -163,19 +122,12 @@ public class LogisticController {
 	}
 
 
-	private boolean setContainerForUpdate(String text) {
-
+	private void setContainerForUpdate(String text) {
 		try {
 			containerID= Long.valueOf(text);
-			System.out.println("String is correct");
 			logistic.getContainer(containerID);
-			return logistic.getSetContainer();
-			}catch(NumberFormatException e) {
-				System.out.println("the containerID is not valid");
-				return false;
 			}catch(ElementSelectionException e) {
 				System.out.println("The counterID is not correct");
-				return false;
 			}
 	}
 
@@ -183,43 +135,23 @@ public class LogisticController {
 	
 
 
-	private boolean updateStatus(String pressure, String humidity, String temperature) {
+	private void setStatus(String pressure, String humidity, String temperature) {
 		float temp;
 		float humi;
 		float pres;
-		try {
-			temp= Float.valueOf(temperature);
-			System.out.println("Correct temperature");
-			}catch(NumberFormatException e) {
-				System.out.println("the temp is not valid");
-				return false;
-			}
-		try {
-			humi= Float.valueOf(humidity);
-			System.out.println("Correct humidity");
-			}catch(NumberFormatException e) {
-				System.out.println("the humidity is not valid");
-				return false;
-			}
-		try {
-			pres= Float.valueOf(pressure);
-			System.out.println("Correct pressure");
-			}catch(NumberFormatException e) {
-				System.out.println("the pressure is not valid");
-				return false;
-			}
-		UpdateStatus update = new UpdateStatus( temp, humi,pres);
 		
-		return logistic.updateContainerInformation(update);
+		temp= Float.valueOf(temperature);
+		humi= Float.valueOf(humidity);
+		pres= Float.valueOf(pressure);
+		updateStatus = new UpdateStatus( temp, humi,pres);
 	}
 	private String getPortName(long portID) {
 		Port port;
 		try {
 			port = DataBase.getPort(portID);
 		} catch (ElementSelectionException e) {
-
 			System.out.println("Cant find the port");
-			throw new Error(e);
+			throw new Error(e); // as the port should exist...
 		}
 		return port.getPortName();
 	}
@@ -248,68 +180,29 @@ public class LogisticController {
 	}
 
 
-	private boolean updatePosition(String longitude, String latitude) {
-		//TODO try to avoid abbreviations in names
-		float longit;
-		float lati;
-		try {
-			longit= Float.valueOf(longitude);
-			System.out.println("Correct string longitude");
-			}catch(NumberFormatException e) {
-				System.out.println("the  longitude is not valid");
-				return false;
-			}
-		try {
-			lati= Float.valueOf(latitude);
-			System.out.println("Correct string latitude");
-			}catch(NumberFormatException e) {
-				System.out.println("the  latitude is not valid");
-				return false;
-			}
-		if (validate.validateLocation(lati)&&validate.validateLocation(longit)) {
-			UpdateLocation update = new UpdateLocation( longit,lati);
-			return logistic.updateContainerInformation(update);
-		}
-		return false;
+	private void setPosition(String longitude, String latitude) {
+		float Longitude;
+		float Latitude;
+		Longitude= Float.valueOf(longitude);
+		
+		Latitude= Float.valueOf(latitude);
+		updatePosition = new UpdateLocation( Longitude,Latitude);
 	}
 
-	//TODO names of methods returning booleans shouldn't start with get
-	private boolean getClientByEmail(String searchEmail) {
-
+	private void setClientsByEmail(String searchEmail) {
 		optionEmail = new SearchByEmail(searchEmail);
-		clients= logistic.search(optionEmail);
-		if (clients.size()>0) {
-			
-			return true;
-		}
-		return false;
+		List<Client> clientsFound = logistic.search(optionEmail);
+		addClients(clientsFound);
 		
 	}
 
-
-	private boolean getClientByCompanyName(String searchName) {
-
-		optionName = new SearchByName(searchName);
-		clients = logistic.search(optionName);
-		if(clients.size()>0) {
-			return true;
+	private void addClients(List<Client> clientsFound) {
+		for(Client client : clientsFound) {
+			clients.add(client);
 		}
-		return false;
 	}
 
-
-	private boolean getClientByPhone(String phone) {
-
-		long phonenumber;
-		try {
-			phonenumber= Long.valueOf(phone);
-			System.out.println("Correct string phonenumber");
-			optionPhone = new SearchByPhone(phonenumber);
-			clients = logistic.search(optionPhone);
-			}catch(NumberFormatException e) {
-				System.out.println("the  latitude is not valid");
-				return false;
-			}
+	private boolean checkSizeOfClients() {
 		if (clients.size()>0) {
 			return true;
 		}
@@ -317,7 +210,23 @@ public class LogisticController {
 	}
 
 
-	private boolean getClientByReferencePerson(String text, String string, String text2) {
+	private void setClientsByCompanyName(String searchName) {
+		optionName = new SearchByName(searchName);
+		List<Client> clientsFound = logistic.search(optionName);
+		addClients(clientsFound);
+	}
+
+
+	private void setClientsByPhone(String phone) {
+
+			phonenumber= Long.valueOf(phone);
+			optionPhone = new SearchByPhone(phonenumber);
+			List<Client> clientsFound = logistic.search(optionPhone);
+			addClients(clientsFound);
+	}
+
+
+	private void getClientByReferencePerson(String text, String string, String text2) {
 		firstN = InputParser.parsingNames(text);
 		
 		middleN = InputParser.parsingNames(string);
@@ -328,11 +237,8 @@ public class LogisticController {
 		
 		optionRefPerson = new SearchByReferencePerson(searchRefPerson);
 		
-		clients = logistic.search(optionRefPerson);
-		if(clients.size()>0) {
-			return true;
-		}
-		return false;
+		List<Client> clientsFound = logistic.search(optionRefPerson);
+		addClients(clientsFound);
 	}
 
  
@@ -340,12 +246,9 @@ public class LogisticController {
         System.out.println("Inside get client view");
 		String result ="Displaying Up to most 3 Clients: ";
 		int counter =0;
-		for(int i=0;i<clients.size();i++) {
+		for(int i=0;i<clients.size()&&counter<3;i++) {
 			result =result+clientDataToString(clients.get(i));
 			counter++;
-			if(counter>2) {
-				break;
-			}
 		}
 		return result;
 	}
@@ -369,112 +272,122 @@ public class LogisticController {
 
 	
 	public boolean addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
+		checkMessage = false;
 		setCompanyName(companyname);
-		boolean checkMessage=setEmail(email);
-		if(checkMessage) {
-			checkMessage = setCountryCode(countrycode);
+		if(validate.validateEmail(email)) {
+			setEmail(email);
 		}else {
-			System.out.println("email has error");
+			System.out.println("email had error");
 			return false;
 		}
-		if(checkMessage) {
-			checkMessage = setPhoneNumber(phone);
+		if(ValidInputType.validateInteger(countrycode)&&validate.validateCountryCode(Integer.valueOf(countrycode))) {
+			 setCountryCode(countrycode);
 		}else {
-			System.out.println("Countrycode has error");
+			System.out.println("countrycode has error");
 			return false;
 		}
-		if (checkMessage) {
-			checkMessage =setFirstName(firstname);
+		if(ValidInputType.validateLong(phone)&&validate.validatePhone(Long.valueOf(phone))) {
+			setPhoneNumber(phone);
 		}else {
-			System.out.println("phone has error");
+			System.out.println("Phone has error");
 			return false;
 		}
-		if (checkMessage) {
-			checkMessage =setMiddleName(middlename);
+		if (validate.validateName(firstname)) {
+			setFirstName(firstname);
 		}else {
 			System.out.println("firstname has error");
 			return false;
 		}
-		if (checkMessage) {
-			checkMessage = setLastName(lastname);
+		if (validate.validateName(middlename)) {
+			setMiddleName(middlename);
 		}else {
-			System.out.println("middlename has error");
+			System.out.println("Middlename has error");
 			return false;
 		}
-		if(checkMessage) {
-			checkMessage = setStreetName(street);
+		if (validate.validateName(lastname)) {
+			 setLastName(lastname);
 		}else {
 			System.out.println("lastname has error");
 			return false;
 		}
-		if(checkMessage) {
-			checkMessage = setCity(city);
-		}else {
-			System.out.println("street has error");
-			return false;
-		}
-		if(checkMessage) {
-			checkMessage =setBuilding(building);
-			System.out.println("Building,"+checkMessage);
+		 setStreetName(street);
+		
+		if(validate.validateName(city)) {
+			setCity(city);
 		}else {
 			System.out.println("city has error");
 			return false;
 		}
-		if(checkMessage) {
-			checkMessage =setPostcode(postcode);
+		if(ValidInputType.validateInteger(building)) {
+			setBuilding(building);
 		}else {
-			System.out.println("building has error");
+			System.out.println("building number has error");
 			return false;
 		}
-		if(checkMessage) {
-			addClient();
-			System.out.println("Client was added successfully");
-			return true;
+		if(validate.validatePostCode(postcode)) {
+			setPostcode(postcode);
 		}else {
 			System.out.println("postcode has error");
 			return false;
 		}
+		addClient();
+		System.out.println("Client was added successfully");
+		checkMessage = true;
+		return true;
 		
 		
 	}
 
 
 	public void updateContainerPosition(String containerID, String logitude, String latitude) {
-
-		checkMessage = setContainerForUpdate(containerID);
-		if (checkMessage){
-			checkMessage = updatePosition(logitude,latitude);
+		checkMessage = false;
+		if(ValidInputType.validateLong(containerID)) {
+			setContainerForUpdate(containerID);
+		}else {
+			System.out.println("Container ID type is not valid");
+			logisticMenu.errorPositionUpdate();
+			return;
+		}
+		boolean checks = logistic.getSetContainer()&&ValidInputType.validateFloat(latitude)&&ValidInputType.validateFloat(latitude)&&validate.validateLocation(Float.valueOf(latitude))&&validate.validateLocation(Float.valueOf(logitude));
+		if (checks){
+			setPosition(logitude,latitude);
 		}else {
 			System.out.println("Container ID is invalid, try again");
 			logisticMenu.errorPositionUpdate();
 			return;
 		}
-		if(checkMessage) {
+		if(logistic.updateContainerInformation(updatePosition)) {
 			System.out.println("Valid info");
 			System.out.println(logistic.viewContainer().getID());
+			checkMessage = true;
 			
 		}else {
-			
 			System.out.println("Something went wrong in update..");
-			logisticMenu.errorPositionUpdate(); 
+			logisticMenu.errorPositionUpdate();
+			
 		}
 	}
 
 
 	public void updateContainerStatus(String containerID, String press, String humid, String temp) {
-		
-		checkMessage = setContainerForUpdate(containerID);
-		
-		if (checkMessage){
-			checkMessage =updateStatus(press,humid,temp);
+		checkMessage = false;
+		if(ValidInputType.validateLong(containerID)) {
+			setContainerForUpdate(containerID);
+		}else {
+			System.out.println("Container ID type is not valid");
+			logisticMenu.errorPositionUpdate();
+			return;
+		}
+		if (logistic.getSetContainer()&&ValidInputType.validateFloat(temp)&&ValidInputType.validateFloat(press)&&ValidInputType.validateFloat(humid)){
+			setStatus(press,humid,temp);
 		}else {
 			System.out.println("Invalid container ID");
 			logisticMenu.errorStatusUpdate();
 			return;
 		}
-		if(checkMessage) {
+		if(logistic.updateContainerInformation(updateStatus)) {
 			System.out.println("Valid info");
-			
+			checkMessage = true;
 			return;
 		}else {
 			System.out.println("Something went wrong in status update");
@@ -493,27 +406,30 @@ public class LogisticController {
 		//TODO this could probably be done in a for loop
 		checkMessage=false;
 		if (!email.isEmpty()) {
-			checkMessage = getClientByEmail(email);
-			
+			setClientsByEmail(email);
+			checkMessage = checkSizeOfClients();
+			System.out.println("client found by email: "+checkMessage);
 		} 
 		if(!checkMessage&&!company.isEmpty()) {
-			checkMessage = getClientByCompanyName(company);
-			
+			setClientsByCompanyName(company);
+			checkMessage = checkSizeOfClients();
 		}
-		if(!checkMessage&&!phone.isEmpty()) {
-			checkMessage =getClientByPhone(phone);
+		if(!checkMessage&&!phone.isEmpty()&&ValidInputType.validateLong(phone)) {
+			setClientsByPhone(phone);
+			checkMessage = checkSizeOfClients();
 		}
 		if(!checkMessage&&!(firstname.isEmpty()&&last.isEmpty())) {
 			if(middle.isEmpty()) {
-				checkMessage = getClientByReferencePerson(firstname,"",last);
+			 getClientByReferencePerson(firstname,"",last);
+			 checkMessage = checkSizeOfClients();
 			}else {
-				checkMessage = getClientByReferencePerson(firstname,middle,last);
+				getClientByReferencePerson(firstname,middle,last);
+				checkMessage = checkSizeOfClients();
 			}
 		}
 		
 		if(checkMessage) {
 			System.out.println("Success search");
-			return;
 		}else {
 			System.out.println("Not success");
 			logisticMenu.errorSearch();

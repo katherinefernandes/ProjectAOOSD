@@ -69,8 +69,9 @@ class LogisticsControllerTest {
 		client.save();
 		controller.searchClient("clean.your.pipes@wash.com", "dvdf vssd", "6564433232", "Daniela", "fssdsdsd", "Sascasas");
 		assertTrue(controller.checkMessage());
+		System.out.println("Client found: "+controller.checkMessage());
 		String result = controller.getclientsview();
-		System.out.println(result);
+		System.out.println("result"+result);
 		assertTrue(result.contains("clean.your.pipes@wash.com"));
 	}
 

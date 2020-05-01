@@ -12,7 +12,11 @@ import updateClientInformation.UpdateClient;
 
 public class ClientApplication extends Application {
 
-
+	
+	
+	
+	
+	
 	public ClientApplication(long ID) {
 		super();
 		try {

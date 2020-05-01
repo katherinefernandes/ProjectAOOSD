@@ -98,10 +98,6 @@ public class ApplicationSteps {
 		port2.save();
 		port1.save();
 		port3.save();
-		//need to delete the things below when I move the getPortID to a class -mamuna
-	//	ClientData client1 = new ClientData(897841664590l,"random",45,23879091l,"random@random.com",parseInput.parsingNames("somename"),parseInput.parsingNames("somename"),parseInput.parsingNames("somename"),"g-11/2","islamabad",58,"1400");
-	//	databaseClient.newEntry(client1);
-	//	databaseClient.flushActiveData();
 	}
 
 	

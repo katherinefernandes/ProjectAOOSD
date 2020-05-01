@@ -15,6 +15,7 @@ import dataBase.DataBase;
 import exceptions.ElementSelectionException;
 import graphicalInterface.ClientMenu;import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
+import supportingClasses.ValidInputType;
 import supportingClasses.InputParser;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
@@ -23,7 +24,7 @@ import updateClientInformation.UpdateReferencePerson;
  * public class ClientController{}
  * connects the graphical User Interface to the logic behind the client menu 
  * @author daniela
- *
+ * 
  */
 public class ClientController {
 	private long clientID;
@@ -38,6 +39,7 @@ public class ClientController {
 	private long portID;
 	private long startPortID;
 	private long destinationPortID;
+	private boolean checkMessage;
 /**
  * public ClientController(){}
  * ClientController is a construct of the ClientController Class which initialises the clientID (the object)
@@ -51,7 +53,9 @@ public class ClientController {
 		clientmenu.frame.setVisible(true);
 	}
 	
-	
+	public boolean getcheckMessage() {
+		return this.checkMessage;
+	}
 	
 	 
 	
@@ -66,8 +70,8 @@ public class ClientController {
 	 */
 	public void saveReferencePerson(String firstName, String middleName, String lastName) { 
 		System.out.println("inside the method savereferencePerson");
-		boolean checkMessage = false;
-		if(checkNameValidity(firstName) && validate.validateName(middleName) && checkNameValidity(lastName)){
+		checkMessage = false;
+		if(validate.validateArrayOfNames(firstName) && validate.validateArrayOfNames(middleName) && validate.validateArrayOfNames(lastName)){
 			firstNameList = InputParser.parsingNames(firstName);
 			middleNameList = InputParser.parsingNames(middleName);
 			lastNameList = InputParser.parsingNames(lastName);
@@ -77,9 +81,9 @@ public class ClientController {
 		}
 		else {
 			System.out.println("The names are not valid");
-			checkMessage = false;	
 		}
 		if (checkMessage) {
+			checkMessage = true;
 			clientmenu.successFieldForName();
 		}else {
 			clientmenu.errorMessageForName();
@@ -96,7 +100,7 @@ public class ClientController {
      * @return variable holding the information whether the data was updated successfully or not
      */
 	private boolean updateReferencePersonInformation(UpdateReferencePerson update) {
-		boolean checkMessage;
+		checkMessage = false;
 		if (currentClient.updateClientInformation(update)) {
 			System.out.println("Update success, trying to display message");
 			currentClient = new ClientApplication(this.clientID);
@@ -110,63 +114,19 @@ public class ClientController {
 	
 	
 	
-	/**
-	 * private boolean checkNameValidity(){}
-	 * This method is checking the validity of the name and returns a boolean depending on the situation
-	 * @param name the Name inputed by the user (could be either first name, middle name or last name)
-	 * @return true if the name is valid and false if the name is invalid
-	 */
-	private boolean checkNameValidity(String name) {
-		System.out.println(name);
-		ArrayList<String> Name = InputParser.parsingNames(name); 
-		for(int i=0;i<Name.size();i++) {
-			if(!validate.validateName(Name.get(i))) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	
-	
-	/**
-	 * private boolean checkPhoneValidity(){}
-	 * This method returns a boolean value and calls the validatePhone method to check if the phone number inputed by the user is valid 
-	 * @param phone the phone number inputed by the user
-	 * @return false if the phone number is invalid and true if the phone number is valid
-	 */
-	private boolean checkPhoneValidity(String phone) {
-		try {
-			return validate.validatePhone(Long.valueOf(phone));
-		}catch(NumberFormatException e) {
-			return false;
-		}
-	}
-	
-	/**
-	 * private boolean checkCountryCodeValidity(){}
-	 * This method calls the validateCountryCode() method from the ValidInput class and returns a boolean 
-	 * @param CountryCode the variable taking the country code input from the user
-	 * @return false if the country code  is valid and false if the country code is invalid
-	 */
-	private boolean checkCountryCodeValidity(String CountryCode) {
-		return validate.validateCountryCode(Integer.valueOf(CountryCode));
-	}
-	
-	
 	
 	/**
 	 * public void savePhoneNumber(){}
-	 * This method saves the phone number into the data base if the boolean value returned in the checkPhoneValidity() and the boolean value returned
-	 * in the checkCountryCodeValidity are true. If both boolean value are true a success message will be displayed in the gui, else an error message
+	 * This method saves the phone number into the data base if the boolean value returned by the validatePhoneUpdateInput is true. 
+	 * If checkMessage value is true a success message will be displayed in the gui, else an error message
 	 * will be displayed.
 	 * 
 	 * @param countryCode represents the country code input from the user
 	 * @param phone represents the phone number inputed by the user
 	 */
 	public void savePhoneNumber(String countryCode,String phone) {
-		boolean checkMessage =false;
-		if(checkPhoneValidity(phone)&&checkCountryCodeValidity(countryCode)) {
+		checkMessage =false;
+		if(validatePhoneUpdateInputs(countryCode, phone)) {
 			System.out.println("The phone number and country code were valid, now going to update information");
 			UpdatePhoneNumber update = new UpdatePhoneNumber(Integer.valueOf(countryCode),Long.valueOf(phone));
 			System.out.println("Updating information");
@@ -185,6 +145,11 @@ public class ClientController {
 		
 	}
 
+	
+	private boolean validatePhoneUpdateInputs(String countryCode, String phone) {
+		return ValidInputType.validateLong(phone)&&ValidInputType.validateInteger(countryCode)&&validate.validatePhone(Long.valueOf(phone))&&validate.validateCountryCode(Integer.valueOf(countryCode));
+	}
+
     /**
      * private boolean updatePhoneNumberInformation(){}
      * This method checks if the phone number information was successfully updated into the data base
@@ -192,13 +157,11 @@ public class ClientController {
      * @return boolean value stating whether the phone number was successfully updated or not
      */
 	private boolean updatePhoneNumberInformation(UpdatePhoneNumber update) {
-		boolean checkMessage;
+		 checkMessage=false;
 		if (currentClient.updateClientInformation(update)) {
-			System.out.println("Everything went alright");
 			currentClient = new ClientApplication(this.clientID); 
 			checkMessage = true;
 		}else {
-			System.out.println("Something went wrong with the database update");
 			checkMessage = false;
 		}
 		return checkMessage;
@@ -227,7 +190,7 @@ public class ClientController {
 	 * @param email represents the new email imputed by the user
 	 */
 	public void saveEmail(String email) {
-		boolean checkMessage =false;
+		checkMessage =false;
 		if(checkEmailValidity(email)) {
 			System.out.println("The email type is valid, now going to try setting it");
 			UpdateEmail update = new UpdateEmail(email);
@@ -253,7 +216,7 @@ public class ClientController {
      * @return boolean value stating whether the email was successfully updated or not
      */
 	private boolean updateEmail(UpdateEmail update) {
-		boolean checkMessage;
+		checkMessage=true;
 		if (currentClient.updateClientInformation(update)) {
 			System.out.println("The email has been successfully updated");
 			currentClient = new ClientApplication(this.clientID);
@@ -385,12 +348,12 @@ public class ClientController {
 	}
 	
 	/**
-	 * public String getActiveShipments(){}
+	 * private String getActiveShipments(){}
 	 * This method stores the active shipments information by calling the getActiveShipments() Method
 	 * 
 	 * @return a String holding the active Shipments information
 	 */
-	public String getActiveShipments() {
+	private String getActiveShipments() {
 		String activeShipments ="The recently registered journeys: ";
 		
 		if (currentClient.getSetClient()) {
@@ -404,49 +367,50 @@ public class ClientController {
 	
 	
 	
-	/**
-	 * public boolean getContainerByContainerID(){}
-	 * This method returns a true statement if the containerID inputed exists and a false statement if the containerID doesn't exist into the data base
-	 * @param containerID holds the String ID representative for the container
-	 * @return a boolean value depending on the validity of the inputed container
-	 */
-	public boolean checkContainerByContainerID(String containerID) {
-		container = new ArrayList<Container>();
-		try {
-			currentClient.getContainer(Long.valueOf(containerID));
-			return checkIfContainerExists();
-		}catch(NumberFormatException e) {
-			System.out.println("The value in the containerID field is not valid format");
-			return false;
-		}catch(ElementSelectionException e) {
-			System.out.println("The containerID is not correct");
-			return false;
-		}
-	}
-
-    /**
-     * private boolean checkIfContainerExists(){}
-     * This method checks if such a container exists in the data base
-     * @return boolean value depending whether the container exists in the data base or not
-     */
-	private boolean checkIfContainerExists() {
-		if (currentClient.getSetContainer()) {// Changed this from foundContainer to getSetContainer
-			container.add(currentClient.viewContainer());
-			System.out.println("The container has been found, now the data can be displayed safely");
-			return true;
-		}else {
-			System.out.println("The container does not exist");
-			return false;
-		}
-	}
+//	/**
+//	 * public boolean getContainerByContainerID(){}
+//	 * This method returns a true statement if the containerID inputed exists and a false statement if the containerID doesn't exist into the data base
+//	 * @param containerID holds the String ID representative for the container
+//	 * @return a boolean value depending on the validity of the inputed container
+//	 */
+//	private boolean checkContainerByContainerID(String containerID) {
+//		container = new ArrayList<Container>();
+//		try {
+//			currentClient.getContainer(Long.valueOf(containerID));
+//			return checkIfContainerExists();
+//		}catch(NumberFormatException e) {
+//			System.out.println("The value in the containerID field is not valid format");
+//			return false;
+//		}catch(ElementSelectionException e) {
+//			System.out.println("The containerID is not correct");
+//			return false;
+//		}
+//	}
+//
+//    /**
+//     * private boolean checkIfContainerExists(){}
+//     * This method checks if such a container exists in the data base
+//     * @return boolean value depending whether the container exists in the data base or not
+//     */
+//	private boolean checkIfContainerExists() {
+//		if (currentClient.getSetContainer()) {// Changed this from foundContainer to getSetContainer
+//			container.add(currentClient.viewContainer());
+//			System.out.println("The container has been found, now the data can be displayed safely");
+//			return true;
+//		}else {
+//			System.out.println("The container does not exist");
+//			return false;
+//		}
+//	}
+	
 	
 	/**
-	 * public boolean getContainerByJourneyID(){}
+	 * private boolean getContainerByJourneyID(){}
 	 * This method returns a boolean value depending whether the journeyID inputed exists in the database
 	 * @param journeyID the String holding the journeyID
 	 * @return a boolean value depending on the user input.
 	 */
-	public boolean findContainerByJourneyID(String journeyID) {
+	private boolean findContainerByJourneyID(String journeyID) {
 		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
@@ -481,15 +445,15 @@ public class ClientController {
 		String activeShipments = this.getActiveShipments();
 		return activeShipments.contains(journeyID);
 	}
-	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+	
 	
 	/**
-	 * public boolean getContainerByCargo(){}
+	 * private boolean retrieveContainersByCargo(){}
 	 * This method returns a boolean value depending on whether the cargo inputed by the user exists in the database.
 	 * @param cargo the string holding the cargo information
 	 * @return boolean value depending whether the inputed cargo exists in the database or not
 	 */
-	public boolean getContainerByCargo(String cargo) {
+	private boolean retrieveContainersByCargo(String cargo) {
 		FilterByCargoName filter = new FilterByCargoName(currentClient.viewClient(),cargo);
 		container = currentClient.filterContainersOnAJourney(filter);
 		if(container.size()<=0) {
@@ -499,15 +463,15 @@ public class ClientController {
 		System.out.println("Found some containers containing this cargo");
 		return true;
 	}
-	//TODO names of methods that return boolean shouldn't start with get. If it updates a local field, the name should reflect that
+	
 	
 	/**
-	 * public boolean getContainerByPortName(){}
+	 * private boolean getContainerByPortName(){}
 	 * This method checks if there are active containers at a specific port and returns a boolean value depending on the outcome
 	 * @param portname the String holding the Port Name information
 	 * @return a boolean value showing whether there are containers present in a specific port or not
 	 */
-	public boolean getContainerByPortName(String portname) {
+	private boolean getContainerByPortName(String portname) {
 		portID = ExtractingPortID.getPortID(portname);
 		if (portID==1l) {
 			System.out.println("The portname is not present in the database");
@@ -627,13 +591,9 @@ public class ClientController {
 	public String getMulitpleContainersData() {
 		String result ="Displaying Up to most 2 Containers: ";
 		int contains = 0;
-		//TODO Try to avoid breaks. Place the test in the for declaration instead
-		for(int i=0;i<container.size();i++) {
+		for(int i=0;i<container.size()&&contains>2;i++) {
 			result =result+containerDataToString(container.get(i));
 			contains++;
-			if(contains>2) {
-				break;
-			}
 		}
 		return result;
 	}
@@ -689,14 +649,6 @@ public class ClientController {
 		   return false;
 	   };
 	   System.out.println("Port name is valid");
-	  //  currentClient.getAContainer(startPortID); // commenting all this part as there will always be a container set if the startport exists - muna
-	   // System.out.println("Checking if the container is set");
-	   // if (currentClient.getFoundContainer()) {
-	   // 	System.out.println("Container found");
-	   // 	return true;
-	   // }
-	  //  System.out.println("Container not found nor set, something wrong with currentclient method");
-		
 	    return true;
 	}
 	
@@ -720,23 +672,7 @@ public class ClientController {
 	
 	
 	
-	/**
-	 * private boolean checkFloat(){}
-	 * This method converts the inputed string into a float and check it's validity
-	 * @param floatnumber String holding the internal status value
-	 * @return a boolean value depending on the validity of the input
-	 */
-	private boolean checkFloat(String floatnumber) {
 
-		try {
-			Float.valueOf(floatnumber);
-			System.out.println("number value is correct");
-			return true;
-		}catch(NumberFormatException e) {
-			System.out.println("The internal status values are not valid");
-			return false;
-		}
-	}
 	
 	
 	/**
@@ -793,7 +729,7 @@ public class ClientController {
 	 */
 	public void saveJourney(String startPortName, String destinationPortName, String cargo, String atm, String temp, String humidity,
 			String arriveby) {
-		boolean checkMessage = checkStartPortName( startPortName);
+		checkMessage = checkStartPortName( startPortName);
 		if (checkMessage) {
 			checkMessage = checkDestinationPortName(destinationPortName);
 		}else  {
@@ -810,9 +746,9 @@ public class ClientController {
 		checkMessage = validate.validateName(cargo);
 		System.out.println(cargo+cargo.length());
 		if(checkMessage) {
-			checkMessage =checkFloat(atm);
-			checkMessage = checkFloat(temp);
-			checkMessage = checkFloat(humidity);
+			checkMessage =ValidInputType.validateFloat(atm);
+			checkMessage = ValidInputType.validateFloat(temp);
+			checkMessage = ValidInputType.validateFloat(humidity);
 		}else {
 			System.out.println("Cargo is not valid");
 			clientmenu.errorMessageForAddJourney();
@@ -847,14 +783,14 @@ public class ClientController {
 	 */
 	public String searchContainer(String journeyID, String cargo, String portName) {
 		boolean checkCriteria = false;
-		boolean checkMessage = false;
+		checkMessage = false;
 		long containerID = 1L;
 		if(!journeyID.isEmpty()) {
 			checkMessage = findContainerByJourneyID(journeyID);
 			checkCriteria =true;
 		}
 		if(!checkMessage&&!cargo.isEmpty()) {
-			checkMessage = getContainerByCargo(cargo);
+			checkMessage = retrieveContainersByCargo(cargo);
 		}
 		if(!checkMessage&&!portName.isEmpty()) {
 			checkMessage = getContainerByPortName(portName);
@@ -883,11 +819,11 @@ public class ClientController {
 	
 	
 	/**
-	 * public String setSuccessfulJourneys() {}
+	 * public String getSuccessfulJourneys() {}
 	 * This method collects the information about a successful journey and stores it into a variable called result
 	 * @return result which stores the successful journey information
 	 */
-	public String setSuccessfulJourneys() {
+	public String getSuccessfulJourneys() {
 		String result = "---------------------------------------";
 		for(long journeys : currentClient.viewClient().getFinishedShipments()) {
 			result = result +"\nJourney ID: "+journeys;
