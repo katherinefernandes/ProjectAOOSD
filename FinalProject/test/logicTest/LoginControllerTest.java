@@ -29,7 +29,7 @@ public class LoginControllerTest {
 		Client client = new Client(311l,"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		assertTrue(controller.validClientInfo("311"));
-	}
+	} 
 	
 	@Test
 	public void validCompanyInfoTest() {

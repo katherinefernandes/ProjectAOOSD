@@ -29,7 +29,6 @@ import graphsForInternalStatus.LineGraphTemperature;
 
 //TODO I think there should only be one search field for. Makes no sense to restrict what a user can search for
 public class LogisticMenu {
-	//TODO add field for timestamp on update of internal status and position of container. "Leave blank for current time" should be written somewhere.
 	public JFrame frame;
 	public JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10;
 	public JTextField textField_11,textField_12,textField_13,textField_14,textField_15;
@@ -282,15 +281,32 @@ public class LogisticMenu {
 		Save1.setBounds(213, 351, 117, 29);
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtrSuccess.setVisible(false);
-				txtrSomethingWentWrong.setVisible(false);
+				String middlename;
 				if(textField_10.getText().isEmpty()||textField_9.getText().isEmpty()||textField_8.getText().isEmpty()||textField_7.getText().isEmpty()||textField_6.getText().isEmpty()||textField_4.getText().isEmpty()||textField_3.getText().isEmpty()||textField_2.getText().isEmpty()||textField_1.getText().isEmpty()||textField.getText().isEmpty()) {
 					System.out.println("One of the fields is empty, please try again");
 					txtrSomethingWentWrong.setVisible(true);
 					return;
 				}else {
-					
-					controller.addNewClient(textField_10.getText(),textField_9.getText(),textField_8.getText(),textField_7.getText(),textField_6.getText(),textField_5.getText(),textField_4.getText(),textField_3.getText(),textField_2.getText(),textField_1.getText(),textField.getText());
+					if(textField_5.getText().isEmpty()) {
+						 middlename = " ";
+						 
+					}
+					else {
+						middlename = textField_5.getText();
+					}
+					boolean checkMessage = controller.addNewClient(textField_10.getText(),textField_9.getText(),textField_8.getText(),textField_7.getText(),textField_6.getText(),middlename,textField_4.getText(),textField_3.getText(),textField_2.getText(),textField_1.getText(),textField.getText());
+				    if(checkMessage) {
+				    	txtrSomethingWentWrong.setVisible(false);
+				    	txtrSuccess.setVisible(true);
+				   
+				    
+				    }
+				    else {
+				    	txtrSuccess.setVisible(false);
+				    	txtrSomethingWentWrong.setVisible(true);
+				    	
+				    	
+				    }
 				}
 				
 				clearDataFields(textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10);
@@ -369,7 +385,7 @@ public class LogisticMenu {
 				}
 				clearDataFields(textField_16,textField_14,textField_15);
 			
-		}});
+		}}); 
 		
 		ContainePositionrPanel.add(Save2);
 		
@@ -811,7 +827,7 @@ public class LogisticMenu {
 				successSearch.setVisible(false);
 				controller.searchClient(clientemailTextField.getText(),companyNameTextField.getText(),clientPhoneTextField.getText(),firstNameTextField.getText(),middlenameTextField.getText(),lastNameTextField.getText());
 				if(controller.checkMessage()) {
-					viewClientTextField.setText(controller.viewClient());
+					viewClientTextField.setText(controller.getclientsview());
 					switchPanels(viewClientPanel);
 				}
 				clearDataFields(clientemailTextField,companyNameTextField,clientPhoneTextField,firstNameTextField,middlenameTextField,lastNameTextField);
@@ -877,7 +893,7 @@ public class LogisticMenu {
 	
 	public void setFieldsClientData() {
 		
-		viewClientTextField.setText(controller.viewClient());
+		viewClientTextField.setText(controller.getclientsview());
 	}
 	public void switchPanels(JPanel panel) {
 		System.out.println("in switch panels");
@@ -916,6 +932,7 @@ public class LogisticMenu {
 	}
 
 	public void successFieldForAddClient() {
+		System.out.println("Inside success field for add client");
 		setTextVisibleTrue(txtrSuccess);
 	}
 	public void successPositionUpdate() {

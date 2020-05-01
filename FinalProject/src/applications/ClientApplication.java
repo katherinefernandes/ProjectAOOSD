@@ -75,6 +75,7 @@ public class ClientApplication extends Application {
 	 * @param humidity
 	 * @param arriveBy
 	 */
+	//this needs to be fixed -- need to add the last visited port 
 	public void registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy) {
 		long containerID = getContainerID(startPortID);

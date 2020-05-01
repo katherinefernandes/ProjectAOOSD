@@ -21,11 +21,8 @@ import supportingClasses.ValidInput;
 import supportingClasses.InputParser;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
-/**
- * This class connects the logic behind the Logistics Company to the graphical user interface
- * @author daniela
- *
- */
+
+
 public class LogisticController {
 	private CompanyApplication logistic;
 	private String companyName;
@@ -52,163 +49,117 @@ public class LogisticController {
 	private SearchByReferencePerson optionRefPerson;
 	private LogisticMenu logisticMenu;
 	private boolean	checkMessage ;
-	/**
-	 * This constructor initialises the logistics company menu 
-	 */
+	
 	public LogisticController(){
 		logistic = new CompanyApplication();
 		validate = new ValidInput();
 		logisticMenu = new LogisticMenu(this);
 	}
 
+	//TODO unify way of sending information from interface to controller
+	//TODO reduce method to one level of abstraction
 	//TODO methods called in interface should have names that of the form "saveRefrencePersonPressed" to make it clear that we're separating view from controller
+	//TODO Is it really valuable to have all these getters and setters return booleans? Seems largely unnecessary, and in conflict with the single responsibility principle
+	//It could be okay in some contexts, but I don't think we should follow the pattern as a rule.
+	private boolean setCompanyName(String text) {
 
-	/**
-	 * private boolean setCompanyNam(){}
-	 * This method sets the new company name
-	 * @param text string that holds the value of the company name
-	 * @return true
-	 */
-	private void setCompanyName(String text) {
 		this.companyName=text;
-	}
-
- 
-	private void setEmail(String email) {
-		this.email = email;	
+		return true;
 	}
 
 
-//	
-//	private boolean setCountryCode(String countryCode) {
-//
-//		try {
-//			cc = Integer.valueOf(countryCode);
-//			System.out.println("string is correct");
-//			return validate.validateCountryCode(cc);
-//		}catch(NumberFormatException e) {
-//			System.out.println("the countrycode is not valid");
-//			return false;
-//		}
-//	}
-	
-	
-	private void setCountryCode(String countryCode) {
-		this.cc = Integer.valueOf(countryCode);
+	private boolean setEmail(String email) {
+
+		this.email = email;
+		return validate.validateEmail(email);
 	}
 
-    /**
-     * private boolean setPhoneNumber(){}
-     * This method sets the phone number inputed by the user
-     * @param phone String that holds the value of the phone number
-     * @return boolean value depending whether the input is valid or not
-     */
-//	private boolean setPhoneNumber(String phone) {
-//			try {
-//				phonenumber = Long.valueOf(phone);
-//				System.out.println("string is correct");
-//				return validate.validatePhone(phonenumber);
-//				}catch(NumberFormatException e) {
-//					System.out.println("the countrycode is not valid");
-//					return false;
-//				}
-//	}
-	
-	private void setPhoneNumber(String phone) {
-		phonenumber = Long.valueOf(phone);
+
+	private boolean setCountryCode(String countryCode) {
+
+		try {
+			cc = Integer.valueOf(countryCode);
+			System.out.println("string is correct");
+			return validate.validateCountryCode(cc);
+		}catch(NumberFormatException e) {
+			System.out.println("the countrycode is not valid");
+			return false;
+		}
 	}
 
-    /**
-     * private boolean setFirstName(){}
-     * This method sets the first name 
-     * @param name1 holds the value inputed by the user for the first name of the reference person
-     * @return a boolean value depending whether the name is valid or not
-     */
-	private void setFirstName(String name1) {
+
+	private boolean setPhoneNumber(String phone) {
+			try {
+				phonenumber = Long.valueOf(phone);
+				System.out.println("string is correct");
+				return validate.validatePhone(phonenumber);
+				}catch(NumberFormatException e) {
+					System.out.println("the countrycode is not valid");
+					return false;
+				}
+	}
+
+
+	private boolean setFirstName(String name1) {
 
 		firstName = InputParser.parsingNames(name1);
-		//return validate.validateName(name1);
+		return validate.validateName(name1);
 	}
 
-    /**
-     * private boolean setMiddleName(){}
-     * This method sets the middle name of the reference person
-     * @param name2 holds the string containing the middle name or middle names (that's why we use the parser)
-     * @return boolean depending whether the input is valid
-     */
-	private void setMiddleName(String name2) {
+
+	private boolean setMiddleName(String name2) {
 
 		middleName = InputParser.parsingNames(name2);
-		//return validate.validateName(name2);
+		System.out.println(name2 + "Is the name");
+		return validate.validateName(name2);
 	}
 
-    /**
-     * private boolean setLastName(){}
-     * This method sets the Last Name of the reference person
-     * @param name stores the string holding the last name of the reference person
-     * @return boolean depending whether the name inputed is valid or not
-     */
-	private void setLastName(String name) {
+
+	private boolean setLastName(String name) {
 		lastName = InputParser.parsingNames(name);
-		//return validate.validateName(name);
+		return validate.validateName(name);
 	}
 
-    /**
-     * private boolean setStreetName(){}
-     * This method sets the street Name
-     * @param street holds the string containing the inputed street name 
-     * @return true (we assumed any street would be valid) 
-     */
-	private void setStreetName(String street) {
+
+	private boolean setStreetName(String street) {
 
 		this.street=street;
-
+		return true;
 	}
 
-    /**
-     * private boolean setCity(){}
-     * This method sets the City
-     * @param text String containing the city name
-     * @return boolean depending whether the City is Valid or not
-     */
-	private void setCity(String text) {
+
+	private boolean setCity(String text) {
 
 		this.city = text;
-		//return validate.validateName(text);
-	}
-	
-	
-  
-    /**
-     * 
-     * @param text
-     * @return
-     */
-	private void setBuilding(String text) {
-//		try {
-//			this.building = Integer.valueOf(text);
-//			System.out.println("Building number is correct");
-//			return true;
-//			}catch(NumberFormatException e) {
-//				System.out.println("the building number is not valid");
-//				return false;
-//			}
-		this.building = Integer.valueOf(text);
+		return validate.validateName(text);
 	}
 
 
-	private void setPostcode(String postcode) {
+	private boolean setBuilding(String text) {
+		try {
+			System.out.println("The set building number is----------------------------");
+			System.out.println(text);
+			this.building = Integer.valueOf(text);
+			System.out.println("Building number is correct");
+			return true;
+			}catch(NumberFormatException e) {
+				System.out.println("the building number is not valid");
+				return false;
+			}
+	}
+
+
+	private boolean setPostcode(String postcode) {
 
 		this.zipcode= postcode;
-		//return validate.validatePostCode(postcode);
+		return validate.validatePostCode(postcode);
 	}
 
 
-	private boolean addClient() {
+	private void addClient() {
 
-		logistic.setAddNewClient();
 		logistic.addClient(email, companyName, cc, phonenumber, firstName, middleName, lastName, street, city, zipcode, building);
-		return logistic.getAddNewClient();
+		
 	}
 
 
@@ -232,10 +183,10 @@ public class LogisticController {
 	
 
 
-	public boolean updateStatus(String pressure, String humidity, String temperature) {
+	private boolean updateStatus(String pressure, String humidity, String temperature) {
 		float temp;
 		float humi;
-		float pres; 
+		float pres;
 		try {
 			temp= Float.valueOf(temperature);
 			System.out.println("Correct temperature");
@@ -322,7 +273,8 @@ public class LogisticController {
 		return false;
 	}
 
-	public boolean findClientByEmail(String searchEmail) {
+	//TODO names of methods returning booleans shouldn't start with get
+	private boolean getClientByEmail(String searchEmail) {
 
 		optionEmail = new SearchByEmail(searchEmail);
 		clients= logistic.search(optionEmail);
@@ -330,12 +282,12 @@ public class LogisticController {
 			
 			return true;
 		}
-		return false; 
+		return false;
 		
 	}
 
 
-	public boolean findClientByCompanyName(String searchName) {
+	private boolean getClientByCompanyName(String searchName) {
 
 		optionName = new SearchByName(searchName);
 		clients = logistic.search(optionName);
@@ -346,7 +298,7 @@ public class LogisticController {
 	}
 
 
-	public boolean findClientByPhone(String phone) {
+	private boolean getClientByPhone(String phone) {
 
 		long phonenumber;
 		try {
@@ -365,7 +317,7 @@ public class LogisticController {
 	}
 
 
-	public boolean findClientByReferencePerson(String text, String string, String text2) {
+	private boolean getClientByReferencePerson(String text, String string, String text2) {
 		firstN = InputParser.parsingNames(text);
 		
 		middleN = InputParser.parsingNames(string);
@@ -383,9 +335,9 @@ public class LogisticController {
 		return false;
 	}
 
-
-	public String viewClient() {
-
+ 
+	public String getclientsview() {
+        System.out.println("Inside get client view");
 		String result ="Displaying Up to most 3 Clients: ";
 		int counter =0;
 		for(int i=0;i<clients.size();i++) {
@@ -416,98 +368,73 @@ public class LogisticController {
 
 
 	
-	public void addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
-		setCompanyName(companyName);
-		if(validate.validateEmail(email)) {
-			setEmail(email);
-		}
-		
-		else {
-			System.out.println("email name has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
-		}
-		
-		
-		if(validate.validateCountryCode(cc)) {
-			setCountryCode(countrycode);
-		}
-		
-		else {
-			System.out.println("country code has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
-		}
-		
-		 
-		if(validate.validatePhone(Long.valueOf(phone))) {
-			setPhoneNumber(phone);
-		}
-		
-		
-		else {
-			System.out.println("phonenumber has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
-		}
-		if (validate.validateName(firstname)) {
-			setFirstName(firstname);
-		}
-		
-		else {
-			System.out.println("Invalid first name");
-			logisticMenu.errorMessageForAddClient();
-			return;
-		}
-		if (validate.validateName(middlename)) {
-			setMiddleName(middlename);
+	public boolean addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
+		setCompanyName(companyname);
+		boolean checkMessage=setEmail(email);
+		if(checkMessage) {
+			checkMessage = setCountryCode(countrycode);
 		}else {
-			System.out.println("middle name has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			System.out.println("email has error");
+			return false;
 		}
-		if (validate.validateName(lastname)) {
-			setLastName(lastname);
+		if(checkMessage) {
+			checkMessage = setPhoneNumber(phone);
 		}else {
-			System.out.println("last name has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			System.out.println("Countrycode has error");
+			return false;
 		}
-		if(validate.validateName(street)) {
-			setStreetName(street);
+		if (checkMessage) {
+			checkMessage =setFirstName(firstname);
 		}else {
-			System.out.println("Street name has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			System.out.println("phone has error");
+			return false;
 		}
-		if(validate.validateName(city)) {
-			setCity(city);
+		if (checkMessage) {
+			checkMessage =setMiddleName(middlename);
 		}else {
-			System.out.println("City name has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			System.out.println("firstname has error");
+			return false;
 		}
-		if(validate.validateLocation(Float.valueOf(building))) {
-			setBuilding(building);
-			
+		if (checkMessage) {
+			checkMessage = setLastName(lastname);
 		}else {
-			System.out.println("cbuilding has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			System.out.println("middlename has error");
+			return false;
 		}
-		if(validate.validatePostCode(postcode)) {
-			setPostcode(postcode);
+		if(checkMessage) {
+			checkMessage = setStreetName(street);
 		}else {
-			System.out.println("Post code has error");
-			logisticMenu.errorMessageForAddClient();
-			return;
+			System.out.println("lastname has error");
+			return false;
+		}
+		if(checkMessage) {
+			checkMessage = setCity(city);
+		}else {
+			System.out.println("street has error");
+			return false;
+		}
+		if(checkMessage) {
+			checkMessage =setBuilding(building);
+			System.out.println("Building,"+checkMessage);
+		}else {
+			System.out.println("city has error");
+			return false;
+		}
+		if(checkMessage) {
+			checkMessage =setPostcode(postcode);
+		}else {
+			System.out.println("building has error");
+			return false;
+		}
+		if(checkMessage) {
+			addClient();
+			System.out.println("Client was added successfully");
+			return true;
+		}else {
+			System.out.println("postcode has error");
+			return false;
 		}
 		
-		if(addClient()) {
-			logisticMenu.successFieldForAddClient();
-		}else {
-			logisticMenu.errorMessageForAddClient();
-		}
 		
 	}
 
@@ -524,7 +451,7 @@ public class LogisticController {
 		}
 		if(checkMessage) {
 			System.out.println("Valid info");
-			
+			System.out.println(logistic.viewContainer().getID());
 			
 		}else {
 			
@@ -566,21 +493,21 @@ public class LogisticController {
 		//TODO this could probably be done in a for loop
 		checkMessage=false;
 		if (!email.isEmpty()) {
-			checkMessage = findClientByEmail(email);
+			checkMessage = getClientByEmail(email);
 			
 		} 
 		if(!checkMessage&&!company.isEmpty()) {
-			checkMessage = findClientByCompanyName(company);
+			checkMessage = getClientByCompanyName(company);
 			
 		}
 		if(!checkMessage&&!phone.isEmpty()) {
-			checkMessage =findClientByPhone(phone);
+			checkMessage =getClientByPhone(phone);
 		}
 		if(!checkMessage&&!(firstname.isEmpty()&&last.isEmpty())) {
 			if(middle.isEmpty()) {
-				checkMessage = findClientByReferencePerson(firstname,"",last);
+				checkMessage = getClientByReferencePerson(firstname,"",last);
 			}else {
-				checkMessage = findClientByReferencePerson(firstname,middle,last);
+				checkMessage = getClientByReferencePerson(firstname,middle,last);
 			}
 		}
 		

@@ -368,15 +368,14 @@ public class ApplicationSteps {
 	}
 	@Given("the logistic Company decides to add a new client")
 	public void theLogisticCompanyDecidesToAddANewClient() {
-		assertFalse(logistic.getAddNewClient());
-	    logistic.setAddNewClient();   
+		   //remove this given or check in a different way Muna
 	}
 
 
 	@Then("a unique client ID is generated")
 	public void aUniqueClientIDIsGenerated() {
-		logistic.addClient(email, name, countryCode, phone, firstName, middleName, lastName, street, city, postCode, houseNumber);
-		assertTrue(logistic.getAddNewClient());
+		long ID = logistic.addClient(email, name, countryCode, phone, firstName, middleName, lastName, street, city, postCode, houseNumber);
+		assertTrue(DataBase.searchClients(Long.toString(ID)).size()>0);
 	}
 	
 	@When("the client email is provided {string}")
