@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 
 import businessObjects.Container;
@@ -28,7 +29,7 @@ public class HistoryAccessTest extends DataAccessTest<Container> {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void persistencyTestT() throws NumberFormatException, ElementSelectionException {
 		persistencyTest(); }
 	
@@ -64,7 +65,7 @@ public class HistoryAccessTest extends DataAccessTest<Container> {
 
 	@Override
 	@AfterEach
-	public void cleanUp() {
+	public void cleanUp() { // needs to be tested
 		toBeDeleted = new ArrayList<>();
 		DataBase.wipeHistory();
 	}

@@ -78,7 +78,7 @@ public class Container implements BusinessObject {
 	public void setCargo(String cargo) {
 		this.cargo=cargo;
 	}
-	public void setUpdated(String time) {
+	public void setUpdated(String time) {//test this
 		this.updated = time;
 	}
 	public void setArriveBy(String arriveBy) {
@@ -130,7 +130,7 @@ public class Container implements BusinessObject {
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){
+	public List<String> getAllValues(){// needs to be tested
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getClientID()));

@@ -321,7 +321,7 @@ public class ClientController {
 			IDs = IDs+"\nJourney: "+list.get(i);
 			System.out.println(IDs);
 			counter=counter+1;
-			if(counter>2) {
+			if(counter>2) { // test or remove
 				break;
 			}
 		}
@@ -363,47 +363,6 @@ public class ClientController {
 		return activeShipments;
 	}
 	
-	
-	
-	
-	
-//	/**
-//	 * public boolean getContainerByContainerID(){}
-//	 * This method returns a true statement if the containerID inputed exists and a false statement if the containerID doesn't exist into the data base
-//	 * @param containerID holds the String ID representative for the container
-//	 * @return a boolean value depending on the validity of the inputed container
-//	 */
-//	private boolean checkContainerByContainerID(String containerID) {
-//		container = new ArrayList<Container>();
-//		try {
-//			currentClient.getContainer(Long.valueOf(containerID));
-//			return checkIfContainerExists();
-//		}catch(NumberFormatException e) {
-//			System.out.println("The value in the containerID field is not valid format");
-//			return false;
-//		}catch(ElementSelectionException e) {
-//			System.out.println("The containerID is not correct");
-//			return false;
-//		}
-//	}
-//
-//    /**
-//     * private boolean checkIfContainerExists(){}
-//     * This method checks if such a container exists in the data base
-//     * @return boolean value depending whether the container exists in the data base or not
-//     */
-//	private boolean checkIfContainerExists() {
-//		if (currentClient.getSetContainer()) {// Changed this from foundContainer to getSetContainer
-//			container.add(currentClient.viewContainer());
-//			System.out.println("The container has been found, now the data can be displayed safely");
-//			return true;
-//		}else {
-//			System.out.println("The container does not exist");
-//			return false;
-//		}
-//	}
-	
-	
 	/**
 	 * private boolean getContainerByJourneyID(){}
 	 * This method returns a boolean value depending whether the journeyID inputed exists in the database
@@ -411,7 +370,7 @@ public class ClientController {
 	 * @return a boolean value depending on the user input.
 	 */
 	private boolean findContainerByJourneyID(String journeyID) {
-		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
+		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {//test this
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
 		    container= currentClient.filterContainersOnAJourney(filter);
@@ -425,7 +384,7 @@ public class ClientController {
      * This method checks if the array contains any containers
      * @return boolean value depending on the outcome
      */
-	private boolean findContainerByID() {
+	private boolean findContainerByID() {//test this
 		if (container.size()>0) {
 			System.out.println("Container found, now the data can be read");
 			return true;
@@ -456,7 +415,7 @@ public class ClientController {
 	private boolean retrieveContainersByCargo(String cargo) {
 		FilterByCargoName filter = new FilterByCargoName(currentClient.viewClient(),cargo);
 		container = currentClient.filterContainersOnAJourney(filter);
-		if(container.size()<=0) {
+		if(container.size()<=0) {//test this 
 			System.out.println("There is no container containing this cargo"+cargo+ "for this client");
 			return false;
 		}
@@ -471,7 +430,7 @@ public class ClientController {
 	 * @param portname the String holding the Port Name information
 	 * @return a boolean value showing whether there are containers present in a specific port or not
 	 */
-	private boolean getContainerByPortName(String portname) {
+	private boolean getContainerByPortName(String portname) {//test this
 		portID = ExtractingPortID.getPortID(portname);
 		if (portID==1l) {
 			System.out.println("The portname is not present in the database");
@@ -508,7 +467,7 @@ public class ClientController {
 		Port port;
 		try {
 			port = DataBase.getPort(portID);
-		} catch (ElementSelectionException e) {
+		} catch (ElementSelectionException e) { //test this
 			System.out.println("Cant find the port");
 			throw new Error(e);
 		}
@@ -591,7 +550,7 @@ public class ClientController {
 	public String getMulitpleContainersData() {
 		String result ="Displaying Up to most 2 Containers: ";
 		int contains = 0;
-		for(int i=0;i<container.size()&&contains>2;i++) {
+		for(int i=0;i<container.size()&&contains>2;i++) { //test this
 			result =result+containerDataToString(container.get(i));
 			contains++;
 		}
@@ -604,7 +563,7 @@ public class ClientController {
 	 * @param container the object holding the container data
 	 * @return the string containing the container information
 	 */
-	private String containerDataToString(Container container) {
+	private String containerDataToString(Container container) {//test this
 		String result="\n";
 		result = result +"\nJourney ID: "+container.getJourneyID();
 		result = result +"\nStart Port: "+getPortName(container.getStartPortID());
@@ -626,7 +585,8 @@ public class ClientController {
 	 * @param container the object holding the container information
 	 * @return a String holding the internal status of a container
 	 */
-	private String getInternalStatus(Container container) {
+	
+	private String getInternalStatus(Container container) { //test this
 		String temp= Float.toString(container.getInternalStatus().getTemperature());
 		String humidity = Float.toString(container.getInternalStatus().getHumidity());
 		String pressure = Float.toString(container.getInternalStatus().getAtmosphere());
@@ -644,7 +604,7 @@ public class ClientController {
 	private boolean checkStartPortName(String portname) {
 		startPortID = ExtractingPortID.getPortID(portname);
 		System.out.println("Checking if the port name exists");
-	   if (startPortID==1l) {
+	   if (startPortID==1l) {//test this
 		   System.out.println("Port name doesnot exist");
 		   return false;
 	   };
@@ -662,7 +622,7 @@ public class ClientController {
 	 */
 	private boolean checkDestinationPortName(String portname) {
 		destinationPortID = ExtractingPortID.getPortID(portname);
-		if(destinationPortID==1l) {
+		if(destinationPortID==1l) { //test this
 			System.out.println("Destination port does not exit");
 			return false;
 		}
@@ -687,7 +647,7 @@ public class ClientController {
 		try {
 			///date; -> Need to write return validate.validateDate(date)
 			return true;
-		}catch(DateTimeException e ){
+		}catch(DateTimeException e ){// why do we have this 
 				System.out.println("Not accurate date format");
 		}catch ( java.lang.ArrayIndexOutOfBoundsException e) {
 			System.out.println("Not accurate date format");
@@ -732,12 +692,12 @@ public class ClientController {
 		checkMessage = checkStartPortName( startPortName);
 		if (checkMessage) {
 			checkMessage = checkDestinationPortName(destinationPortName);
-		}else  {
+		}else  {//test this
 			System.out.println("There is no startPortName");
 			clientmenu.errorMessageForAddJourney();
 			return;
 		}
-		if(!checkMessage) {
+		if(!checkMessage) {//test this
 			System.out.println("Destination port not valid");
 			clientmenu.errorMessageForAddJourney();
 			return;
@@ -749,14 +709,14 @@ public class ClientController {
 			checkMessage =ValidInputType.validateFloat(atm);
 			checkMessage = ValidInputType.validateFloat(temp);
 			checkMessage = ValidInputType.validateFloat(humidity);
-		}else {
+		}else {//test this
 			System.out.println("Cargo is not valid");
 			clientmenu.errorMessageForAddJourney();
 			return;
 		}
 		if(checkMessage) {
 			checkMessage =setArriveByString(arriveby);
-		}else {
+		}else {//test this
 			System.out.println("One of the internal status things is invalid");
 			clientmenu.errorMessageForAddJourney();
 			return;
@@ -765,7 +725,7 @@ public class ClientController {
 			System.out.println("Everything is valid, now trying to register");
 			registerJourney(cargo,  atm, temp,  humidity, arriveby);
 			clientmenu.successFieldForAddJourney();
-		}else {
+		}else {//test this
 			System.out.println("Arriveby is not valid");
 			clientmenu.errorMessageForAddJourney();
 			return;
@@ -792,7 +752,7 @@ public class ClientController {
 		if(!checkMessage&&!cargo.isEmpty()) {
 			checkMessage = retrieveContainersByCargo(cargo);
 		}
-		if(!checkMessage&&!portName.isEmpty()) {
+		if(!checkMessage&&!portName.isEmpty()) {//test this
 			checkMessage = getContainerByPortName(portName);
 		}
 		if(checkMessage) {
@@ -805,11 +765,11 @@ public class ClientController {
 				containerID=container.get(0).getID();
 				clientmenu.viewOneContainerPanel();
 				
-			}else {
+			}else {//test this
 				clientmenu.setFieldsContainerData();
 				clientmenu.viewMultipleContainerPanel();
 			}
-		}else {
+		}else { //test this
 			System.out.println("no container found by the above criterias");
 			clientmenu.containerSearchError();
 		}
@@ -823,7 +783,7 @@ public class ClientController {
 	 * This method collects the information about a successful journey and stores it into a variable called result
 	 * @return result which stores the successful journey information
 	 */
-	public String getSuccessfulJourneys() {
+	public String getSuccessfulJourneys() {//not tested
 		String result = "---------------------------------------";
 		for(long journeys : currentClient.viewClient().getFinishedShipments()) {
 			result = result +"\nJourney ID: "+journeys;
@@ -842,7 +802,7 @@ public class ClientController {
 	 * @param journeys stores the journey ID 
 	 * @return either the port name or a string "Unknown" 
 	 */
-	private String getFinalDestinationByJourneyID(long journeys) {
+	private String getFinalDestinationByJourneyID(long journeys) {//not tested
 		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
 		if (containers.size()>0) {
 			return getPortName(containers.get(0).getDestinationPortID());
@@ -858,7 +818,7 @@ public class ClientController {
 	 * @param journeys Long storing the journey ID
 	 * @return the cargo of the container or the "unknown" message.
 	 */
-	private String getCargoByJourneyID(long journeys) {
+	private String getCargoByJourneyID(long journeys) {//not tested
 		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
 		if (containers.size()>0) {
 			return containers.get(0).getCargo();

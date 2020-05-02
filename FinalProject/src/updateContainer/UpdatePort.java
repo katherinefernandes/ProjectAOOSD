@@ -17,7 +17,6 @@ public class UpdatePort implements UpdateContainer {
 	
 	@Override
 	public boolean updated() {
-		// TODO Auto-generated method stub
 		return update;
 	}
 
@@ -38,7 +37,7 @@ public class UpdatePort implements UpdateContainer {
 			try {
 				client = DataBase.getClient(container.getClientID());
 			} catch (ElementSelectionException e) {
-				throw new Error(e);
+				throw new Error("Client not found",e); //need to test this somehow
 			}
 			client.removeActiveShipment(container.getJourneyID());
 			client.addFinishedShipment(container.getJourneyID());
@@ -46,8 +45,6 @@ public class UpdatePort implements UpdateContainer {
 			new UpdateDestinationPort().updatedestinationPortAtEndOfJourney(container.getDestinationPortID(), container.getID());
 			container.useContainerAgain(0000000l, 00000l, container.getDestinationPortID(), container.getDestinationPortID(), "none", 0, 0, 0, "1-1-2020");
 			container.save();
-		
-		
 	}
 
 }

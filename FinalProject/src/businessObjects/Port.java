@@ -54,7 +54,7 @@ public class Port implements BusinessObject{
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){
+	public List<String> getAllValues(){ // need to test this
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getCountry()));

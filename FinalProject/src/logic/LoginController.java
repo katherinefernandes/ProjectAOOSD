@@ -59,7 +59,6 @@ public class LoginController {
 	 */
 	public void loginButtonPressed(boolean isClient) { 
 		boolean validLogin;
-		//boolean isClient = window.isClientButtonChecked();
 		if(isClient) {
 			validLogin = validClientInfo(clientText);
 		}
@@ -68,8 +67,8 @@ public class LoginController {
 			validLogin =validCompanyInfo(companyName,companyPasswordIN);
 		}
 		if(!validLogin) {
-			window.invalidInput();
-		} else {
+			window.invalidInput(); // test this
+		} else { // test this 
 			invokeNextFrame(isClient);} 
 	}
 	
@@ -106,7 +105,7 @@ public class LoginController {
 	 */
 	private void nextComapanyFrame() {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+			public void run() {//test this
 				try {
 					LogisticController logisticController = new LogisticController();
 					LogisticMenu logistics = new LogisticMenu(logisticController);
@@ -124,7 +123,7 @@ public class LoginController {
 	 */
 	private void nextClientFrame() {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+			public void run() {//test this
 				try {
 					new ClientController(clientText);
 					window.closeFrame();

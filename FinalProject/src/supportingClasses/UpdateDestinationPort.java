@@ -44,7 +44,7 @@ public class UpdateDestinationPort {
 			destinationPort.removeArrivingContainer(containerID);
 			destinationPort.save();
 		} catch (ElementSelectionException e) {
-			throw new Error(e);
+			throw new Error(e); // need to test this
 		}
 	}
 	

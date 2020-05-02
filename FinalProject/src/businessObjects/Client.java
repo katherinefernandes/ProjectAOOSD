@@ -66,7 +66,7 @@ public class Client implements BusinessObject{
 	public void removeActiveShipment(long shipmentID){
 		activeShipments.remove(shipmentID);
 	}
-	public void removeFinishedShipment(long shipmentID){
+	public void removeFinishedShipment(long shipmentID){//test this
 		finishedShipments.remove(shipmentID);
 	}
 	public void save() {
@@ -75,7 +75,7 @@ public class Client implements BusinessObject{
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){
+	public List<String> getAllValues(){//test this
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getCompanyName()));

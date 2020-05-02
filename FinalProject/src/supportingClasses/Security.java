@@ -10,7 +10,7 @@ public class Security {
 		return ID;
 	}   	
 	
-	public static long generateIDFromSecureRandom() {
+	public static long generateIDFromSecureRandom() { // do we need this? if so then this needs to be tested
 		SecureRandom random = new SecureRandom();
 		return random.nextLong();
 	}

@@ -71,7 +71,7 @@ class ClientControllerTest {
 		assertTrue(controller.getReferencePerson().contains("Daniela"));
 		assertTrue(controller.getAddress().contains("Islamabad"));
 		assertTrue(controller.getAllActiveShipments().contains("All Active Journeys: "));
-
+		
 		
 	}
 
