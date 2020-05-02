@@ -39,6 +39,7 @@ public class Container implements BusinessObject {
 		this.clientID=clientID;
 		this.journeyID=journeyID;
 		this.startPortID=startPortID;
+		this.lastVisitedPortID = startPortID;
 		this.destinationPortID=destinationPortID;
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo=cargo;
@@ -78,7 +79,7 @@ public class Container implements BusinessObject {
 	public void setCargo(String cargo) {
 		this.cargo=cargo;
 	}
-	public void setUpdated(String time) {//test this
+	public void setUpdated(String time) {
 		this.updated = time;
 	}
 	public void setArriveBy(String arriveBy) {

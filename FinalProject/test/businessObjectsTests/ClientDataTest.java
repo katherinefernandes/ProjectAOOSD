@@ -3,6 +3,8 @@ package businessObjectsTests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.*;
 
 import businessObjects.Client;
@@ -73,6 +75,15 @@ public class ClientDataTest {
 		assertTrue(objectTest.getActiveShipments().isEmpty());
 		objectTest.addActiveShipment(3090l);
 		assertFalse(objectTest.getActiveShipments().isEmpty());
+		
+	}
+	
+	@Test
+	public void testGetAllValues() {
+		objectTest.addActiveShipment(3090l);
+		objectTest.addFinishedShipment(89728l);
+		List<String> values = objectTest.getAllValues();
+		assertTrue(values.get(0).equals(Long.toString(objectTest.getID())));
 		
 	}
 

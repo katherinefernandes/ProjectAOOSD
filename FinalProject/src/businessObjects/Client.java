@@ -66,16 +66,13 @@ public class Client implements BusinessObject{
 	public void removeActiveShipment(long shipmentID){
 		activeShipments.remove(shipmentID);
 	}
-	public void removeFinishedShipment(long shipmentID){//test this
-		finishedShipments.remove(shipmentID);
-	}
 	public void save() {
 		DataBase.save(this);
 	}
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){//test this
+	public List<String> getAllValues(){
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getCompanyName()));

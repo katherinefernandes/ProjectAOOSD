@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -672,7 +673,8 @@ public class ApplicationSteps {
 
 	@When("the database is asked to return the port data")
 	public void theDatabaseIsAskedToReturnThePortData() {
-		 result = new UpdateDestinationPort().updatePort(portID, 34569l);
+		 assertThrows(java.lang.Error.class,()-> new UpdateDestinationPort().updatePort(portID, 34569l));
+		 result = false;
 	}
 
 	@Then("error message is returned")

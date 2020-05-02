@@ -25,7 +25,7 @@ public class UpdateDestinationPort {
 			destinationPort.save();
 			return true;
 		} catch (ElementSelectionException e) {
-			return false;
+			throw new Error("The destination port is not valid",e);
 		}
 	}
 	
@@ -44,7 +44,7 @@ public class UpdateDestinationPort {
 			destinationPort.removeArrivingContainer(containerID);
 			destinationPort.save();
 		} catch (ElementSelectionException e) {
-			throw new Error(e); // need to test this
+			throw new Error("The destination port entered when registering the journey was not valid",e); 
 		}
 	}
 	

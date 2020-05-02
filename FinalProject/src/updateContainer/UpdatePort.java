@@ -13,6 +13,7 @@ public class UpdatePort implements UpdateContainer {
 	
 	public UpdatePort(long portID) {
 		this.portID = portID;
+		this.update=false;
 	}
 	
 	@Override
@@ -32,19 +33,21 @@ public class UpdatePort implements UpdateContainer {
 		update = true;
 		return container;
 	}
+	
+	
 	private void containerHasReachedDestination(Container container) {
 		    System.out.println("Trying to update client");
 			try {
 				client = DataBase.getClient(container.getClientID());
 			} catch (ElementSelectionException e) {
-				throw new Error("Client not found",e); //need to test this somehow
+				throw new Error("Client was not found, which means the container was not registered properly",e);
 			}
 			client.removeActiveShipment(container.getJourneyID());
 			client.addFinishedShipment(container.getJourneyID());
 			client.save();
 			new UpdateDestinationPort().updatedestinationPortAtEndOfJourney(container.getDestinationPortID(), container.getID());
 			container.useContainerAgain(0000000l, 00000l, container.getDestinationPortID(), container.getDestinationPortID(), "none", 0, 0, 0, "1-1-2020");
-			container.save();
+			container.save(); 
 	}
 
 }

@@ -17,7 +17,7 @@ public class CompanyApplication extends Application {
 	public long addClient(String email, String name, int countryCode, long phone, ArrayList<String> firstName,
 			ArrayList<String> middleName, ArrayList<String> lastName, String street, String city, String postCode,
 			int houseNumber) {
-		long id = Security.generateID();
+		long id = Security.generateIDFromSecureRandom();
 		Client newClient = new Client(id, name, countryCode, phone, email, firstName, middleName, lastName, street, city, houseNumber, postCode);
 		newClient.save();
 		return id;

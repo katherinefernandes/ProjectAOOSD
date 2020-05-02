@@ -641,18 +641,11 @@ public class ClientController {
 	 * @param date String holding the inputed arrival date
 	 * @return boolean value depending whether the date format is acceptable or not
 	 */
-	private boolean setArriveByString(String date) {
+	private boolean CheckArriveBy(String date) {
 
 		System.out.println("Checking arrive by");
-		try {
-			///date; -> Need to write return validate.validateDate(date)
-			return true;
-		}catch(DateTimeException e ){// why do we have this 
-				System.out.println("Not accurate date format");
-		}catch ( java.lang.ArrayIndexOutOfBoundsException e) {
-			System.out.println("Not accurate date format");
-		}
-		return false;
+		
+		return validate.validateDate(date);
 	}
 	
 	/**
@@ -715,7 +708,7 @@ public class ClientController {
 			return;
 		}
 		if(checkMessage) {
-			checkMessage =setArriveByString(arriveby);
+			checkMessage = CheckArriveBy(arriveby);
 		}else {//test this
 			System.out.println("One of the internal status things is invalid");
 			clientmenu.errorMessageForAddJourney();

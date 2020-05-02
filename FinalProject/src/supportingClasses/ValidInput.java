@@ -1,9 +1,10 @@
 package supportingClasses;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ValidInput {
-	//changed all methods to just public
+	
 	public  boolean validateEmail (String email) {
 		return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
 	}
@@ -63,4 +64,14 @@ public class ValidInput {
 		}
 		return true;
 	}
+	
+	public boolean validateDate(String date) {
+		String[] datearray = date.split("-");
+		if(datearray.length==3) {
+			LocalDate object = LocalDate.of(Integer.valueOf(datearray[2]), Integer.valueOf(datearray[1]), Integer.valueOf(datearray[0]));
+			return object.isAfter(LocalDate.now());
+		}
+		else return false;
+	}
+	
 }
