@@ -7,22 +7,18 @@ import businessObjects.Port;
 import containerFilters.FilteringContainersForAClient;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
+import supportingClasses.Security;
 import supportingClasses.UpdateDestinationPort;
 import updateClientInformation.UpdateClient;
 
 public class ClientApplication extends Application {
-
-	
-	
-	
-	
 	
 	public ClientApplication(long ID) {
 		super();
 		try {
 			this.getClient(ID);
 		} catch (ElementSelectionException e) {
-			throw new Error(e);
+			throw new Error("The client ID was not validated properly by the login controller",e); // need to test this
 		}
 	}
 
@@ -60,8 +56,7 @@ public class ClientApplication extends Application {
 			}
 			return containerID;
 		} catch (ElementSelectionException e) {
-			
-			throw new Error(e);
+			throw new Error("The start port ID found was not valid",e); //needs to be tested
 		}
 		
 	}
@@ -79,12 +74,11 @@ public class ClientApplication extends Application {
 	 * @param humidity
 	 * @param arriveBy
 	 */
-	//this needs to be fixed -- need to add the last visited port 
 	public void registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy) {
 		long containerID = getContainerID(startPortID);
 		new UpdateDestinationPort().updatePort(destinationPortID, containerID);
-		container.useContainerAgain(client.getID(),ssecurity.generateID() , startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
+		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
 		container.save();
 		DataBase.saveToHistory(container);
 		client.addActiveShipment(container.getJourneyID());
@@ -92,7 +86,7 @@ public class ClientApplication extends Application {
 		try {
 			this.getClient(client.getID());
 		} catch (ElementSelectionException e) {
-			throw new Error(e);
+			throw new Error("For some reason the client just saved can't be found",e);
 		}
 	}
 
@@ -104,7 +98,7 @@ public class ClientApplication extends Application {
 	 */
 	private void createANewContainer(Port startPort)  {
 
-		container = new Container(this.ssecurity.generateID(),startPort);
+		container = new Container(Security.generateIDFromSecureRandom(),startPort);
 		startPort.addStationedContainer(container.getID());
 		startPort.save();
 		container.save();

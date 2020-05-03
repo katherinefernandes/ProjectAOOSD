@@ -20,7 +20,7 @@ public class FilterByJourneyID  extends FilteringContainersForAClient{
 			System.out.println("Journey ID in container"+containers.get(i).getJourneyID());
 			if (containers.get(i).getJourneyID()!=journeyID) {
 				System.out.println("Removing the container");
-				containers.remove(i);
+				containers.remove(i); // need to test this 
 			}
 		}
 		return containers;

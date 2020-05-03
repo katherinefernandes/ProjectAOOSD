@@ -15,7 +15,7 @@ class ClientControllerTest {
 	
 	@Test
 	void testSaveReferencePerson() {
-		Client client = new Client(Security.generateID(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
+		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		controller = new ClientController(Long.toString(client.getID()));
 		controller.saveReferencePerson("Muna", " ", "azam");
@@ -30,7 +30,7 @@ class ClientControllerTest {
 	}
 	@Test
 	void testSavePhoneNumber() {
-		Client client = new Client(Security.generateID(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
+		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		controller = new ClientController(Long.toString(client.getID()));
 		controller.savePhoneNumber("45", "5566672");
@@ -51,7 +51,7 @@ class ClientControllerTest {
 
 	@Test
 	void testSaveEmail() {
-		Client client = new Client(Security.generateID(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
+		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		controller = new ClientController(Long.toString(client.getID()));
 		controller.saveEmail("email@eamil.com");
@@ -62,7 +62,7 @@ class ClientControllerTest {
 
 	@Test
 	void testGetClientInfo() {
-		Client client = new Client(Security.generateID(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
+		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		controller = new ClientController(Long.toString(client.getID()));
 		assertTrue(controller.getCurrentPhoneNumber().contains("23789"),"Should be true");
@@ -71,13 +71,13 @@ class ClientControllerTest {
 		assertTrue(controller.getReferencePerson().contains("Daniela"));
 		assertTrue(controller.getAddress().contains("Islamabad"));
 		assertTrue(controller.getAllActiveShipments().contains("All Active Journeys: "));
-
+		
 		
 	}
 
 	@Test
 	void testSearchContainer() {
-		Client client = new Client(Security.generateID(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
+		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		controller = new ClientController(Long.toString(client.getID()));
 		Port port1 = new Port(357983327889100l,"Pakistan","Gwadar",25.11f,62.33f);

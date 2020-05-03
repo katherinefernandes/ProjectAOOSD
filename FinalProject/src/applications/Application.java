@@ -4,19 +4,16 @@ import businessObjects.Client;
 import businessObjects.Container;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
-import supportingClasses.Security;
 
 public class Application implements View{
-	//TODO what's the point of this class? Why are these fields together in a class with only getters and setters
+	
 	protected Client client;
 	protected Container container;
-	protected Security ssecurity;
 	protected boolean setClient;
 	protected boolean setContainer;
 	
 	public Application() {
 		this.setClient=false;
-		ssecurity = new Security();
 		this.setContainer=false;
 	}
 	
@@ -31,11 +28,11 @@ public class Application implements View{
 	}
 	
 	
-	public void getClient (long clientID) throws ElementSelectionException {
+	public void getClient (long clientID) throws ElementSelectionException {//need to deal with the exceptions
 			client = DataBase.getClient(clientID);
 			setClient = true;
 	}
-	public void getContainer(long containerID) throws ElementSelectionException { //need to change the throws
+	public void getContainer(long containerID) throws ElementSelectionException { //need to deal with the exceptions
 			setContainer = false;
 			container = DataBase.getContainer(containerID); 
 			setContainer= true;

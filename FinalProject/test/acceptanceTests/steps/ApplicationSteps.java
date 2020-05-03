@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,33 +105,27 @@ public class ApplicationSteps {
 	
 	@Given("that there exists a client with ID {long}")
 	public void thatThereExistsAClientWithID(long clientID) {
-		
 		this.clientID=clientID;
 	}
 
 	@Given("the client name is {string}")
 	public void theClientNameIs(String name) {
-
 		 this.companyname =name;
 	}
 
 	@Given("the email is {string}")
 	public void theEmailIs(String email) {
-		
 		this.email =email;
 	}
 
 	@Given("the phonenumber is countrycode {int} phone {long}")
 	public void thePhonenumberIsCountrycodePhone(int countryCode, long phone) {
-		
 		this.countryCode =countryCode;
 	    this.phone =phone;
 	}
 
 	@Given("the reference person is firstname {string} middlename {string} lastname {string}")
 	public void theReferencePersonIsFirstnameLastname(String firstname, String middlename,String lastname) {
-
-		
 		this.firstname = InputParser.parsingNames(firstname);
 	    this.lastname = InputParser.parsingNames(lastname);
 	    this.middlename = InputParser.parsingNames(middlename);
@@ -141,71 +136,60 @@ public class ApplicationSteps {
 
 	@When("the logistic Company enters the Client ID {long}")
 	public void theLogisticCompanyEntersTheClientID(long clientID) {
-
 		try {
 			 logistic.getClient(clientID);
 			 client = logistic.viewClient();
 		} catch (ElementSelectionException e) {
 
-			throw new Error(e);
+			throw new Error(e); ///need to figure out how to test this.
 		}
 	}
 
 	@Then("the Client information is shown that the client name is {string}")
 	public void theClientInformationIsShownThatTheClientNameIs(String clientname) {
-
 		assertTrue(client.getCompanyName().equals(clientname));
 	}
 
 	@Then("the email shown is {string}")
 	public void theEmailShownIs(String email) {
-
 		assertTrue(client.getEmail().equals(email));
 	}
 	@Given("that the client with the ID {long} is logged into the clientApplication")
 	public void thatTheClientWithTheIDIsLoggedIntoTheClientApplication(long clientID) {
-
 		clientApplication = new ClientApplication(clientID);
 		assertTrue(clientApplication.getSetClient());
 	}
 
 	@When("the client decides to view its own information")
 	public void theClientDecidesToViewItsOwnInformation() {
-
 	    client = clientApplication.viewClient();
 	}
 
 	@Then("the client sees that the company name is {string}")
 	public void theClientSeesThatTheCompanyNameIs(String name) {
-
 		 assertTrue(client.getCompanyName().equals(name));
 	}
 
 	@Then("that the email is {string}")
 	public void thatTheEmailIs(String email) {
-
 		assertTrue(client.getEmail().equals(email));
 	}
 
 	@Then("that the phonenumber is countrycode {int} phone {long}")
 	public void thatThePhonenumberIsCountrycodePhone(int cc, long phone) {
-
 		assertEquals(client.getPhoneNumber().getCountryCode(),cc);
 	    assertEquals(client.getPhoneNumber().getPhone(),phone);
 	}
 
 	@Then("that the reference person is firstname {string} lastname {string}")
 	public void thatTheReferencePersonIsFirstnameLastname(String firstname, String lastname) {
-		
 		assertEquals(InputParser.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
 	    assertEquals(InputParser.parsingNames(lastname).size(),client.getPerson().getLastName().size());
-	
 	}
 	
 	
 	@Given("there is a client with ID {long}")
 	public void thereIsAClientWithID(long clientID) {
-
 		this.clientID =clientID;
 		client = new Client(this.clientID,"company",92,23789,"email@eh.com",InputParser.parsingNames("muna"),InputParser.parsingNames(""),InputParser.parsingNames("azam"),"g11/2","Islamabad",59,"2620");
 		client.save();
@@ -214,7 +198,6 @@ public class ApplicationSteps {
 
 	@Given("the client has a container with the journey ID {long} registered for a journey")
 	public void theClientHasAContainerWithTheJourneyIDRegisteredForAJourney(long journeyID) {
-
 		this.journeyID=journeyID;
 	    client.addActiveShipment(this.journeyID);
 	    client.save();
@@ -222,26 +205,22 @@ public class ApplicationSteps {
 
 	@Given("the start port of the container was {string}")
 	public void theStartPortOfTheContainerWas(String portname) {
-
 		this.startPortID = ExtractingPortID.getPortID(portname);
 	}
 
 	@Given("the destination port is {string}")
 	public void theDestinationPortIs(String portname) {
-
 		this.destinationPortID = ExtractingPortID.getPortID(portname);
 	}
 
 	@Given("the current location of the container is {float} latitude and {float} longitude")
 	public void theCurrentLocationOfTheContainerIsLatitudeAndLongitude(float latitude, float longitude) {
-
 		this.latitude = latitude;
 	    this.longitude =longitude;
 	}
 
 	@Given("the container has cargo {string}")
 	public void theContainerHasCargo(String cargo) {
-	    // Write code here that turns the phrase above into concrete actions
 		this.cargo=cargo;
 	}
 
@@ -254,7 +233,6 @@ public class ApplicationSteps {
 
 	@Given("its optimal internal Status is {float} atm {float} celsius {float} % humidity")
 	public void itsOptimalInternalStatusIsAtmCelsiusHumidity(float atm, float temp, float humid) {
-
 		 this.pressure = atm;
 		 this.temperature = temp;
 		 this.humidity = humid;
@@ -262,19 +240,16 @@ public class ApplicationSteps {
 
 	@When("the client asks for the information of the container with the journey ID {long}")
 	public void theClientAsksForTheInformationOfTheContainerWithTheJourneyID(long journeyID) {
-
 		clientApplication = new ClientApplication(clientID);
 		this.journeyID=journeyID;
 	    FilteringContainersForAClient filter = new FilterByJourneyID(client,journeyID);
 	    Containers = clientApplication.filterContainersOnAJourney(filter);
 	    assertFalse(Containers.isEmpty());
 	    System.out.println(Containers.get(0).getJourneyID()+"  "+Containers.get(0).getStartPortID());
-
 	}
 
 	@Then("the current location of the container shown is {float} latitude and {float} longitude")
 	public void theCurrentLocationOfTheContainerShownIsLatitudeAndLongitude(float latitude, float longitude) {
-
 		assertEquals((int)Containers.get(0).getCurrentPosition().getLatitude(),(int)latitude);
 		assertEquals((int)Containers.get(0).getCurrentPosition().getLongitude(),(int)longitude);
 		
@@ -282,13 +257,11 @@ public class ApplicationSteps {
 
 	@Then("it contains the cargo:{string}")
 	public void itContainsTheCargo(String cargo) {
-
 		assertEquals(Containers.get(0).getCargo(),cargo);
 	}
 
 	@Then("it will arrive by the date {string}")
 	public void itWillArriveByTheDate(String date) {
-
 		assertEquals(Containers.get(0).getArriveBy(),date);
 	}
 	
@@ -301,7 +274,6 @@ public class ApplicationSteps {
 
 	@Then("the client can view the information for his containers starting journey from the Port {string}")
 	public void theClientCanViewTheInformationForHisContainersStartingJourneyFromThePort(String portname) {
-
 		FilterByPortName filter = new FilterByPortName(clientApplication.viewClient(),startPortID);
 		Containers = clientApplication.filterContainersOnAJourney(filter);
 		assertFalse(Containers.isEmpty());
@@ -309,7 +281,6 @@ public class ApplicationSteps {
 
 	@Then("those containers will include the container with the journey ID {long}")
 	public void thoseContainersWillIncludeTheContainerWithTheJourneyID(long journeyID) {
-
 		boolean contains = false;
 		for (int i=0;i<Containers.size();i++) {
 			if(Containers.get(i).getJourneyID()==journeyID) {
@@ -322,28 +293,24 @@ public class ApplicationSteps {
 	
 	@When("the client provides a port name {string} from where the journey will start")
 	public void theClientProvidesAPortNameFromWhereTheJourneyWillStart(String portname) {
-	    // Write code here that turns the phrase above into concrete actions
 		 startPortID = ExtractingPortID.getPortID(portname);
 		 assertNotEquals(startPortID,1l);
 	}
 
 	@When("provides a destination port name {string}")
 	public void providesADestinationPortName(String portname) {
-
 		destinationPortID =ExtractingPortID.getPortID(portname);
 		assertNotEquals(destinationPortID,1l);
 	}
 
 	@When("provides the name of the cargo {string} being transported")
 	public void providesTheNameOfTheCargoBeingTransported(String cargo) {
-
 		this.cargo = cargo;
 	    assertTrue(validate.validateName(cargo));
 	}
 
 	@When("provides the optimal internal state for the cargo which is {float} temperature, {float} atm pressure and {float}% humidity")
 	public void providesTheOptimalInternalStateForTheCargoWhichIsTemperatureAtmPressureAndHumidity(float temp, float atm, float humid) {
-		   
 		this.temperature= temp;
 		this.pressure= atm;
 		this.humidity = humid;
@@ -351,13 +318,11 @@ public class ApplicationSteps {
 
 	@When("provides the expected arrival date which is {string}")
 	public void providesTheExpectedArrivalDateWhichIs(String date) {
-		
 		arriveBy = date;
 	}
 
 	@Then("a container is registered for the journey and the client is provided with a journey ID to track the container.")
 	public void aContainerIsRegisteredForTheJourneyAndTheClientIsProvidedWithAJourneyIDToTrackTheContainer() {
-	    
 		clientApplication.registerContainerForAJourney(startPortID,destinationPortID,cargo,temperature,pressure,humidity,arriveBy);
 		assertTrue(DataBase.searchContainers(cargo).size()>0);
 		
@@ -376,34 +341,28 @@ public class ApplicationSteps {
 	
 	@When("the client email is provided {string}")
 	public void theClientEmailIsProvided(String email) {
-
 		assertTrue(validate.validateEmail(email));
 		this.email = email;	
 	}
 
 	@When("the client name is provided{string}")
 	public void theClientNameIsProvided(String companyname) {
-		
 		this.companyname = companyname;
-		
 	}
 
 	@When("the client phone number is provided  {int} , {long}")
 	public void theClientPhoneNumberIsProvided(int cc, long phone) {
 		assertTrue("the country code should be valid",validate.validateCountryCode(cc));
 		assertTrue(validate.validatePhone(phone));
-		
 		this.countryCode = cc;
 		this.phone = phone;
 	}
 
 	@When("the reference person is provided {string} {string} {string}")
 	public void theReferencePersonIsProvided(String name1, String name2, String name3) {
-	    
 		assertTrue(validate.validateName(name1));
 		assertTrue(validate.validateName(name2));
 	    assertTrue(validate.validateName(name3));
-		   
 	   this.firstName = InputParser.parsingNames(name1);
 	   this.middleName = InputParser.parsingNames(name2);
 	   this.lastName = InputParser.parsingNames(name3);
@@ -411,10 +370,8 @@ public class ApplicationSteps {
 
 	@When("the address is provided street: {string} house number: {int} city: {string} zipcode: {string}")
 	public void theAddressIsProvidedStreetHouseNumberCityZipcode(String street, int hNumber, String city, String zipcode) {
-
 		assertTrue(validate.validateName(city));
 		assertTrue(validate.validatePostCode(zipcode));
-		
 		this.street = street;
 		this.houseNumber = hNumber;
 		this.city = city;
@@ -425,20 +382,17 @@ public class ApplicationSteps {
 
 	@When("that the logistic company enters the clients name {string}")
 	public void thatTheLogisticCompanyEntersTheClientsName(String searchName) {
-		
 		optionName = new SearchByName(searchName);
 	}
 
 	@Then("the list of clients with this name should appear")
 	public void theListOfClientsWithThisNameShouldAppear() {
-		
 		  assertNotEquals(logistic.search(optionName).size(),0);
 		  this.clients =logistic.search(optionName);
 	}
 
 	@Then("the list should include the client with ID {long}")
 	public void theListShouldIncludeTheClientWithID(long clientID) {
-	    
 		boolean contains = false;
 		for (int i=0;i<clients.size();i++) {
 			if(clients.get(i).getID()==clientID) {
@@ -450,28 +404,21 @@ public class ApplicationSteps {
 	}
 	@When("that the logistic company enters the clients email {string}")
 	public void thatTheLogisticCompanyEntersTheClientsEmail(String searchEmail) {
-
 		optionEmail = new SearchByEmail(searchEmail);
 	}
 
 	@Then("the list of clients with this email should appear")
 	public void theListOfClientsWithThisEmailShouldAppear() {
-		
 		assertNotEquals(logistic.search(optionEmail).size(), 0);
 		this.clients =logistic.search(optionEmail);
 	}
 
 	@When("that the logistic company enters the clients reference person {string} {string} {string}")
 	public void thatTheLogisticCompanyEntersTheClientsReferencePerson(String string, String string2, String string3) {
-	    	
 		this.firstname = InputParser.parsingNames(string);
-		
 		this.middlename = InputParser.parsingNames(string2);
-		
 		this.lastName = InputParser.parsingNames(string3);
-		
 		searchRefPerson = new ReferenceName(firstname, middlename, lastName);
-		
 		optionRefPerson = new SearchByReferencePerson(searchRefPerson);
 	}
 
@@ -483,9 +430,7 @@ public class ApplicationSteps {
 
 	@When("that the logistic company enters the clients phone {long}")
 	public void thatTheLogisticCompanyEntersTheClientsPhone(long searchPhone) {
-		
 		optionPhone = new SearchByPhone(searchPhone);
-	    
 	}
 
 	@Then("the list of clients with this phone should appear")
@@ -496,40 +441,34 @@ public class ApplicationSteps {
 	
 	@Given("there is a container with the ID {long}")
 	public void thereIsAContainerWithTheID(long containerID) {
-	    
 		this.containerID = containerID;
 	}
 
 	@Given("the container has the journey ID {long}")
 	public void theContainerHasTheJourneyID(long journeyID) {
-
 		this.journeyID=journeyID;
 	}
 
 	@Given("the start port is given {string}")
 	public void theStartPortIsGiven(String portname) {
-		startPortID = ExtractingPortID.getPortID(portname); // need to move the getPortID to a supporting class class
+		startPortID = ExtractingPortID.getPortID(portname);
 		System.out.println("Startport ID: "+startPortID);
 		assertNotEquals(startPortID,1l);
-		
 	}
 
 	@Given("the destination port is given {string}")
 	public void theDestinationPortIsGiven(String portname) {
 		this.destinationPortID = ExtractingPortID.getPortID(portname);
-	    
 	}
 
 	@Given("the current location of the container given is {float} latitude and {float} longitude")
 	public void theCurrentLocationOfTheContainerGivenIsLatitudeAndLongitude(float latitude, float longitude) {
-
 		this.latitude = latitude;
 	    this.longitude =longitude;
 	}
 
 	@Given("the container has cargo given as  {string}")
 	public void theContainerHasCargoGivenAs(String cargo) {
-
 		this.cargo=cargo;
 	}
 
@@ -542,24 +481,21 @@ public class ApplicationSteps {
 
 	@Given("its arrival date is given {string}")
 	public void itsArrivalDateIsGiven(String date) {
-	    
 		this.arriveBy =date;
 		System.out.println(containerID);
 		Container container = new Container (this.containerID,897841664590l,this.journeyID,this.startPortID,this.destinationPortID,this.latitude,this.longitude,this.cargo,this.temperature,this.pressure,this.humidity,(this.arriveBy));
 		container.save();
-		
 	}
 
 	@Given("that the logistic company enters the container ID {long}")
 	public void thatTheLogisticCompanyEntersTheContainerID(long id) {
-	   
 		  this.containerID = id;
 		    try {
 				logistic.getContainer(this.containerID);
 				System.out.println(this.containerID);
 			} catch (ElementSelectionException e) {
 				e.printStackTrace();
-				throw new Error(e);
+				throw new Error(e); //need to test this out in a better way
 			}
 		    assertTrue(logistic.getSetContainer());
 		
@@ -567,19 +503,16 @@ public class ApplicationSteps {
 
 	@When("the temperature value {float} are given")
 	public void theTemperatureValueAreGiven(float double1) {
-
 		this.temperature = double1;
 	}
 
 	@When("the humidity level value {float}% are given")
 	public void theHumidityLevelValueAreGiven(float double1) {
-	    
 		this.humidity=double1;
 	}
 
 	@When("the pressure value {float}atm are given")
 	public void thePressureValueAtmAreGiven(float double1) {
-
 		this.pressure=double1;
 	}
 
@@ -587,7 +520,6 @@ public class ApplicationSteps {
 	public void theInternalStatusOfTheContainerIsUpdated() {
 		UpdateStatus update = new UpdateStatus( temperature, humidity,pressure);
 		assertTrue("This should be true now as the status has been updated",logistic.updateContainerInformation(update));
-	
 	}
 
 	@Then("the new temperature value is {float}")
@@ -596,7 +528,7 @@ public class ApplicationSteps {
 			logistic.getContainer(this.containerID);
 		} catch (ElementSelectionException e) {
 			e.printStackTrace();
-			throw new Error(e);
+			throw new Error(e); //need to test this out in a better way
 		}
 	    this.container = logistic.viewContainer();
 	    assertEquals((int)container.getInternalStatus().getTemperature(),(int)temp);
@@ -605,7 +537,6 @@ public class ApplicationSteps {
 
 	@Then("the new humidity level is {float}%")
 	public void theNewHumidityLevelIs(float humid) {
-
 		 assertEquals((int)container.getInternalStatus().getHumidity(),(int)humid);		
 	}
 
@@ -616,7 +547,6 @@ public class ApplicationSteps {
 	
 	@When("the latitude {float} is given")
 	public void theLatitudeIsGiven(float double1) {
-	    	
 		 this.latitude = double1;
 		 assertTrue(validate.validateLocation(double1));
 	}
@@ -639,7 +569,7 @@ public class ApplicationSteps {
 			logistic.getContainer(this.containerID);
 		} catch (ElementSelectionException e) {
 			e.printStackTrace();
-			throw new Error(e);
+			throw new Error(e); //need to test this out in a better way
 		}
 	    this.container = logistic.viewContainer();
 	    assertEquals((int)container.getCurrentPosition().getLatitude(),(int)double1);
@@ -649,6 +579,8 @@ public class ApplicationSteps {
 	public void theNewLongitudeIs(float double1) {
 		assertEquals((int)container.getCurrentPosition().getLongitude(),(int)double1);
 	}
+	
+	
 	@When("the client chooses to view the internal status of a container with the journeyID {long}")
 	public void theClientChoosesToViewTheInternalStatusOfAContainerWithTheJourneyID(long journeyID) {
 	    	this.journeyID=journeyID;
@@ -657,7 +589,6 @@ public class ApplicationSteps {
 			for (int i=0;i<Containers.size();i++) {
 				assertEquals(Containers.get(i).getJourneyID(),journeyID);
 			}
-		
 	}
 
 	@Then("the client can view the current internal status of the container which is temperature {float}, pressure {float}, humidity level {float}")
@@ -666,9 +597,9 @@ public class ApplicationSteps {
 		assertEquals((int)Containers.get(0).getInternalStatus().getAtmosphere(),(int)press);
 		assertEquals((int)Containers.get(0).getInternalStatus().getHumidity(),(int)humid);
 	}
+	
 	@When("the client provides the cargo type {string}")
 	public void theClientProvidesTheCargoType(String cargo) {
-		
 		this.cargo=cargo;
 		FilterByCargoName filter = new FilterByCargoName(clientApplication.viewClient(),cargo);
 		Containers = clientApplication.filterContainersOnAJourney(filter);
@@ -683,7 +614,6 @@ public class ApplicationSteps {
 	
 	@Given("that the client ID {long} is entered")
 	public void thatTheClientIDIsEntered(long clientID) {
-
 		this.clientID = clientID;
 		user = new Application();
 	}
@@ -693,8 +623,7 @@ public class ApplicationSteps {
 	    try {
 			user.getClient(clientID);
 			errorMessage = "none";
-		} catch (ElementSelectionException e) {
-
+		} catch (ElementSelectionException e) { //need to test this out in a better way
 			errorMessage = "ElementNotFoundException";
 		}
 	}
@@ -702,20 +631,17 @@ public class ApplicationSteps {
 	
 	@Then("error message {string} is given")
 	public void errorMessageIsGiven(String error) {
-
 		assertTrue(errorMessage.equals(error));
 	}
 	
 	@Given("that the container ID {long} is entered")
 	public void thatTheContainerIDIsEntered(long containerID) {
-
 		this.containerID = containerID;
 		user = new Application();
 	}
 
 	@When("the database is asked to return the container information")
 	public void theDatabaseIsAskedToReturnTheContainerInformation() {
-
 		   try {
 				user.getContainer(containerID);
 				errorMessage = "none";
@@ -724,40 +650,38 @@ public class ApplicationSteps {
 				errorMessage = "ElementNotFoundException";
 			}
 	}
+	
 	@Given("that the port name {string} is entered")
 	public void thatThePortNameIsEntered(String portName) {
-
 	    this.portName=portName;
 	}
 
 	@When("the database is asked to return the portID")
 	public void theDatabaseIsAskedToReturnThePortID() {
-
 		this.portID = ExtractingPortID.getPortID(portName);
 	}
 
 	@Then("the ID {long} is returned which means that port name is not valid")
 	public void theIDIsReturnedWhichMeansThatPortNameIsNotValid(long portID) {
-
 	    assertEquals(portID,this.portID);
 	}
+	
 	@Given("that the portID {long} is entered")
 	public void thatThePortIDIsEntered(long portID) {
-
 		this.portID=portID;
 	}
 
 	@When("the database is asked to return the port data")
 	public void theDatabaseIsAskedToReturnThePortData() {
-
-		 result = new UpdateDestinationPort().updatePort(portID, 34569l);
+		 assertThrows(java.lang.Error.class,()-> new UpdateDestinationPort().updatePort(portID, 34569l));
+		 result = false;
 	}
 
 	@Then("error message is returned")
 	public void errorMessageIsReturned() {
-
 		assertFalse(result);
 	}
+	
 	@When("the Client provides the new country code {int} which is of the valid length")
 	public void providesTheNewCountryCodeWhichIsOfTheValidLength(int countryCode) {
 		this.countryCode=countryCode;
@@ -824,13 +748,10 @@ public class ApplicationSteps {
 	public void thePortVisitedForTheContainerIsUpdated() {
 		UpdatePort update = new UpdatePort(this.visitedPortID);
 		assertTrue("This should be true now as the port has been updated",logistic.updateContainerInformation(update));
-
-		
 	}
 
 	@Then("the new port is {string}")
 	public void theNewPortIs(String portname) {
-		
 		List<Port> ports = DataBase.searchPorts(Long.toString(logistic.viewContainer().getLastVisitedPortID()));
 		boolean contains =false;
 		for (Port port: ports) {
@@ -844,19 +765,16 @@ public class ApplicationSteps {
 	@Given("there is a container with assigned ID {long}")
 	public void thereIsAContainerWithAssignedID(long containerID) {
 		this.containerID=containerID;
-		
 	}
 
 	@Given("the container has the assigned journey ID {long}")
 	public void theContainerHasTheAssignedJourneyID(long ID) {
 		this.journeyID=ID;
-		
 	}
 
 	@Given("the container has the assigned client ID {long}")
 	public void theContainerHasTheAssignedClientID(long ID) {
 		this.clientID =ID;
-		
 		Client client = new Client(ID, "company",92,23789,"email@eh.com",InputParser.parsingNames("firstname"),InputParser.parsingNames("middlename"),InputParser.parsingNames("lastname"),"g11/2","Islamabad",59,"2620");
 		client.addActiveShipment(journeyID);
 		client.save();
@@ -880,13 +798,11 @@ public class ApplicationSteps {
 
 	@Given("the container has cargo assigned as  {string}")
 	public void theContainerHasCargoAssignedAs(String string) {
-		
 		this.cargo=string;
 	}
 
 	@Given("its optimal internal Status assigned is {float} atm {float} celsius {float} % humidity")
 	public void itsOptimalInternalStatusAssignedIsAtmCelsiusHumidity(float atm, float temp, float humid) {
-
 		this.temperature=temp;
 		this.pressure=atm;
 		this.humidity=humid;
@@ -894,15 +810,14 @@ public class ApplicationSteps {
 
 	@Given("its arrival date assigned is {string}")
 	public void itsArrivalDateAssignedIs(String string) {
-		
 		this.arriveBy=string;
 		Container container = new Container (this.containerID,this.clientID,this.journeyID,this.startPortID,this.destinationPortID,this.latitude,this.longitude,this.cargo,this.temperature,this.pressure,this.humidity,(this.arriveBy));
 		container.save();
 	}
+	
 	@When("the logistic company decides to view all the active Journeys")
 	public void theLogisticCompanyDecidesToViewAllTheActiveJourneys() {
 		viewJourneys = new DataForViewAllJourneys();
-		
 	}
 
 	@Then("all the active journey IDs are returned which also contains the Journey ID {long}")

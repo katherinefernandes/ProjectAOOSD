@@ -66,9 +66,6 @@ public class Client implements BusinessObject{
 	public void removeActiveShipment(long shipmentID){
 		activeShipments.remove(shipmentID);
 	}
-	public void removeFinishedShipment(long shipmentID){
-		finishedShipments.remove(shipmentID);
-	}
 	public void save() {
 		DataBase.save(this);
 	}

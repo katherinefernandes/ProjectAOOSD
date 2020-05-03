@@ -19,7 +19,7 @@ public class FilterByPortName extends FilteringContainersForAClient{
 		System.out.println("containers: "+containers.size());
 		for (int i=0;i<containers.size();i++) {
 			if (containers.get(i).getStartPortID()!=portID) {
-				containers.remove(i);
+				containers.remove(i); //write more test cases for this
 			}
 		}
 		return containers;
