@@ -78,8 +78,10 @@ public class ClientApplication extends Application {
 		return new UpdateDestinationPort().updatePort(destinationPortID, containerID);
 		
 	}
-
-	public void registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
+	
+	//I needed a way to access to access the journey right after creation, so I made this method return journeyID
+	//Simon
+	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy) {
 		containerRegistered=false;		
 		container.useContainerAgain(client.getID(),ssecurity.generateID() , startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
@@ -88,6 +90,7 @@ public class ClientApplication extends Application {
 		client.addActiveShipment(container.getJourneyID());
 		client.save();
 		containerRegistered=true;
+		return container.getJourneyID();
 	}
 
 	public boolean getContainerRegistered() {

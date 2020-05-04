@@ -7,7 +7,7 @@ import dataWrappers.PhoneNumber;
 import dataWrappers.ReferenceName;
 import exceptions.ElementSelectionException;
 
-public class Client implements BusinessObject{
+public class Client extends BusinessObject{
 	private long ID;
 	private String companyName;
 	private PhoneNumber phoneNumber;

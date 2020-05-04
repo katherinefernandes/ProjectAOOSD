@@ -8,7 +8,7 @@ import dataBase.DataBase;
 import dataWrappers.InternalStatus;
 import dataWrappers.Location;
 
-public class Container implements BusinessObject {
+public class Container extends BusinessObject {
 	private long ID;
 	private long clientID = 0L;
 	private long journeyID = 0L;

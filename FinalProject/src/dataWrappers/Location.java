@@ -27,17 +27,17 @@ public class Location {
 		float[] direction = directionVectorTowardsDestination(destination);
 		float newLongitude = longitude + direction[0]*distance/distancePerLongitudeDegreeKM();
 		float newLatitude = latitude + direction[1]*distance/distancePerLatitudeDegreeKM();
-		return new Location(newLongitude, newLatitude);
+		return new Location(newLatitude, newLongitude);
 	}
 	public float distanceTo(Location position) {
-		return (float) (distanceToPointInDegrees(position)*6378F);
+		return (float) (Math.toRadians(distanceToPointInDegrees(position))*6378F);
 	}
 	
 	private float distancePerLatitudeDegreeKM() {
 		return 111F;
 	}
 	private float distancePerLongitudeDegreeKM() {
-		return (float) (Math.cos(latitude)*111F);
+		return (float) (Math.cos(Math.toRadians(latitude))*111F);
 	}
 	private float[] directionVectorTowardsDestination(Location destination) {
 		float[] vector = {0,0};
@@ -51,8 +51,11 @@ public class Location {
 		double angle1 = Math.toRadians(90. - latitude);
 		double angle2 = Math.toRadians(90. - destination.getLatitude());
 		double angle3 = Math.toRadians(Math.abs(longitude - destination.getLongitude()));
-		double distanceInDegrees = Math.toDegrees(Math.acos(Math.cos(angle1)*Math.cos(angle2) 
-											 	  + Math.sin(angle1)*Math.asin(angle2)*Math.cos(angle3)));
+		double radians = Math.acos(Math.cos(angle1)*Math.cos(angle2) 
+			 	  		 + Math.sin(angle1)*Math.sin(angle2)*Math.cos(angle3));
+		double distanceInDegrees = Math.toDegrees(radians);
+		
+		//double distanceInDegrees = Math.sqrt(Math.pow(destination.getLongitude() - longitude,2.) + Math.pow((destination.getLatitude() - latitude),2.));
 		return distanceInDegrees;
 	}
 }

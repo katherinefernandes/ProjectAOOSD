@@ -42,6 +42,7 @@ public abstract class GeneralXMLManipulation<T extends BusinessObject> {
 
 	public T getEntry(long ID) throws ElementSelectionException {
 		List<T> matchingEntries = searchEntries(String.valueOf(ID));
+		matchingEntries.removeIf( object -> object.getID() != ID);
 		if(matchingEntries.size() == 0) {
 			throw new ElementSelectionException("Given element could not be found in database");
 		}else if(matchingEntries.size() > 1) {

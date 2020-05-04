@@ -11,6 +11,7 @@ public class UpdatePort implements UpdateContainer {
 	private boolean update;
 	private long portID;
 	private Client client;
+	private Container container;
 	
 	public UpdatePort(long portID) {
 		this.portID = portID;
@@ -51,4 +52,10 @@ public class UpdatePort implements UpdateContainer {
 		
 	}
 
+	public Container getContainer() {
+		return container;
+	}
+	public void setContainer(Container container) {
+		this.container = container;
+	}
 }

@@ -13,15 +13,15 @@ import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 
 public class UserActionGenerator {
-	private static RandomGenerator randomGenerator;
+	private static RandomGenerator randomGenerator = new RandomGenerator();
 	private static int shipSpeedKPH = 60;
 	
 	private UserActionGenerator(){};
 	
-	static public void generateNewClient() {
+	static public Client generateNewClient() {
 		List<List<String>> refrencePersonName = randomGenerator.generateRefrenceName();
-		
-		Client client = new Client(Security.generateIDFromSecureRandom(), 
+		Security idGenerator = new Security();
+		Client client = new Client(idGenerator.generateID(), 
 							   	   randomGenerator.generateCompanyName(), randomGenerator.generateCountryCode(), 
 								   randomGenerator.generatePhoneNumber(), randomGenerator.generateEmail(),
 								   refrencePersonName.get(0), refrencePersonName.get(1), refrencePersonName.get(2),
@@ -29,9 +29,10 @@ public class UserActionGenerator {
 								   randomGenerator.generateHouseNumber(), randomGenerator.generateZipCode());
 		randomGenerator.addClientToSelection(client);
 		client.save();
+		return client;
 	}
 	
-	static public void generateNewJourney() {
+	static public long generateNewJourney() {
 		Client client = randomGenerator.getRandomClient();
 		client = client.getUpdated();
 		Port startPort = randomGenerator.getRandomPort();
@@ -45,7 +46,8 @@ public class UserActionGenerator {
 		//TODO must be changed when application is changed
 		ClientApplication user = new ClientApplication(client.getID());
 		user.getAContainer(startPort.getID());
-		user.registerContainerForAJourney(startPort.getID(), destinationPort.getID(), cargo, startTemperature, startAtmosphere, startHumidity, arriveBy);
+		long journeyID = user.registerContainerForAJourney(startPort.getID(), destinationPort.getID(), cargo, startTemperature, startAtmosphere, startHumidity, arriveBy);
+		return journeyID;
 	}
 	
 	static public void changeContainerPosition(Container container) throws ElementSelectionException {

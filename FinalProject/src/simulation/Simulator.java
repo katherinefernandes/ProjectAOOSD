@@ -3,6 +3,7 @@ package simulation;
 import java.util.*;
 
 import applications.CompanyApplication;
+import businessObjects.Client;
 import businessObjects.Container;
 import businessObjects.Port;
 import dataBase.DataBase;
@@ -10,16 +11,16 @@ import exceptions.ElementSelectionException;
 import updateContainer.UpdatePort;
 
 public class Simulator {
-	private static Random random = new Random();
+	private Random random = new Random();
 	
-	public static void simulateOneHour() {
-		simulateClientCreation();
-		simulateJourneyCreation();
+	public void simulateOneHour() {
+		simulateClientCreation(random.nextDouble());
+		simulateJourneyCreation(random.nextDouble());
 		simulateJourneyDevelopment();
 		checkForFinshedJourneys();
 	}
 
-	private static void checkForFinshedJourneys() {
+	public void checkForFinshedJourneys() {
 		List<Container> allContainers = DataBase.searchContainers("");
 		List<UpdatePort> updates = new ArrayList<>();
 		for(Container container : allContainers) {
@@ -27,11 +28,12 @@ public class Simulator {
 		}
 		CompanyApplication application = new CompanyApplication();
 		for(UpdatePort update : updates) {
+			application.getContainer(update.getContainer());
 			application.updateContainerInformation(update);
 		}
 	}
 
-	private static void addUpdateIfArrived(Container container, List<UpdatePort> updates) {
+	private void addUpdateIfArrived(Container container, List<UpdatePort> updates) {
 		Port destinationPort;
 		try {
 			destinationPort = DataBase.getPort(container.getDestinationPortID());
@@ -40,11 +42,12 @@ public class Simulator {
 		}
 		if(container.getJourneyID() != 0 && containerIsCloseToPort(container, destinationPort)) {
 			UpdatePort update = new UpdatePort(destinationPort.getID());
+			update.setContainer(container);
 			updates.add(update);
 		}
 	}
 
-	private static void updateContainerIfActive(Container container) {
+	private void updateContainerIfActive(Container container) {
 		if(container.getJourneyID() != 0) {
 			try {
 				UserActionGenerator.changeContainerPosition(container);
@@ -55,26 +58,30 @@ public class Simulator {
 		}
 	}
 	
-	private static boolean containerIsCloseToPort(Container container, Port destinationPort) {
-		return container.getCurrentPosition().distanceTo(destinationPort.getPosition()) <= 5F;
+	private boolean containerIsCloseToPort(Container container, Port destinationPort) {
+		return container.getCurrentPosition().distanceTo(destinationPort.getPosition()) <= 10F;
 	}
 
-	private static void simulateJourneyDevelopment() {
+	public void simulateJourneyDevelopment() {
 		List<Container> allContainers = DataBase.searchContainers("");
 		for(Container container : allContainers) {
 			updateContainerIfActive(container);
 		}
 	}
 
-	private static void simulateClientCreation() {
-		if(random.nextDouble() < 1/24) {
-			UserActionGenerator.generateNewClient();
+	public Client simulateClientCreation(double creationWeigth) {
+		Client client = null;
+		if(creationWeigth < 1D/24D) {
+			client = UserActionGenerator.generateNewClient();
 		}
+		return client;
 	}
 	
-	private static void simulateJourneyCreation() {
-		if(random.nextDouble() < 1/6) {
-			UserActionGenerator.generateNewJourney();
+	public long simulateJourneyCreation(double creationWeigth) {
+		long journeyID = 0;
+		if(creationWeigth < 1D/6D) {
+			journeyID = UserActionGenerator.generateNewJourney();
 		}
+		return journeyID;
 	}
 }
