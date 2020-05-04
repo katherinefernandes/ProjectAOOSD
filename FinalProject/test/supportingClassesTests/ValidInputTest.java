@@ -41,4 +41,21 @@ public class ValidInputTest {
 		
 	}
 	
+	@Test
+	public void validateDate() {
+		assertTrue(validate.validateDate("09-10-2020"));
+		assertFalse(validate.validateDate("9019"));
+		assertFalse(validate.validateDate("02-05-2020"));
+	}
+	
+	@Test
+	public void validateEmail() {
+		assertTrue(validate.validateEmail("email@email.com"));
+		assertFalse(validate.validateEmail("someemail"));
+	}
+	
+	
+	
+	
+	
 }

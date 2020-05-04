@@ -1,6 +1,9 @@
-package objectsDataTest;
+package businessObjectsTests;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.*;
 
 import businessObjects.Container;
@@ -102,6 +105,16 @@ public class ContainerDataTest {
 		
 	}
 	
+	@Test
+	public void testSetUpdated() {
+		objectTest2.setUpdated("09-10-2020");
+		assertTrue(objectTest2.getUpdated().equals("09-10-2020"));
+	}
 	
+	@Test
+	public void testgetAllValues() {
+		List<String> values = objectTest2.getAllValues();
+		assertTrue(values.get(0).equals(Long.toString(objectTest2.getID())));
+	}
 
 }

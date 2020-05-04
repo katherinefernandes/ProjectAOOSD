@@ -1,116 +1,119 @@
 package applications;
 
 import java.util.*;
-
 import businessObjects.Container;
 import businessObjects.Port;
 import containerFilters.FilteringContainersForAClient;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
+import supportingClasses.Security;
 import supportingClasses.UpdateDestinationPort;
-import supportingClasses.UpdateHistory;
 import updateClientInformation.UpdateClient;
 
 public class ClientApplication extends Application {
-	//TODO what is the meaning of these fields? When fields are saved permanently inside an object
-	//it should be because their status has something to do with the purpose of the object.
-	//I can't understand in what way a startport fundamentally relates to a session where the user is a client
-	//A meaningful field would be for example Client saving the currently logged in client, which you seem
-	//have saved in the supertype for some reason. This is weird as the logistics company cannot log in as
-	//a specific client.
-	//TODO what methods correspond directly to actions the user can perform? Since this is application layer, that should be
-	//very clear, probably through an interface
-	private Port startPort;
-	private boolean foundContainer;
-	private long containerID;
-	private boolean containerRegistered;
-
+	
 	public ClientApplication(long ID) {
 		super();
 		try {
 			this.getClient(ID);
 		} catch (ElementSelectionException e) {
-			throw new Error(e);
+			throw new Error("The client ID was not validated properly by the login controller",e); // need to test this
 		}
 	}
 
+	/**
+	 * updateClientInformation will update the client's information and 
+	 * return a true if its updated
+	 * @param update
+	 * @return boolean 
+	 */
 	
-	//TODO why can't updateInformation be called directly on the update instance, which you necessitate the 
-	//caller having anyways
 	public boolean updateClientInformation(UpdateClient update) {
 		update.updateInformation(client);
 		return update.updated();
 	}
 
 
-
 	/**
-	 * 
+	 * getContainerID will get a container ID of a container stationed at the
+	 * start port which will be registered for a journey.
 	 * @param startPortID
+	 * @return ContainerID
 	 */
 
-	public void getAContainer(long startPortID) {
-		foundContainer = false;
+	private long getContainerID(long startPortID) {
 		try {
-			startPort = DataBase.getPort(startPortID);
+			Port startPort = DataBase.getPort(startPortID);
+			Long containerID = 0l;
 			if (startPort.getStationedContainers().size()>0) {
 				containerID = startPort.getStationedContainers().get(0);
 				container = DataBase.getContainer(containerID);
-				foundContainer  = true;
 				startPort.removeStationedContainer(containerID);
 				startPort.save();
 			}else {
-				createANewContainer();
+				createANewContainer(startPort);
 			}
+			return containerID;
 		} catch (ElementSelectionException e) {
-			
-			throw new Error(e);
+			throw new Error("The start port ID found was not valid",e); //needs to be tested
 		}
 		
 	}
 
-	public boolean getFoundContainer() {
-		return foundContainer;
-	}
-
-	
-	public boolean updateDestinationPort(long destinationPortID) {
-		return new UpdateDestinationPort().updatePort(destinationPortID, containerID);
-		
-	}
-	
-	//I needed a way to access to access the journey right after creation, so I made this method return journeyID
+	//I needed a way to access the journey right after creation, so I made this method return journeyID
 	//Simon
+	/**
+	 * registerContainerForAJourney will be called in the interface 
+	 * to register a container for a journey
+	 * It assumes that all the information passed to it is valid
+	 * And thus will always register a container. 
+	 * @param startPortID
+	 * @param destinationPortID
+	 * @param cargo
+	 * @param temperature
+	 * @param pressure
+	 * @param humidity
+	 * @param arriveBy
+	 */
 	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy) {
-		containerRegistered=false;		
-		container.useContainerAgain(client.getID(),ssecurity.generateID() , startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
+		long containerID = getContainerID(startPortID);
+		new UpdateDestinationPort().updatePort(destinationPortID, containerID);
+		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
 		container.save();
-		UpdateHistory.updateHistoryDataBase(container);
+		DataBase.saveToHistory(container);
 		client.addActiveShipment(container.getJourneyID());
 		client.save();
-		containerRegistered=true;
+		try {
+			this.getClient(client.getID());
+		} catch (ElementSelectionException e) {
+			throw new Error("For some reason the client just saved can't be found",e);
+		}
 		return container.getJourneyID();
 	}
 
-	public boolean getContainerRegistered() {
-
-		return this.containerRegistered;
-	}
-
 	
+	/**
+	 * createANewContainer will generate a new container object and add the container ID 
+	 * to the array of stationedContainers at the start Port
+	 * @param startPort
+	 */
+	private void createANewContainer(Port startPort)  {
 
-	private void createANewContainer()  {
-
-		container = new Container(this.ssecurity.generateID(),startPort);
-		containerID = container.getID();
-		startPort.addStationedContainer(containerID);
+		container = new Container(Security.generateIDFromSecureRandom(),startPort);
+		startPort.addStationedContainer(container.getID());
 		startPort.save();
 		container.save();
-		getAContainer(startPort.getID());
+		getContainerID(startPort.getID());
 	}
 	
-	//TODO what is this? If someone already have an instance of filter, why can't they just call its method directly?
+	
+	/**
+	 * filterContainersOnAJourney will filter out the active containers for the client 
+	 * depending on the filter used.
+	 * @param filter
+	 * @return
+	 */
 	public ArrayList<Container> filterContainersOnAJourney(FilteringContainersForAClient filter){
 		return filter.filterContainers();
 	}

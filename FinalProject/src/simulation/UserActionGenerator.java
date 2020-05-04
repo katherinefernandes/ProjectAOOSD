@@ -20,8 +20,7 @@ public class UserActionGenerator {
 	
 	static public Client generateNewClient() {
 		List<List<String>> refrencePersonName = randomGenerator.generateRefrenceName();
-		Security idGenerator = new Security();
-		Client client = new Client(idGenerator.generateID(), 
+		Client client = new Client(Security.generateIDFromSecureRandom(), 
 							   	   randomGenerator.generateCompanyName(), randomGenerator.generateCountryCode(), 
 								   randomGenerator.generatePhoneNumber(), randomGenerator.generateEmail(),
 								   refrencePersonName.get(0), refrencePersonName.get(1), refrencePersonName.get(2),
@@ -45,7 +44,6 @@ public class UserActionGenerator {
 
 		//TODO must be changed when application is changed
 		ClientApplication user = new ClientApplication(client.getID());
-		user.getAContainer(startPort.getID());
 		long journeyID = user.registerContainerForAJourney(startPort.getID(), destinationPort.getID(), cargo, startTemperature, startAtmosphere, startHumidity, arriveBy);
 		return journeyID;
 	}

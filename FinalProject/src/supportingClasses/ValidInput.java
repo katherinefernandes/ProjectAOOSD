@@ -1,10 +1,10 @@
 package supportingClasses;
 
-
-
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ValidInput {
-	//changed all methods to just public
+	
 	public  boolean validateEmail (String email) {
 		return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
 	}
@@ -48,4 +48,30 @@ public class ValidInput {
 			return false;
 		}
 	}
+	/**
+	 * private boolean validateArrayOfNames(){}
+	 * This method is checking the validity of the name and returns a boolean depending on the situation
+	 * @param name the Name inputed by the user (could be either first name, middle name or last name)
+	 * @return true if the name is valid and false if the name is invalid
+	 */
+	public boolean validateArrayOfNames(String name) {
+		System.out.println(name);
+		ArrayList<String> Name = InputParser.parsingNames(name); 
+		for(int i=0;i<Name.size();i++) {
+			if(!validateName(Name.get(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean validateDate(String date) {
+		String[] datearray = date.split("-");
+		if(datearray.length==3) {
+			LocalDate object = LocalDate.of(Integer.valueOf(datearray[2]), Integer.valueOf(datearray[1]), Integer.valueOf(datearray[0]));
+			return object.isAfter(LocalDate.now());
+		}
+		else return false;
+	}
+	
 }

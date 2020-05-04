@@ -1,6 +1,8 @@
-package objectsDataTest;
+package businessObjectsTests;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.jupiter.api.*;
 
@@ -13,8 +15,9 @@ public class PortDataTest {
 	
 	@BeforeEach
 	public void testPortData() {
-		objectTest = new Port(36l,"Pakistan","gawadar",36.0f,87.0f);
-		
+		objectTest = new Port(6778l,"Pakistan","gawadar",36.0f,87.0f);
+		objectTest.addArrivingContainer(8882l);
+		objectTest.addStationedContainer(99110l);
 	}
 
 	@Test
@@ -41,17 +44,20 @@ public class PortDataTest {
 
 	@Test
 	public void testGetStationedContainers() {
-		assertTrue(objectTest.getStationedContainers().isEmpty());
-		objectTest.addStationedContainer(89l);
+	objectTest.addStationedContainer(89l);
 		assertFalse(objectTest.getStationedContainers().isEmpty());
 	}
 
 	@Test
 	public void testGetArrivingContainers() {
-		assertTrue(objectTest.getArrivingContainers().isEmpty());
 		objectTest.addArrivingContainer(30l);
 		assertFalse(objectTest.getArrivingContainers().isEmpty());
 	}
 
+	@Test
+	public void testGetAllValues() {
+		List<String> allvalues = objectTest.getAllValues();
+		assertTrue(allvalues.get(0).equals(Long.toString(objectTest.getID())));
+	}
 
 }

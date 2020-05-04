@@ -14,13 +14,13 @@ public class UpdateEmail implements UpdateClient {
 	
 	@Override
 	public boolean updated() {
-		// TODO Auto-generated method stub
 		return setUpdate;
 	}
 
+	
+	
 	@Override
 	public Client updateInformation(Client client) {
-		// TODO Auto-generated method stub
 		client.setEmail(email);
 		client.save();
 		setUpdate = true;

@@ -13,7 +13,7 @@ Scenario: The simulation can create a new journey
 		When the simulation decides to create a new journey
 		Then a container is assigned to the journey
 		And the journey is assigned to a client
-		
+
 Scenario: The simulation can develop a journey
 		Given that the logistics company is logged in to the logistics company application
 		And that the following ports are defined:

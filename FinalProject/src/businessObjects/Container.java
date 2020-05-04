@@ -39,6 +39,7 @@ public class Container extends BusinessObject {
 		this.clientID=clientID;
 		this.journeyID=journeyID;
 		this.startPortID=startPortID;
+		this.lastVisitedPortID = startPortID;
 		this.destinationPortID=destinationPortID;
 		this.currentPosition= new Location(latitude,longitude);
 		this.cargo=cargo;
@@ -130,7 +131,7 @@ public class Container extends BusinessObject {
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){
+	public List<String> getAllValues(){// needs to be tested
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getClientID()));

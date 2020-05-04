@@ -29,7 +29,6 @@ import graphsForInternalStatus.LineGraphTemperature;
 
 //TODO I think there should only be one search field for. Makes no sense to restrict what a user can search for
 public class LogisticMenu {
-	//TODO add field for timestamp on update of internal status and position of container. "Leave blank for current time" should be written somewhere.
 	public JFrame frame;
 	public JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10;
 	public JTextField textField_11,textField_12,textField_13,textField_14,textField_15;
@@ -64,6 +63,10 @@ public class LogisticMenu {
 	private JButton atmosphereGraphButton;
 	private JButton humidityGraphButton;
 	private JPanel searchClientPanel;
+	private JPanel updateContainerPortPanel;
+	private JTextField updatePortContainerID;
+	private JTextField updatePortName;
+	private JTextArea updateCurrentPortError;
     
     public LogisticMenu(LogisticController controller) {
 		this.controller = controller;
@@ -116,7 +119,7 @@ public class LogisticMenu {
 		panel.add(UpdateContainerButton);
 		
 		logoutButton = new JButton("Log Out");
-		logoutButton.setBounds(19, 266, 187, 29);
+		logoutButton.setBounds(19, 301, 187, 29);
 		logoutButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -282,15 +285,32 @@ public class LogisticMenu {
 		Save1.setBounds(213, 351, 117, 29);
 		Save1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtrSuccess.setVisible(false);
-				txtrSomethingWentWrong.setVisible(false);
+				String middlename;
 				if(textField_10.getText().isEmpty()||textField_9.getText().isEmpty()||textField_8.getText().isEmpty()||textField_7.getText().isEmpty()||textField_6.getText().isEmpty()||textField_4.getText().isEmpty()||textField_3.getText().isEmpty()||textField_2.getText().isEmpty()||textField_1.getText().isEmpty()||textField.getText().isEmpty()) {
 					System.out.println("One of the fields is empty, please try again");
 					txtrSomethingWentWrong.setVisible(true);
 					return;
 				}else {
-					
-					controller.addNewClient(textField_10.getText(),textField_9.getText(),textField_8.getText(),textField_7.getText(),textField_6.getText(),textField_5.getText(),textField_4.getText(),textField_3.getText(),textField_2.getText(),textField_1.getText(),textField.getText());
+					if(textField_5.getText().isEmpty()) {
+						 middlename = " ";
+						 
+					}
+					else {
+						middlename = textField_5.getText();
+					}
+					boolean checkMessage = controller.addNewClient(textField_10.getText(),textField_9.getText(),textField_8.getText(),textField_7.getText(),textField_6.getText(),middlename,textField_4.getText(),textField_3.getText(),textField_2.getText(),textField_1.getText(),textField.getText());
+				    if(checkMessage) {
+				    	txtrSomethingWentWrong.setVisible(false);
+				    	txtrSuccess.setVisible(true);
+				   
+				    
+				    }
+				    else {
+				    	txtrSuccess.setVisible(false);
+				    	txtrSomethingWentWrong.setVisible(true);
+				    	
+				    	
+				    }
 				}
 				
 				clearDataFields(textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10);
@@ -369,7 +389,7 @@ public class LogisticMenu {
 				}
 				clearDataFields(textField_16,textField_14,textField_15);
 			
-		}});
+		}}); 
 		
 		ContainePositionrPanel.add(Save2);
 		
@@ -512,6 +532,75 @@ public class LogisticMenu {
 		successStatus.setBounds(245, 251, 175, 16);
 		StatusPanel.add(successStatus);
 		successStatus.setVisible(false);
+		
+		updateContainerPortPanel = new JPanel();
+		layeredPane.setLayer(updateContainerPortPanel, 0);
+		updateContainerPortPanel.setBounds(0, 0, 486, 412);
+		layeredPane.add(updateContainerPortPanel);
+		updateContainerPortPanel.setBackground(new Color(95, 158, 160));
+		updateContainerPortPanel.setLayout(null);
+		
+		JTextArea txtrContainerId_3 = new JTextArea();
+		txtrContainerId_3.setBackground(new Color(95, 158, 160));
+		txtrContainerId_3.setText("Container ID:");
+		txtrContainerId_3.setEditable(false);
+		txtrContainerId_3.setBounds(43, 73, 148, 16);
+		updateContainerPortPanel.add(txtrContainerId_3);
+		
+		JTextArea txtrContainerId_3_1 = new JTextArea();
+		txtrContainerId_3_1.setText("Port Name:");
+		txtrContainerId_3_1.setEditable(false);
+		txtrContainerId_3_1.setBackground(new Color(95, 158, 160));
+		txtrContainerId_3_1.setBounds(43, 115, 148, 16);
+		updateContainerPortPanel.add(txtrContainerId_3_1);
+		
+		updatePortContainerID = new JTextField();
+		updatePortContainerID.setBounds(242, 68, 217, 26);
+		updateContainerPortPanel.add(updatePortContainerID);
+		updatePortContainerID.setColumns(10);
+		
+		updatePortName = new JTextField();
+		updatePortName.setColumns(10);
+		updatePortName.setBounds(242, 106, 217, 26);
+		updateContainerPortPanel.add(updatePortName);
+		
+		JButton updatePortSaveButton = new JButton("Save");
+		updatePortSaveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateCurrentPortError.setVisible(false);
+				if(updatePortContainerID.getText().isEmpty()&&updatePortName.getText().isEmpty()) {
+					updateCurrentPortError.setVisible(true);
+					System.out.println("One of the text fields is empty");
+					clearDataFields(updatePortContainerID,updatePortName);
+					return;
+				}else {
+					containerIDForGraphs=updatePortContainerID.getText();
+					controller.updateContainerPort(updatePortContainerID.getText(),updatePortName.getText());
+					
+				}
+				if(controller.checkMessage()){
+					viewContainerText.setText(controller.getContainerData());
+					switchPanels(viewContainerPanel);
+					
+				}
+				else {
+					updateCurrentPortError.setVisible(true);
+				}
+				
+				clearDataFields(containerIDtextstatus,textField_11,textField_12,textField_13);
+			}
+		});
+		updatePortSaveButton.setBounds(342, 177, 117, 29);
+		updateContainerPortPanel.add(updatePortSaveButton);
+		
+		updateCurrentPortError = new JTextArea();
+		updateCurrentPortError.setForeground(new Color(165, 42, 42));
+		updateCurrentPortError.setText("Something went wrong. Try again!");
+		updateCurrentPortError.setBackground(new Color(95, 158, 160));
+		updateCurrentPortError.setEditable(false);
+		updateCurrentPortError.setBounds(56, 182, 274, 16);
+		updateContainerPortPanel.add(updateCurrentPortError);
+		
 		
 		ContainerInfoPanel = new JPanel();
 		ContainerInfoPanel.setBackground(new Color(95, 158, 160));
@@ -719,7 +808,7 @@ public class LogisticMenu {
 				
 			}
 		});
-		getClientIfoButton.setBounds(19, 186, 187, 29);
+		getClientIfoButton.setBounds(19, 229, 187, 29);
 		panel.add(getClientIfoButton);
 		
 		
@@ -871,8 +960,18 @@ public class LogisticMenu {
 			
 			}
 		});
-		viewJourneysButton.setBounds(19, 225, 187, 29);
+		viewJourneysButton.setBounds(19, 266, 187, 29);
 		panel.add(viewJourneysButton);
+		
+		JButton updatePortButton = new JButton("Update Current Port");
+		updatePortButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateCurrentPortError.setVisible(false);
+				switchPanels(updateContainerPortPanel);
+			}
+		});
+		updatePortButton.setBounds(19, 188, 187, 29);
+		panel.add(updatePortButton);
 	}
 	
 	public void setFieldsClientData() {
@@ -916,6 +1015,7 @@ public class LogisticMenu {
 	}
 
 	public void successFieldForAddClient() {
+		System.out.println("Inside success field for add client");
 		setTextVisibleTrue(txtrSuccess);
 	}
 	public void successPositionUpdate() {
@@ -945,5 +1045,9 @@ public class LogisticMenu {
 		System.out.println("Switching panels");
 		switchPanels(viewClientPanel);
 		successSearch.setVisible(true);// switch it to false once the panel works
+	}
+	public void displayPortError() {
+		updateCurrentPortError.setVisible(true);
+		
 	}
 }

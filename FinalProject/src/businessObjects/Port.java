@@ -54,7 +54,7 @@ public class Port extends BusinessObject{
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){
+	public List<String> getAllValues(){ 
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getCountry()));

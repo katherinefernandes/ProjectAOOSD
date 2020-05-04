@@ -1,7 +1,5 @@
 package dataWrappers;
 
-import java.util.*;
-
 public class Location {
 	private float latitude;
 	private float longitude;

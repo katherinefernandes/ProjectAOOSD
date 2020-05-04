@@ -18,22 +18,31 @@ public abstract class FilteringContainersForAClient implements FilterContainer {
 		getContainersByActiveJourneyIDs();
 	}
 	
+	
+	/**
+	 * getContainersByActiveJourneysIDs will extract all the containers from the database 
+	 * which are registered as an active journey for the client
+	 */
 	private  void getContainersByActiveJourneyIDs() {
 		List<Container> containerExtractedByDataBase;
 		System.out.println("activeJourneys: "+activeJourneys.size());
 		for(int i=0;i<this.activeJourneys.size();i++) {
 			String journeyIDInString = this.activeJourneys.get(i).toString();
 			containerExtractedByDataBase = DataBase.searchContainers(journeyIDInString);
-			//Need to check if there is actually a container
 			System.out.println("Containers found "+containerExtractedByDataBase.size());
 			if(containerExtractedByDataBase.size()>0) {
 				System.out.println(containerExtractedByDataBase.get(0).getJourneyID());
 				this.containers.add(containerExtractedByDataBase.get(0));
 			}
 		}
-		//So this method ensures that the containers contain all the containers registered by the client which are on an active journey
+		
 	}
 	
+	/**
+	 * filterContainers will filter out the list of containers on an active journey for the 
+	 * client depending on the filter chosen
+	 * @return ArrayList<Container>
+	 */
 	
 	@Override
 	public abstract ArrayList<Container> filterContainers();

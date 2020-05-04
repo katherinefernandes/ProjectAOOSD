@@ -1,4 +1,4 @@
-package objectsDataTest;
+package businessObjectsTests;
 
 import static org.junit.Assert.*;
 
