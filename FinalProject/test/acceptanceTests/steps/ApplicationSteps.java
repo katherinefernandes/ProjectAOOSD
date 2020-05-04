@@ -895,8 +895,8 @@ public class ApplicationSteps {
 		List<Map<String,String>> ports = table.asMaps();
 		for(Map<String,String> portValues : ports) {
 			Port port = new Port(Long.valueOf(portValues.get("ID")),portValues.get("Country"),
-					    		 portValues.get("PortName"),Float.valueOf(portValues.get("Longitude")),
-					    		 Float.valueOf(portValues.get("Latitude")));
+					    		 portValues.get("PortName"),Float.valueOf(portValues.get("Latitude")),
+					    		 Float.valueOf(portValues.get("Longitude")));
 			port.save();
 		}
 	}
@@ -908,7 +908,7 @@ public class ApplicationSteps {
 			Container container = new Container(Long.valueOf(containerValues.get("ID")),Long.valueOf(containerValues.get("ClientID")),
 												Long.valueOf(containerValues.get("JourneyID")),Long.valueOf(containerValues.get("StartPortID")),
 												Long.valueOf(containerValues.get("LastVisitedPortID")),Long.valueOf(containerValues.get("DestinationPortID")),
-												Float.valueOf(containerValues.get("Longitude")),Float.valueOf(containerValues.get("Latitude")),
+												Float.valueOf(containerValues.get("Latitude")),Float.valueOf(containerValues.get("Longitude")),
 												containerValues.get("Cargo"),Float.valueOf(containerValues.get("Temperature")),
 												Float.valueOf(containerValues.get("Atmosphere")),Float.valueOf(containerValues.get("Humidity")),
 												LocalDateTime.now().toString(),LocalDate.now().plusMonths(3).toString());

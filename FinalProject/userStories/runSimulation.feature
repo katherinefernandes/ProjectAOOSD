@@ -19,7 +19,7 @@ Scenario: The simulation can develop a journey
 		And that the following ports are defined:
 				| ID 			  | Country   | PortName     | Longitude | Latitude |
 				| 123456789 | Denmark   | Nyhavn       | 55.       | 12.      |
-				| 987654321 | China     | Tianjin port | 39.	  	 | 118.		  |
+				| 987654321 | China     | Tianjin      | 39.	  	 | 118.		  |
 		And that the following containers are defined:
 				| ID				  | ClientID    | JourneyID | StartPortID | LastVisitedPortID | DestinationPortID | Longitude | Latitude | Cargo | Temperature | Humidity | Atmosphere |
 				| 10238493181 | 12901394121 | 128938929 | 123456789   | 123456789					| 987654321					| 40.				| 80.			 | Socks | 23.	 			 | 24.			| 1.				 |
@@ -31,9 +31,9 @@ Scenario: The simulation can develop a journey
 
 Scenario: The simulation can finish a journey
 		Given that the following ports are defined:
-				| ID 			  | Country | Port name    | Longitude | Latitude |
+				| ID 			  | Country | PortName    | Longitude | Latitude |
 				| 123456789 | Denmark | Nyhavn       | 55.       | 12.      |
-				| 987654321 | China   | Tianjin port | 39.       | 118.		  |
+				| 987654321 | China   | Tianjin      | 39.       | 118.		  |
 		And the port with ID=987654321 has the arriving container with ID=10238493181
 		And that the following clients are defined:
 				| ID				  | CompanyName | PhoneNumber  | Email     | RefrencePersonName | StreetName   | HouseNumber | City 			| ZipCode |
