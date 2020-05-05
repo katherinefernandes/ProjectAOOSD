@@ -28,6 +28,8 @@ public class LoginControllerTest {
 	public void validClientInfoTest() {
 		Client client = new Client(311l,"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
+		assertFalse(controller.validClientInfo("mak82"));
+		assertFalse(controller.validClientInfo("20000000000"));
 		assertTrue(controller.validClientInfo("311"));
 	} 
 	
@@ -50,12 +52,18 @@ public class LoginControllerTest {
 		controller.setCompnyName("admin");
 		controller.setCompanyPassword("admin".toCharArray());
 		controller.loginButtonPressed(false);
+		controller.setClientText("1000000000000");
+		controller.loginButtonPressed(true);
 		
 	}
 	
 	
 	@Test
 	public void invokeNextFrameTest() {
+		Client client = new Client(311l,"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
+		client.save();
+		controller.setClientText("311");
+		controller.loginButtonPressed(true);
 		assertTrue(window.isClientButtonChecked());
 		
 		

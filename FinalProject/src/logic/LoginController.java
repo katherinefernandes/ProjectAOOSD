@@ -3,8 +3,10 @@ package logic;
 import java.awt.EventQueue;
 import java.util.*;
 import dataBase.DataBase;
+import exceptions.ElementSelectionException;
 import graphicalInterface.LoginWindow;
 import graphicalInterface.LogisticMenu;
+import supportingClasses.ValidInputType;
 /**
  * This class connects the logic behind the login system to the graphical user interface
  * @author daniela
@@ -34,7 +36,7 @@ public class LoginController {
 	 * @return boolean value depending whether the ID exists in the data base or not
 	 */
 	public boolean validClientInfo(String clientID) {
-		return DataBase.isSavedID(Long.valueOf(clientID));
+		return ValidInputType.validateLong(clientID)&&DataBase.isSavedID(Long.valueOf(clientID));
 	}
     
 	/**
@@ -67,8 +69,8 @@ public class LoginController {
 			validLogin =validCompanyInfo(companyName,companyPasswordIN);
 		}
 		if(!validLogin) {
-			window.invalidInput(); // test this
-		} else { // test this 
+			window.invalidInput();
+		} else { 
 			invokeNextFrame(isClient);} 
 	}
 	
@@ -99,6 +101,8 @@ public class LoginController {
 		}
 	}
 	
+	
+	//I think the two methods below should be moved to graphicalInterface login window-Mamuna
 	/**
 	 * private void nextComapanyFrame() {}
 	 * This method invokes the next frame for the company menu
@@ -123,14 +127,15 @@ public class LoginController {
 	 */
 	private void nextClientFrame() {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {//test this
+			public void run() {
 				try {
+					System.out.println("Setting up the client application for client:"+clientText);
 					new ClientController(clientText);
 					window.closeFrame();
 					
 				
 				} catch (Exception e) {
-					e.printStackTrace();
+					throw new Error("Exception given, the validation did not work",e);
 				}
 			}
 		});
