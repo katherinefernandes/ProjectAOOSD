@@ -1,7 +1,7 @@
 package applications;
 
-import java.util.ArrayList;
-
+import java.time.LocalDateTime;
+import java.util.*;
 import businessObjects.Container;
 import businessObjects.Port;
 import containerFilters.FilteringContainersForAClient;
@@ -45,14 +45,14 @@ public class ClientApplication extends Application {
 	private long getContainerID(long startPortID) {
 		try {
 			Port startPort = DataBase.getPort(startPortID);
-			Long containerID = 0l;
+			Long containerID;
 			if (startPort.getStationedContainers().size()>0) {
 				containerID = startPort.getStationedContainers().get(0);
 				container = DataBase.getContainer(containerID);
 				startPort.removeStationedContainer(containerID);
 				startPort.save();
 			}else {
-				createANewContainer(startPort);
+				containerID = createANewContainer(startPort);
 			}
 			return containerID;
 		} catch (ElementSelectionException e) {
@@ -60,7 +60,15 @@ public class ClientApplication extends Application {
 		}
 		
 	}
+	
+	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
+			float pressure, float humidity, String arriveBy) {
+		return registerContainerForAJourney(startPortID, destinationPortID, cargo, temperature,
+				pressure, humidity, arriveBy, LocalDateTime.now().toString());
+	}
 
+	//I needed a way to access the journey right after creation, so I made this method return journeyID
+	//Simon
 	/**
 	 * registerContainerForAJourney will be called in the interface 
 	 * to register a container for a journey
@@ -74,11 +82,11 @@ public class ClientApplication extends Application {
 	 * @param humidity
 	 * @param arriveBy
 	 */
-	public void registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
-			float pressure, float humidity, String arriveBy) {
+	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
+			float pressure, float humidity, String arriveBy, String updated) {
 		long containerID = getContainerID(startPortID);
 		new UpdateDestinationPort().updatePort(destinationPortID, containerID);
-		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
+		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy, updated);
 		container.save();
 		DataBase.saveToHistory(container);
 		client.addActiveShipment(container.getJourneyID());
@@ -88,6 +96,7 @@ public class ClientApplication extends Application {
 		} catch (ElementSelectionException e) {
 			throw new Error("For some reason the client just saved can't be found",e);
 		}
+		return container.getJourneyID();
 	}
 
 	
@@ -96,13 +105,13 @@ public class ClientApplication extends Application {
 	 * to the array of stationedContainers at the start Port
 	 * @param startPort
 	 */
-	private void createANewContainer(Port startPort)  {
+	private long createANewContainer(Port startPort)  {
 
 		container = new Container(Security.generateIDFromSecureRandom(),startPort);
 		startPort.addStationedContainer(container.getID());
 		startPort.save();
 		container.save();
-		getContainerID(startPort.getID());
+		return getContainerID(startPort.getID());
 	}
 	
 	

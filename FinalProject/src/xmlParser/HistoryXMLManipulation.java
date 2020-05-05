@@ -13,6 +13,9 @@ public class HistoryXMLManipulation extends ContainerXMLManipulation{
 	@Override
 	public void newEntry(Container container) {
 		activeData.storeNewData(container);
+		if(activeData.size() > 50) {
+			flushActiveData();
+		}
 	}
 
 	@Override
@@ -25,11 +28,21 @@ public class HistoryXMLManipulation extends ContainerXMLManipulation{
 		io.finishWriteIO();
 	}
 	
+	@Override
+	public List<Container> searchEntries(String searchWord){
+		List<Container> matchingEntries = new ArrayList<>();
+		flushActiveData();
+		matchingEntries.addAll(findMatchingEntriesFromFile(searchWord));
+		return matchingEntries;
+	}
+	
 	private void saveAllActiveData() {
-		while(!activeData.isEmpty()) {
-			io.insertDataPoint(dataPointFromObject(activeData.getDataAtIndex(0)));
-			activeData.removeDataAtIndex(0);
+		int index = activeData.size() - 1;
+		while(index >= 0) {
+			io.insertDataPoint(dataPointFromObject(activeData.getDataAtIndex(index)));
+			index--;
 		}
+		activeData.wipeAllData();
 	}
 	
 	private void saveAllFileData() {

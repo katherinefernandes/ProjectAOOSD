@@ -37,7 +37,10 @@ public class Application implements View{
 			container = DataBase.getContainer(containerID); 
 			setContainer= true;
 	}
-	
+	public void getContainer(Container container) {
+		this.container = container;
+		setContainer = true;
+	}
 	public boolean getSetClient() {
 		return this.setClient;
 	}

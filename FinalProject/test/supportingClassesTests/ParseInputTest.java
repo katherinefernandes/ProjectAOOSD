@@ -14,8 +14,7 @@ class ParseInputTest {
 	@Test
 	public void testParsingNames() {
 		assertSame(new ArrayList<String>(Arrays.asList("muna")).size(),InputParser.parsingNames("muna").size());
-		InputParser parser = new InputParser();
-		assertSame(new ArrayList<String>(Arrays.asList("muna")).size(),parser.parsingNames("muna").size());
+		assertSame(new ArrayList<String>(Arrays.asList("muna")).size(),InputParser.parsingNames("muna").size());
 	}
 
 }

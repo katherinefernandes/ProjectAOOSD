@@ -4,7 +4,7 @@ import java.util.*;
 import dataBase.DataBase;
 import dataWrappers.Location;
 
-public class Port implements BusinessObject{
+public class Port extends BusinessObject{
 	private long ID;
 	private String country;
 	private String portName;

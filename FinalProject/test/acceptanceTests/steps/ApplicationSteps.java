@@ -6,8 +6,11 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import applications.ClientApplication;
 import applications.CompanyApplication;
@@ -19,9 +22,11 @@ import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import containerFilters.FilteringContainersForAClient;
+import dataWrappers.Location;
 import dataWrappers.ReferenceName;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -30,6 +35,8 @@ import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
+import searchClients.SearchByString;
+import simulation.Simulator;
 import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ExtractingPortID;
 import supportingClasses.UpdateDestinationPort;
@@ -826,10 +833,249 @@ public class ApplicationSteps {
 		assertTrue(viewJourneys.getResult().contains(Long.toString(journeyID)));
 	}
 	
-
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	//SIMULATION STEPS
+	//Would have made this a separate class, if not for build problems 
+	////////////////////////////////////////////////////////////////////////////////////
+	Port currentPort;
+	Container currentContainer;
+	Container updatedContainer;
+	Client currentClient;
+	long currentJourney;
+	ClientApplication clientSession;
+	CompanyApplication companySession;
+	List<Client> viewedClients;
+	Simulator simulator;
 	
 	
+	//--------------------------------------------------------
+	@Given("that the logistics company is logged in to the logistics company application")
+	public void initializeCompanySession(){
+		companySession = new CompanyApplication();
+	}
 	
-
+	@Given("that the database is empty")
+	public void emptyDataBase(){
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipePorts();
+		DataBase.wipeHistory();
+	}
 	
+	@Given("the simulation is activated")
+	public void activateSimulator(){
+		simulator = new Simulator();
+	}
+	
+	
+    @When("the simulation decides to create a new client")
+    public void simulateClientCreation(){
+    	currentClient = simulator.simulateClientCreation(0.0);
+    }
+    
+    @Then("a new client is created")
+    public void clientExists(){
+    	assertTrue(currentClient != null);
+    }
+    
+    @Then("the new client is displayed")
+    public void clientIsSaved(){
+    	SearchByEmail search = new SearchByEmail("");
+    	viewedClients = companySession.search(search);
+    	assertTrue(viewedClients.contains(currentClient));
+    }
+    //--------------------------------------------------------
+    @When("the simulation decides to create a new journey")
+    public void simulateJourneyCreation() {
+    	currentJourney = simulator.simulateJourneyCreation(0.0);
+    	currentClient = DataBase.searchClients(String.valueOf(currentJourney)).get(0);
+    	currentContainer = DataBase.searchContainers(String.valueOf(currentJourney)).get(0);
+    }
+    
+	@Then("a container is assigned to the journey")
+	public void containerIsAssigned() {
+		assertTrue(currentContainer.getJourneyID() == currentJourney);
+	}
+	
+	@Then("the journey is assigned to a client")
+	public void clientIsAssigned(){
+		assertTrue(currentClient.getActiveShipments().contains(currentJourney));
+	}
+	//--------------------------------------------------------
+	@Given("that the following ports are defined:$")
+	public void definePorts(DataTable table) {
+		List<Map<String,String>> ports = table.asMaps();
+		for(Map<String,String> portValues : ports) {
+			Port port = new Port(Long.valueOf(portValues.get("ID")),portValues.get("Country"),
+					    		 portValues.get("PortName"),Float.valueOf(portValues.get("Latitude")),
+					    		 Float.valueOf(portValues.get("Longitude")));
+			port.save();
+		}
+	}
+	
+	@Given("that the following containers are defined:$")
+	public void defineContainers(DataTable table) {
+		List<Map<String,String>> containers = table.asMaps();
+		for(Map<String,String> containerValues : containers) {
+			Container container = new Container(Long.valueOf(containerValues.get("ID")),Long.valueOf(containerValues.get("ClientID")),
+												Long.valueOf(containerValues.get("JourneyID")),Long.valueOf(containerValues.get("StartPortID")),
+												Long.valueOf(containerValues.get("LastVisitedPortID")),Long.valueOf(containerValues.get("DestinationPortID")),
+												Float.valueOf(containerValues.get("Latitude")),Float.valueOf(containerValues.get("Longitude")),
+												containerValues.get("Cargo"),Float.valueOf(containerValues.get("Temperature")),
+												Float.valueOf(containerValues.get("Atmosphere")),Float.valueOf(containerValues.get("Humidity")),
+												LocalDateTime.now().toString(),LocalDate.now().plusMonths(3).toString());
+			container.save();
+			currentContainer = container;
+		}
+	}
+	
+	@Given("that the following clients are defined:$")
+	public void defineClients(DataTable table) {
+		List<Map<String,String>> clients = table.asMaps();
+		for(Map<String,String> clientValues : clients) {
+			String[] phone = clientValues.get("PhoneNumber").split(" ");
+			int countryCode = Integer.valueOf(phone[0]);
+			long phoneNumber = Long.valueOf(phone[1]);
+			
+			String[] name = clientValues.get("RefrencePersonName").split(" ");
+			List<String> firstName = new ArrayList<>();
+			firstName.add(name[0]);
+			List<String> lastName = new ArrayList<>();
+			lastName.add(name[name.length - 1]);
+			List<String> middleName = new ArrayList<>();
+			for(int i = 1; i < name.length - 1; i++) {
+				middleName.add(name[i]);
+			}
+			
+			Client client = new Client(Long.valueOf(clientValues.get("ID")),clientValues.get("CompanyName"),
+									   countryCode,phoneNumber,clientValues.get("Email"),firstName,middleName,lastName,
+									   clientValues.get("StreetName"),clientValues.get("City"),
+									   Integer.valueOf(clientValues.get("HouseNumber")),clientValues.get("ZipCode"));
+			client.save();
+			currentClient = client;
+		}
+	}
+	
+	@When("the simulation decides to update active journeys")
+	public void simulateJourneyUpdate() {
+		simulator.simulateJourneyDevelopment();
+		try {
+			updatedContainer = DataBase.getContainer(currentContainer.getID());
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	}
+	
+	@Then("the container is moved towards its destination port with speed=60km\\/hour")
+	public void containerIsMoved() {
+		Location oldPosition = currentContainer.getCurrentPosition();
+		Location newPosition = updatedContainer.getCurrentPosition();
+		float distance = oldPosition.distanceTo(newPosition);
+		assertTrue(distance >= 30F && distance <= 150F);
+	}
+	
+	@Then("the temperature of the container is changed by no more than 0.5 with max=90. and min=-10.")
+	public void temperatureIsChanged() {
+		float oldTemperature = currentContainer.getInternalStatus().getTemperature();
+		float newTemperature = updatedContainer.getInternalStatus().getTemperature();
+		assertTrue(oldTemperature != newTemperature); //This could possible return return a failure with working code, 
+													  //but the chance is very small
+		assertTrue(Math.abs(oldTemperature - newTemperature) <= 0.5F);
+		assertTrue(newTemperature <= 90.F && newTemperature >= -10.F);
+	}
+	
+	@Then("the humidity of the container is changed by no more than 0.5 with max=100. and min=0.")
+	public void humidityIsChanged() {
+		float oldHumidity = currentContainer.getInternalStatus().getHumidity();
+		float newHumidity = updatedContainer.getInternalStatus().getHumidity();
+		assertTrue(oldHumidity != newHumidity); //This could possible return return a failure with working code, 
+													  //but the chance is very small
+		assertTrue(Math.abs(oldHumidity - newHumidity) <= 0.5F);
+		assertTrue(newHumidity <= 100.F && newHumidity >= 0.F);
+	}
+	
+	@Then("the atmosphere of the container is changed by no more than 0.05 with max=3. and min=0.5")
+	public void atmosphereIsChanged() {
+		float oldAtmosphere = currentContainer.getInternalStatus().getAtmosphere();
+		float newAtmosphere = updatedContainer.getInternalStatus().getAtmosphere();
+		assertTrue(oldAtmosphere != newAtmosphere); //This could possible return return a failure with working code, 
+													//but the chance is very small
+		assertTrue(Math.abs(oldAtmosphere - newAtmosphere) <= 0.05F);
+		assertTrue(newAtmosphere <= 3.F && newAtmosphere >= 0.5F);
+	}
+	//---------------------------------------------------------------
+	@Given("the port with ID={long} has the arriving container with ID={long}")
+	public void assignArrivingContainer(long portID, long containerID) {
+		try {
+			Port port = DataBase.getPort(portID);
+			port.addArrivingContainer(containerID);
+			port.save();
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	}
+	@Given("that the client with ID={long} has the active journey with ID={long}")
+	public void assignActiveJourney(long clientID, long journeyID) {
+		try {
+			Client client = DataBase.getClient(clientID);
+			client.addActiveShipment(journeyID);
+			client.save();
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	}
+	@When("the simulation checks for finished journeys")
+	public void simulateFinishJourney() {
+		simulator.checkForFinshedJourneys();
+	}
+	@Then("the client with ID={long} has the the finished journey with ID={long}")
+	public void checkForFinishedJourney(long clientID, long journeyID) {
+		try {
+			Client client = DataBase.getClient(clientID);
+			assertTrue(client.getFinishedShipments().contains(journeyID));
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	}
+	@Then("the client with ID={long} does not have the active journey with ID={long}")
+	public void checkForMissingActiveJourney(long clientID, long journeyID) {
+		try {
+			Client client = DataBase.getClient(clientID);
+			assertFalse(client.getActiveShipments().contains(journeyID));
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	}
+	@Then("the container with ID={long} has journeyID={long}, lastVisitedPortID={long}, startPortID={long} and cargo={string}")
+	public void checkThatContainerIsFinished(long containerID, long journeyID, long lastVisitedPortID, long startPortID, String cargo) {
+		try {
+			Container container = DataBase.getContainer(containerID);
+			assertTrue(container.getJourneyID() == journeyID);
+			assertTrue(container.getLastVisitedPortID() == lastVisitedPortID);
+			assertTrue(container.getStartPortID() == startPortID);
+			assertTrue(container.getCargo().equals(cargo));
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	
+	}
+	@Then("the port with ID={long} does not have the arrriving container {long}")
+	public void checkForMissingArrivingContainer(long portID, long containerID) {
+		try {
+			Port port = DataBase.getPort(portID);
+			assertFalse(port.getArrivingContainers().contains(containerID));
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	}
+	@Then("the port with ID={long} has the stationed container {long}")
+	public void checkForStationedContainer(long portID, long containerID) {
+		try {
+			Port port = DataBase.getPort(portID);
+			assertTrue(port.getStationedContainers().contains(containerID));
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
+	}
 }

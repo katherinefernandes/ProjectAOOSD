@@ -14,7 +14,7 @@ public class Security {
 
 	public static long generateIDFromSecureRandom() { 
 		SecureRandom random = new SecureRandom();
-		return random.nextLong();
+		return Math.abs(random.nextLong());
 	}
 	
 }

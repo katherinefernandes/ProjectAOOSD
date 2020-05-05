@@ -1,10 +1,10 @@
 package dataWrappers;
 
-public class InternalState  {
+public class InternalStatus  {
 	private float Atmosphere;
 	private float Temperature;
 	private float Humidity;
-	public InternalState(float a, float t, float h) {
+	public InternalStatus(float a, float t, float h) {
 		this.Atmosphere=a;
 		this.Humidity=h;
 		this.Temperature=t;

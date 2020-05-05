@@ -28,7 +28,7 @@ public abstract class GeneralXMLManipulation<T extends BusinessObject> {
 	
 	public void newEntry(T newData) {
 		activeData.storeNewData(newData);
-		if (activeData.size() > 5) {
+		if (activeData.size() > 10) {
 			flushActiveData();
 		}
 	}
@@ -37,11 +37,21 @@ public abstract class GeneralXMLManipulation<T extends BusinessObject> {
 		List<T> matchingEntries = new ArrayList<>();
 		flushActiveData();
 		matchingEntries.addAll(findMatchingEntriesFromFile(searchWord));
+		activeData.storeAllData(matchingEntries);
 		return matchingEntries;
 	}
 
 	public T getEntry(long ID) throws ElementSelectionException {
-		List<T> matchingEntries = searchEntries(String.valueOf(ID));
+		//Search memory
+		List<T> matchingEntries = activeData.findMatchingEntriesFromActiveData(String.valueOf(ID));
+		matchingEntries.removeIf( object -> object.getID() != ID);
+		if(matchingEntries.size() == 1) {
+			return matchingEntries.get(0);
+		}else if(matchingEntries.size() > 1) {
+			throw new ElementSelectionException("More than one element matched with given ID");
+		}
+		//Search file
+		matchingEntries = searchEntries(String.valueOf(ID));
 		matchingEntries.removeIf( object -> object.getID() != ID);
 		if(matchingEntries.size() == 0) {
 			throw new ElementSelectionException("Given element could not be found in database");

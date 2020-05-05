@@ -5,8 +5,9 @@ import dataBase.DataBase;
 import dataWrappers.Address;
 import dataWrappers.PhoneNumber;
 import dataWrappers.ReferenceName;
+import exceptions.ElementSelectionException;
 
-public class Client implements BusinessObject{
+public class Client extends BusinessObject{
 	private long ID;
 	private String companyName;
 	private PhoneNumber phoneNumber;
@@ -71,6 +72,13 @@ public class Client implements BusinessObject{
 	}
 	public long getID() {
 		return ID;
+	}
+	public Client getUpdated() {
+		try {
+			return DataBase.getClient(ID);
+		} catch (ElementSelectionException e) {
+			throw new Error(e);
+		}
 	}
 	public List<String> getAllValues(){
 		List<String> values = new ArrayList<>();

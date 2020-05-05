@@ -54,7 +54,6 @@ public class LogisticController {
 	private boolean	checkMessage ;
 	private UpdateStatus updateStatus;
 	private UpdateLocation updatePosition;
-	private UpdatePort UpdatePort;
 	private updateContainer.UpdatePort updatePort;
 	
 	public LogisticController(){

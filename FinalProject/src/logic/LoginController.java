@@ -1,11 +1,18 @@
 package logic;
  
 import java.awt.EventQueue;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+
+import javax.swing.Timer;
+
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
 import graphicalInterface.LoginWindow;
 import graphicalInterface.LogisticMenu;
+
+import simulation.Simulator;
 import supportingClasses.ValidInputType;
 /**
  * This class connects the logic behind the login system to the graphical user interface
@@ -19,12 +26,17 @@ public class LoginController {
 	private String clientText;
 	private String companyName;
 	private char[] companyPasswordIN;
+	private boolean simulationOn;
+	private double simulationHoursPerSecond;
+	private Simulator simulator;
     
 	/**
 	 * This controller initialises the login system
 	 */
 	public LoginController() {
 		System.out.println("Inside login controller");
+		simulationOn = false;
+		simulator = new Simulator();
 		window = new LoginWindow(this);
 		window.errorMessage.setVisible(false);
 		window.openFrame();
@@ -71,10 +83,11 @@ public class LoginController {
 		if(!validLogin) {
 			window.invalidInput();
 		} else { 
+			startSimulation();
 			invokeNextFrame(isClient);} 
 	}
 	
-	
+
 	public void setClientText(String text) {
 		this.clientText = text;
 	}
@@ -101,8 +114,6 @@ public class LoginController {
 		}
 	}
 	
-	
-	//I think the two methods below should be moved to graphicalInterface login window-Mamuna
 	/**
 	 * private void nextComapanyFrame() {}
 	 * This method invokes the next frame for the company menu
@@ -139,5 +150,21 @@ public class LoginController {
 				}
 			}
 		});
+	}
+	
+	public void setSimulation(boolean simulationOn, double simulationHoursPerSecond) {
+		this.simulationOn = simulationOn;
+		this.simulationHoursPerSecond = simulationHoursPerSecond;
+	}
+	private void startSimulation() {
+		if(simulationOn) {
+			int delayMS = (int) (1000./simulationHoursPerSecond);
+			Timer simulation = new Timer(delayMS, new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					simulator.simulateOneHour();
+		         }
+			});
+			simulation.start();
+		}
 	}
 }
