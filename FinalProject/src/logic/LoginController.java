@@ -84,7 +84,8 @@ public class LoginController {
 			window.invalidInput();
 		} else { 
 			startSimulation();
-			invokeNextFrame(isClient);} 
+			invokeNextFrame(isClient);
+		} 
 	}
 	
 
