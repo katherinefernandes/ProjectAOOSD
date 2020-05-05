@@ -69,7 +69,6 @@ public class ClientController {
 	 */
 	public void saveReferencePerson(String firstName, String middleName, String lastName) { 
 		System.out.println("inside the method savereferencePerson");
-		checkMessage = false;
 		if(validate.validateArrayOfNames(firstName) && validate.validateArrayOfNames(middleName) && validate.validateArrayOfNames(lastName)){
 			firstNameList = InputParser.parsingNames(firstName);
 			middleNameList = InputParser.parsingNames(middleName);
@@ -80,9 +79,9 @@ public class ClientController {
 		}
 		else {
 			System.out.println("The names are not valid");
+			checkMessage = false;
 		}
 		if (checkMessage) {
-			checkMessage = true;
 			clientmenu.successFieldForName();
 		}else {
 			clientmenu.errorMessageForName();
@@ -99,15 +98,8 @@ public class ClientController {
      * @return variable holding the information whether the data was updated successfully or not
      */
 	private boolean updateReferencePersonInformation(UpdateReferencePerson update) {
-		checkMessage = false;
-		if (currentClient.updateClientInformation(update)) {
-			System.out.println("Update success, trying to display message");
-			currentClient = new ClientApplication(this.clientID);
-			checkMessage = true;
-		} else {
-			System.out.println("Some thing went wrong, try again");
-			checkMessage = false;
-		}
+		checkMessage = currentClient.updateClientInformation(update);
+		currentClient = new ClientApplication(this.clientID);
 		return checkMessage;
 	}
 	
@@ -134,7 +126,6 @@ public class ClientController {
 		}
 		else {
 			 System.out.println("The phone number or the countrycode type is not valid");
-			 checkMessage =  false;
 		}
 		if (checkMessage) {
 			clientmenu.successFieldForPhone();
@@ -156,13 +147,8 @@ public class ClientController {
      * @return boolean value stating whether the phone number was successfully updated or not
      */
 	private boolean updatePhoneNumberInformation(UpdatePhoneNumber update) {
-		 checkMessage=false;
-		if (currentClient.updateClientInformation(update)) {
-			currentClient = new ClientApplication(this.clientID); 
-			checkMessage = true;
-		}else {
-			checkMessage = false;
-		}
+		checkMessage = currentClient.updateClientInformation(update);
+		currentClient = new ClientApplication(this.clientID); 
 		return checkMessage;
 	}
 	
@@ -198,7 +184,6 @@ public class ClientController {
 		}
 		else {
 			System.out.println("The email type is not valid");
-			checkMessage = false;
 		}
 		if (checkMessage) {
 			clientmenu.successFieldForEmail();
@@ -215,15 +200,8 @@ public class ClientController {
      * @return boolean value stating whether the email was successfully updated or not
      */
 	private boolean updateEmail(UpdateEmail update) {
-		checkMessage=true;
-		if (currentClient.updateClientInformation(update)) {
-			System.out.println("The email has been successfully updated");
-			currentClient = new ClientApplication(this.clientID);
-			checkMessage = true;
-		} else {
-			System.out.println("Something went wrong with the database");
-			checkMessage = false;
-		}
+		checkMessage = currentClient.updateClientInformation(update);
+		currentClient = new ClientApplication(this.clientID);
 		return checkMessage;
 	}
 	
@@ -309,20 +287,17 @@ public class ClientController {
 	
 	/**
 	 * private String arrayListJourneyToString(){}
-	 * This method converts an array List into a String
+	 * This method converts an array List of Journeys into a String
 	 * @param list represents the list containing the long type IDs
 	 * @return The String holding the ID information
 	 */
 	private String arrayListJourneyToString(List<Long> list) {
 		String IDs="";
 		int counter=0;
-		for (int i=0;i<list.size();i++) {
+		for (int i=0;i<list.size()&&counter<2;i++) {
 			IDs = IDs+"\nJourney: "+list.get(i);
 			System.out.println(IDs);
 			counter=counter+1;
-			if(counter>2) { // test or remove
-				break;
-			}
 		}
 		return IDs;
 	}
