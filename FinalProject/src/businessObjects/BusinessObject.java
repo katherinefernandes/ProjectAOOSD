@@ -6,11 +6,19 @@ public abstract class BusinessObject{
 	/**
 	 * Returns unique id of a business object
 	 * @author simon
-	 * @return the ID
+	 * @return ID
 	 */
 	public abstract long getID();
-	
+	/**
+	 * saves business object to database. 
+	 * @author simon
+	 */
 	public abstract void save();
+	/**
+	 * an access method for all data fields
+	 * @author simon
+	 * @return a list of all data fields as strings
+	 */
 	public abstract List<String> getAllValues();
 	
 	@Override

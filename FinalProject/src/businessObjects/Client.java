@@ -37,12 +37,6 @@ public class Client extends BusinessObject{
 	public void setPerson(ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln) {
 		this.person= new ReferenceName(fn,mn,ln);
 	}
-	public void addActiveShipment(long JourneyID) {
-		this.activeShipments.add(JourneyID);
-	}
-	public void addFinishedShipment(long JourneyID) {
-		this.finishedShipments.add(JourneyID);
-	}
 	public String getCompanyName() {
 		return this.companyName;
 	}
@@ -58,6 +52,12 @@ public class Client extends BusinessObject{
 	public Address getAddress() {
 		return this.address;
 	}
+	public void addActiveShipment(long JourneyID) {
+		this.activeShipments.add(JourneyID);
+	}
+	public void addFinishedShipment(long JourneyID) {
+		this.finishedShipments.add(JourneyID);
+	}
 	public List<Long> getActiveShipments(){
 		return this.activeShipments;
 	}
@@ -72,13 +72,6 @@ public class Client extends BusinessObject{
 	}
 	public long getID() {
 		return ID;
-	}
-	public Client getUpdated() {
-		try {
-			return DataBase.getClient(ID);
-		} catch (ElementSelectionException e) {
-			throw new Error(e);
-		}
 	}
 	public List<String> getAllValues(){
 		List<String> values = new ArrayList<>();
@@ -101,5 +94,16 @@ public class Client extends BusinessObject{
 			values.add(String.valueOf(journeyID));
 		}
 		return values;
+	}
+	/**
+	 * returns the version of the client saved in the data base
+	 * @return
+	 */
+	public Client getUpdated() {
+		try {
+			return DataBase.getClient(ID);
+		} catch (ElementSelectionException e) {
+			throw new Error("This client is not saved in the database",e);
+		}
 	}
 }
