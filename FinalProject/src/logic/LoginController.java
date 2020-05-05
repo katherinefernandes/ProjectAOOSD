@@ -154,8 +154,8 @@ public class LoginController {
 	}
 	private void startSimulation() {
 		if(simulationOn) {
-			int delay = (int) (1000./simulationHoursPerSecond);
-			Timer simulation = new Timer(delay, new ActionListener() {
+			int delayMS = (int) (1000./simulationHoursPerSecond);
+			Timer simulation = new Timer(delayMS, new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					simulator.simulateOneHour();
 		         }

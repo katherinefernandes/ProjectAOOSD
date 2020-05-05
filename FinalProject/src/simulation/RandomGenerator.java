@@ -18,7 +18,7 @@ class RandomGenerator {
 	private RandomAccessFile words;
 	private static int bytesInFirstNames = 40000;
 	private static int bytesInLastNames = 91000;
-	private static int bytesInWords = 62000;
+	private static int bytesInWords = 49000;
 	//more efficient to pull a selection of business objects at construction than every time a method is used
 	private List<Client> randomClientSelection;
 	private List<Container> randomContainerSelection;
@@ -99,7 +99,7 @@ class RandomGenerator {
 	public String generateCompanyName() {
 		String[] companyTypes = {"Inc.", "Ltd.","LLC","Corp.","A/S","& Co"};
 		String companyName = getRandomLastName() + "'s ";
-		companyName += getRandomWord() + "s ";
+		companyName += getRandomWord() + " ";
 		companyName += companyTypes[random.nextInt(companyTypes.length)];
 		return companyName;
 	}
@@ -170,9 +170,9 @@ class RandomGenerator {
 	
 	public String generateCargo() {
 		String cargo = "";
-		cargo += getRandomWord() + "s";
+		cargo += getRandomWord();
 		if(random.nextBoolean()) {
-			cargo += " and " + getRandomWord() + "s";
+			cargo += " and " + getRandomWord();
 		}
 		return cargo;
 	}

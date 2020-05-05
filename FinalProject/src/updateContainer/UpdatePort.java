@@ -47,9 +47,7 @@ public class UpdatePort implements UpdateContainer {
 			client.addFinishedShipment(container.getJourneyID());
 			client.save();
 			new UpdateDestinationPort().updatedestinationPortAtEndOfJourney(container.getDestinationPortID(), container.getID());
-			
 			container.useContainerAgain(0000000l, 0, container.getDestinationPortID(), container.getDestinationPortID(), "none", 0, 0, 0, "1-1-2020");
-			container.save();
 	}
 
 	public Container getContainer() {

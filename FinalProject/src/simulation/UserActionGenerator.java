@@ -1,5 +1,6 @@
 package simulation;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import applications.ClientApplication;
@@ -31,7 +32,7 @@ public class UserActionGenerator {
 		return client;
 	}
 	
-	static public long generateNewJourney() {
+	static public long generateNewJourney(LocalDateTime currentTime) {
 		Client client = randomGenerator.getRandomClient();
 		client = client.getUpdated();
 		Port startPort = randomGenerator.getRandomPort();
@@ -44,11 +45,11 @@ public class UserActionGenerator {
 
 		//TODO must be changed when application is changed
 		ClientApplication user = new ClientApplication(client.getID());
-		long journeyID = user.registerContainerForAJourney(startPort.getID(), destinationPort.getID(), cargo, startTemperature, startAtmosphere, startHumidity, arriveBy);
+		long journeyID = user.registerContainerForAJourney(startPort.getID(), destinationPort.getID(), cargo, startTemperature, startAtmosphere, startHumidity, arriveBy, currentTime.toString());
 		return journeyID;
 	}
 	
-	static public void changeContainerPosition(Container container) throws ElementSelectionException {
+	static public void changeContainerPosition(Container container, LocalDateTime currentTime) throws ElementSelectionException {
 		Location oldPosition = container.getCurrentPosition();
 		Port destinationPort;
 		try {
@@ -60,10 +61,9 @@ public class UserActionGenerator {
 		
 		Location newPosition = oldPosition.moveTowardsPointByDistanceInKM(destinationPosition, shipSpeedKPH);
 		
-		UpdateLocation update = new UpdateLocation(newPosition.getLongitude(),newPosition.getLatitude());
-		CompanyApplication user = new CompanyApplication();
-		user.getContainer(container.getID());
-		user.updateContainerInformation(update);
+		container.setCurrentPosition(newPosition.getLatitude(), newPosition.getLongitude());
+		container.setUpdated(currentTime.toString());
+		container.save();
 	}
 	
 	static public void changeContainerStatus(Container container) throws ElementSelectionException {

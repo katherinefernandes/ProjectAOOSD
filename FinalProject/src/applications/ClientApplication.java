@@ -1,5 +1,6 @@
 package applications;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import businessObjects.Container;
 import businessObjects.Port;
@@ -59,6 +60,12 @@ public class ClientApplication extends Application {
 		}
 		
 	}
+	
+	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
+			float pressure, float humidity, String arriveBy) {
+		return registerContainerForAJourney(startPortID, destinationPortID, cargo, temperature,
+				pressure, humidity, arriveBy, LocalDateTime.now().toString());
+	}
 
 	//I needed a way to access the journey right after creation, so I made this method return journeyID
 	//Simon
@@ -76,10 +83,10 @@ public class ClientApplication extends Application {
 	 * @param arriveBy
 	 */
 	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
-			float pressure, float humidity, String arriveBy) {
+			float pressure, float humidity, String arriveBy, String updated) {
 		long containerID = getContainerID(startPortID);
 		new UpdateDestinationPort().updatePort(destinationPortID, containerID);
-		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy);
+		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy, updated);
 		container.save();
 		DataBase.saveToHistory(container);
 		client.addActiveShipment(container.getJourneyID());

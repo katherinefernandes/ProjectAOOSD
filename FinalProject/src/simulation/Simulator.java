@@ -1,5 +1,6 @@
 package simulation;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import applications.CompanyApplication;
@@ -11,9 +12,12 @@ import exceptions.ElementSelectionException;
 import updateContainer.UpdatePort;
 
 public class Simulator {
-	private Random random = new Random();
+	private Random random;
+	private LocalDateTime currentTime;
 	
 	public Simulator() {
+		random = new Random();
+		currentTime = LocalDateTime.now();
 		generateInitialPorts();
 		generateInitialClients();
 		generateInitialJourneys();
@@ -24,6 +28,7 @@ public class Simulator {
 		simulateJourneyCreation(random.nextDouble());
 		simulateJourneyDevelopment();
 		checkForFinshedJourneys();
+		currentTime = currentTime.plusHours(1);
 	}
 
 	public void checkForFinshedJourneys() {
@@ -56,7 +61,7 @@ public class Simulator {
 	private void updateContainerIfActive(Container container) {
 		if(container.getJourneyID() != 0) {
 			try {
-				UserActionGenerator.changeContainerPosition(container);
+				UserActionGenerator.changeContainerPosition(container,currentTime);
 				UserActionGenerator.changeContainerStatus(container);
 			} catch (ElementSelectionException e) {
 				throw new Error(e);
@@ -86,7 +91,7 @@ public class Simulator {
 	public long simulateJourneyCreation(double creationWeigth) {
 		long journeyID = 0;
 		if(creationWeigth < 1D/6D) {
-			journeyID = UserActionGenerator.generateNewJourney();
+			journeyID = UserActionGenerator.generateNewJourney(currentTime);
 		}
 		return journeyID;
 	}

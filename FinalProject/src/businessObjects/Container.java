@@ -86,6 +86,9 @@ public class Container extends BusinessObject {
 		this.arriveBy=arriveBy;
 	}
 	public void useContainerAgain(long clientID, long journeyID,long startPortID, long destinationPortID, String cargo, float temperature, float atmosphere, float humidity, String arriveby) {
+		useContainerAgain(clientID, journeyID, startPortID, destinationPortID, cargo, temperature, atmosphere, humidity, arriveby, LocalDateTime.now().toString());
+	}
+	public void useContainerAgain(long clientID, long journeyID,long startPortID, long destinationPortID, String cargo, float temperature, float atmosphere, float humidity, String arriveby, String updated) {
 		setClientID(clientID);
 		setJourneyID(journeyID);
 		setStartPortID(startPortID);
@@ -93,6 +96,7 @@ public class Container extends BusinessObject {
 		setCargo(cargo);
 		setInternalStatus(atmosphere, temperature, humidity);
 		setArriveBy(arriveby);
+		setUpdated(updated);
 	}
 	public Location getCurrentPosition() {
 		return currentPosition;
