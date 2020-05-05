@@ -19,6 +19,10 @@ class ActiveData<T extends BusinessObject> {
 		dataList.add(newData1);
 	}
 	
+	public void storeAllData(List<T> dataList) {
+		this.dataList.addAll(dataList);
+	}
+	
 	public T getDataAtIndex(int index) {
 		return dataList.get(index);
 	}

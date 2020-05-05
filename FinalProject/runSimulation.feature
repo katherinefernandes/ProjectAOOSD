@@ -2,7 +2,7 @@ Feature: Run simulation
   Description: Use the simulation package to generate and develop business objects
 
 
- Scenario: The simulation can create a new client
+Scenario: The simulation can create a new client
     Given that the logistics company is logged in to the logistics company application
     When the simulation decides to create a new client
     Then a new client is created
