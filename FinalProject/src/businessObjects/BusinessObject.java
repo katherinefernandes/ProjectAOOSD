@@ -3,7 +3,13 @@ package businessObjects;
 import java.util.*;
 
 public abstract class BusinessObject{
+	/**
+	 * Returns unique id of a business object
+	 * @author simon
+	 * @return the ID
+	 */
 	public abstract long getID();
+	
 	public abstract void save();
 	public abstract List<String> getAllValues();
 	
