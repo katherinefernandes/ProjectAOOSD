@@ -41,7 +41,7 @@ public class LoginControllerTest {
 		
 		
 	}
-	
+/*	
 	@Test
 	public void loginButtonPressedTest() {
 		Client client = new Client(311l,"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
@@ -53,8 +53,8 @@ public class LoginControllerTest {
 		controller.loginButtonPressed(false);
 		controller.setClientText("1000000000000");
 		controller.loginButtonPressed(true);
-		
-	}
+		the tests need to be done in a different way... use assertions
+	}*/
 	
 	
 	@Test

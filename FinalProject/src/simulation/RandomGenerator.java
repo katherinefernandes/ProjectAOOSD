@@ -16,7 +16,7 @@ class RandomGenerator {
 	private RandomAccessFile firstNames;
 	private RandomAccessFile lastNames;
 	private RandomAccessFile words;
-	private static int bytesInFirstNames = 40000;
+	private static int bytesInFirstNames = 35000;
 	private static int bytesInLastNames = 91000;
 	private static int bytesInWords = 49000;
 	//more efficient to pull a selection of business objects at construction than every time a method is used
@@ -272,5 +272,11 @@ class RandomGenerator {
 			Client client = allClients.remove(random.nextInt(allClients.size()));
 			randomClientSelection.add(client);
 		}
+	}
+	public static void main(String[] arg) {
+		RandomGenerator e = new RandomGenerator();
+		System.out.println(e.getRandomFirstName());
+		System.out.println(e.getRandomLastName());
+		System.out.println(e.getRandomWord());
 	}
 }

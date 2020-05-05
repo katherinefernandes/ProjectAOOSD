@@ -13,11 +13,16 @@ import supportingClasses.Security;
 class ClientControllerTest {
 	ClientController controller;
 	
-	@Test
-	void testSaveReferencePerson() {
+	public  ClientControllerTest() {
 		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		controller = new ClientController(Long.toString(client.getID()));
+	}
+	
+	
+	
+	@Test
+	void testSaveReferencePerson() {
 		controller.saveReferencePerson("Muna", " ", "azam");
 		assertTrue(controller.getcheckMessage());
 		controller.saveReferencePerson("Mu991", " ", "azam");
@@ -30,9 +35,6 @@ class ClientControllerTest {
 	}
 	@Test
 	void testSavePhoneNumber() {
-		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
-		client.save();
-		controller = new ClientController(Long.toString(client.getID()));
 		controller.savePhoneNumber("45", "5566672");
 		assertTrue(controller.getcheckMessage());
 		controller.savePhoneNumber("mak", "5566672");
@@ -51,9 +53,6 @@ class ClientControllerTest {
 
 	@Test
 	void testSaveEmail() {
-		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
-		client.save();
-		controller = new ClientController(Long.toString(client.getID()));
 		controller.saveEmail("email@eamil.com");
 		assertTrue(controller.getcheckMessage());
 		controller.saveEmail("emaill.com");
@@ -62,9 +61,6 @@ class ClientControllerTest {
 
 	@Test
 	void testGetClientInfo() {
-		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
-		client.save();
-		controller = new ClientController(Long.toString(client.getID()));
 		assertTrue(controller.getCurrentPhoneNumber().contains("23789"),"Should be true");
 		assertEquals(controller.getCurrentEmail(),"email@eh.com");
 		assertEquals(controller.getCompanyName(),"company");
@@ -77,9 +73,6 @@ class ClientControllerTest {
 
 	@Test
 	void testSearchContainer() {
-		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
-		client.save();
-		controller = new ClientController(Long.toString(client.getID()));
 		Port port1 = new Port(357983327889100l,"Pakistan","Gwadar",25.11f,62.33f);
 		Port port2 = new Port(357983327946100l,"Denmark","Copenhagen",55.70f,12.59f);
 		Port port3 = new Port(357983327979100l,"Singapore","Keppel",1.26f,103.83f);
@@ -96,58 +89,5 @@ class ClientControllerTest {
 		
 	}
 
-
-//	@Test
-//	void testGetStartPortName() {
-//		Client client = new Client(32221l,"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
-//		client.save();
-//		controller = new ClientController("32221");
-//	}
-//
-//	@Test
-//	void testGetDestinationPortName() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetCargo() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetArrivalDate() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetLastUpdate() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetInternalStatus() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetCurrentLocation() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetMulitpleContainersData() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testSaveJourney() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testSearchContainer() {
-//		fail("Not yet implemented");
-//	}
-//
 
 }

@@ -17,11 +17,6 @@ class LogisticsControllerTest {
     private LogisticController controller = new LogisticController();
 
 
-//	@Test
-//	void testGetclientsview() {
-//		fail("Not yet implemented");
-//	}
-
 	@Test
 	void testAddNewClient() {
 		
