@@ -6,7 +6,6 @@ Feature: Run simulation
     Given that the logistics company is logged in to the logistics company application
     When the simulation decides to create a new client
     Then a new client is created
-    And the new client is displayed
 
 Scenario: The simulation can create a new journey
 		Given that the logistics company is logged in to the logistics company application

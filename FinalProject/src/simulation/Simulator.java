@@ -13,6 +13,12 @@ import updateContainer.UpdatePort;
 public class Simulator {
 	private Random random = new Random();
 	
+	public Simulator() {
+		generateInitialPorts();
+		generateInitialClients();
+		generateInitialJourneys();
+	}
+
 	public void simulateOneHour() {
 		simulateClientCreation(random.nextDouble());
 		simulateJourneyCreation(random.nextDouble());
@@ -83,5 +89,22 @@ public class Simulator {
 			journeyID = UserActionGenerator.generateNewJourney();
 		}
 		return journeyID;
+	}
+	
+	private void generateInitialJourneys() {
+		for(int i = 0; i < 10; i++) {
+			simulateJourneyCreation(0.0);
+		}
+	}
+
+	private void generateInitialClients() {
+		for(int i = 0; i < 5; i++) {
+			simulateClientCreation(0.0);
+		}
+	}
+
+	private void generateInitialPorts() {
+		PortInitializer portInit = new PortInitializer();
+		portInit.generatePorts();
 	}
 }

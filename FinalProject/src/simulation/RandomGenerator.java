@@ -11,7 +11,7 @@ import businessObjects.*;
 import dataBase.DataBase;
 
 
-public class RandomGenerator {
+class RandomGenerator {
 	private Random random;
 	private RandomAccessFile firstNames;
 	private RandomAccessFile lastNames;
