@@ -184,14 +184,23 @@ class RandomGenerator {
 	}
 	
 	public Client getRandomClient() {
+		if(randomClientSelection.size() < 5 || random.nextDouble() < 0.075) {
+			pullRandomClients();
+		}
 		return randomClientSelection.get(random.nextInt(randomClientSelection.size()));
 	}
 	
 	public Container getRandomContainer() {
+		if(randomContainerSelection.size() < 5 || random.nextDouble() < 0.075) {
+			pullRandomContainers();
+		}
 		return randomContainerSelection.get(random.nextInt(randomContainerSelection.size()));
 	}
 	
 	public Port getRandomPort() {
+		if(randomPortSelection.size() < 5 || random.nextDouble() < 0.075) {
+			pullRandomPorts();
+		}
 		return randomPortSelection.get(random.nextInt(randomPortSelection.size()));
 	}
 	

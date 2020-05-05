@@ -846,13 +846,26 @@ public class ApplicationSteps {
 	ClientApplication clientSession;
 	CompanyApplication companySession;
 	List<Client> viewedClients;
-	Simulator simulator = new Simulator();
+	Simulator simulator;
 	
 	
 	//--------------------------------------------------------
 	@Given("that the logistics company is logged in to the logistics company application")
 	public void initializeCompanySession(){
 		companySession = new CompanyApplication();
+	}
+	
+	@Given("that the database is empty")
+	public void emptyDataBase(){
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipePorts();
+		DataBase.wipeHistory();
+	}
+	
+	@Given("the simulation is activated")
+	public void activateSimulator(){
+		simulator = new Simulator();
 	}
 	
 	

@@ -14,12 +14,11 @@ import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 
 public class UserActionGenerator {
-	private static RandomGenerator randomGenerator = new RandomGenerator();
-	private static int shipSpeedKPH = 60;
+	private RandomGenerator randomGenerator = new RandomGenerator();
+	private int shipSpeedKPH = 60;
 	
-	private UserActionGenerator(){};
 	
-	static public Client generateNewClient() {
+	public Client generateNewClient() {
 		List<List<String>> refrencePersonName = randomGenerator.generateRefrenceName();
 		Client client = new Client(Security.generateIDFromSecureRandom(), 
 							   	   randomGenerator.generateCompanyName(), randomGenerator.generateCountryCode(), 
@@ -32,11 +31,14 @@ public class UserActionGenerator {
 		return client;
 	}
 	
-	static public long generateNewJourney(LocalDateTime currentTime) {
+	public long generateNewJourney(LocalDateTime currentTime) {
 		Client client = randomGenerator.getRandomClient();
 		client = client.getUpdated();
 		Port startPort = randomGenerator.getRandomPort();
 		Port destinationPort = randomGenerator.getRandomPort();
+		while(destinationPort.getID() == startPort.getID()) {
+			destinationPort = randomGenerator.getRandomPort();
+		}
 		String cargo = randomGenerator.generateCargo();
 		float startTemperature = randomGenerator.generateTemperature();
 		float startHumidity = randomGenerator.generateHumidity();
@@ -49,7 +51,7 @@ public class UserActionGenerator {
 		return journeyID;
 	}
 	
-	static public void changeContainerPosition(Container container, LocalDateTime currentTime) throws ElementSelectionException {
+	public void changeContainerPosition(Container container, LocalDateTime currentTime) throws ElementSelectionException {
 		Location oldPosition = container.getCurrentPosition();
 		Port destinationPort;
 		try {
@@ -66,7 +68,7 @@ public class UserActionGenerator {
 		container.save();
 	}
 	
-	static public void changeContainerStatus(Container container) throws ElementSelectionException {
+	public void changeContainerStatus(Container container) throws ElementSelectionException {
 		InternalStatus oldStatus = container.getInternalStatus();
 		float newTemperature = randomGenerator.changeTemperature(oldStatus.getTemperature());
 		float newHumidity = randomGenerator.changeHumidity(oldStatus.getHumidity());

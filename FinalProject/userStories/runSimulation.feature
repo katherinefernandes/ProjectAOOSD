@@ -4,17 +4,23 @@ Feature: Run simulation
 
 Scenario: The simulation can create a new client
     Given that the logistics company is logged in to the logistics company application
+    And that the database is empty
+    And the simulation is activated
     When the simulation decides to create a new client
     Then a new client is created
 
 Scenario: The simulation can create a new journey
 		Given that the logistics company is logged in to the logistics company application
+		And that the database is empty
+		And the simulation is activated
 		When the simulation decides to create a new journey
 		Then a container is assigned to the journey
 		And the journey is assigned to a client
 
 Scenario: The simulation can develop a journey
 		Given that the logistics company is logged in to the logistics company application
+		And that the database is empty
+		And the simulation is activated
 		And that the following ports are defined:
 				| ID 			  | Country   | PortName     | Longitude | Latitude |
 				| 123456789 | Denmark   | Nyhavn       | 55.       | 12.      |
@@ -29,8 +35,10 @@ Scenario: The simulation can develop a journey
 		And the atmosphere of the container is changed by no more than 0.05 with max=3. and min=0.5
 
 Scenario: The simulation can finish a journey
-		Given that the following ports are defined:
-				| ID 			  | Country | PortName    | Longitude | Latitude |
+		Given that the database is empty
+		And the simulation is activated
+		And that the following ports are defined:
+				| ID 			  | Country | PortName     | Longitude | Latitude |
 				| 123456789 | Denmark | Nyhavn       | 55.       | 12.      |
 				| 987654321 | China   | Tianjin      | 39.       | 118.		  |
 		And the port with ID=987654321 has the arriving container with ID=10238493181

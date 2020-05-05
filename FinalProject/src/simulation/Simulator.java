@@ -14,10 +14,12 @@ import updateContainer.UpdatePort;
 public class Simulator {
 	private Random random;
 	private LocalDateTime currentTime;
+	private UserActionGenerator actionGenerator;
 	
 	public Simulator() {
 		random = new Random();
 		currentTime = LocalDateTime.now();
+		actionGenerator = new UserActionGenerator();
 		generateInitialPorts();
 		generateInitialClients();
 		generateInitialJourneys();
@@ -61,8 +63,8 @@ public class Simulator {
 	private void updateContainerIfActive(Container container) {
 		if(container.getJourneyID() != 0) {
 			try {
-				UserActionGenerator.changeContainerPosition(container,currentTime);
-				UserActionGenerator.changeContainerStatus(container);
+				actionGenerator.changeContainerPosition(container,currentTime);
+				actionGenerator.changeContainerStatus(container);
 			} catch (ElementSelectionException e) {
 				throw new Error(e);
 			}
@@ -83,7 +85,7 @@ public class Simulator {
 	public Client simulateClientCreation(double creationWeigth) {
 		Client client = null;
 		if(creationWeigth < 1D/24D) {
-			client = UserActionGenerator.generateNewClient();
+			client = actionGenerator.generateNewClient();
 		}
 		return client;
 	}
@@ -91,7 +93,7 @@ public class Simulator {
 	public long simulateJourneyCreation(double creationWeigth) {
 		long journeyID = 0;
 		if(creationWeigth < 1D/6D) {
-			journeyID = UserActionGenerator.generateNewJourney(currentTime);
+			journeyID = actionGenerator.generateNewJourney(currentTime);
 		}
 		return journeyID;
 	}
