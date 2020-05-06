@@ -1,6 +1,6 @@
 package supportingClasses;
 
-public class ValidInputType { // need to make a separate junit test class
+public class ValidInputType {
 
 	public static boolean validateInteger(String text) {
 		try {

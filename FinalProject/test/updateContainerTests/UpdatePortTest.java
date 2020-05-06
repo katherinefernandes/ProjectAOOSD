@@ -19,7 +19,7 @@ class UpdatePortTest {
 		update = new UpdatePort(90189l);
 		Container container = new Container( 91232234l,12342l,892773l, 123442,90189l , 89.0f,  10.0f,  "cargo",  1.0f, 1.0f,  10.0f, "09-10-2020");
 		container.save();
-		assertFalse(update.updated());
+		assertFalse(update.getUpdated());
 		assertThrows(java.lang.Error.class,()->methodtoruntest());
 		
 	}

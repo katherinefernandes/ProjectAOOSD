@@ -273,10 +273,11 @@ class RandomGenerator {
 			randomClientSelection.add(client);
 		}
 	}
+/* just for testing 
 	public static void main(String[] arg) {
 		RandomGenerator e = new RandomGenerator();
 		System.out.println(e.getRandomFirstName());
 		System.out.println(e.getRandomLastName());
 		System.out.println(e.getRandomWord());
-	}
+	}*/
 }

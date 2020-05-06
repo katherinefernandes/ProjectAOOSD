@@ -47,6 +47,7 @@ public class LoginController {
 	 * @param clientID String holding the clientID
 	 * @return boolean value depending whether the ID exists in the data base or not
 	 */
+	//I think this method should be private as not used by anyother class
 	public boolean validClientInfo(String clientID) {
 		return ValidInputType.validateLong(clientID)&&DataBase.isSavedID(Long.valueOf(clientID));
 	}
@@ -58,6 +59,7 @@ public class LoginController {
 	 * @param companyPasswordIN holds the value of the inputed password
 	 * @return a boolean statement depending on the outcome
 	 */
+	//same here -mamuna
 	public boolean validCompanyInfo(String companyUserNameIN, char[] companyPasswordIN) {
 		return companyUserNameIN.equals(companyUsername) && Arrays.equals(companyPasswordIN, companyPassword.toCharArray());
 	}

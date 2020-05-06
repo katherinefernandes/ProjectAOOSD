@@ -17,14 +17,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
+
 import javax.swing.SwingUtilities;
 
 import graphsForInternalStatus.LineGraphHumidity;
 import graphsForInternalStatus.LineGraphPressure;
 import graphsForInternalStatus.LineGraphTemperature;
 
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -1085,9 +1084,7 @@ public class ClientMenu {
 	public void successFieldForAddJourney() {
 		setTextVisibleTrue(journeySuccessTextfield);
 	}
-//	public void updateActiveShipments() {
-//		viewActiveShipmentsTextField.setText(controller.getActiveShipments());
-//	}
+
 	public void containerSearchError() {
 		setTextVisibleTrue(noContainerError);
 	}

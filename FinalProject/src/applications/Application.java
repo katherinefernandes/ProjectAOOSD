@@ -9,12 +9,12 @@ public class Application implements View{
 	
 	protected Client client;
 	protected Container container;
-	protected boolean setClient;
-	protected boolean setContainer;
+	private boolean clientAdded;
+	private boolean ContainerAdd;
 	
 	public Application() {
-		this.setClient=false;
-		this.setContainer=false;
+		this.clientAdded=false;
+		this.ContainerAdd=false;
 	}
 	
 	@Override
@@ -27,25 +27,38 @@ public class Application implements View{
 		return this.container;
 	}
 	
+	/**
+	 * Gets a client with the ID clientID from the database 
+	 * 
+	 * @param clientID
+	 * @throws ElementSelectionException when the client with the given ID is not found
+	 */
 	
-	public void getClient (long clientID) throws ElementSelectionException {//need to deal with the exceptions
+	public void getClient (long clientID) throws ElementSelectionException {
+			clientAdded = false;
 			client = DataBase.getClient(clientID);
-			setClient = true;
+			clientAdded = true;
 	}
-	public void getContainer(long containerID) throws ElementSelectionException { //need to deal with the exceptions
-			setContainer = false;
+	
+	/**
+	 * Gets a container with the ID containerID from the database
+	 * @param containerID
+	 * @throws ElementSelectionException when the container with the given ID is not found
+	 */
+	public void getContainer(long containerID) throws ElementSelectionException {
+			ContainerAdd = false;
 			container = DataBase.getContainer(containerID); 
-			setContainer= true;
+			ContainerAdd= true;
 	}
 	public void getContainer(Container container) {
 		this.container = container;
-		setContainer = true;
+		ContainerAdd = true;
 	}
 	public boolean getSetClient() {
-		return this.setClient;
+		return this.clientAdded;
 	}
 	public boolean getSetContainer() {
-		return this.setContainer;
+		return this.ContainerAdd;
 	}
 	
 	

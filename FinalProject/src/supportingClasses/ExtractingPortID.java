@@ -5,7 +5,7 @@ import java.util.List;
 import businessObjects.Port;
 import dataBase.DataBase;
 
-public class ExtractingPortID {//IDk why this class is not being covered but needs a junit test of its own
+public class ExtractingPortID {
 	
 	
 	/**

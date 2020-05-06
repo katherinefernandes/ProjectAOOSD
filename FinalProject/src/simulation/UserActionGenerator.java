@@ -33,7 +33,7 @@ public class UserActionGenerator {
 	
 	public long generateNewJourney(LocalDateTime currentTime) {
 		Client client = randomGenerator.getRandomClient();
-		client = client.getUpdated();
+		//client = client.getUpdated();//why are we extracting the client from the database?/mamuna all the tests pass without this line of code..
 		Port startPort = randomGenerator.getRandomPort();
 		Port destinationPort = randomGenerator.getRandomPort();
 		while(destinationPort.getID() == startPort.getID()) {

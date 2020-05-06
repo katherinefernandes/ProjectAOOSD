@@ -73,13 +73,15 @@ public class Client extends BusinessObject{
 	public long getID() {
 		return ID;
 	}
-	public Client getUpdated() {
+	
+	// 	What is the purpose of this method?
+/*	public Client getUpdated() {
 		try {
 			return DataBase.getClient(ID);
 		} catch (ElementSelectionException e) {
 			throw new Error(e);
 		}
-	}
+	}*/
 	public List<String> getAllValues(){
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));

@@ -5,7 +5,7 @@ import dataBase.DataBase;
 
 public class UpdateStatus implements UpdateContainer{
 
-	private boolean setUpdate;
+	private boolean update;
 	private float temp;
 	private float hum;
 	private float press;
@@ -14,23 +14,21 @@ public class UpdateStatus implements UpdateContainer{
 		this.temp = temp;
 		this.hum = hum;
 		this.press = press;
-		this.setUpdate = false;
+		this.update = false;
 	}
 	
 	
 	@Override
-	public boolean updated() {
-		// TODO Auto-generated method stub
-		return setUpdate;
+	public boolean getUpdated() {
+		return update;
 	}
 	
 	@Override
 	public Container updateInformation(Container container) {
-		// TODO Auto-generated method stub
 		container.setInternalStatus(press, temp, hum);
 		container.save();
 		DataBase.saveToHistory(container);
-		setUpdate = true;
+		update = true;
 		return container;
 	}
 	

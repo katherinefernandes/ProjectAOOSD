@@ -18,7 +18,7 @@ public class UpdatePort implements UpdateContainer {
 	}
 	
 	@Override
-	public boolean updated() {
+	public boolean getUpdated() {
 		return update;
 	}
 

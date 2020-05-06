@@ -35,7 +35,6 @@ import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
 import searchClients.SearchByReferencePerson;
-import searchClients.SearchByString;
 import simulation.Simulator;
 import supportingClasses.DataForViewAllJourneys;
 import supportingClasses.ExtractingPortID;
