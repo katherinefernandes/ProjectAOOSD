@@ -5,7 +5,6 @@ import dataBase.DataBase;
 import dataWrappers.Address;
 import dataWrappers.PhoneNumber;
 import dataWrappers.ReferenceName;
-import exceptions.ElementSelectionException;
 
 public class Client extends BusinessObject{
 	private long ID;
