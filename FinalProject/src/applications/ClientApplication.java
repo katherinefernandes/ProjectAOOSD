@@ -56,7 +56,7 @@ public class ClientApplication extends Application {
 			}
 			return containerID;
 		} catch (ElementSelectionException e) {
-			throw new Error("The start port ID found was not valid",e); //needs to be tested
+			throw new Error("The start port ID found was not valid",e); 
 		}
 		
 	}
@@ -67,8 +67,7 @@ public class ClientApplication extends Application {
 				pressure, humidity, arriveBy, LocalDateTime.now().toString());
 	}
 
-	//I needed a way to access the journey right after creation, so I made this method return journeyID
-	//Simon
+	
 	/**
 	 * registerContainerForAJourney will be called in the interface 
 	 * to register a container for a journey
@@ -91,11 +90,11 @@ public class ClientApplication extends Application {
 		DataBase.saveToHistory(container);
 		client.addActiveShipment(container.getJourneyID());
 		client.save();
-		try {
+		/*try {
 			this.getClient(client.getID());
 		} catch (ElementSelectionException e) {
 			throw new Error("For some reason the client just saved can't be found",e);
-		}
+		}*/
 		return container.getJourneyID();
 	}
 

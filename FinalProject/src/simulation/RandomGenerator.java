@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.*;
 import businessObjects.*;
 import dataBase.DataBase;
+import exceptions.ElementSelectionException;
 
 
 class RandomGenerator {
@@ -16,13 +17,13 @@ class RandomGenerator {
 	private RandomAccessFile firstNames;
 	private RandomAccessFile lastNames;
 	private RandomAccessFile words;
-	private static int bytesInFirstNames = 40000;
+	private static int bytesInFirstNames = 35000;
 	private static int bytesInLastNames = 91000;
 	private static int bytesInWords = 49000;
 	//more efficient to pull a selection of business objects at construction than every time a method is used
-	private List<Client> randomClientSelection;
-	private List<Container> randomContainerSelection;
-	private List<Port> randomPortSelection;
+	private List<Long> randomClientSelection;
+	private List<Long> randomContainerSelection;
+	private List<Long> randomPortSelection;
 	
 	public RandomGenerator() {
 		try {
@@ -187,21 +188,36 @@ class RandomGenerator {
 		if(randomClientSelection.size() < 5 || random.nextDouble() < 0.075) {
 			pullRandomClients();
 		}
-		return randomClientSelection.get(random.nextInt(randomClientSelection.size()));
+		long ID = randomClientSelection.get(random.nextInt(randomClientSelection.size()));
+		try {
+			return DataBase.getClient(ID);
+		} catch (ElementSelectionException e) {
+			throw new Error("Simulation contains client that's not in database", e);
+		}
 	}
 	
 	public Container getRandomContainer() {
 		if(randomContainerSelection.size() < 5 || random.nextDouble() < 0.075) {
 			pullRandomContainers();
 		}
-		return randomContainerSelection.get(random.nextInt(randomContainerSelection.size()));
+		long ID = randomContainerSelection.get(random.nextInt(randomContainerSelection.size()));
+		try {
+			return DataBase.getContainer(ID);
+		} catch (ElementSelectionException e) {
+			throw new Error("Simulation contains container that's not in database", e);
+		}
 	}
 	
 	public Port getRandomPort() {
 		if(randomPortSelection.size() < 5 || random.nextDouble() < 0.075) {
 			pullRandomPorts();
 		}
-		return randomPortSelection.get(random.nextInt(randomPortSelection.size()));
+		long ID = randomPortSelection.get(random.nextInt(randomPortSelection.size()));
+		try {
+			return DataBase.getPort(ID);
+		} catch (ElementSelectionException e) {
+			throw new Error("Simulation contains port that's not in database", e);
+		}
 	}
 	
 	public float changeTemperature(float temperature) {
@@ -221,15 +237,15 @@ class RandomGenerator {
 	}
 	
 	public void addClientToSelection(Client client) {
-		randomClientSelection.add(client);
+		randomClientSelection.add(client.getID());
 	}
 	
 	public void addPortToSelection(Port port) {
-		randomPortSelection.add(port);
+		randomPortSelection.add(port.getID());
 	}
 	
 	public void addContainerToSelection(Container container) {
-		randomContainerSelection.add(container);
+		randomContainerSelection.add(container.getID());
 	}
 	
 	private String getRandomLine(RandomAccessFile file, int bytesInFile) throws IOException {
@@ -246,12 +262,9 @@ class RandomGenerator {
 		int transfered = 0;
 		while(transfered < 100 && !allPorts.isEmpty()) {
 			Port port = allPorts.remove(random.nextInt(allPorts.size()));
-			randomPortSelection.add(port);
+			addPortToSelection(port);
 		}
-		
-		
 	}
-
 	private void pullRandomContainers() {
 		randomContainerSelection = new ArrayList<>();
 		List<Container> allContainers = DataBase.searchContainers("");
@@ -259,7 +272,7 @@ class RandomGenerator {
 		int transfered = 0;
 		while(transfered < 100 && !allContainers.isEmpty()) {
 			Container container = allContainers.remove(random.nextInt(allContainers.size()));
-			randomContainerSelection.add(container);
+			addContainerToSelection(container);
 		}
 	}
 
@@ -270,7 +283,14 @@ class RandomGenerator {
 		int transfered = 0;
 		while(transfered < 100 && !allClients.isEmpty()) {
 			Client client = allClients.remove(random.nextInt(allClients.size()));
-			randomClientSelection.add(client);
+			addClientToSelection(client);
 		}
 	}
+/* just for testing 
+	public static void main(String[] arg) {
+		RandomGenerator e = new RandomGenerator();
+		System.out.println(e.getRandomFirstName());
+		System.out.println(e.getRandomLastName());
+		System.out.println(e.getRandomWord());
+	}*/
 }

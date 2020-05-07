@@ -1,5 +1,6 @@
 package graphsForInternalStatus;
 
+import java.awt.Component;
 import java.util.List;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;  
@@ -11,12 +12,13 @@ import dataBase.DataBase;
 
 public class LineGraphPressure extends JFrame {  
   
-  private static final long serialVersionUID = 1L;  
+  private static final long serialVersionUID = 1L;
+private DefaultCategoryDataset dataset;
   
   public LineGraphPressure(String title, String ContainerID) {  
     super(title);  
     // Create dataset  
-    DefaultCategoryDataset dataset = createDataset(ContainerID);  
+     dataset = createDataset(ContainerID);  
     // Create chart  
     JFreeChart chart = ChartFactory.createLineChart(  
         "Internal Pressure of Container: " + ContainerID, // Chart title  
@@ -43,7 +45,19 @@ public class LineGraphPressure extends JFrame {
     
   
     return dataset;  
-  }  
+  }
+
+
+//this method is just used in side the tests
+  public String getValues() {
+	  System.out.println(dataset.getColumnCount());
+	  String values ="";
+	  for(int i=0;i<dataset.getRowCount();i++) {
+		  values = values+(dataset.getValue(i, 0));
+		  System.out.println(dataset.getValue(i, 0));
+	  }
+	  return values;
+  }
   
 //  public static void main(String[] args) {  
 //    SwingUtilities.invokeLater(() -> {  

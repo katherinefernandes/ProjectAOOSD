@@ -4,7 +4,7 @@ import businessObjects.Container;
 
 public interface UpdateContainer {
 	
-	boolean updated();
+	boolean getUpdated();
 	Container updateInformation(Container container);
 	
 }

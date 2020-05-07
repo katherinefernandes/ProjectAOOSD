@@ -7,7 +7,7 @@ import dataBase.DataBase;
 
 public class UpdateLocation implements UpdateContainer{
 
-	private boolean setUpdate;
+	private boolean update;
 	private float lon;
 	private float lat;
 	private String currentTime;
@@ -15,19 +15,21 @@ public class UpdateLocation implements UpdateContainer{
 	public UpdateLocation(float lon, float lat) {
 		this.lon = lon;
 		this.lat = lat;
-		this.setUpdate = false;
+		this.update = false;
 		currentTime = LocalDateTime.now().toString();
 	}
 	
-	public UpdateLocation(float lon, float lat, String currentTime) {
+	
+	//Where is this constructor being used?-mamuna
+	/*public UpdateLocation(float lon, float lat, String currentTime) {
 		this(lon, lat);
 		this.currentTime = currentTime;
-	}
+	}*/
 	
 	
 	@Override
-	public boolean updated() {
-		return setUpdate;
+	public boolean getUpdated() {
+		return update;
 	}
 	
 	@Override
@@ -36,7 +38,7 @@ public class UpdateLocation implements UpdateContainer{
 		container.setUpdated(currentTime);
 		container.save();
 		DataBase.saveToHistory(container);
-		setUpdate = true;
+		update = true;
 		return container;
 	}
 	

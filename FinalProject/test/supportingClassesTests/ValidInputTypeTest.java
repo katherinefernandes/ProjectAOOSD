@@ -6,9 +6,11 @@ import supportingClasses.ValidInputType;
 
 class ValidInputTypeTest {
 
+	//The reason why i am using the object and not the static method is for coverage, idk why but it doesnot cover the class otherwise
+	//Mamuna
 	@Test
 	void testValidateInteger() {
-		assertTrue(ValidInputType.validateInteger("89"));
+		assertTrue(new ValidInputType().validateInteger("89"));
 		assertFalse(ValidInputType.validateInteger("ma910"));
 		
 		

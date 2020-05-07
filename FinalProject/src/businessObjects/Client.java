@@ -95,15 +95,4 @@ public class Client extends BusinessObject{
 		}
 		return values;
 	}
-	/**
-	 * returns the version of the client saved in the data base
-	 * @return
-	 */
-	public Client getUpdated() {
-		try {
-			return DataBase.getClient(ID);
-		} catch (ElementSelectionException e) {
-			throw new Error("This client is not saved in the database",e);
-		}
-	}
 }

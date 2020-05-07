@@ -1,11 +1,10 @@
 package searchClients;
 
-import java.util.List;
-
-import businessObjects.Client;
-import dataBase.DataBase;
-
+/*
 public class SearchByString implements SearchClients{
+	
+	
+	// Why do we have this class? we can search by phone so don't need this class - mamuna
 	private String string;
 	
 	
@@ -18,4 +17,4 @@ public class SearchByString implements SearchClients{
 		return DataBase.searchClients(string);
 	}
 	
-}
+}*/

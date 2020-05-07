@@ -10,7 +10,6 @@ import dataBase.DataBase;
 import dataWrappers.*;
 import exceptions.ElementSelectionException;
 import supportingClasses.Security;
-import updateContainer.UpdateLocation;
 import updateContainer.UpdateStatus;
 
 public class UserActionGenerator {
@@ -33,7 +32,6 @@ public class UserActionGenerator {
 	
 	public long generateNewJourney(LocalDateTime currentTime) {
 		Client client = randomGenerator.getRandomClient();
-		client = client.getUpdated();
 		Port startPort = randomGenerator.getRandomPort();
 		Port destinationPort = randomGenerator.getRandomPort();
 		while(destinationPort.getID() == startPort.getID()) {

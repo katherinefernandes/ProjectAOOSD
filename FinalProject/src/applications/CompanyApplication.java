@@ -25,7 +25,7 @@ public class CompanyApplication extends Application {
 
 	public boolean updateContainerInformation(UpdateContainer Update) {
 		Update.updateInformation(container);
-		return Update.updated();
+		return Update.getUpdated();
 	}
 
 	public List<Client> search(SearchClients option){
