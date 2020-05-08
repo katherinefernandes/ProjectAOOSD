@@ -21,14 +21,14 @@ public abstract class BusinessObject{
 	 */
 	public abstract List<String> getAllValues();
 	
-	/*@Override // This method is not being used - mamuna  
+	@Override
 	public boolean equals(Object object) {
 		if(object == null || (object.getClass() != this.getClass())) {
 			return false;
 		}
 		BusinessObject businessObject = (BusinessObject) object;
 		return getAllValues().equals(businessObject.getAllValues());
-	}*/
+	}
 	
 	@Override
 	public int hashCode() {
