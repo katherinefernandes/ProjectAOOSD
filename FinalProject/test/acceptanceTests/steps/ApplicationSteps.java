@@ -828,8 +828,8 @@ public class ApplicationSteps {
 
 	@Then("all the active journey IDs are returned which also contains the Journey ID {long}")
 	public void allTheActiveJourneyIDsAreReturnedWhichAlsoContainsTheJourneyID(long journeyID) {
-		System.out.println(viewJourneys.getResult());
-		assertTrue(viewJourneys.getResult().contains(Long.toString(journeyID)));
+		System.out.println(viewJourneys.getOutPut());
+		assertTrue(viewJourneys.getOutPut().contains(Long.toString(journeyID)));
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////

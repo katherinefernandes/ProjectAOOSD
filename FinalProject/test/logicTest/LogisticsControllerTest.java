@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import businessObjects.Client;
 import businessObjects.Container;
+import controllers.LogisticController;
 import dataBase.DataBase;
-import logic.LogisticController;
 import supportingClasses.InputParser;
 
 class LogisticsControllerTest {

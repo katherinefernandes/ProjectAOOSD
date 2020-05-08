@@ -1,4 +1,4 @@
-package logic;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -756,13 +756,24 @@ public class ClientController {
 			result = result +"\nJourney ID: "+journeys;
 			result = result +"\nContained: "+getCargoByJourneyID(journeys);
 			result = result +"\nReached: "+getFinalDestinationByJourneyID(journeys);
-			 result =result + "---------------------------------------";
+			result = result+"\nLast Updated: "+getLastUpdated(journeys);
+			result =result + "---------------------------------------";
 		}
 		return "";
 	}
 	
 	
 	
+	private String getLastUpdated(long journeys) {
+		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
+		if (containers.size()>0) {
+			return containers.get(0).getUpdated();
+			
+		}
+		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		return "Unknown";
+	}
+
 	/**
 	 * private String getFinalDestinationByJourneyID(){}
 	 * This method returns the final destination port characterising a specific journey or if the port doesn't exist it returns an error

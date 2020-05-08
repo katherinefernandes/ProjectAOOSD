@@ -1,5 +1,5 @@
 package graphicalInterface;
-import logic.LoginController;
+import controllers.LoginController;
 
 public class Start {
 	private static boolean simulationOn = true;

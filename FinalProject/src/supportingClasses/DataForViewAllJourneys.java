@@ -70,7 +70,7 @@ public class DataForViewAllJourneys {
 	}
 	
 	
-	public String getResult() {
+	public String getOutPut() {
 		return output;
 	}
 	

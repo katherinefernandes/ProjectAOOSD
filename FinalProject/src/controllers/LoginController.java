@@ -1,4 +1,4 @@
-package logic;
+package controllers;
  
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;

@@ -1,4 +1,4 @@
-package logic;
+package controllers;
 
 
 import java.util.ArrayList;
@@ -442,7 +442,7 @@ public class LogisticController {
 
 	public String getAllJourneys() {
 		
-		return new DataForViewAllJourneys().getResult();
+		return new DataForViewAllJourneys().getOutPut();
 	}
 
 	public void updateContainerPort(String containerID, String portName) {

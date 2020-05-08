@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import businessObjects.Client;
+import controllers.LoginController;
 import graphicalInterface.LoginWindow;
-import logic.LoginController;
 import supportingClasses.InputParser;
 
 public class LoginControllerTest {

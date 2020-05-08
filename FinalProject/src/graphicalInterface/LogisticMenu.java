@@ -12,10 +12,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
-import logic.LoginController;
-import logic.LogisticController;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -23,6 +19,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import controllers.LoginController;
+import controllers.LogisticController;
 import graphsForInternalStatus.LineGraphHumidity;
 import graphsForInternalStatus.LineGraphPressure;
 import graphsForInternalStatus.LineGraphTemperature;

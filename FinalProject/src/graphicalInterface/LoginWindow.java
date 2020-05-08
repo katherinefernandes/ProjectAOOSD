@@ -7,9 +7,6 @@ import java.awt.Font;
 import java.awt.Color;
 
 import javax.swing.SpringLayout;
-
-import logic.LoginController;
-
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -19,6 +16,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.event.ChangeListener;
+
+import controllers.LoginController;
+
 import javax.swing.event.ChangeEvent;
 
 public class LoginWindow {

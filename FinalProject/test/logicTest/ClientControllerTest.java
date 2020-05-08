@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import businessObjects.Client;
 import businessObjects.Port;
-import logic.ClientController;
+import controllers.ClientController;
 import supportingClasses.InputParser;
 import supportingClasses.Security;
 
