@@ -1,6 +1,6 @@
 package updateClientInformation;
 
-import businessObjects.Client;
+import objects.Client;
 
 public interface UpdateClient {
 	boolean getUpdated();

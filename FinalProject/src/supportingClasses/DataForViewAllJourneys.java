@@ -1,9 +1,10 @@
 package supportingClasses;
 
 import java.util.List;
-import businessObjects.Client;
-import businessObjects.Container;
+
 import dataBase.DataBase;
+import objects.Client;
+import objects.Container;
 /**
  * Gets all the data for the logistic company to view all the active journeys
  * @author Mamuna

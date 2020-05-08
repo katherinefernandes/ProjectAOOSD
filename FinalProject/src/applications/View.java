@@ -1,7 +1,7 @@
 package applications;
 
-import businessObjects.Client;
-import businessObjects.Container;
+import objects.Client;
+import objects.Container;
 
 public interface View {
 	Client viewClient();

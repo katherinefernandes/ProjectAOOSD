@@ -3,7 +3,7 @@ package dataBase;
 
 import java.util.List;
 
-import businessObjects.BusinessObject;
+import objects.BusinessObject;
 
 public interface GeneralPersistency<T extends BusinessObject> {
 	public abstract void newEntry(T data);

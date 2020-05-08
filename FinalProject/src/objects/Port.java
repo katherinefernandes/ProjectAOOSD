@@ -1,4 +1,4 @@
-package businessObjects;
+package objects;
 
 import java.util.*;
 import dataBase.DataBase;
@@ -45,9 +45,6 @@ public class Port extends BusinessObject{
 	}
 	public void addArrivingContainer(long containerID) {
 		arrivingContainers.add(containerID);
-	}
-	public void removeStationedContainer(long containerID) {
-		stationedContainers.remove(containerID);
 	}
 	public void removeArrivingContainer(long containerID) {
 		arrivingContainers.remove(containerID);

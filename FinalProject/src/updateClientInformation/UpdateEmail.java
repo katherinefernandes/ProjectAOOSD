@@ -1,6 +1,6 @@
 package updateClientInformation;
 
-import businessObjects.Client;
+import objects.Client;
 /**
  * This class is used to update the email for a client
  * @author Mamuna

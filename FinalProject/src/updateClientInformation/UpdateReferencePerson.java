@@ -2,7 +2,7 @@ package updateClientInformation;
 
 import java.util.ArrayList;
 
-import businessObjects.Client;
+import objects.Client;
 
 public class UpdateReferencePerson implements UpdateClient {
 	private ArrayList<String> firstName;

@@ -2,7 +2,7 @@ package xmlParser;
 
 import java.util.*;
 
-import businessObjects.Container;
+import objects.Container;
 
 public class HistoryXMLManipulation extends ContainerXMLManipulation{	
 	public HistoryXMLManipulation() {

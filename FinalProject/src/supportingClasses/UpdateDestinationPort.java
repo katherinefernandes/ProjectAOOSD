@@ -1,8 +1,8 @@
 package supportingClasses;
 
-import businessObjects.Port;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
+import objects.Port;
 /**
  * This class is used to update the destination port when required
  * @author Mamuna Azam

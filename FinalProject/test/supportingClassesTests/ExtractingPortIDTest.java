@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import businessObjects.Port;
+import objects.Port;
 import supportingClasses.ExtractingPortID;
 
 class ExtractingPortIDTest {

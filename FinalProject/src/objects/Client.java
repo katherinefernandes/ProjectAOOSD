@@ -1,4 +1,4 @@
-package businessObjects;
+package objects;
 
 import java.util.*;
 import dataBase.DataBase;
@@ -59,7 +59,10 @@ public class Client extends BusinessObject{
 	public void addActiveShipment(long JourneyID) {
 		this.activeShipments.add(JourneyID);
 	}
-	public void addFinishedShipment(long JourneyID) {
+	private void addFinishedShipment(long JourneyID) {
+		this.finishedShipments.add(JourneyID);
+	}
+	public void setFinishedShipment(long JourneyID) {
 		this.finishedShipments.add(JourneyID);
 	}
 	public List<Long> getActiveShipments(){
@@ -68,7 +71,7 @@ public class Client extends BusinessObject{
 	public List<Long> getFinishedShipments(){
 		return this.finishedShipments;
 	}
-	public void removeActiveShipment(long journeyID){
+	private void removeActiveShipment(long journeyID){
 		activeShipments.remove(journeyID);
 	}
 	public void save() {
@@ -99,4 +102,12 @@ public class Client extends BusinessObject{
 		}
 		return values;
 	}
+
+	public void updateJourneyInformation(long journeyID) {
+		removeActiveShipment(journeyID);
+		addFinishedShipment(journeyID);
+		save();
+	}
+	
+	
 }

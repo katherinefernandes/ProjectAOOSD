@@ -2,8 +2,8 @@ package containerFilters;
 
 import java.util.ArrayList;
 
-import businessObjects.Client;
-import businessObjects.Container;
+import objects.Client;
+import objects.Container;
 /**
  * This class filters the list of containers by the given cargo name
  * @author Mamuna

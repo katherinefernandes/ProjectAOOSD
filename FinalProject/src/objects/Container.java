@@ -1,4 +1,4 @@
-package businessObjects;
+package objects;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,6 +7,8 @@ import java.util.List;
 import dataBase.DataBase;
 import dataWrappers.InternalStatus;
 import dataWrappers.Location;
+import exceptions.ElementSelectionException;
+import supportingClasses.UpdateDestinationPort;
 
 /**
  * This class contains all the information required for a container
@@ -158,4 +160,29 @@ public class Container extends BusinessObject {
 		values.add(String.valueOf(getArriveBy()));
 		return values;
 	}
+	
+	/**
+	 * This method will invoke the client to update its journey information
+	 * and reset the container information
+	 * @param container
+	 * @author Mamuna Azam
+	 */
+	public void containerHasReachedDestination() {
+		    System.out.println("Trying to update client");
+			try {
+				Client client = DataBase.getClient(clientID);
+				client.updateJourneyInformation(this.journeyID);
+			} catch (ElementSelectionException e) {
+				throw new Error("Client was not found, which means the container was not registered properly",e);
+			}
+			new UpdateDestinationPort().updateAtTheEndOfAJourney(destinationPortID, ID);
+			useContainerAgain(0000000l, 0, destinationPortID, destinationPortID, "none", 0, 0, 0, "1-1-2020");
+	}
+	
+	
+	
+	
+	
+	
+	
 }

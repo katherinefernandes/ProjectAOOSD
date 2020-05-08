@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.*;
 
-import businessObjects.Client;
+import objects.Client;
 
 public class ClientDataTest {
 	private Client objectTest;
@@ -81,7 +81,7 @@ public class ClientDataTest {
 	@Test
 	public void testGetAllValues() {
 		objectTest.addActiveShipment(3090l);
-		objectTest.addFinishedShipment(89728l);
+		objectTest.setFinishedShipment(89728l);
 		List<String> values = objectTest.getAllValues();
 		assertTrue(values.get(0).equals(Long.toString(objectTest.getID())));
 		

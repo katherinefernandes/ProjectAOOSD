@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 
-import businessObjects.Client;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
+import objects.Client;
 
 public class ClientAccessTest extends IdentifiableDataAccessTest<Client>{
 	
@@ -49,9 +49,9 @@ public class ClientAccessTest extends IdentifiableDataAccessTest<Client>{
 		data1.addActiveShipment(1766465L);
 		data1.addActiveShipment(8923892L);
 		data1.addActiveShipment(10390101L);
-		data1.addFinishedShipment(2342355L);
-		data1.addFinishedShipment(32564364L);
-		data1.addFinishedShipment(1243252364L);
+		data1.setFinishedShipment(2342355L);
+		data1.setFinishedShipment(32564364L);
+		data1.setFinishedShipment(1243252364L);
 		
 		for (int i = 0; i < 20; i++) {
 			long ID = Math.abs(random.nextLong());

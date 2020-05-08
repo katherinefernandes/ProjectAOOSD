@@ -1,6 +1,6 @@
 package xmlParser;
 
-import businessObjects.BusinessObject;
+import objects.BusinessObject;
 
 class ActiveIDSortedData<T extends BusinessObject> extends ActiveData<T> {
 	

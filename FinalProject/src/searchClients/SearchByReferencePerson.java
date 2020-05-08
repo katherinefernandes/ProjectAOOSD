@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import businessObjects.Client;
 import dataBase.DataBase;
 import dataWrappers.ReferenceName;
+import objects.Client;
 
 public class SearchByReferencePerson implements SearchClients{
 	private ReferenceName referencePerson;

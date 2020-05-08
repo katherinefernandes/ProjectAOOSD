@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import businessObjects.Container;
-import businessObjects.Port;
+import objects.Container;
+import objects.Port;
 import updateContainer.UpdatePort;
 
 class UpdatePortTest {

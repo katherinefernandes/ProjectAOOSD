@@ -3,8 +3,8 @@ package persistencyTest;
 import java.util.*;
 import org.junit.jupiter.api.AfterEach;
 
-import businessObjects.BusinessObject;
 import exceptions.ElementSelectionException;
+import objects.BusinessObject;
 
 public abstract class IdentifiableDataAccessTest<T extends BusinessObject> extends DataAccessTest<T>{
 	public IdentifiableDataAccessTest() {

@@ -1,7 +1,7 @@
 package updateContainer;
 
-import businessObjects.Container;
 import dataBase.DataBase;
+import objects.Container;
 
 public class UpdateStatus implements UpdateContainer{
 

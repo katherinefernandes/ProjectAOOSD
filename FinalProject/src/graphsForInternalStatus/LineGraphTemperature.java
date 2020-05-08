@@ -9,8 +9,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;  
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import businessObjects.Container;
 import dataBase.DataBase;
+import objects.Container;
   
 /**
  * Creates a line graph for the Temperature changes for a container

@@ -27,6 +27,7 @@ public class Location {
 		float newLatitude = latitude + direction[1]*distance/distancePerLatitudeDegreeKM();
 		return new Location(newLatitude, newLongitude);
 	}
+	
 	public float distanceTo(Location position) {
 		return (float) (Math.toRadians(distanceToPointInDegrees(position))*6378F);
 	}

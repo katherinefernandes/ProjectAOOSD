@@ -1,6 +1,6 @@
 package updateContainer;
 
-import businessObjects.Container;
+import objects.Container;
 
 public interface UpdateContainer {
 	

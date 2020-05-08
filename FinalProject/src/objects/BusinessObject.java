@@ -1,4 +1,4 @@
-package businessObjects;
+package objects;
 
 import java.util.*;
 

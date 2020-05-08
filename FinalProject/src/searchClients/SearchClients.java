@@ -3,7 +3,7 @@ package searchClients;
 
 import java.util.List;
 
-import businessObjects.Client;
+import objects.Client;
 
 public interface SearchClients {
 	

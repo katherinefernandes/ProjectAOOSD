@@ -2,8 +2,8 @@ package containerFilters;
 
 import java.util.ArrayList;
 
-import businessObjects.Client;
-import businessObjects.Container;
+import objects.Client;
+import objects.Container;
 /**
  * This class filters the containers by the given journeyID
  * @author Mamuna
