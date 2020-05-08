@@ -1,6 +1,5 @@
 package graphsForInternalStatus;
 
-import java.awt.Component;
 import java.util.List;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;  
@@ -9,7 +8,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import businessObjects.Container;
 import dataBase.DataBase;
-
+/**
+ * Creates a line graph for the Pressure changes for a container
+ * @author Mamuna Azam
+ *
+ */
 public class LineGraphPressure extends JFrame {  
   
   private static final long serialVersionUID = 1L;
@@ -17,13 +20,11 @@ private DefaultCategoryDataset dataset;
   
   public LineGraphPressure(String title, String ContainerID) {  
     super(title);  
-    // Create dataset  
      dataset = createDataset(ContainerID);  
-    // Create chart  
     JFreeChart chart = ChartFactory.createLineChart(  
-        "Internal Pressure of Container: " + ContainerID, // Chart title  
-        "Date", // X-Axis Label  
-        "Pressure (atm) ", // Y-Axis Label  
+        "Internal Pressure of Container: " + ContainerID,  
+        "Date", 
+        "Pressure (atm) ",
         dataset  
         );  
   
@@ -47,8 +48,6 @@ private DefaultCategoryDataset dataset;
     return dataset;  
   }
 
-
-//this method is just used in side the tests
   public String getValues() {
 	  System.out.println(dataset.getColumnCount());
 	  String values ="";
@@ -59,14 +58,5 @@ private DefaultCategoryDataset dataset;
 	  return values;
   }
   
-//  public static void main(String[] args) {  
-//    SwingUtilities.invokeLater(() -> {  
-//      LineGraphPressure example = new LineGraphPressure("Pressure Fluctuations",Long.toString(10849147913510l));  
-//      example.setAlwaysOnTop(true);  
-//      example.pack();  
-//      example.setSize(600, 400);  
-//      example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
-//      example.setVisible(true);  
-//    });  
-//  }  
+
 }  

@@ -52,8 +52,6 @@ public class Location {
 		double radians = Math.acos(Math.cos(angle1)*Math.cos(angle2) 
 			 	  		 + Math.sin(angle1)*Math.sin(angle2)*Math.cos(angle3));
 		double distanceInDegrees = Math.toDegrees(radians);
-		
-		//double distanceInDegrees = Math.sqrt(Math.pow(destination.getLongitude() - longitude,2.) + Math.pow((destination.getLatitude() - latitude),2.));
 		return distanceInDegrees;
 	}
 }

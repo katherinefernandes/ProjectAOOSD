@@ -6,6 +6,11 @@ import dataWrappers.Address;
 import dataWrappers.PhoneNumber;
 import dataWrappers.ReferenceName;
 
+/**
+ * This class contains all the information required for a client
+ * @author Mamuna Azam and Simon 
+ *
+ */
 public class Client extends BusinessObject{
 	private long ID;
 	private String companyName;
@@ -33,8 +38,8 @@ public class Client extends BusinessObject{
 	public void setEmail(String email) {
 		this.email=email;
 	}
-	public void setPerson(ArrayList<String> fn, ArrayList<String> mn, ArrayList<String> ln) {
-		this.person= new ReferenceName(fn,mn,ln);
+	public void setPerson(ArrayList<String> firstName, ArrayList<String> middleName, ArrayList<String> lastName) {
+		this.person= new ReferenceName(firstName,middleName,lastName);
 	}
 	public String getCompanyName() {
 		return this.companyName;
@@ -63,8 +68,8 @@ public class Client extends BusinessObject{
 	public List<Long> getFinishedShipments(){
 		return this.finishedShipments;
 	}
-	public void removeActiveShipment(long shipmentID){
-		activeShipments.remove(shipmentID);
+	public void removeActiveShipment(long journeyID){
+		activeShipments.remove(journeyID);
 	}
 	public void save() {
 		DataBase.save(this);

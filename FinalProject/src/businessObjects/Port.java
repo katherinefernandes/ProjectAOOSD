@@ -3,7 +3,11 @@ package businessObjects;
 import java.util.*;
 import dataBase.DataBase;
 import dataWrappers.Location;
-
+/**
+ * Contains all the information required for a Port
+ * @author Mamuna and Simon
+ *
+ */
 public class Port extends BusinessObject{
 	private long ID;
 	private String country;

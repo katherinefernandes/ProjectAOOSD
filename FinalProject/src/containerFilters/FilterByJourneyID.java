@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import businessObjects.Client;
 import businessObjects.Container;
-
+/**
+ * This class filters the containers by the given journeyID
+ * @author Mamuna
+ *
+ */
 public class FilterByJourneyID  extends FilteringContainersForAClient{
 	private long journeyID;
 	
@@ -20,7 +24,7 @@ public class FilterByJourneyID  extends FilteringContainersForAClient{
 			System.out.println("Journey ID in container"+containers.get(i).getJourneyID());
 			if (containers.get(i).getJourneyID()!=journeyID) {
 				System.out.println("Removing the container");
-				containers.remove(i); // need to test this 
+				containers.remove(i);
 			}
 		}
 		return containers;

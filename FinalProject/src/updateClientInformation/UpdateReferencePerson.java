@@ -8,25 +8,25 @@ public class UpdateReferencePerson implements UpdateClient {
 	private ArrayList<String> firstName;
 	private ArrayList<String> middleName;
 	private ArrayList<String> lastName;
-	private boolean setUpdate;
+	private boolean updated;
 	
 	public UpdateReferencePerson(ArrayList<String> firstName, ArrayList<String> middleName, ArrayList<String> lastName) {
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.middleName=middleName;
-		this.setUpdate=false;
+		this.updated=false;
 	}
 	
 	@Override
-	public boolean updated() {
-		return setUpdate;
+	public boolean getUpdated() {
+		return updated;
 	}
 
 	@Override
 	public Client updateInformation(Client client) {
 		client.setPerson(firstName, middleName, lastName);
 		client.save();
-		setUpdate= true;
+		updated= true;
 		return client;
 		
 	}

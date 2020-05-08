@@ -11,6 +11,12 @@ import supportingClasses.Security;
 import supportingClasses.UpdateDestinationPort;
 import updateClientInformation.UpdateClient;
 
+/**
+ * This class contains the methods only relavent for the user client and will be used by the 
+ * ClientController
+ * @author Mamuna
+ *
+ */
 public class ClientApplication extends Application {
 	
 	public ClientApplication(long ID) {
@@ -24,20 +30,20 @@ public class ClientApplication extends Application {
 
 	/**
 	 * updateClientInformation will update the client's information and 
-	 * return a true if its updated
+	 * return a true if its stored correctly in the database
 	 * @param update
 	 * @return boolean 
 	 */
 	
 	public boolean updateClientInformation(UpdateClient update) {
 		update.updateInformation(client);
-		return update.updated();
+		return update.getUpdated();
 	}
 
 
 	/**
 	 * getContainerID will get a container ID of a container stationed at the
-	 * start port which will be registered for a journey.
+	 * start port which will be used to register a journey.
 	 * @param startPortID
 	 * @return ContainerID
 	 */
@@ -80,21 +86,20 @@ public class ClientApplication extends Application {
 	 * @param pressure
 	 * @param humidity
 	 * @param arriveBy
+	 * @param updated
+	 * @return journey ID
 	 */
 	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy, String updated) {
+		
 		long containerID = getContainerID(startPortID);
-		new UpdateDestinationPort().updatePort(destinationPortID, containerID);
+		new UpdateDestinationPort().updateArrivingContainersList(destinationPortID, containerID);
 		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy, updated);
 		container.save();
 		DataBase.saveToHistory(container);
 		client.addActiveShipment(container.getJourneyID());
 		client.save();
-		/*try {
-			this.getClient(client.getID());
-		} catch (ElementSelectionException e) {
-			throw new Error("For some reason the client just saved can't be found",e);
-		}*/
+
 		return container.getJourneyID();
 	}
 
@@ -103,6 +108,7 @@ public class ClientApplication extends Application {
 	 * createANewContainer will generate a new container object and add the container ID 
 	 * to the array of stationedContainers at the start Port
 	 * @param startPort
+	 * @return startPort ID
 	 */
 	private long createANewContainer(Port startPort)  {
 
@@ -118,7 +124,7 @@ public class ClientApplication extends Application {
 	 * filterContainersOnAJourney will filter out the active containers for the client 
 	 * depending on the filter used.
 	 * @param filter
-	 * @return
+	 * @return ArrayList<Container> containers
 	 */
 	public ArrayList<Container> filterContainersOnAJourney(FilteringContainersForAClient filter){
 		return filter.filterContainers();

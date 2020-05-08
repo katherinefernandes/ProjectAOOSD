@@ -21,6 +21,8 @@ public abstract class BusinessObject{
 	 */
 	public abstract List<String> getAllValues();
 	
+	
+	//need a test case for this method and javadoc comment
 	@Override
 	public boolean equals(Object object) {
 		if(object == null || (object.getClass() != this.getClass())) {

@@ -1,20 +1,24 @@
 package updateClientInformation;
 
 import businessObjects.Client;
-
+/**
+ * This class is used to update the email for a client
+ * @author Mamuna
+ *
+ */
 public class UpdateEmail implements UpdateClient {
 	private String email;
-	private boolean setUpdate;
+	private boolean updated;
 	
 	public UpdateEmail(String email) {
 		this.email=email;
-		this.setUpdate=false;
+		this.updated=false;
 	}
 	
 	
 	@Override
-	public boolean updated() {
-		return setUpdate;
+	public boolean getUpdated() {
+		return updated;
 	}
 
 	
@@ -23,7 +27,7 @@ public class UpdateEmail implements UpdateClient {
 	public Client updateInformation(Client client) {
 		client.setEmail(email);
 		client.save();
-		setUpdate = true;
+		updated = true;
 		return client;
 	}
 

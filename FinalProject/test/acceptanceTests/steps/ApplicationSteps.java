@@ -679,7 +679,7 @@ public class ApplicationSteps {
 
 	@When("the database is asked to return the port data")
 	public void theDatabaseIsAskedToReturnThePortData() {
-		 assertThrows(java.lang.Error.class,()-> new UpdateDestinationPort().updatePort(portID, 34569l));
+		 assertThrows(java.lang.Error.class,()-> new UpdateDestinationPort().updateArrivingContainersList(portID, 34569l));
 		 result = false;
 	}
 

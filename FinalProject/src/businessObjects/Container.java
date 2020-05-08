@@ -8,6 +8,11 @@ import dataBase.DataBase;
 import dataWrappers.InternalStatus;
 import dataWrappers.Location;
 
+/**
+ * This class contains all the information required for a container
+ * @author Mamuna and Simon
+ *
+ */
 public class Container extends BusinessObject {
 	private long ID;
 	private long clientID = 0L;
@@ -135,7 +140,7 @@ public class Container extends BusinessObject {
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){// needs to be tested
+	public List<String> getAllValues(){
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getClientID()));

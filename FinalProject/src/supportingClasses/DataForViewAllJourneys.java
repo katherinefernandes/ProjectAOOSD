@@ -4,7 +4,11 @@ import java.util.List;
 import businessObjects.Client;
 import businessObjects.Container;
 import dataBase.DataBase;
-
+/**
+ * Gets all the data for the logistic company to view all the active journeys
+ * @author Mamuna
+ *
+ */
 public class DataForViewAllJourneys {
 	
 	private List<Client> clients;

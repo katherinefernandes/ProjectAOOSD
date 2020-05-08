@@ -34,8 +34,14 @@ public class UpdatePort implements UpdateContainer {
 		update = true;
 		return container;
 	}
-	
-	
+
+	/**
+	 * This method is called when the portID entered is same as the container's destination
+	 * port ID. It will then execute some steps to inform the client that the journey has
+	 * ended, the container information is reset to allow the container to be used again.
+	 * @param container
+	 * @author Mamuna Azam
+	 */
 	private void containerHasReachedDestination(Container container) {
 		    System.out.println("Trying to update client");
 			try {
@@ -43,11 +49,15 @@ public class UpdatePort implements UpdateContainer {
 			} catch (ElementSelectionException e) {
 				throw new Error("Client was not found, which means the container was not registered properly",e);
 			}
-			client.removeActiveShipment(container.getJourneyID());
-			client.addFinishedShipment(container.getJourneyID());
-			client.save();
-			new UpdateDestinationPort().updatedestinationPortAtEndOfJourney(container.getDestinationPortID(), container.getID());
+			updateClientInformationAtTheEndOfJourney(container);
+			new UpdateDestinationPort().updateAtTheEndOfAJourney(container.getDestinationPortID(), container.getID());
 			container.useContainerAgain(0000000l, 0, container.getDestinationPortID(), container.getDestinationPortID(), "none", 0, 0, 0, "1-1-2020");
+	}
+
+	private void updateClientInformationAtTheEndOfJourney(Container container) {
+		client.removeActiveShipment(container.getJourneyID());
+		client.addFinishedShipment(container.getJourneyID());
+		client.save();
 	}
 
 	public Container getContainer() {

@@ -15,12 +15,12 @@ class UpdateDestinationPortTest {
 	}
 	void testmethods() {
 		UpdateDestinationPort update = new UpdateDestinationPort();
-		update.updatePort(-9l, 90l);
+		update.updateArrivingContainersList(-9l, 90l);
 		
 	}
 	void testmethod2() {
 		UpdateDestinationPort update = new UpdateDestinationPort();
-		update.updatedestinationPortAtEndOfJourney(-2l, 78l);
+		update.updateAtTheEndOfAJourney(-2l, 78l);
 	}
 	
 }

@@ -7,11 +7,11 @@ import dataBase.DataBase;
 
 public class ExtractingPortID {
 	
-	
 	/**
 	 * For the given port name, this method returns the port ID
 	 * @param portname
-	 * @return either port ID or 1l if the port if not found in the database
+	 * @return either port ID or 1l if the port is not found in the database
+	 * @author Mamuna Azam
 	 */
 	public static long getPortID(String portname) {
 		

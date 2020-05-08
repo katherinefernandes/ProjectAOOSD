@@ -3,7 +3,11 @@ package supportingClasses;
 import businessObjects.Port;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
-
+/**
+ * This class is used to update the destination port when required
+ * @author Mamuna Azam
+ *
+ */
 public class UpdateDestinationPort {
 
 	private Port destinationPort;
@@ -12,13 +16,12 @@ public class UpdateDestinationPort {
 	/**
 	 * When registering a container, this method is used to add the container ID
 	 * to the arriving container list for the destination Port
-	 * It is assumed by this method, that the destination ID is valid and there exists a 
-	 * port in the database which has this destination ID
 	 * @param destinationID
 	 * @param containerID
-	 * @return
+	 * @return boolean if the destination port is updated
+	 * @throws ElementSelectionException if the destination Port does not exist
 	 */
-	public boolean updatePort(long destinationID,long containerID) {
+	public boolean updateArrivingContainersList(long destinationID,long containerID) {
 		try {
 			destinationPort = DataBase.getPort(destinationID);
 			destinationPort.addArrivingContainer(containerID);
@@ -32,12 +35,10 @@ public class UpdateDestinationPort {
 	/**
 	 * When the journey for a container ends, the container ID is removed from the arriving 
 	 * Containers list at the destination port and added to the stationed containers
-	 * Again, it is assumed that the destination port ID is valid as otherwise the journey was 
-	 * not registered correctly
 	 * @param destinationID
 	 * @param containerID
 	 */
-	public void updatedestinationPortAtEndOfJourney(long destinationID, long containerID) {
+	public void updateAtTheEndOfAJourney(long destinationID, long containerID) {
 		try {
 			destinationPort = DataBase.getPort(destinationID);
 			destinationPort.addStationedContainer(containerID);
