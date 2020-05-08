@@ -42,24 +42,19 @@ public class ClientApplication extends Application {
 
 
 	/**
-	 * getContainerID will get a container ID of a container stationed at the
+	 * getContainer will get a container ID of a container stationed at the
 	 * start port which will be used to register a journey.
 	 * @param startPortID
 	 * @return ContainerID
 	 */
 
-	private long getContainerID(long startPortID) {
+	
+	private long getContainerForJourneyRegisteration(long startPortID) {
 		try {
 			Port startPort = DataBase.getPort(startPortID);
-			Long containerID;
-			if (startPort.getStationedContainers().size()>0) {
-				containerID = startPort.getStationedContainers().get(0);
-				container = DataBase.getContainer(containerID);
-				startPort.removeStationedContainer(containerID);
-				startPort.save();
-			}else {
-				containerID = createANewContainer(startPort);
-			}
+			long containerID = startPort.containerIDForJourneyRegisteration();
+			System.out.println("containerID"+containerID);
+			container = DataBase.getContainer(containerID);
 			return containerID;
 		} catch (ElementSelectionException e) {
 			throw new Error("The start port ID found was not valid",e); 
@@ -92,7 +87,7 @@ public class ClientApplication extends Application {
 	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy, String updated) {
 		
-		long containerID = getContainerID(startPortID);
+		long containerID = getContainerForJourneyRegisteration(startPortID);
 		new UpdateDestinationPort().updateArrivingContainersList(destinationPortID, containerID);
 		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy, updated);
 		container.save();
@@ -103,22 +98,7 @@ public class ClientApplication extends Application {
 		return container.getJourneyID();
 	}
 
-	
-	/**
-	 * createANewContainer will generate a new container object and add the container ID 
-	 * to the array of stationedContainers at the start Port
-	 * @param startPort
-	 * @return startPort ID
-	 */
-	private long createANewContainer(Port startPort)  {
 
-		container = new Container(Security.generateIDFromSecureRandom(),startPort);
-		startPort.addStationedContainer(container.getID());
-		startPort.save();
-		container.save();
-		return getContainerID(startPort.getID());
-	}
-	
 	
 	/**
 	 * filterContainersOnAJourney will filter out the active containers for the client 

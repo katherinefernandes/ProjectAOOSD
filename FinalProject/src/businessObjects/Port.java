@@ -3,6 +3,7 @@ package businessObjects;
 import java.util.*;
 import dataBase.DataBase;
 import dataWrappers.Location;
+import supportingClasses.Security;
 /**
  * Contains all the information required for a Port
  * @author Mamuna and Simon
@@ -73,4 +74,38 @@ public class Port extends BusinessObject{
 		}
 		return values;
 	}
+	/**
+	 * createANewContainer will generate a new container object and add the container ID 
+	 * to the array of stationedContainers
+	 * @param startPort
+	 * @return startPort ID
+	 */
+	private void createANewContainer()  {
+
+		Container container = new Container(Security.generateIDFromSecureRandom(),this);
+		container.save();
+		this.addStationedContainer(container.getID());
+		
+	}
+	
+	/**
+	 *This method will return a containerID of a container which will be used to register a 
+	 *journey.
+	 * @return
+	 */
+	
+	public long containerIDForJourneyRegisteration() {
+		if(this.stationedContainers.size()>0) {
+			return this.stationedContainers.remove(0);
+		}else {
+			createANewContainer();
+			return this.stationedContainers.remove(0);
+		}
+	}
+	
+	
+	
+	
+	
+	
 }
