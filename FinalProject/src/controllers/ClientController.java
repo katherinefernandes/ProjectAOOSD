@@ -344,7 +344,7 @@ public class ClientController {
 	 * @return a boolean value depending on the user input.
 	 */
 	private boolean findContainerByJourneyID(String journeyID) {
-		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {//test this
+		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
 		    container= currentClient.filterContainersOnAJourney(filter);
@@ -719,10 +719,11 @@ public class ClientController {
 		if(!checkMessage&&!cargo.isEmpty()) {
 			checkMessage = retrieveContainersByCargo(cargo);
 		}
-		if(!checkMessage&&!portName.isEmpty()) {//test this
+		if(!checkMessage&&!portName.isEmpty()) {
 			checkMessage = getContainerByPortName(portName);
 		}
 		if(checkMessage) {
+			System.out.println("a container was found: "+checkMessage);
 			clientmenu.setFieldsContainerData();
 			
 			if(checkCriteria) {
@@ -732,11 +733,11 @@ public class ClientController {
 				containerID=container.get(0).getID();
 				clientmenu.viewOneContainerPanel();
 				
-			}else {//test this
+			}else {
 				clientmenu.setFieldsContainerData();
 				clientmenu.viewMultipleContainerPanel();
 			}
-		}else { //test this
+		}else {
 			System.out.println("no container found by the above criterias");
 			clientmenu.containerSearchError();
 		}
@@ -812,11 +813,13 @@ public class ClientController {
 	 * @return all the current active shipments.
 	 */
 	public String getAllActiveShipments() {
-		String result = "All Active Journeys: ";
+		String result = "\t\tAll Active Journeys: ";
+		result = result +"\n--------------------------------------------------------------------------------";
 		
 		for(long Journeys : currentClient.viewClient().getActiveShipments()) {
-			result = result+"\nJourney ID: "+Journeys;
-			result = result +"-----------------------------------------------------";
+			result = result+"\n\tJourney ID: "+Journeys;
+			result = result +"\n\tCargo: "+this.getCargoByJourneyID(Journeys);
+			result = result +"\n--------------------------------------------------------------------------------";
 		}
 		return result;
 	}

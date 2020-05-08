@@ -165,6 +165,7 @@ public class LogisticController {
 		result = result +"\nJourney ID: "+container.getJourneyID();
 		result = result +"\nStart Port: "+getPortName(container.getStartPortID());
 		result = result +"\nDestination Port: "+getPortName(container.getDestinationPortID());
+		result = result +"\nLast Visited Port: "+getPortName(container.getLastVisitedPortID());
 		result = result +"\nCargo: "+container.getCargo();
 		result = result +"\nInternal Status: "+getInternalStatus(container);
 		String latitude = Float.toString(container.getCurrentPosition().getLatitude());
