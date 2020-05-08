@@ -2,8 +2,8 @@ package graphicalInterface;
 import logic.LoginController;
 
 public class Start {
-	private static boolean simulationOn = true;
-	private static double simulationHoursPerSecond = 6.;
+	private static boolean simulationOn = false;
+	private static double simulationHoursPerSecond = 1.;
 	
 	public static void main(String[] args) {
 		LoginController controller = new LoginController();
