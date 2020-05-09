@@ -19,6 +19,17 @@ public class PortDataTest {
 		objectTest.addArrivingContainer(8882l);
 		objectTest.addStationedContainer(99110l);
 	}
+	
+	@Test
+	public void equalityTest() {
+		Port objectTest1 = new Port(67781,"Pakistan","gawadar",36.0f,87.0f);
+		objectTest1.addArrivingContainer(8882l);
+		objectTest1.addStationedContainer(99110l);
+		Port objectTest2 = new Port(67781,"Pakistan","gawadar",36.0f,87.0f);
+		objectTest2.addArrivingContainer(8882l);
+		objectTest2.addStationedContainer(99110l);
+		assertTrue(objectTest1.equals(objectTest2));
+	}
 
 	@Test
 	public void testGetPortID() {

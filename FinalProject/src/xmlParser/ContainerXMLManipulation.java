@@ -4,11 +4,19 @@ import dataBase.IdentifiablePersistency;
 import objects.*;
 
 public class ContainerXMLManipulation extends GeneralXMLManipulation<Container> implements IdentifiablePersistency<Container> {
+	private static ContainerXMLManipulation selfInstance;
 	
-	public ContainerXMLManipulation() {
+	public static ContainerXMLManipulation getInstance() {
+		if(selfInstance == null) {
+			selfInstance = new ContainerXMLManipulation();
+		}
+		return selfInstance;
+	}
+	
+	private ContainerXMLManipulation() {
 		super("storage/activeData/containers.xml", "Container", "Containers");
 	}
-	public ContainerXMLManipulation(String filename, String dataPointTagName, String collectionTagName) {
+	protected ContainerXMLManipulation(String filename, String dataPointTagName, String collectionTagName) {
 		super(filename, dataPointTagName, collectionTagName);
 	}
 	

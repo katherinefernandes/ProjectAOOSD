@@ -7,10 +7,10 @@ import objects.*;
 import xmlParser.*;
 
 public class DataBase {
-	private static IdentifiablePersistency<Client> clientAccess = new ClientXMLManipulation();
-	private static IdentifiablePersistency<Container> containerAccess = new ContainerXMLManipulation();
-	private static IdentifiablePersistency<Port> portAccess = new PortXMLManipulation();
-	private static GeneralPersistency<Container> historyAccess = new HistoryXMLManipulation();
+	private static IdentifiablePersistency<Client> clientAccess = ClientXMLManipulation.getInstance();
+	private static IdentifiablePersistency<Container> containerAccess = ContainerXMLManipulation.getInstance();
+	private static IdentifiablePersistency<Port> portAccess = PortXMLManipulation.getInstance();
+	private static GeneralPersistency<Container> historyAccess = HistoryXMLManipulation.getInstance();
 	
 	private DataBase() {} //Should be private. DO NOT CHANGE VISIBILITY
 	

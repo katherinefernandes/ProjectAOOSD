@@ -8,7 +8,7 @@ import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.events.*;
 
 
-public class EventParser {
+class EventParser {
 	private XMLEvent event;
 	private static XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 	

@@ -6,8 +6,16 @@ import dataBase.IdentifiablePersistency;
 import objects.Port;
 
 public class PortXMLManipulation extends GeneralXMLManipulation<Port> implements IdentifiablePersistency<Port> {
+	private static PortXMLManipulation selfInstance;
 	
-	public PortXMLManipulation() {
+	public static PortXMLManipulation getInstance() {
+		if(selfInstance == null) {
+			selfInstance = new PortXMLManipulation();
+		}
+		return selfInstance;
+	}
+	
+	private PortXMLManipulation() {
 		super("storage/activeData/ports.xml","Port","Ports");
 	}
 

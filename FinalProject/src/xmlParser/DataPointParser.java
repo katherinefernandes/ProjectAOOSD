@@ -3,7 +3,7 @@ package xmlParser;
 import java.util.*;
 import javax.xml.stream.events.*;
 
-public class DataPointParser {
+class DataPointParser {
 	private Long ID;
 	private List<EventParser> dataPoint;
 	private String dataPointTagName;

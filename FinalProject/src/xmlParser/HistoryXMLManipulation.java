@@ -5,7 +5,16 @@ import java.util.*;
 import objects.Container;
 
 public class HistoryXMLManipulation extends ContainerXMLManipulation{	
-	public HistoryXMLManipulation() {
+	private static HistoryXMLManipulation selfInstance;
+	
+	public static HistoryXMLManipulation getInstance() {
+		if(selfInstance == null) {
+			selfInstance = new HistoryXMLManipulation();
+		}
+		return selfInstance;
+	}
+	
+	private HistoryXMLManipulation() {
 		super("storage/activeData/history.xml","Container","History");
 		activeData = new ActiveData<>();
 	}
@@ -13,7 +22,7 @@ public class HistoryXMLManipulation extends ContainerXMLManipulation{
 	@Override
 	public void newEntry(Container container) {
 		activeData.storeNewData(container);
-		if(activeData.size() > 50) {
+		if(activeData.size() > 500) {
 			flushActiveData();
 		}
 	}

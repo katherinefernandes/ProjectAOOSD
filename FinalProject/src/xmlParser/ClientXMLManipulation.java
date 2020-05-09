@@ -7,7 +7,16 @@ import dataBase.IdentifiablePersistency;
 import objects.*;
 
 public class ClientXMLManipulation extends GeneralXMLManipulation<Client> implements IdentifiablePersistency<Client> {
-	public ClientXMLManipulation() {
+	private static ClientXMLManipulation selfInstance;
+	
+	public static ClientXMLManipulation getInstance() {
+		if(selfInstance == null) {
+			selfInstance = new ClientXMLManipulation();
+		}
+		return selfInstance;
+	}
+	
+	private ClientXMLManipulation() {
 		super("storage/activeData/clients.xml", "Client","Clients");
 	}
 	

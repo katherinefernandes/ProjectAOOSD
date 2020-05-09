@@ -1,6 +1,6 @@
 package xmlParser;
 
-public interface IO {
+interface IO {
 	
 	public void initializeIO();
 	
