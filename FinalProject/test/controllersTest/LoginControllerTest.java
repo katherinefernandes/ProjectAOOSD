@@ -1,4 +1,4 @@
-package logicTest;
+package controllersTest;
 
 
 import static org.junit.Assert.assertFalse;
