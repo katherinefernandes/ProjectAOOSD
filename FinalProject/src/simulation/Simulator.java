@@ -25,7 +25,10 @@ public class Simulator {
 		generateInitialClients();
 		generateInitialJourneys();
 	}
-
+	
+	/**
+	 * Perform the actions 
+	 */
 	public void simulateOneHour() {
 		simulateClientCreation(random.nextDouble());
 		simulateJourneyCreation(random.nextDouble());
@@ -75,7 +78,7 @@ public class Simulator {
 	}
 	
 	private boolean containerIsCloseToPort(Container container, Port destinationPort) {
-		return container.getCurrentPosition().distanceTo(destinationPort.getPosition()) <= 10F;
+		return container.getCurrentPosition().distanceTo(destinationPort.getPosition()) <= 70F;
 	}
 
 	public void simulateJourneyDevelopment() {
