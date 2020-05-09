@@ -37,7 +37,7 @@ public class Container extends BusinessObject {
 		startPortID = startPort.getID();
 		lastVisitedPortID = startPort.getID();
 		destinationPortID = startPort.getID();
-		currentPosition = startPort.getPosition();
+		currentPosition =startPort.getPosition();
 	}
 	
 	public Container(long containerID, long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String arriveBy) {
