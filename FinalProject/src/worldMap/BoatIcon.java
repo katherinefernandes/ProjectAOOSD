@@ -2,7 +2,6 @@ package worldMap;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 
 public class BoatIcon extends Icon{
 	private static Toolkit t = Toolkit.getDefaultToolkit();
