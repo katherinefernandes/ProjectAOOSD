@@ -40,7 +40,6 @@ public class LoginController {
 	public LoginController() {
 		System.out.println("Inside login controller");
 		simulationOn = false;
-		simulator = new Simulator();
 		window = new LoginWindow(this);
 		window.errorMessage.setVisible(false);
 		window.openFrame();
@@ -51,7 +50,7 @@ public class LoginController {
 	 * @param clientID String holding the clientID
 	 * @return boolean value depending whether the ID exists in the data base or not
 	 */
-	//I think this method should be private as not used by anyother class
+	
 	public boolean validClientInfo(String clientID) {
 		return ValidInputType.validateLong(clientID)&&DataBase.isSavedID(Long.valueOf(clientID));
 	}
@@ -127,7 +126,7 @@ public class LoginController {
 	 */
 	private void nextComapanyFrame() {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {//test this
+			public void run() {
 				try {
 					LogisticController logisticController = new LogisticController();
 					LogisticMenu logistics = new LogisticMenu(logisticController);
@@ -168,6 +167,7 @@ public class LoginController {
 			int delayMS = (int) (1000./simulationHoursPerSecond);
 			Timer simulation = new Timer(delayMS, new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					simulator = new Simulator();
 					simulator.simulateOneHour();
 		         }
 			});

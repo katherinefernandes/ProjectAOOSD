@@ -827,7 +827,7 @@ public class ClientController {
 		result = result +"\n--------------------------------------------------------------------------------";
 		
 		for(long Journeys : currentClient.viewClient().getActiveShipments()) {
-			List<Container> containers = DataBase.searchHistory(Long.toString(Journeys));
+			List<Container> containers = DataBase.searchContainers(Long.toString(Journeys));
 			result = result+"\n\tJourney ID: "+Journeys;
 			result = result +"\n\tCargo: "+this.getCargoByContainer(containers);
 			result = result +"\n--------------------------------------------------------------------------------";
