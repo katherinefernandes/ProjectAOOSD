@@ -175,6 +175,7 @@ public class Container extends BusinessObject {
 			} catch (ElementSelectionException e) {
 				throw new Error("Client was not found, which means the container was not registered properly",e);
 			}
+			DataBase.saveToHistory(this);
 			new UpdateDestinationPort().updateAtTheEndOfAJourney(destinationPortID, ID);
 			useContainerAgain(0000000l, 0, destinationPortID, destinationPortID, "none", 0, 0, 0, "1-1-2020");
 	}

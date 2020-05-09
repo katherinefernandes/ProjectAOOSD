@@ -144,6 +144,7 @@ public class LogisticController {
 
 
 	
+	
 
 
 	private void setStatus(String pressure, String humidity, String temperature) {
@@ -415,7 +416,6 @@ public class LogisticController {
 
 
 	public void searchClient(String email, String company, String phone, String firstname, String middle, String last) {
-		//TODO this could probably be done in a for loop
 		checkMessage=false;
 		if (!email.isEmpty()) {
 			setClientsByEmail(email);

@@ -341,6 +341,7 @@ public class ClientController {
 		
 		if (currentClient.getSetClient()) {
 			client = currentClient.viewClient();
+			System.out.println("The number of active containers are: "+client.getActiveShipments().size());
 			activeShipments = activeShipments + arrayListJourneyToString(client.getActiveShipments());
 		}
 		return activeShipments;
@@ -701,7 +702,7 @@ public class ClientController {
 			System.out.println("Everything is valid, now trying to register");
 			registerJourney(cargo,  atm, temp,  humidity, arriveby);
 			clientmenu.successFieldForAddJourney();
-		}else {//test this
+		}else {
 			System.out.println("Arriveby is not valid");
 			clientmenu.errorMessageForAddJourney();
 			return;
@@ -760,27 +761,29 @@ public class ClientController {
 	 * This method collects the information about a successful journey and stores it into a variable called result
 	 * @return result which stores the successful journey information
 	 */
-	public String getSuccessfulJourneys() {//not tested
-		String result = "---------------------------------------";
-		for(long journeys : currentClient.viewClient().getFinishedShipments()) {
+	public String getSuccessfulJourneys() {
+		String result = "\n---------------------------------------";
+		List<Long> Journeys = currentClient.viewClient().getFinishedShipments();
+		System.out.println("Successful journeys: "+Journeys.size());
+		for(long journeys : Journeys) {
+			List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
 			result = result +"\nJourney ID: "+journeys;
-			result = result +"\nContained: "+getCargoByJourneyID(journeys);
-			result = result +"\nReached: "+getFinalDestinationByJourneyID(journeys);
-			result = result+"\nLast Updated: "+getLastUpdated(journeys);
-			result =result + "---------------------------------------";
+			result = result +"\nContained: "+getCargoByContainer(containers);
+			result = result +"\nReached: "+getFinalDestinationFromContainer(containers);
+			result = result+"\nLast Updated: "+getLastUpdated(containers);
+			result =result + "\n---------------------------------------";
 		}
-		return "";
+		return result;
 	}
 	
 	
 	
-	private String getLastUpdated(long journeys) {
-		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
+	private String getLastUpdated(List<Container> containers) {
 		if (containers.size()>0) {
 			return containers.get(0).getUpdated();
 			
 		}
-		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		System.out.println("Could not find the container in history");
 		return "Unknown";
 	}
 
@@ -790,12 +793,11 @@ public class ClientController {
 	 * @param journeys stores the journey ID 
 	 * @return either the port name or a string "Unknown" 
 	 */
-	private String getFinalDestinationByJourneyID(long journeys) {//not tested
-		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
+	private String getFinalDestinationFromContainer(List<Container> containers) {
 		if (containers.size()>0) {
 			return getPortName(containers.get(0).getDestinationPortID());
 		}
-		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		System.out.println("Could not find the container in history");
 		return "Unknown";
 	}
 	
@@ -806,12 +808,11 @@ public class ClientController {
 	 * @param journeys Long storing the journey ID
 	 * @return the cargo of the container or the "unknown" message.
 	 */
-	private String getCargoByJourneyID(long journeys) {//not tested
-		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
+	private String getCargoByContainer(List<Container> containers) {
 		if (containers.size()>0) {
 			return containers.get(0).getCargo();
 		}
-		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		System.out.println("Could not find the container in history");
 		return "Unknown";
 	}
 	
@@ -826,8 +827,9 @@ public class ClientController {
 		result = result +"\n--------------------------------------------------------------------------------";
 		
 		for(long Journeys : currentClient.viewClient().getActiveShipments()) {
+			List<Container> containers = DataBase.searchHistory(Long.toString(Journeys));
 			result = result+"\n\tJourney ID: "+Journeys;
-			result = result +"\n\tCargo: "+this.getCargoByJourneyID(Journeys);
+			result = result +"\n\tCargo: "+this.getCargoByContainer(containers);
 			result = result +"\n--------------------------------------------------------------------------------";
 		}
 		return result;

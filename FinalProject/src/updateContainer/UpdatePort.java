@@ -26,7 +26,6 @@ public class UpdatePort implements UpdateContainer {
 			container.containerHasReachedDestination();
 		}
 		container.save();
-		DataBase.saveToHistory(container);
 		update = true;
 		return container;
 	}
