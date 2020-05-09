@@ -13,7 +13,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 
-public class XMLIO implements IO{
+class XMLIO implements IO{
 	private XMLEventReader reader;
 	private XMLEventWriter writer;
 	private FileInputStream streamIn;

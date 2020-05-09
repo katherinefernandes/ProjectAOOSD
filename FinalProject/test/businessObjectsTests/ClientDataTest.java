@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.*;
 
 import objects.Client;
+import objects.Port;
 
 public class ClientDataTest {
 	private Client objectTest;
@@ -21,7 +22,12 @@ public class ClientDataTest {
 		lastname.add("azam");
 		objectTest = new Client(31l,"company",92,23789,"email@eh.com",firstname,middlename,lastname,"g11/2","Islamabad",59,"2620");
 	}
-
+	
+	@Test
+	public void equalityTest() {
+		Client objectTest2 = new Client(31l,"company",92,23789,"email@eh.com",firstname,middlename,lastname,"g11/2","Islamabad",59,"2620");
+		assertTrue(objectTest.equals(objectTest2));
+	}
 	
 	@Test
 	public void testGetClientID() {

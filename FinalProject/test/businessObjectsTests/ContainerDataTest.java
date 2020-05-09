@@ -35,6 +35,12 @@ public class ContainerDataTest {
 	}
 	
 	@Test
+	public void equalityTest() {
+		Container objectTest3 = new Container( cid,clid, jid, spid,  dpid,  lat,  lon,  cargo,  t,  a,  h, (arriveby));
+		assertTrue(objectTest.equals(objectTest3));
+	}
+	
+	@Test
 	public void testUseContainerAgain() {
 		assertSame(cargo,objectTest.getCargo());
 		objectTest.useContainerAgain(clid, jid, spid,  dpid,  "apple",  t,  a,  h, (arriveby));
