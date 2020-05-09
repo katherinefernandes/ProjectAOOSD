@@ -1,21 +1,17 @@
 package worldMap;
 
-import java.awt.Canvas;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
 import dataWrappers.Location;
 
 public abstract class Icon {
-	private int width;
-	private int height;
-	private int xPosition;
-	private int yPosition;
+	protected int width;
+	protected int height;
+	protected int xPosition;
+	protected int yPosition;
 	
 	protected Icon(int width, int height) {
 		this.width = width;
@@ -38,30 +34,5 @@ public abstract class Icon {
 	
 	public void drawIcon(Graphics g, JPanel p) {
 		g.drawImage(getImage(), xPosition, yPosition, width, height, p);
-	}
-	
-	/**
-	 * Converts a given Image into a BufferedImage
-	 *
-	 * @param img The Image to be converted
-	 * @return The converted BufferedImage
-	 */
-	public static BufferedImage toBufferedImage(Image img, int width, int height)
-	{
-	    if (img instanceof BufferedImage)
-	    {
-	        return (BufferedImage) img;
-	    }
-
-	    // Create a buffered image with transparency
-	    BufferedImage bimage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-	    // Draw the image on to the buffered image
-	    Graphics2D bGr = bimage.createGraphics();
-	    bGr.drawImage(img, 0, 0, null);
-	    bGr.dispose();
-
-	    // Return the buffered image
-	    return bimage;
 	}
 }

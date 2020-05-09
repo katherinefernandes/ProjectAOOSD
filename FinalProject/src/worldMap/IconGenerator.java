@@ -21,6 +21,7 @@ public class IconGenerator {
 		for(Port port : ports) {
 			PortIcon portIcon = new PortIcon();
 			portIcon.setPositionToCoordinates(port.getPosition());
+			portIcon.setPortName(port.getPortName());
 			icons.add(portIcon);
 		}
 		return icons;
