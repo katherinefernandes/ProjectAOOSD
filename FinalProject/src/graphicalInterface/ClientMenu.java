@@ -22,11 +22,11 @@ import controllers.LoginController;
 import graphsForInternalStatus.LineGraphHumidity;
 import graphsForInternalStatus.LineGraphPressure;
 import graphsForInternalStatus.LineGraphTemperature;
+import worldMap.MapPane;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-//TODO I think there should only be one search field for. Makes no sense to restrict what a user can search for, as long the information belongs to them
 public class ClientMenu {
 
 	//private long clientID;
@@ -101,6 +101,7 @@ public class ClientMenu {
 	private JButton activeJourneysButton;
 	private JScrollPane scrollPane;
 	private JTextArea allActiveJourneysTextArea;
+	private JButton mapButton;
 	
 	public ClientMenu(ClientController controller) {
 		this.controller = controller;
@@ -841,6 +842,22 @@ public class ClientMenu {
 		noContainerError.setBackground(new Color(95, 158, 160));
 		noContainerError.setBounds(221, 321, 156, 19);
 		DataPanel.add(noContainerError);
+		//World map stuff and button listener
+		mapButton = new JButton("World Map");
+		mapButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					System.out.println("Inside the world map");
+					MapPane map = new MapPane();  // pass active containers
+//				      map.setAlwaysOnTop(true);  
+//				      map.pack();  
+				      map.setSize(600, 400);  
+				      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+				      map.setVisible(true);  
+				    
+			}
+		});
+		mapButton.setBounds(442, 428, 117, 29);
+		DataPanel.add(mapButton);
 		noContainerError.setVisible(false);
 		
 		ViewInfoPanel = new JPanel();
