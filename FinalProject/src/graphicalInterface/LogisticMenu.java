@@ -24,8 +24,8 @@ import controllers.LogisticController;
 import graphsForInternalStatus.LineGraphHumidity;
 import graphsForInternalStatus.LineGraphPressure;
 import graphsForInternalStatus.LineGraphTemperature;
+import worldMap.MapPane;
 
-//TODO I think there should only be one search field for. Makes no sense to restrict what a user can search for
 public class LogisticMenu {
 	public JFrame frame;
 	public JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6,textField_7,textField_8,textField_9,textField_10;
@@ -65,6 +65,7 @@ public class LogisticMenu {
 	private JTextField updatePortContainerID;
 	private JTextField updatePortName;
 	private JTextArea updateCurrentPortError;
+	private JButton mapButton;
     
     public LogisticMenu(LogisticController controller) {
 		this.controller = controller;
@@ -91,7 +92,7 @@ public class LogisticMenu {
 				switchPanels(newClientPanel);
 			} 
 		});
-		newClientButton.setBounds(19, 69, 187, 29);
+		newClientButton.setBounds(19, 54, 187, 29);
 		panel.add(newClientButton);
 		
 		getInfoButton = new JButton("Update Container Status");
@@ -102,7 +103,7 @@ public class LogisticMenu {
 				switchPanels(StatusPanel);
 			}
 		});
-		getInfoButton.setBounds(19, 110, 187, 29);
+		getInfoButton.setBounds(19, 91, 187, 29);
 		panel.add(getInfoButton);
 		
 		UpdateContainerButton = new JButton("Update container Position");
@@ -113,11 +114,11 @@ public class LogisticMenu {
 				switchPanels(ContainePositionrPanel);
 			}
 		});
-		UpdateContainerButton.setBounds(19, 145, 187, 29);
+		UpdateContainerButton.setBounds(19, 132, 187, 29);
 		panel.add(UpdateContainerButton);
 		
 		logoutButton = new JButton("Log Out");
-		logoutButton.setBounds(19, 301, 187, 29);
+		logoutButton.setBounds(19, 332, 187, 29);
 		logoutButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -806,7 +807,7 @@ public class LogisticMenu {
 				
 			}
 		});
-		getClientIfoButton.setBounds(19, 229, 187, 29);
+		getClientIfoButton.setBounds(19, 209, 187, 29);
 		panel.add(getClientIfoButton);
 		
 		
@@ -958,7 +959,7 @@ public class LogisticMenu {
 			
 			}
 		});
-		viewJourneysButton.setBounds(19, 266, 187, 29);
+		viewJourneysButton.setBounds(19, 250, 187, 29);
 		panel.add(viewJourneysButton);
 		
 		JButton updatePortButton = new JButton("Update Current Port");
@@ -968,8 +969,24 @@ public class LogisticMenu {
 				switchPanels(updateContainerPortPanel);
 			}
 		});
-		updatePortButton.setBounds(19, 188, 187, 29);
+		updatePortButton.setBounds(19, 168, 187, 29);
 		panel.add(updatePortButton);
+		
+		//World Map stuff logistic
+		mapButton = new JButton("World Map");
+		mapButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inside the world map");
+				MapPane map = new MapPane();  // pass active containers
+//			      map.setAlwaysOnTop(true);  
+//			      map.pack();  
+			      map.setSize(600, 400);  
+			      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
+			      map.setVisible(true);  
+			}
+		});
+		mapButton.setBounds(19, 291, 187, 29);
+		panel.add(mapButton);
 	}
 	
 	public void setFieldsClientData() {
