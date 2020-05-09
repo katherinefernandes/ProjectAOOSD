@@ -116,7 +116,10 @@ public class Simulator {
 	}
 
 	private void generateInitialPorts() {
-		PortInitializer portInit = new PortInitializer();
-		portInit.generatePorts();
+		List<Port> ports = DataBase.searchPorts("");
+		if(ports.size() < 20) {
+			PortInitializer portInit = new PortInitializer();
+			portInit.generatePorts();
+		}
 	}
 }
