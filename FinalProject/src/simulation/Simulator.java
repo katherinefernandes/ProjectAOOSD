@@ -15,6 +15,7 @@ public class Simulator {
 	private Random random;
 	private LocalDateTime currentTime;
 	private UserActionGenerator actionGenerator;
+	private List<Container> allContainers;
 	
 	public Simulator() {
 		random = new Random();
@@ -34,7 +35,9 @@ public class Simulator {
 	}
 
 	public void checkForFinshedJourneys() {
-		List<Container> allContainers = DataBase.searchContainers("");
+		if(allContainers == null || random.nextDouble() < 0.05) {
+			allContainers = DataBase.searchContainers("");
+		}
 		List<UpdatePort> updates = new ArrayList<>();
 		for(Container container : allContainers) {
 			addUpdateIfArrived(container, updates);
@@ -76,7 +79,9 @@ public class Simulator {
 	}
 
 	public void simulateJourneyDevelopment() {
-		List<Container> allContainers = DataBase.searchContainers("");
+		if(allContainers == null || random.nextDouble() < 0.05) {
+			allContainers = DataBase.searchContainers("");
+		}
 		for(Container container : allContainers) {
 			updateContainerIfActive(container);
 		}
