@@ -1,8 +1,15 @@
 package controllers;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import dataBase.DataBase;
 import dataWrappers.ReferenceName;
@@ -24,6 +31,7 @@ import supportingClasses.InputParser;
 import updateContainer.UpdateLocation;
 import updateContainer.UpdatePort;
 import updateContainer.UpdateStatus;
+import worldMap.MapPane;
 
 
 public class LogisticController {
@@ -486,5 +494,17 @@ public class LogisticController {
 	}
 	
 
-	
+	public void startMap() {
+		SwingUtilities.invokeLater(() -> {  
+			MapPane m=new MapPane("");
+			logisticMenu.openMap(m);
+	        
+	        Timer mapUpdate = new Timer(500, new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					m.repaint();
+		         }
+			});
+			mapUpdate.start();
+		});
+	}
 }

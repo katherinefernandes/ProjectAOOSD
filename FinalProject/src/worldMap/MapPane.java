@@ -23,15 +23,15 @@ public class MapPane extends JPanel{
 	Image mapImage;
 	IconGenerator iconGenerator; 
 	
-	public MapPane() {
+	public MapPane(String containerSelection) {
 		Toolkit t=Toolkit.getDefaultToolkit();  
         mapImage = t.getImage("graphics/world_map.jpg");
+        iconGenerator = new IconGenerator(containerSelection);
 	}
 	
 	@Override
     public void paintComponent(Graphics g) {
 		super.paintComponents(g);
-    	iconGenerator = new IconGenerator();
         paintMap(g);
         paintIcons(g,iconGenerator.getPortIcons());
         paintIcons(g,iconGenerator.getContainerIcons());
@@ -46,16 +46,4 @@ public class MapPane extends JPanel{
 			i.drawIcon(g, this);
 		}
 	}
-
-	public static void main(String[] args) {  
-		SwingUtilities.invokeLater(() -> {  
-			MapPane m=new MapPane();
-			JFrame f=new JFrame();
-	        f.add(m);
-	        f.pack();
-	        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	        f.setSize(1500,750);  
-	        f.setVisible(true);
-		});
-	}  
 }

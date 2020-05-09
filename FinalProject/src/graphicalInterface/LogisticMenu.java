@@ -977,16 +977,18 @@ public class LogisticMenu {
 		mapButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Inside the world map");
-				MapPane map = new MapPane();  // pass active containers
-//			      map.setAlwaysOnTop(true);  
-//			      map.pack();  
-			      map.setSize(600, 400);  
-			      //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
-			      map.setVisible(true);  
+				controller.startMap();
 			}
 		});
 		mapButton.setBounds(19, 291, 187, 29);
 		panel.add(mapButton);
+	}
+	public void openMap(MapPane m) {
+		JFrame f=new JFrame();
+		f.add(m);
+		f.pack();
+		f.setSize(1500,750);  
+		f.setVisible(true);
 	}
 	
 	public void setFieldsClientData() {

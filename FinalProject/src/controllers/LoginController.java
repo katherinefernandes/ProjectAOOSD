@@ -44,7 +44,6 @@ public class LoginController {
 		window = new LoginWindow(this);
 		window.errorMessage.setVisible(false);
 		window.openFrame();
-		startMap();
 	}
 	/**
 	 * public boolean validClientInfo(){}
@@ -174,23 +173,5 @@ public class LoginController {
 			});
 			simulation.start();
 		}
-	}
-	private void startMap() {
-		SwingUtilities.invokeLater(() -> {  
-			MapPane m=new MapPane();
-			JFrame f=new JFrame();
-	        f.add(m);
-	        f.pack();
-	        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	        f.setSize(1500,750);  
-	        f.setVisible(true);
-	        
-	        Timer mapUpdate = new Timer(500, new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					m.repaint();
-		         }
-			});
-			mapUpdate.start();
-		});
 	}
 }

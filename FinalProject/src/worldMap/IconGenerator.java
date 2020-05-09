@@ -9,6 +9,10 @@ import objects.Port;
 
 public class IconGenerator {
 	List<Port> ports;
+	String containerSelection;
+	public IconGenerator(String containerSelection) {
+		this.containerSelection = containerSelection;
+	}
 	public List<Icon> getPortIcons() {
 		List<Icon> icons = new ArrayList<>();
 		if(ports == null) {
@@ -24,7 +28,7 @@ public class IconGenerator {
 
 	public List<Icon> getContainerIcons() {
 		List<Icon> icons = new ArrayList<>();
-		List<Container> Containers = DataBase.searchContainers("");
+		List<Container> Containers = DataBase.searchContainers(containerSelection);
 		for(Container container : Containers) {
 			if(container.getJourneyID() != 0L) {
 				BoatIcon boatIcon = new BoatIcon();

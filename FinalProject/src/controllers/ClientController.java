@@ -1,7 +1,14 @@
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import applications.ClientApplication;
 import containerFilters.FilterByCargoName;
@@ -20,6 +27,7 @@ import supportingClasses.InputParser;
 import updateClientInformation.UpdateEmail;
 import updateClientInformation.UpdatePhoneNumber;
 import updateClientInformation.UpdateReferencePerson;
+import worldMap.MapPane;
 /**
  * public class ClientController{}
  * connects the graphical User Interface to the logic behind the client menu 
@@ -825,4 +833,17 @@ public class ClientController {
 		return result;
 	}
 	
+	public void startMap() {
+		SwingUtilities.invokeLater(() -> {  
+			MapPane m=new MapPane(String.valueOf(clientID));
+			clientmenu.openMap(m);
+	        
+	        Timer mapUpdate = new Timer(500, new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					m.repaint();
+		         }
+			});
+			mapUpdate.start();
+		});
+	}
 }
