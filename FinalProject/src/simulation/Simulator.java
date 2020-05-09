@@ -78,7 +78,7 @@ public class Simulator {
 	}
 	
 	private boolean containerIsCloseToPort(Container container, Port destinationPort) {
-		return container.getCurrentPosition().distanceTo(destinationPort.getPosition()) <= 70F;
+		return container.distanceTo(destinationPort.getPosition()) <= 70F;
 	}
 
 	public void simulateJourneyDevelopment() {

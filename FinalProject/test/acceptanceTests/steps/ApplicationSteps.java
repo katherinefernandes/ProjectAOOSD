@@ -984,9 +984,7 @@ public class ApplicationSteps {
 	
 	@Then("the container is moved towards its destination port with speed=60km\\/hour")
 	public void containerIsMoved() {
-		Location oldPosition = currentContainer.getCurrentPosition();
-		Location newPosition = updatedContainer.getCurrentPosition();
-		float distance = oldPosition.distanceTo(newPosition);
+		float distance = currentContainer.distanceTo(updatedContainer.getCurrentPosition());
 		assertTrue(distance >= 30F && distance <= 150F);
 	}
 	
