@@ -3,8 +3,8 @@ package xmlParser;
 import java.util.ArrayList;
 import java.util.List;
 
-import businessObjects.BusinessObject;
 import exceptions.ElementSelectionException;
+import objects.BusinessObject;
 
 public abstract class GeneralXMLManipulation<T extends BusinessObject> {
 	protected String dataPointTagName;

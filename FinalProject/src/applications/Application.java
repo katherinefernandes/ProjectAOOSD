@@ -1,10 +1,15 @@
 package applications;
 
-import businessObjects.Client;
-import businessObjects.Container;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
-
+import objects.Client;
+import objects.Container;
+/**
+ * This class extracts all the common methods used in clientApplication and 
+ * CompanyApplication
+ * @author Mamuna Azam
+ *
+ */
 public class Application implements View{
 	
 	protected Client client;

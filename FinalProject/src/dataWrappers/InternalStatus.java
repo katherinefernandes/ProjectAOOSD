@@ -18,14 +18,14 @@ public class InternalStatus  {
 	public float getHumidity() {
 		return Humidity;
 	}
-	public void setAtmosphere(float p) {
-		this.Atmosphere=p;
+	public void setAtmosphere(float atmosphere) {
+		this.Atmosphere=atmosphere;
 	}
-	public void setTemperature(float t) {
-		this.Temperature=t;
+	public void setTemperature(float temperature) {
+		this.Temperature=temperature;
 	}
-	public void setHumidity(float h) {
-		this.Humidity=h;
+	public void setHumidity(float humidity) {
+		this.Humidity=humidity;
 	}
 	
 }

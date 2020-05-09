@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import applications.ClientApplication;
-import businessObjects.Client;
+import objects.Client;
 import supportingClasses.InputParser;
 import supportingClasses.Security;
 

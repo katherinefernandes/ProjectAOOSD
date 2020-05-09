@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import businessObjects.Client;
+import controllers.LoginController;
 import graphicalInterface.LoginWindow;
-import logic.LoginController;
+import objects.Client;
 import supportingClasses.InputParser;
 
 public class LoginControllerTest {

@@ -1,18 +1,19 @@
-package logic;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import applications.ClientApplication;
-import businessObjects.Client;
-import businessObjects.Container;
-import businessObjects.Port;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
-import graphicalInterface.ClientMenu;import supportingClasses.ExtractingPortID;
+import graphicalInterface.ClientMenu;
+import objects.Client;
+import objects.Container;
+import objects.Port;
+import supportingClasses.ExtractingPortID;
 import supportingClasses.ValidInput;
 import supportingClasses.ValidInputType;
 import supportingClasses.InputParser;
@@ -344,7 +345,7 @@ public class ClientController {
 	 * @return a boolean value depending on the user input.
 	 */
 	private boolean findContainerByJourneyID(String journeyID) {
-		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {//test this
+		if (checkIfJourneyIDisPartOfActiveShipment(journeyID)) {
 			System.out.println("The journeyID is valid and part of the activeshipments, now will try to find the container");
 			FilterByJourneyID filter = new FilterByJourneyID(currentClient.viewClient(),Long.valueOf(journeyID));
 		    container= currentClient.filterContainersOnAJourney(filter);
@@ -719,10 +720,11 @@ public class ClientController {
 		if(!checkMessage&&!cargo.isEmpty()) {
 			checkMessage = retrieveContainersByCargo(cargo);
 		}
-		if(!checkMessage&&!portName.isEmpty()) {//test this
+		if(!checkMessage&&!portName.isEmpty()) {
 			checkMessage = getContainerByPortName(portName);
 		}
 		if(checkMessage) {
+			System.out.println("a container was found: "+checkMessage);
 			clientmenu.setFieldsContainerData();
 			
 			if(checkCriteria) {
@@ -732,11 +734,11 @@ public class ClientController {
 				containerID=container.get(0).getID();
 				clientmenu.viewOneContainerPanel();
 				
-			}else {//test this
+			}else {
 				clientmenu.setFieldsContainerData();
 				clientmenu.viewMultipleContainerPanel();
 			}
-		}else { //test this
+		}else {
 			System.out.println("no container found by the above criterias");
 			clientmenu.containerSearchError();
 		}
@@ -756,13 +758,24 @@ public class ClientController {
 			result = result +"\nJourney ID: "+journeys;
 			result = result +"\nContained: "+getCargoByJourneyID(journeys);
 			result = result +"\nReached: "+getFinalDestinationByJourneyID(journeys);
-			 result =result + "---------------------------------------";
+			result = result+"\nLast Updated: "+getLastUpdated(journeys);
+			result =result + "---------------------------------------";
 		}
 		return "";
 	}
 	
 	
 	
+	private String getLastUpdated(long journeys) {
+		List<Container> containers = DataBase.searchHistory(Long.toString(journeys));
+		if (containers.size()>0) {
+			return containers.get(0).getUpdated();
+			
+		}
+		System.out.println("Could not find the container in history for the journey ID: "+journeys);
+		return "Unknown";
+	}
+
 	/**
 	 * private String getFinalDestinationByJourneyID(){}
 	 * This method returns the final destination port characterising a specific journey or if the port doesn't exist it returns an error
@@ -801,11 +814,13 @@ public class ClientController {
 	 * @return all the current active shipments.
 	 */
 	public String getAllActiveShipments() {
-		String result = "All Active Journeys: ";
+		String result = "\t\tAll Active Journeys: ";
+		result = result +"\n--------------------------------------------------------------------------------";
 		
 		for(long Journeys : currentClient.viewClient().getActiveShipments()) {
-			result = result+"\nJourney ID: "+Journeys;
-			result = result +"-----------------------------------------------------";
+			result = result+"\n\tJourney ID: "+Journeys;
+			result = result +"\n\tCargo: "+this.getCargoByJourneyID(Journeys);
+			result = result +"\n--------------------------------------------------------------------------------";
 		}
 		return result;
 	}

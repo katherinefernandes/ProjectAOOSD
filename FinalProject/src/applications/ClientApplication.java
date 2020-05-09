@@ -2,15 +2,22 @@ package applications;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import businessObjects.Container;
-import businessObjects.Port;
+
 import containerFilters.FilteringContainersForAClient;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
+import objects.Container;
+import objects.Port;
 import supportingClasses.Security;
 import supportingClasses.UpdateDestinationPort;
 import updateClientInformation.UpdateClient;
 
+/**
+ * This class contains the methods only relavent for the user client and will be used by the 
+ * ClientController
+ * @author Mamuna
+ *
+ */
 public class ClientApplication extends Application {
 	
 	public ClientApplication(long ID) {
@@ -24,36 +31,31 @@ public class ClientApplication extends Application {
 
 	/**
 	 * updateClientInformation will update the client's information and 
-	 * return a true if its updated
+	 * return a true if its stored correctly in the database
 	 * @param update
 	 * @return boolean 
 	 */
 	
 	public boolean updateClientInformation(UpdateClient update) {
 		update.updateInformation(client);
-		return update.updated();
+		return update.getUpdated();
 	}
 
 
 	/**
-	 * getContainerID will get a container ID of a container stationed at the
-	 * start port which will be registered for a journey.
+	 * getContainer will get a container ID of a container stationed at the
+	 * start port which will be used to register a journey.
 	 * @param startPortID
 	 * @return ContainerID
 	 */
 
-	private long getContainerID(long startPortID) {
+	
+	private long getContainerForJourneyRegisteration(long startPortID) {
 		try {
 			Port startPort = DataBase.getPort(startPortID);
-			Long containerID;
-			if (startPort.getStationedContainers().size()>0) {
-				containerID = startPort.getStationedContainers().get(0);
-				container = DataBase.getContainer(containerID);
-				startPort.removeStationedContainer(containerID);
-				startPort.save();
-			}else {
-				containerID = createANewContainer(startPort);
-			}
+			long containerID = startPort.containerIDForJourneyRegisteration();
+			System.out.println("containerID"+containerID);
+			container = DataBase.getContainer(containerID);
 			return containerID;
 		} catch (ElementSelectionException e) {
 			throw new Error("The start port ID found was not valid",e); 
@@ -80,45 +82,30 @@ public class ClientApplication extends Application {
 	 * @param pressure
 	 * @param humidity
 	 * @param arriveBy
+	 * @param updated
+	 * @return journey ID
 	 */
 	public long registerContainerForAJourney(long startPortID, long destinationPortID, String cargo, float temperature,
 			float pressure, float humidity, String arriveBy, String updated) {
-		long containerID = getContainerID(startPortID);
-		new UpdateDestinationPort().updatePort(destinationPortID, containerID);
+		
+		long containerID = getContainerForJourneyRegisteration(startPortID);
+		new UpdateDestinationPort().updateArrivingContainersList(destinationPortID, containerID);
 		container.useContainerAgain(client.getID(),Security.generateIDFromSecureRandom(), startPortID, destinationPortID, cargo, temperature, pressure, humidity, arriveBy, updated);
 		container.save();
 		DataBase.saveToHistory(container);
 		client.addActiveShipment(container.getJourneyID());
 		client.save();
-		/*try {
-			this.getClient(client.getID());
-		} catch (ElementSelectionException e) {
-			throw new Error("For some reason the client just saved can't be found",e);
-		}*/
+
 		return container.getJourneyID();
 	}
 
-	
-	/**
-	 * createANewContainer will generate a new container object and add the container ID 
-	 * to the array of stationedContainers at the start Port
-	 * @param startPort
-	 */
-	private long createANewContainer(Port startPort)  {
 
-		container = new Container(Security.generateIDFromSecureRandom(),startPort);
-		startPort.addStationedContainer(container.getID());
-		startPort.save();
-		container.save();
-		return getContainerID(startPort.getID());
-	}
-	
 	
 	/**
 	 * filterContainersOnAJourney will filter out the active containers for the client 
 	 * depending on the filter used.
 	 * @param filter
-	 * @return
+	 * @return ArrayList<Container> containers
 	 */
 	public ArrayList<Container> filterContainersOnAJourney(FilteringContainersForAClient filter){
 		return filter.filterContainers();

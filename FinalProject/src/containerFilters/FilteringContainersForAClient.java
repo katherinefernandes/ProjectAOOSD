@@ -3,10 +3,15 @@ package containerFilters;
 import java.util.ArrayList;
 import java.util.List;
 
-import businessObjects.Client;
-import businessObjects.Container;
 import dataBase.DataBase;
-
+import objects.Client;
+import objects.Container;
+/**
+ * This class collects a list of containers which are registered for a journey
+ * for the client
+ * @author Mamuna
+ *
+ */
 public abstract class FilteringContainersForAClient implements FilterContainer {
 
 	protected ArrayList<Container> containers;

@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import businessObjects.Port;
+import objects.Port;
 
 class PortInitializer {
 	Random random;

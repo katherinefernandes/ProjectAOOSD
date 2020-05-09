@@ -1,9 +1,9 @@
 package updateClientInformation;
 
-import businessObjects.Client;
+import objects.Client;
 
 public interface UpdateClient {
-	boolean updated();
+	boolean getUpdated();
 	
 	/**
 	 * updateInformation will replace the current information of the client 

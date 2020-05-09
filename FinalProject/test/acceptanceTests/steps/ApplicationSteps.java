@@ -14,9 +14,6 @@ import java.util.Map;
 
 import applications.ClientApplication;
 import applications.CompanyApplication;
-import businessObjects.Client;
-import businessObjects.Container;
-import businessObjects.Port;
 import applications.Application;
 import containerFilters.FilterByCargoName;
 import containerFilters.FilterByJourneyID;
@@ -31,6 +28,9 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import objects.Client;
+import objects.Container;
+import objects.Port;
 import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
@@ -679,7 +679,7 @@ public class ApplicationSteps {
 
 	@When("the database is asked to return the port data")
 	public void theDatabaseIsAskedToReturnThePortData() {
-		 assertThrows(java.lang.Error.class,()-> new UpdateDestinationPort().updatePort(portID, 34569l));
+		 assertThrows(java.lang.Error.class,()-> new UpdateDestinationPort().updateArrivingContainersList(portID, 34569l));
 		 result = false;
 	}
 
@@ -828,8 +828,8 @@ public class ApplicationSteps {
 
 	@Then("all the active journey IDs are returned which also contains the Journey ID {long}")
 	public void allTheActiveJourneyIDsAreReturnedWhichAlsoContainsTheJourneyID(long journeyID) {
-		System.out.println(viewJourneys.getResult());
-		assertTrue(viewJourneys.getResult().contains(Long.toString(journeyID)));
+		System.out.println(viewJourneys.getOutPut());
+		assertTrue(viewJourneys.getOutPut().contains(Long.toString(journeyID)));
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////

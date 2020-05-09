@@ -1,5 +1,3 @@
-
-
 Feature: Find a journey
   Description: The Client can track the journey of a container
   

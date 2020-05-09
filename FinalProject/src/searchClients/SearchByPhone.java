@@ -2,8 +2,8 @@ package searchClients;
 
 import java.util.List;
 
-import businessObjects.Client;
 import dataBase.DataBase;
+import objects.Client;
 
 public class SearchByPhone implements SearchClients{
 	private String phone;

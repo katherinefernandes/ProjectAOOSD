@@ -3,7 +3,7 @@ package applications;
 import java.util.ArrayList;
 import java.util.List;
 
-import businessObjects.Client;
+import objects.Client;
 import searchClients.SearchClients;
 import supportingClasses.Security;
 import updateContainer.UpdateContainer;

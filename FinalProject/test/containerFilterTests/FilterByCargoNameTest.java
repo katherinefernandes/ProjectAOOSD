@@ -3,10 +3,10 @@ package containerFilterTests;
 
 import org.junit.jupiter.api.Test;
 
-import businessObjects.Client;
-import businessObjects.Container;
-import businessObjects.Port;
 import containerFilters.FilterByCargoName;
+import objects.Client;
+import objects.Container;
+import objects.Port;
 import supportingClasses.InputParser;
 
 class FilterByCargoNameTest {

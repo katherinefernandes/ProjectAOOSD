@@ -1,7 +1,7 @@
 package xmlParser;
 
-import businessObjects.*;
 import dataBase.IdentifiablePersistency;
+import objects.*;
 
 public class ContainerXMLManipulation extends GeneralXMLManipulation<Container> implements IdentifiablePersistency<Container> {
 	

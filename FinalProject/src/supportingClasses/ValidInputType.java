@@ -1,5 +1,10 @@
 package supportingClasses;
 
+/**
+ * This class validates the types of the inputs from a user
+ * @author Mamuna
+ *
+ */
 public class ValidInputType {
 
 	public static boolean validateInteger(String text) {

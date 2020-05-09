@@ -2,8 +2,8 @@ package xmlParser;
 
 import javax.xml.stream.events.XMLEvent;
 
-import businessObjects.Port;
 import dataBase.IdentifiablePersistency;
+import objects.Port;
 
 public class PortXMLManipulation extends GeneralXMLManipulation<Port> implements IdentifiablePersistency<Port> {
 	

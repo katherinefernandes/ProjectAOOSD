@@ -7,9 +7,9 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import businessObjects.Port;
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
+import objects.Port;
 
 public class PortAccessTest extends IdentifiableDataAccessTest<Port>{
 

@@ -1,19 +1,19 @@
 package updateContainer;
 
-import businessObjects.Container;
 import dataBase.DataBase;
+import objects.Container;
 
 public class UpdateStatus implements UpdateContainer{
 
 	private boolean update;
-	private float temp;
-	private float hum;
-	private float press;
+	private float temperature;
+	private float humidity;
+	private float atmosphere;
 	
-	public UpdateStatus(float temp, float hum, float press) {
-		this.temp = temp;
-		this.hum = hum;
-		this.press = press;
+	public UpdateStatus(float temperature, float humidity, float atmosphere) {
+		this.temperature = temperature;
+		this.humidity = humidity;
+		this.atmosphere = atmosphere;
 		this.update = false;
 	}
 	
@@ -25,7 +25,7 @@ public class UpdateStatus implements UpdateContainer{
 	
 	@Override
 	public Container updateInformation(Container container) {
-		container.setInternalStatus(press, temp, hum);
+		container.setInternalStatus(atmosphere, temperature, humidity);
 		container.save();
 		DataBase.saveToHistory(container);
 		update = true;

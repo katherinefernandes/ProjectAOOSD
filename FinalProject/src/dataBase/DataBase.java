@@ -2,8 +2,8 @@ package dataBase;
 
 import java.util.*;
 
-import businessObjects.*;
 import exceptions.ElementSelectionException;
+import objects.*;
 import xmlParser.*;
 
 public class DataBase {

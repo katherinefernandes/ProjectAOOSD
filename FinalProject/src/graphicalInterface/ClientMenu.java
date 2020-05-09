@@ -10,9 +10,6 @@ import java.awt.CardLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 
-import logic.ClientController;
-import logic.LoginController;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -20,6 +17,8 @@ import javax.swing.JTextField;
 
 import javax.swing.SwingUtilities;
 
+import controllers.ClientController;
+import controllers.LoginController;
 import graphsForInternalStatus.LineGraphHumidity;
 import graphsForInternalStatus.LineGraphPressure;
 import graphsForInternalStatus.LineGraphTemperature;

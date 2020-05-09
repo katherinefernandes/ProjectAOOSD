@@ -2,7 +2,7 @@ package xmlParser;
 
 import java.util.*;
 
-import businessObjects.BusinessObject;
+import objects.BusinessObject;
 
 class ActiveData<T extends BusinessObject> {
 	List<T> dataList;

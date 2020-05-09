@@ -9,9 +9,9 @@ public class ValidInput {
 		return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
 	}
  
-	public  boolean validateCountryCode (int cc) {
+	public  boolean validateCountryCode (int countryCode) {
 		
-		if (cc < 1000 & cc > 0) {
+		if (countryCode < 1000 & countryCode > 0) {
 			return true;
 		}
 		else {
@@ -65,6 +65,13 @@ public class ValidInput {
 		return true;
 	}
 	
+	/**
+	 * This method validates the arrival date. It should be of the correct format 
+	 * and comes after the current date.
+	 * @param date
+	 * @return true if the date is valid
+	 * @author Mamuna
+	 */
 	public boolean validateDate(String date) {
 		String[] datearray = date.split("-");
 		if(datearray.length==3) {

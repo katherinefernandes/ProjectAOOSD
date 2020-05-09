@@ -5,10 +5,10 @@ import java.util.*;
 
 import applications.ClientApplication;
 import applications.CompanyApplication;
-import businessObjects.*;
 import dataBase.DataBase;
 import dataWrappers.*;
 import exceptions.ElementSelectionException;
+import objects.*;
 import supportingClasses.Security;
 import updateContainer.UpdateStatus;
 

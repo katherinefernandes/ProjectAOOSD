@@ -1,4 +1,4 @@
-package logic;
+package controllers;
 
 
 import java.util.ArrayList;
@@ -7,11 +7,11 @@ import java.util.List;
 import dataBase.DataBase;
 import dataWrappers.ReferenceName;
 import applications.CompanyApplication;
-import businessObjects.Client;
-import businessObjects.Container;
-import businessObjects.Port;
 import exceptions.ElementSelectionException;
 import graphicalInterface.LogisticMenu;
+import objects.Client;
+import objects.Container;
+import objects.Port;
 import searchClients.SearchByEmail;
 import searchClients.SearchByName;
 import searchClients.SearchByPhone;
@@ -165,6 +165,7 @@ public class LogisticController {
 		result = result +"\nJourney ID: "+container.getJourneyID();
 		result = result +"\nStart Port: "+getPortName(container.getStartPortID());
 		result = result +"\nDestination Port: "+getPortName(container.getDestinationPortID());
+		result = result +"\nLast Visited Port: "+getPortName(container.getLastVisitedPortID());
 		result = result +"\nCargo: "+container.getCargo();
 		result = result +"\nInternal Status: "+getInternalStatus(container);
 		String latitude = Float.toString(container.getCurrentPosition().getLatitude());
@@ -442,7 +443,7 @@ public class LogisticController {
 
 	public String getAllJourneys() {
 		
-		return new DataForViewAllJourneys().getResult();
+		return new DataForViewAllJourneys().getOutPut();
 	}
 
 	public void updateContainerPort(String containerID, String portName) {

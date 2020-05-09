@@ -27,6 +27,7 @@ public class Location {
 		float newLatitude = latitude + direction[1]*distance/distancePerLatitudeDegreeKM();
 		return new Location(newLatitude, newLongitude);
 	}
+	
 	public float distanceTo(Location position) {
 		return (float) (Math.toRadians(distanceToPointInDegrees(position))*6378F);
 	}
@@ -52,8 +53,6 @@ public class Location {
 		double radians = Math.acos(Math.cos(angle1)*Math.cos(angle2) 
 			 	  		 + Math.sin(angle1)*Math.sin(angle2)*Math.cos(angle3));
 		double distanceInDegrees = Math.toDegrees(radians);
-		
-		//double distanceInDegrees = Math.sqrt(Math.pow(destination.getLongitude() - longitude,2.) + Math.pow((destination.getLatitude() - latitude),2.));
 		return distanceInDegrees;
 	}
 }

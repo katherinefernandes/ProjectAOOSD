@@ -1,4 +1,4 @@
-package businessObjects;
+package objects;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,7 +7,14 @@ import java.util.List;
 import dataBase.DataBase;
 import dataWrappers.InternalStatus;
 import dataWrappers.Location;
+import exceptions.ElementSelectionException;
+import supportingClasses.UpdateDestinationPort;
 
+/**
+ * This class contains all the information required for a container
+ * @author Mamuna and Simon
+ *
+ */
 public class Container extends BusinessObject {
 	private long ID;
 	private long clientID = 0L;
@@ -30,7 +37,7 @@ public class Container extends BusinessObject {
 		startPortID = startPort.getID();
 		lastVisitedPortID = startPort.getID();
 		destinationPortID = startPort.getID();
-		currentPosition = startPort.getPosition();
+		currentPosition =startPort.getPosition();
 	}
 	
 	public Container(long containerID, long clientID, long journeyID,long startPortID, long destinationPortID, float latitude, float longitude, String cargo, float temperature, float atmosphere, float humidity, String arriveBy) {
@@ -135,7 +142,7 @@ public class Container extends BusinessObject {
 	public long getID() {
 		return ID;
 	}
-	public List<String> getAllValues(){// needs to be tested
+	public List<String> getAllValues(){
 		List<String> values = new ArrayList<>();
 		values.add(String.valueOf(getID()));
 		values.add(String.valueOf(getClientID()));
@@ -153,4 +160,29 @@ public class Container extends BusinessObject {
 		values.add(String.valueOf(getArriveBy()));
 		return values;
 	}
+	
+	/**
+	 * This method will invoke the client to update its journey information
+	 * and reset the container information
+	 * @param container
+	 * @author Mamuna Azam
+	 */
+	public void containerHasReachedDestination() {
+		    System.out.println("Trying to update client");
+			try {
+				Client client = DataBase.getClient(clientID);
+				client.updateJourneyInformation(this.journeyID);
+			} catch (ElementSelectionException e) {
+				throw new Error("Client was not found, which means the container was not registered properly",e);
+			}
+			new UpdateDestinationPort().updateAtTheEndOfAJourney(destinationPortID, ID);
+			useContainerAgain(0000000l, 0, destinationPortID, destinationPortID, "none", 0, 0, 0, "1-1-2020");
+	}
+	
+	
+	
+	
+	
+	
+	
 }
