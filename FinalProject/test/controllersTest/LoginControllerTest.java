@@ -52,21 +52,4 @@ public class LoginControllerTest {
 
 	
 	
-	@Test
-	public void invokeNextFrameTest() {
-		Client client = new Client(311l,"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
-		client.save();
-		controller.setClientText("311");
-		controller.loginButtonPressed(true);
-		assertTrue(window.isClientButtonChecked());
-		
-		DataBase.wipeClients();
-		DataBase.wipeContainers();
-		DataBase.wipeHistory();
-		DataBase.wipePorts();
-	}
-	
-
-	
-	
 	}
