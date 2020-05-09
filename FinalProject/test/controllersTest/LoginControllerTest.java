@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controllers.LoginController;
+import dataBase.DataBase;
 import graphicalInterface.LoginWindow;
 import objects.Client;
 import supportingClasses.InputParser;
@@ -30,6 +31,10 @@ public class LoginControllerTest {
 		assertFalse(controller.validClientInfo("mak82"));
 		assertFalse(controller.validClientInfo("20000000000"));
 		assertTrue(controller.validClientInfo("311"));
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	} 
 	
 	@Test
@@ -38,23 +43,13 @@ public class LoginControllerTest {
 		 assertFalse(controller.validCompanyInfo("wrong","wrong".toCharArray()));
 		 assertFalse(controller.validCompanyInfo("admin","wrong".toCharArray()));
 		 assertFalse(controller.validCompanyInfo("wrong","admin".toCharArray()));
-		
+		 DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 		
 	}
-/*	
-	@Test
-	public void loginButtonPressedTest() {
-		Client client = new Client(311l,"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
-		client.save();
-		controller.setClientText("311");
-		controller.loginButtonPressed(true);
-		controller.setCompnyName("admin");
-		controller.setCompanyPassword("admin".toCharArray());
-		controller.loginButtonPressed(false);
-		controller.setClientText("1000000000000");
-		controller.loginButtonPressed(true);
-		the tests need to be done in a different way... use assertions
-	}*/
+
 	
 	
 	@Test
@@ -65,7 +60,10 @@ public class LoginControllerTest {
 		controller.loginButtonPressed(true);
 		assertTrue(window.isClientButtonChecked());
 		
-		
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 	
 

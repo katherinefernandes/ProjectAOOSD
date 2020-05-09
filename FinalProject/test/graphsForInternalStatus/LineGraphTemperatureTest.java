@@ -19,7 +19,10 @@ public class LineGraphTemperatureTest {
 	    DataBase.saveToHistory(container);
 	    graph = new LineGraphTemperature("Temperature graph","207115694");
 	    assertTrue(graph.getValues().contains("3.5"));
-	    
+	    DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 	
 	

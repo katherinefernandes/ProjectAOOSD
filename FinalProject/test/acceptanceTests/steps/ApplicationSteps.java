@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+
 import applications.ClientApplication;
 import applications.CompanyApplication;
 import applications.Application;
@@ -147,7 +150,7 @@ public class ApplicationSteps {
 			 client = logistic.viewClient();
 		} catch (ElementSelectionException e) {
 
-			throw new Error(e); ///need to figure out how to test this.
+			throw new Error(e);
 		}
 	}
 
@@ -159,6 +162,7 @@ public class ApplicationSteps {
 	@Then("the email shown is {string}")
 	public void theEmailShownIs(String email) {
 		assertTrue(client.getEmail().equals(email));
+		clearDataBase();
 	}
 	@Given("that the client with the ID {long} is logged into the clientApplication")
 	public void thatTheClientWithTheIDIsLoggedIntoTheClientApplication(long clientID) {
@@ -191,6 +195,7 @@ public class ApplicationSteps {
 	public void thatTheReferencePersonIsFirstnameLastname(String firstname, String lastname) {
 		assertEquals(InputParser.parsingNames(firstname).size(),client.getPerson().getFirstName().size());
 	    assertEquals(InputParser.parsingNames(lastname).size(),client.getPerson().getLastName().size());
+	    clearDataBase();
 	}
 	
 	
@@ -269,6 +274,7 @@ public class ApplicationSteps {
 	@Then("it will arrive by the date {string}")
 	public void itWillArriveByTheDate(String date) {
 		assertEquals(Containers.get(0).getArriveBy(),date);
+		clearDataBase();
 	}
 	
 	@When("the client provides the port name {string}")
@@ -295,6 +301,7 @@ public class ApplicationSteps {
 			}
 		}
 		assertTrue(contains);
+		clearDataBase();
 	}
 	
 	@When("the client provides a port name {string} from where the journey will start")
@@ -331,11 +338,12 @@ public class ApplicationSteps {
 	public void aContainerIsRegisteredForTheJourneyAndTheClientIsProvidedWithAJourneyIDToTrackTheContainer() {
 		clientApplication.registerContainerForAJourney(startPortID,destinationPortID,cargo,temperature,pressure,humidity,arriveBy);
 		assertTrue(DataBase.searchContainers(cargo).size()>0);
+		clearDataBase();
 		
 	}
 	@Given("the logistic Company decides to add a new client")
 	public void theLogisticCompanyDecidesToAddANewClient() {
-		   //remove this given or check in a different way Muna
+		logistic = new CompanyApplication();
 	}
 
 
@@ -343,6 +351,7 @@ public class ApplicationSteps {
 	public void aUniqueClientIDIsGenerated() {
 		long ID = logistic.addClient(email, name, countryCode, phone, firstName, middleName, lastName, street, city, postCode, houseNumber);
 		assertTrue(DataBase.searchClients(Long.toString(ID)).size()>0);
+		clearDataBase();
 	}
 	
 	@When("the client email is provided {string}")
@@ -407,6 +416,7 @@ public class ApplicationSteps {
 			}
 		}
 		assertTrue(contains);
+		clearDataBase();
 	}
 	@When("that the logistic company enters the clients email {string}")
 	public void thatTheLogisticCompanyEntersTheClientsEmail(String searchEmail) {
@@ -431,7 +441,7 @@ public class ApplicationSteps {
 	@Then("the list of clients with this reference person should appear")
 	public void theListOfClientsWithThisReferencePersonShouldAppear() {
 		assertNotEquals(logistic.search(optionRefPerson).size(), 0);
-		this.clients =logistic.search(optionRefPerson);
+		this.clients = logistic.search(optionRefPerson);
 	}
 
 	@When("that the logistic company enters the clients phone {long}")
@@ -441,8 +451,7 @@ public class ApplicationSteps {
 
 	@Then("the list of clients with this phone should appear")
 	public void theListOfClientsWithThisPhoneShouldAppear() {
-		assertNotEquals(logistic.search(optionPhone).size(), 0);
-		this.clients =logistic.search(optionPhone);
+		this.clients = logistic.search(optionPhone);
 	}
 	
 	@Given("there is a container with the ID {long}")
@@ -501,7 +510,7 @@ public class ApplicationSteps {
 				System.out.println(this.containerID);
 			} catch (ElementSelectionException e) {
 				e.printStackTrace();
-				throw new Error(e); //need to test this out in a better way
+				throw new Error(e); 
 			}
 		    assertTrue(logistic.getSetContainer());
 		
@@ -534,7 +543,7 @@ public class ApplicationSteps {
 			logistic.getContainer(this.containerID);
 		} catch (ElementSelectionException e) {
 			e.printStackTrace();
-			throw new Error(e); //need to test this out in a better way
+			throw new Error(e); 
 		}
 	    this.container = logistic.viewContainer();
 	    assertEquals((int)container.getInternalStatus().getTemperature(),(int)temp);
@@ -549,6 +558,7 @@ public class ApplicationSteps {
 	@Then("the new pressure value is {float}atm")
 	public void theNewPressureValueIsAtm(float atm) {
 		 assertEquals((int)container.getInternalStatus().getAtmosphere(),(int)atm);
+		 clearDataBase();
 	}
 	
 	@When("the latitude {float} is given")
@@ -575,15 +585,17 @@ public class ApplicationSteps {
 			logistic.getContainer(this.containerID);
 		} catch (ElementSelectionException e) {
 			e.printStackTrace();
-			throw new Error(e); //need to test this out in a better way
+			throw new Error(e); 
 		}
 	    this.container = logistic.viewContainer();
 	    assertEquals((int)container.getCurrentPosition().getLatitude(),(int)double1);
+
 	}
 
 	@Then("the new longitude is {float}")
 	public void theNewLongitudeIs(float double1) {
 		assertEquals((int)container.getCurrentPosition().getLongitude(),(int)double1);
+		clearDataBase();
 	}
 	
 	
@@ -602,6 +614,7 @@ public class ApplicationSteps {
 		assertEquals((int)Containers.get(0).getInternalStatus().getTemperature(),(int)temp);
 		assertEquals((int)Containers.get(0).getInternalStatus().getAtmosphere(),(int)press);
 		assertEquals((int)Containers.get(0).getInternalStatus().getHumidity(),(int)humid);
+		clearDataBase();
 	}
 	
 	@When("the client provides the cargo type {string}")
@@ -616,6 +629,7 @@ public class ApplicationSteps {
 		for (int i=0;i<Containers.size();i++) {
 			assertEquals(Containers.get(i).getCargo(),cargo);
 		}
+		clearDataBase();
 	}
 	
 	@Given("that the client ID {long} is entered")
@@ -629,7 +643,7 @@ public class ApplicationSteps {
 	    try {
 			user.getClient(clientID);
 			errorMessage = "none";
-		} catch (ElementSelectionException e) { //need to test this out in a better way
+		} catch (ElementSelectionException e) { 
 			errorMessage = "ElementNotFoundException";
 		}
 	}
@@ -638,6 +652,7 @@ public class ApplicationSteps {
 	@Then("error message {string} is given")
 	public void errorMessageIsGiven(String error) {
 		assertTrue(errorMessage.equals(error));
+		clearDataBase();
 	}
 	
 	@Given("that the container ID {long} is entered")
@@ -670,6 +685,7 @@ public class ApplicationSteps {
 	@Then("the ID {long} is returned which means that port name is not valid")
 	public void theIDIsReturnedWhichMeansThatPortNameIsNotValid(long portID) {
 	    assertEquals(portID,this.portID);
+	    clearDataBase();
 	}
 	
 	@Given("that the portID {long} is entered")
@@ -686,6 +702,7 @@ public class ApplicationSteps {
 	@Then("error message is returned")
 	public void errorMessageIsReturned() {
 		assertFalse(result);
+		clearDataBase();
 	}
 	
 	@When("the Client provides the new country code {int} which is of the valid length")
@@ -704,7 +721,7 @@ public class ApplicationSteps {
 	public void thePreviousPhoneNumberAndCountryCodeAreReplacedWithTheValidValues() {
 		UpdatePhoneNumber update = new UpdatePhoneNumber(this.countryCode,this.phone);
 	    assertTrue("Should be true as the phonenumber has been updated",clientApplication.updateClientInformation(update));
-	    
+	    clearDataBase();
 	}
 	@When("the client provides the new email {string} which is a valid email format")
 	public void providesTheNewEmailWhichIsAValidEmailFormat(String email) {
@@ -716,7 +733,7 @@ public class ApplicationSteps {
 	public void thePreviousEmailIsReplacedWithTheNewValidEmail() {
 		UpdateEmail update = new UpdateEmail(email);
 	   assertTrue("This should be true now as the email has been updated",clientApplication.updateClientInformation(update));
-	    
+	   clearDataBase();
 	}
 
 
@@ -742,6 +759,7 @@ public class ApplicationSteps {
 	public void thePreviousReferencePersonIsReplacedWithTheNewInformation() {
 		UpdateReferencePerson update = new UpdateReferencePerson(firstName,middleName,lastName);
 		assertTrue("Should be true as the information has been changed",clientApplication.updateClientInformation(update));
+		clearDataBase();
 	}
 	
 	@When("the port name is given {string}")
@@ -766,6 +784,7 @@ public class ApplicationSteps {
 			}
 		}
 		assertTrue(contains);
+		clearDataBase();
 	}
 	
 	@Given("there is a container with assigned ID {long}")
@@ -830,13 +849,9 @@ public class ApplicationSteps {
 	public void allTheActiveJourneyIDsAreReturnedWhichAlsoContainsTheJourneyID(long journeyID) {
 		System.out.println(viewJourneys.getOutPut());
 		assertTrue(viewJourneys.getOutPut().contains(Long.toString(journeyID)));
+		clearDataBase();
 	}
 	
-	////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////
-	//SIMULATION STEPS
-	//Would have made this a separate class, if not for build problems 
-	////////////////////////////////////////////////////////////////////////////////////
 	Port currentPort;
 	Container currentContainer;
 	Container updatedContainer;
@@ -847,8 +862,6 @@ public class ApplicationSteps {
 	List<Client> viewedClients;
 	Simulator simulator;
 	
-	
-	//--------------------------------------------------------
 	@Given("that the logistics company is logged in to the logistics company application")
 	public void initializeCompanySession(){
 		companySession = new CompanyApplication();
@@ -876,14 +889,16 @@ public class ApplicationSteps {
     @Then("a new client is created")
     public void clientExists(){
     	assertTrue(currentClient != null);
+    	clearDataBase();
     }
     
-    @Then("the new client is displayed")
+  /*  @Then("the new client is displayed")
     public void clientIsSaved(){
     	SearchByEmail search = new SearchByEmail("");
     	viewedClients = companySession.search(search);
     	assertTrue(viewedClients.contains(currentClient));
-    }
+    	clearDataBase();
+    }*/
     //--------------------------------------------------------
     @When("the simulation decides to create a new journey")
     public void simulateJourneyCreation() {
@@ -900,6 +915,7 @@ public class ApplicationSteps {
 	@Then("the journey is assigned to a client")
 	public void clientIsAssigned(){
 		assertTrue(currentClient.getActiveShipments().contains(currentJourney));
+		clearDataBase();
 	}
 	//--------------------------------------------------------
 	@Given("that the following ports are defined:$")
@@ -1002,6 +1018,7 @@ public class ApplicationSteps {
 													//but the chance is very small
 		assertTrue(Math.abs(oldAtmosphere - newAtmosphere) <= 0.05F);
 		assertTrue(newAtmosphere <= 3.F && newAtmosphere >= 0.5F);
+		clearDataBase();
 	}
 	//---------------------------------------------------------------
 	@Given("the port with ID={long} has the arriving container with ID={long}")
@@ -1067,6 +1084,7 @@ public class ApplicationSteps {
 		} catch (ElementSelectionException e) {
 			throw new Error(e);
 		}
+		
 	}
 	@Then("the port with ID={long} has the stationed container {long}")
 	public void checkForStationedContainer(long portID, long containerID) {
@@ -1076,5 +1094,14 @@ public class ApplicationSteps {
 		} catch (ElementSelectionException e) {
 			throw new Error(e);
 		}
+		clearDataBase();
+	}
+	
+	
+	private void clearDataBase() {
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipePorts();
+		DataBase.wipeHistory();
 	}
 }

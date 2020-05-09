@@ -4,6 +4,7 @@ package containerFilterTests;
 import org.junit.jupiter.api.Test;
 
 import containerFilters.FilterByCargoName;
+import dataBase.DataBase;
 import objects.Client;
 import objects.Container;
 import objects.Port;
@@ -26,7 +27,10 @@ class FilterByCargoNameTest {
 		c1.save();c2.save();c3.save();
 		FilterByCargoName filter = new FilterByCargoName(cl1,"car");
 		filter.filterContainers();
-		
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 		
 	}
 

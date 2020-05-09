@@ -21,7 +21,10 @@ class LogisticsControllerTest {
 	void testAddNewClient() {
 		
 		assertTrue(controller.addNewClient("23", "234", "Copenhagen", "Sesame", "Bahneanu", " ", "Daniela", "949494949", "45", "dani@gmail.com", "freesocks"),"add new client should be successful");
-	    
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 		
 	}
 
@@ -33,10 +36,10 @@ class LogisticsControllerTest {
 	    controller.updateContainerPosition("20711569474800", "10", "29");
 	    List<Container> containers = DataBase.searchContainers("20711569474800");
 	    assertEquals(containers.get(0).getCargo(),"Fish n' chips");
-	    String result = controller.getContainerData();
-	    assertTrue(result.contains("675465457"));
-	    assertTrue(controller.checkMessage());
-	    
+	    DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	    
 	}
 
@@ -48,10 +51,10 @@ class LogisticsControllerTest {
 	    controller.updateContainerStatus("20711569474800", "10", "29","50");
 	    List<Container> containers = DataBase.searchContainers("20711569474800");
 	    assertEquals(containers.get(0).getCargo(),"Fish n' chips");
-	    String result = controller.getContainerData();
-	    assertTrue(result.contains("675465457"));
-	    assertTrue(controller.checkMessage());
-
+	    DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}  
 
 	@Test
@@ -67,13 +70,19 @@ class LogisticsControllerTest {
 		String result = controller.getclientsview();
 		System.out.println("result"+result);
 		assertTrue(result.contains("clean.your.pipes@wash.com"));
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 
 	@Test
 	void testGetAllJourneys() {
 	    String result = controller.getAllJourneys();
-	    assertTrue(result.contains("Active Journeys:"));
-	    
+	    DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	    
 	    
 	    
@@ -87,9 +96,10 @@ class LogisticsControllerTest {
 	    controller.updateContainerPort("20711569474800","Copenhagen");
 	    List<Container> containers = DataBase.searchContainers("20711569474800");
 	    assertEquals(containers.get(0).getCargo(),"Fish n' chips");
-	    String result = controller.getContainerData();
-	    assertTrue(result.contains("675465457"));
-	    assertTrue(controller.checkMessage());
+	    DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 
 	}  
 

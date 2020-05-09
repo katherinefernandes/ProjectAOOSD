@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import containerFilters.FilterByJourneyID;
 import containerFilters.FilterByPortName;
+import dataBase.DataBase;
 import objects.Client;
 import objects.Container;
 import objects.Port;
@@ -29,6 +30,10 @@ class FilterByJourneyIDtest {
 		c1.save();c2.save();c3.save();
 		FilterByJourneyID filter = new FilterByJourneyID(cl1,31l);
 		filter.filterContainers();
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 
 }

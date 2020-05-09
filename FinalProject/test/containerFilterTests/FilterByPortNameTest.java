@@ -4,6 +4,7 @@ package containerFilterTests;
 import org.junit.jupiter.api.Test;
 
 import containerFilters.FilterByPortName;
+import dataBase.DataBase;
 import objects.Client;
 import objects.Container;
 import objects.Port;
@@ -30,7 +31,10 @@ class FilterByPortNameTest {
 		FilterByPortName filter = new FilterByPortName(cl1,36l);
 		filter.filterContainers();
 		
-		
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 
 }
