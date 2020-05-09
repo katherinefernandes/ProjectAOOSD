@@ -28,7 +28,7 @@ public abstract class GeneralXMLManipulation<T extends BusinessObject> {
 	
 	public void newEntry(T newData) {
 		activeData.storeNewData(newData);
-		if (activeData.size() > 20) {
+		if (activeData.size() > 100) {
 			flushActiveData();
 		}
 	}

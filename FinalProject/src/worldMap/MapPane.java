@@ -5,8 +5,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
@@ -14,14 +16,21 @@ import javax.swing.WindowConstants;
 import simulation.Simulator;
 
 
-public class MapPane extends Canvas{
+public class MapPane extends JPanel{
 	private static final long serialVersionUID = 1540837497004158859L;
 	public final static int mapWidth = 1500;
 	public final static int mapHeigth = 750;
 	Image mapImage;
 	IconGenerator iconGenerator; 
 	
-    public void paint(Graphics g) {  
+	public MapPane() {
+		Toolkit t=Toolkit.getDefaultToolkit();  
+        mapImage = t.getImage("graphics/world_map.jpg");
+	}
+	
+	@Override
+    public void paintComponent(Graphics g) {
+		super.paintComponents(g);
     	iconGenerator = new IconGenerator();
         paintMap(g);
         paintIcons(g,iconGenerator.getPortIcons());
@@ -29,8 +38,6 @@ public class MapPane extends Canvas{
     }
 
 	private void paintMap(Graphics g) {
-		Toolkit t=Toolkit.getDefaultToolkit();  
-        mapImage = t.getImage("graphics/world_map.jpg");
         g.drawImage(mapImage, 0, 0, mapWidth, mapHeigth, this);
 	}  
     
@@ -43,27 +50,12 @@ public class MapPane extends Canvas{
 	public static void main(String[] args) {  
 		SwingUtilities.invokeLater(() -> {  
 			MapPane m=new MapPane();
-			JFrame f=new JFrame();  
+			JFrame f=new JFrame();
 	        f.add(m);
 	        f.pack();
 	        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	        f.setSize(1500,750);  
 	        f.setVisible(true);
-	        
-	        int delayMS = 250;
-	        Simulator simulator = new Simulator();
-			Timer timer = new Timer(delayMS, new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					simulator.simulateOneHour();
-					simulator.simulateOneHour();
-					simulator.simulateOneHour();
-					f.remove(m);
-					m.update(f.getGraphics());
-					f.add(m);
-		         }
-			});
-			
-			timer.start();
 		});
 	}  
 }

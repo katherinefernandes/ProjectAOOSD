@@ -22,7 +22,7 @@ public class HistoryXMLManipulation extends ContainerXMLManipulation{
 	@Override
 	public void newEntry(Container container) {
 		activeData.storeNewData(container);
-		if(activeData.size() > 500) {
+		if(activeData.size() > 700) {
 			flushActiveData();
 		}
 	}

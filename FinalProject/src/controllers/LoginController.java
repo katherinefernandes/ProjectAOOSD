@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import dataBase.DataBase;
 import exceptions.ElementSelectionException;
@@ -14,6 +17,7 @@ import graphicalInterface.LogisticMenu;
 
 import simulation.Simulator;
 import supportingClasses.ValidInputType;
+import worldMap.MapPane;
 /**
  * This class connects the logic behind the login system to the graphical user interface
  * @author daniela
@@ -40,6 +44,7 @@ public class LoginController {
 		window = new LoginWindow(this);
 		window.errorMessage.setVisible(false);
 		window.openFrame();
+		startMap();
 	}
 	/**
 	 * public boolean validClientInfo(){}
@@ -169,5 +174,23 @@ public class LoginController {
 			});
 			simulation.start();
 		}
+	}
+	private void startMap() {
+		SwingUtilities.invokeLater(() -> {  
+			MapPane m=new MapPane();
+			JFrame f=new JFrame();
+	        f.add(m);
+	        f.pack();
+	        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+	        f.setSize(1500,750);  
+	        f.setVisible(true);
+	        
+	        Timer mapUpdate = new Timer(500, new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					m.repaint();
+		         }
+			});
+			mapUpdate.start();
+		});
 	}
 }
