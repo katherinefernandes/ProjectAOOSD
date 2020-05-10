@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.*;
 
+import dataBase.DataBase;
 import objects.Container;
 import objects.Port;
 
@@ -123,4 +124,12 @@ public class ContainerDataTest {
 		assertTrue(values.get(0).equals(Long.toString(objectTest2.getID())));
 	}
 
+	@AfterEach
+	public void cleanData() {
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
+	}
+	
 }

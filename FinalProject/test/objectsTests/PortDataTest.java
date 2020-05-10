@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.*;
 
+import dataBase.DataBase;
 import objects.Port;
+import supportingClasses.Security;
 
 public class PortDataTest {
 	
@@ -71,4 +73,19 @@ public class PortDataTest {
 		assertTrue(allvalues.get(0).equals(Long.toString(objectTest.getID())));
 	}
 
+	@Test
+	public void testContainerIDForJourneyRegisteration() {
+		objectTest.addStationedContainer(Security.generateIDFromSecureRandom());
+		assertTrue(objectTest.containerIDForJourneyRegisteration()>0);
+		
+		
+	}
+	
+	@AfterEach
+	public void cleanData() {
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
+	}
 }

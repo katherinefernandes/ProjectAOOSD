@@ -59,7 +59,7 @@ public class UserActionGenerator {
 		}
 		Location destinationPosition = destinationPort.getPosition();
 		
-		Location newPosition = oldPosition.moveTowardsPointByDistanceInKM(destinationPosition, shipSpeedKPH);
+		Location newPosition = container.moveTowardsPointByDistanceInKM(destinationPosition, shipSpeedKPH);
 		
 		container.setCurrentPosition(newPosition.getLatitude(), newPosition.getLongitude());
 		container.setUpdated(currentTime.toString());

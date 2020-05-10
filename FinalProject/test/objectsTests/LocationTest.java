@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.*;
 
+import dataBase.DataBase;
 import dataWrappers.Location;
 
 public class LocationTest {
@@ -28,4 +29,7 @@ public class LocationTest {
 		location.setLongitude(367.0f);
 		assertNotSame((int)36.99f,(int)location.getLongitude());
 	}
+	
+
+	
 }

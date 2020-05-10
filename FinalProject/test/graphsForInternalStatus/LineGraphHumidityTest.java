@@ -21,7 +21,10 @@ public class LineGraphHumidityTest {
 	    graph = new LineGraphHumidity("Humidity graph","207115694");
 	    String values = graph.getValues();
 	    assertTrue(values.contains("66.0"));
-	    
+	    DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 	
 	

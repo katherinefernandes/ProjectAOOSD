@@ -2,9 +2,11 @@ package controllersTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import controllers.ClientController;
+import dataBase.DataBase;
 import objects.Client;
 import objects.Port;
 import supportingClasses.InputParser;
@@ -13,7 +15,8 @@ import supportingClasses.Security;
 class ClientControllerTest {
 	ClientController controller;
 	
-	public  ClientControllerTest() {
+	@BeforeEach
+	public void  Test() {
 		Client client = new Client(Security.generateIDFromSecureRandom(),"company",92,23789,"email@eh.com",InputParser.parsingNames("Daniela"),InputParser.parsingNames(""),InputParser.parsingNames("Bahneanu"),"g11/2","Islamabad",59,"2620");
 		client.save();
 		controller = new ClientController(Long.toString(client.getID()));
@@ -31,7 +34,10 @@ class ClientControllerTest {
 		assertFalse(controller.getcheckMessage());
 		controller.saveReferencePerson("Muna", " ", "a22");
 		assertFalse(controller.getcheckMessage());
-		
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 	@Test
 	void testSavePhoneNumber() {
@@ -47,7 +53,10 @@ class ClientControllerTest {
 		assertFalse(controller.getcheckMessage());
 		controller.savePhoneNumber("11222", "91");
 		assertFalse(controller.getcheckMessage());
-		
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 	
 
@@ -57,6 +66,10 @@ class ClientControllerTest {
 		assertTrue(controller.getcheckMessage());
 		controller.saveEmail("emaill.com");
 		assertFalse(controller.getcheckMessage());
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 
 	@Test
@@ -67,7 +80,10 @@ class ClientControllerTest {
 		assertTrue(controller.getReferencePerson().contains("Daniela"));
 		assertTrue(controller.getAddress().contains("Islamabad"));
 		assertTrue(controller.getAllActiveShipments().contains("All Active Journeys: "));
-		
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 		
 	}
 
@@ -86,7 +102,10 @@ class ClientControllerTest {
 		String result = controller.getMulitpleContainersData();
 		assertTrue(result.contains("Displaying Up to most 2 Containers: "));
 		controller.searchContainer("mm", "fruits", "random");
-		
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 
 

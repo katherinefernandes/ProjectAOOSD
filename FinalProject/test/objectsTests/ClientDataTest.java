@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.*;
 
+import dataBase.DataBase;
 import objects.Client;
 import objects.Port;
 
@@ -27,6 +28,7 @@ public class ClientDataTest {
 	public void equalityTest() {
 		Client objectTest2 = new Client(31l,"company",92,23789,"email@eh.com",firstname,middlename,lastname,"g11/2","Islamabad",59,"2620");
 		assertTrue(objectTest.equals(objectTest2));
+		
 	}
 	
 	@Test
@@ -91,6 +93,14 @@ public class ClientDataTest {
 		List<String> values = objectTest.getAllValues();
 		assertTrue(values.get(0).equals(Long.toString(objectTest.getID())));
 		
+	}
+	
+	@AfterEach
+	public void cleanData() {
+		DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 
 }

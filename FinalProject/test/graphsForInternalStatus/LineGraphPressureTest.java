@@ -21,7 +21,10 @@ public class LineGraphPressureTest {
 	    graph = new LineGraphPressure("Pressure graph","112031");
 	    String values = graph.getValues();
 	    assertTrue(values.contains("108"));
-	    
+	    DataBase.wipeClients();
+		DataBase.wipeContainers();
+		DataBase.wipeHistory();
+		DataBase.wipePorts();
 	}
 	
 }
