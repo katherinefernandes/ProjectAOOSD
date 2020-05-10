@@ -2,7 +2,11 @@ package updateContainer;
 
 import dataBase.DataBase;
 import objects.Container;
-
+/**
+ * Updates the last visited port for a container
+ * @author Katherine
+ *
+ */
 public class UpdatePort implements UpdateContainer {
 	private boolean update;
 	private long portID;

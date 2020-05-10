@@ -1,5 +1,3 @@
-
-
 Feature: Search clients
 Description: The Logistic Company should be able to search for clients.
  

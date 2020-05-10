@@ -103,6 +103,10 @@ public class Client extends BusinessObject{
 		return values;
 	}
 
+	/**
+	 * This method is used to update the journey information when a journey ends
+	 * @param journeyID
+	 */
 	public void updateJourneyInformation(long journeyID) {
 		removeActiveShipment(journeyID);
 		addFinishedShipment(journeyID);

@@ -29,7 +29,6 @@ import javax.swing.ScrollPaneConstants;
 
 public class ClientMenu {
 
-	//private long clientID;
 	
 	public JFrame frame;
 	private JButton emailButton,AddJourneyButton,ReferencepersonButton,ContainerButton;

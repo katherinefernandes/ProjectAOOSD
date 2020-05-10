@@ -2,7 +2,11 @@ package updateContainer;
 
 import dataBase.DataBase;
 import objects.Container;
-
+/**
+ * Updates the internal environment status of the container
+ * @author Katherine
+ *
+ */
 public class UpdateStatus implements UpdateContainer{
 
 	private boolean update;

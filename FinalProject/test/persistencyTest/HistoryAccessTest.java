@@ -62,10 +62,8 @@ public class HistoryAccessTest extends DataAccessTest<Container> {
 	}
 
 
-
-	@Override
-	@AfterEach
-	public void cleanUp() { // needs to be tested
+	@AfterEach@Override
+	public void cleanUp() { 
 		toBeDeleted = new ArrayList<>();
 		DataBase.wipeHistory();
 	}

@@ -55,7 +55,7 @@ public class Simulator {
 		}
 		CompanyApplication application = new CompanyApplication();
 		for(UpdatePort update : updates) {
-			application.getContainer(update.getContainer());
+			application.setContainer(update.getContainer());
 			application.updateContainerInformation(update);
 		}
 	}

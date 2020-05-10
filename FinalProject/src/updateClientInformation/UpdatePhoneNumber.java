@@ -4,7 +4,7 @@ import objects.Client;
 
 /**
  * This class is used to update the phone number for a client
- * @author Abdullah da boss
+ * @author Mamuna
  *
  */
 public class UpdatePhoneNumber implements UpdateClient {

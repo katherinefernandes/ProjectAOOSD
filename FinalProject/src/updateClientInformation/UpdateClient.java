@@ -9,7 +9,7 @@ public interface UpdateClient {
 	 * updateInformation will replace the current information of the client 
 	 * with new information
 	 * @param client
-	 * @return
+	 * @return Updated Client
 	 */
 	Client updateInformation(Client client);
 }

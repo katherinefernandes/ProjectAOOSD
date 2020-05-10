@@ -889,10 +889,7 @@ public class ApplicationSteps {
     @Then("a new client is created")
     public void clientExists(){
     	assertTrue(currentClient != null);
-    	clearDataBase();
     }
-    
-    //--------------------------------------------------------
     @When("the simulation decides to create a new journey")
     public void simulateJourneyCreation() {
     	currentJourney = simulator.simulateJourneyCreation(0.0);
@@ -908,9 +905,8 @@ public class ApplicationSteps {
 	@Then("the journey is assigned to a client")
 	public void clientIsAssigned(){
 		assertTrue(currentClient.getActiveShipments().contains(currentJourney));
-		clearDataBase();
+		
 	}
-	//--------------------------------------------------------
 	@Given("that the following ports are defined:$")
 	public void definePorts(DataTable table) {
 		List<Map<String,String>> ports = table.asMaps();
@@ -985,8 +981,7 @@ public class ApplicationSteps {
 	public void temperatureIsChanged() {
 		float oldTemperature = currentContainer.getInternalStatus().getTemperature();
 		float newTemperature = updatedContainer.getInternalStatus().getTemperature();
-		assertTrue(oldTemperature != newTemperature); //This could possible return return a failure with working code, 
-													  //but the chance is very small
+		assertTrue(oldTemperature != newTemperature); 
 		assertTrue(Math.abs(oldTemperature - newTemperature) <= 0.5F);
 		assertTrue(newTemperature <= 90.F && newTemperature >= -10.F);
 	}
@@ -995,8 +990,7 @@ public class ApplicationSteps {
 	public void humidityIsChanged() {
 		float oldHumidity = currentContainer.getInternalStatus().getHumidity();
 		float newHumidity = updatedContainer.getInternalStatus().getHumidity();
-		assertTrue(oldHumidity != newHumidity); //This could possible return return a failure with working code, 
-													  //but the chance is very small
+		assertTrue(oldHumidity != newHumidity); 
 		assertTrue(Math.abs(oldHumidity - newHumidity) <= 0.5F);
 		assertTrue(newHumidity <= 100.F && newHumidity >= 0.F);
 	}
@@ -1005,13 +999,10 @@ public class ApplicationSteps {
 	public void atmosphereIsChanged() {
 		float oldAtmosphere = currentContainer.getInternalStatus().getAtmosphere();
 		float newAtmosphere = updatedContainer.getInternalStatus().getAtmosphere();
-		assertTrue(oldAtmosphere != newAtmosphere); //This could possible return return a failure with working code, 
-													//but the chance is very small
+		assertTrue(oldAtmosphere != newAtmosphere); 
 		assertTrue(Math.abs(oldAtmosphere - newAtmosphere) <= 0.05F);
 		assertTrue(newAtmosphere <= 3.F && newAtmosphere >= 0.5F);
-		clearDataBase();
 	}
-	//---------------------------------------------------------------
 	@Given("the port with ID={long} has the arriving container with ID={long}")
 	public void assignArrivingContainer(long portID, long containerID) {
 		try {

@@ -1,5 +1,9 @@
 package dataWrappers;
-
+/**
+ * Used to contain the information about the internal environment
+ * @author Mamuna
+ *
+ */
 public class InternalStatus  {
 	private float Atmosphere;
 	private float Temperature;
