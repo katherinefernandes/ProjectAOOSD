@@ -7,7 +7,7 @@ public class Start {
 	
 	public static void main(String[] args) {		
 		if(args.length > 0) {
-			if(args[0].toLowerCase() == "true") {
+			if(args[0].toLowerCase().equals("true")) {
 				simulationOn = true;
 			}
 		}
