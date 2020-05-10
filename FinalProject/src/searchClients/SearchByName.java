@@ -4,7 +4,11 @@ import java.util.List;
 
 import dataBase.DataBase;
 import objects.Client;
-
+/**
+ * Searches the database depending on the name entered of a client
+ * @author Katherine
+ *
+ */
 public class SearchByName implements SearchClients{
 	private String name;
 	

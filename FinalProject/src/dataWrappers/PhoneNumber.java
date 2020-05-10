@@ -1,5 +1,9 @@
 package dataWrappers;
-
+/**
+ * Used to contain the information about the phonenumber
+ * @author Mamuna
+ *
+ */
 public class PhoneNumber {
 	private int country;
 	private long phone;

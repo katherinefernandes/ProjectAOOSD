@@ -1,7 +1,11 @@
 package dataWrappers;
 
 import java.util.*;
-
+/**
+ * Used to contain the information about a persons name
+ * @author Mamuna
+ *
+ */
 public class ReferenceName {
 	private List<String> firstName;
 	private List<String> middleName;

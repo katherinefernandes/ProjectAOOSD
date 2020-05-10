@@ -1,5 +1,9 @@
 package dataWrappers;
-
+/**
+ * Used to contain information about the address for a user
+ * @author Mamuna
+ *
+ */
 public class Address {
   private String streetName;
   private int houseNumber;

@@ -3,7 +3,11 @@ package updateClientInformation;
 import java.util.ArrayList;
 
 import objects.Client;
-
+/**
+ * Used to update the referencePerson details for the client
+ * @author Mamuna
+ *
+ */
 public class UpdateReferencePerson implements UpdateClient {
 	private ArrayList<String> firstName;
 	private ArrayList<String> middleName;

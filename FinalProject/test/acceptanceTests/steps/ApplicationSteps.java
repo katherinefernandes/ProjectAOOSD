@@ -889,7 +889,6 @@ public class ApplicationSteps {
     @Then("a new client is created")
     public void clientExists(){
     	assertTrue(currentClient != null);
-    	clearDataBase();
     }
   
     @When("the simulation decides to create a new journey")
@@ -907,7 +906,7 @@ public class ApplicationSteps {
 	@Then("the journey is assigned to a client")
 	public void clientIsAssigned(){
 		assertTrue(currentClient.getActiveShipments().contains(currentJourney));
-		clearDataBase();
+		
 	}
 	@Given("that the following ports are defined:$")
 	public void definePorts(DataTable table) {
@@ -1004,9 +1003,7 @@ public class ApplicationSteps {
 		assertTrue(oldAtmosphere != newAtmosphere); 
 		assertTrue(Math.abs(oldAtmosphere - newAtmosphere) <= 0.05F);
 		assertTrue(newAtmosphere <= 3.F && newAtmosphere >= 0.5F);
-		clearDataBase();
 	}
-	//---------------------------------------------------------------
 	@Given("the port with ID={long} has the arriving container with ID={long}")
 	public void assignArrivingContainer(long portID, long containerID) {
 		try {

@@ -88,7 +88,7 @@ public class Port extends BusinessObject{
 	/**
 	 *This method will return a containerID of a container which will be used to register a 
 	 *journey.
-	 * @return
+	 * @return the containerID
 	 */
 	
 	public long containerIDForJourneyRegisteration() {

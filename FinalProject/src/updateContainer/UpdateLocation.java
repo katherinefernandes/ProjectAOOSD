@@ -4,7 +4,11 @@ import java.time.LocalDateTime;
 
 import dataBase.DataBase;
 import objects.Container;
-
+/**
+ * Updates the current location for the container
+ * @author Katherine
+ *
+ */
 public class UpdateLocation implements UpdateContainer{
 
 	private boolean update;
@@ -18,13 +22,6 @@ public class UpdateLocation implements UpdateContainer{
 		this.update = false;
 		currentTime = LocalDateTime.now().toString();
 	}
-	
-	
-	//Where is this constructor being used?-mamuna
-	/*public UpdateLocation(float lon, float lat, String currentTime) {
-		this(lon, lat);
-		this.currentTime = currentTime;
-	}*/
 	
 	
 	@Override

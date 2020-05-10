@@ -33,7 +33,11 @@ import updateContainer.UpdatePort;
 import updateContainer.UpdateStatus;
 import worldMap.MapPane;
 
-
+/**
+ * Connects the CompanyApplication to the logisticMenu
+ * @author Daniela
+ *
+ */
 public class LogisticController {
 	private CompanyApplication logistic;
 	private String companyName;
@@ -168,6 +172,11 @@ public class LogisticController {
 		return port.getPortName();
 	}
 
+	
+	/**
+	 * Gets the container data for a single container stored in the companyApplication
+	 * @return string of data
+	 */
 	public String getContainerData() {
 		Container container = logistic.viewContainer();
 		String result="\n";
@@ -254,7 +263,10 @@ public class LogisticController {
 		addClients(clientsFound);
 	}
 
- 
+ /**
+  * Used to display information for up to most 3 clients
+  * @return a string of data
+  */
 	public String getclientsview() {
         System.out.println("Inside get client view");
 		String result ="Displaying Up to most 3 Clients: ";
@@ -283,7 +295,21 @@ public class LogisticController {
 	}
 
 
-	
+	/**
+	 * It creates a new client in the system
+	 * @param postcode
+	 * @param building
+	 * @param city
+	 * @param street
+	 * @param lastname
+	 * @param middlename
+	 * @param firstname
+	 * @param phone
+	 * @param countrycode
+	 * @param email
+	 * @param companyname
+	 * @return true if the registeration was successful
+	 */
 	public boolean addNewClient(String postcode, String building, String city, String street, String lastname, String middlename,String firstname, String phone, String countrycode, String email,String companyname) {
 		checkMessage = false;
 		setCompanyName(companyname);
@@ -351,7 +377,12 @@ public class LogisticController {
 		
 	}
 
-
+/**
+ * Updates the container position 
+ * @param containerID
+ * @param logitude
+ * @param latitude
+ */
 	public void updateContainerPosition(String containerID, String logitude, String latitude) {
 		checkMessage = false;
 		if(ValidInputType.validateLong(containerID)) {
@@ -380,7 +411,13 @@ public class LogisticController {
 			
 		}
 	}
-
+	/**
+	 * Updates the container status
+	 * @param containerID
+	 * @param press
+	 * @param humid
+	 * @param temp
+	 */
 
 	public void updateContainerStatus(String containerID, String press, String humid, String temp) {
 		checkMessage = false;
@@ -409,12 +446,23 @@ public class LogisticController {
 		}
 		
 	}
-	
+	/**
+	 * Used to check if the updates and the search was successful
+	 * @return checkMessage
+	 */
 	public boolean checkMessage() {
 		return checkMessage;
 	}
 
-
+	/**
+	 * Allows the company to search for a client
+	 * @param email
+	 * @param company
+	 * @param phone
+	 * @param firstname
+	 * @param middle
+	 * @param last
+	 */
 	public void searchClient(String email, String company, String phone, String firstname, String middle, String last) {
 		checkMessage=false;
 		if (!email.isEmpty()) {
@@ -448,12 +496,19 @@ public class LogisticController {
 		}
 	}
 
-
+	/**
+	 * Used to extract the information for all the registered, active journeys
+	 * @return string of data
+	 */
 	public String getAllJourneys() {
 		
 		return new DataForViewAllJourneys().getOutPut();
 	}
-
+	/**
+	 * Used to update the last Port container has visited
+	 * @param containerID
+	 * @param portName
+	 */
 	public void updateContainerPort(String containerID, String portName) {
 		checkMessage = false;
 		if(ValidInputType.validateLong(containerID)) {
@@ -493,7 +548,9 @@ public class LogisticController {
 		
 	}
 	
-
+	/**
+	 * Used to display the world map
+	 */
 	public void startMap() {
 		SwingUtilities.invokeLater(() -> {  
 			MapPane m=new MapPane("");

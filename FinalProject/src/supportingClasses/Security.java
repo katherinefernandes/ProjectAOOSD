@@ -1,7 +1,11 @@
 package supportingClasses;
 
 import java.security.SecureRandom;
-
+/**
+ * Generates a unique ID
+ * @author Daniela 
+ *
+ */
 public class Security {	
 		
 

@@ -9,6 +9,11 @@ import dataBase.DataBase;
 import dataWrappers.ReferenceName;
 import objects.Client;
 
+/**
+ * Searches the database for clients with the same reference person
+ * @author Katherine
+ *
+ */
 public class SearchByReferencePerson implements SearchClients{
 	private ReferenceName referencePerson;
 	

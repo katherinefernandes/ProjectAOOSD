@@ -2,13 +2,25 @@ package supportingClasses;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+/**
+ * Validates the different types of data input
+ * @author Katherine
+ *
+ */
 public class ValidInput {
-	
+	/**
+	 * Validates the email format
+	 * @param email
+	 * @return boolean
+	 */
 	public  boolean validateEmail (String email) {
 		return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
 	}
- 
+ /**
+  * Validates the country code length
+  * @param countryCode
+  * @return boolean
+  */
 	public  boolean validateCountryCode (int countryCode) {
 		
 		if (countryCode < 1000 & countryCode > 0) {
@@ -19,7 +31,11 @@ public class ValidInput {
 		}
 		
 	}
-	
+	/**
+	 * Validates the phone number length
+	 * @param phone
+	 * @return boolean
+	 */
 	public  boolean validatePhone (long phone) {
 	
 		if (String.valueOf(phone).length() > 4 & String.valueOf(phone).length() < 16) {
@@ -29,17 +45,29 @@ public class ValidInput {
 			return false;
 		}
 	}
-	
+	/**
+	 * Validate a person's name or cargo name
+	 * @param name
+	 * @return boolean
+	 */
 	public  boolean validateName (String name) {
 		return name.matches("^[a-zA-Zàáâäãåą�?ćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñç�?šžÀ�?ÂÄÃÅĄĆČĖĘÈÉÊËÌ�?Î�?Į�?ŃÒÓÔÖÕØÙÚÛÜŲŪŸ�?ŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$");
 	}
 	
 	
-	
+	/**
+	 * Validates the postcode 
+	 * @param zip
+	 * @return boolean
+	 */
 	public  boolean validatePostCode (String zip) {
 		return zip.matches("^[a-zA-Z0-9-]+$");
 	}
-	
+	/**
+	 * Validates the location number
+	 * @param number
+	 * @return boolean
+	 */
 	public boolean validateLocation (float number) {
 		if (number >= -180 & number <= 180) {
 			return true;
