@@ -892,13 +892,6 @@ public class ApplicationSteps {
     	clearDataBase();
     }
     
-  /*  @Then("the new client is displayed")
-    public void clientIsSaved(){
-    	SearchByEmail search = new SearchByEmail("");
-    	viewedClients = companySession.search(search);
-    	assertTrue(viewedClients.contains(currentClient));
-    	clearDataBase();
-    }*/
     //--------------------------------------------------------
     @When("the simulation decides to create a new journey")
     public void simulateJourneyCreation() {

@@ -49,6 +49,9 @@ class RandomGenerator {
 		if(instance == null) {
 			instance = new RandomGenerator();
 		}
+		instance.pullRandomClients();
+		instance.pullRandomContainers();
+		instance.pullRandomPorts();
 		return instance;
 	}
 
