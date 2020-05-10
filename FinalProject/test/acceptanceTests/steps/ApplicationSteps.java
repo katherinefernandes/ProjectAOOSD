@@ -890,7 +890,6 @@ public class ApplicationSteps {
     public void clientExists(){
     	assertTrue(currentClient != null);
     }
-  
     @When("the simulation decides to create a new journey")
     public void simulateJourneyCreation() {
     	currentJourney = simulator.simulateJourneyCreation(0.0);
