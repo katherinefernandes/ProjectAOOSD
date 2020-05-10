@@ -1,7 +1,5 @@
 package simulation;
-//4900 first names
-//11000 last names
-//7700 words
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -12,7 +10,12 @@ import dataBase.DataBase;
 import exceptions.ElementSelectionException;
 import objects.*;
 
-
+/**
+ * This class does the work of generating random values. 
+ * It implements the singleton pattern, to avoid problems with files containing words and names
+ * @author simon
+ *
+ */
 class RandomGenerator {
 	private Random random;
 	private RandomAccessFile firstNames;
@@ -25,8 +28,9 @@ class RandomGenerator {
 	private List<Long> randomClientSelection;
 	private List<Long> randomContainerSelection;
 	private List<Long> randomPortSelection;
+	private static RandomGenerator instance;
 	
-	public RandomGenerator() {
+	private RandomGenerator() {
 		try {
 			firstNames = new RandomAccessFile("storage/simulation/firstNames.txt","r");
 			lastNames = new RandomAccessFile("storage/simulation/lastNames.txt","r");
@@ -39,6 +43,13 @@ class RandomGenerator {
 		pullRandomClients();
 		pullRandomContainers();
 		pullRandomPorts();
+	}
+	
+	public static RandomGenerator getInstance() {
+		if(instance == null) {
+			instance = new RandomGenerator();
+		}
+		return instance;
 	}
 
 	public String getRandomFirstName() {

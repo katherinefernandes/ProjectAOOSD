@@ -5,6 +5,14 @@ import javax.xml.stream.events.XMLEvent;
 import dataBase.IdentifiablePersistency;
 import objects.Port;
 
+/**
+ * This class implements the database for ports.
+ * It implements the singleton pattern, and is supposed to be used through the
+ * IdentifiablePersistency interface.
+ * It is one of the four entry points to the xmlParser package.
+ * @author simon
+ *
+ */
 public class PortXMLManipulation extends GeneralXMLManipulation<Port> implements IdentifiablePersistency<Port> {
 	private static PortXMLManipulation selfInstance;
 	
