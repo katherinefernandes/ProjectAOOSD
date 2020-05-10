@@ -12,11 +12,19 @@ import objects.*;
 import supportingClasses.Security;
 import updateContainer.UpdateStatus;
 
+/**
+ * This class executes the actions a user can perform, as called from the simulator.
+ * @author simon
+ *
+ */
 public class UserActionGenerator {
-	private RandomGenerator randomGenerator = new RandomGenerator();
+	private RandomGenerator randomGenerator = RandomGenerator.getInstance();
 	private int shipSpeedKPH = 60;
 	
-	
+	/**
+	 * Generates a new client. 
+	 * @return the created client
+	 */
 	public Client generateNewClient() {
 		List<List<String>> refrencePersonName = randomGenerator.generateRefrenceName();
 		Client client = new Client(Security.generateIDFromSecureRandom(), 
@@ -30,6 +38,11 @@ public class UserActionGenerator {
 		return client;
 	}
 	
+	/**
+	 * Generates a new journey
+	 * @param currentTime - the current time given from the simulation
+	 * @return the ID of the created journey
+	 */
 	public long generateNewJourney(LocalDateTime currentTime) {
 		Client client = randomGenerator.getRandomClient();
 		Port startPort = randomGenerator.getRandomPort();
@@ -42,31 +55,37 @@ public class UserActionGenerator {
 		float startHumidity = randomGenerator.generateHumidity();
 		float startAtmosphere = randomGenerator.generateAtmosphere();
 		String arriveBy = randomGenerator.generateArriveBy();
-
-		//TODO must be changed when application is changed
+		
 		ClientApplication user = new ClientApplication(client.getID());
 		long journeyID = user.registerContainerForAJourney(startPort.getID(), destinationPort.getID(), cargo, startTemperature, startAtmosphere, startHumidity, arriveBy, currentTime.toString());
 		return journeyID;
 	}
 	
-	public void changeContainerPosition(Container container, LocalDateTime currentTime) throws ElementSelectionException {
-		Location oldPosition = container.getCurrentPosition();
+	/**
+	 * Changes the position of a container, towards its destination port
+	 * @param container - the container to be 
+	 * @param currentTime - the current time given from the simulation
+	 */
+	public void changeContainerPosition(Container container, LocalDateTime currentTime) {
 		Port destinationPort;
 		try {
 			destinationPort = DataBase.getPort(container.getDestinationPortID());
 		} catch (ElementSelectionException e) {
-			throw new Error(e);
+			throw new Error("The destination port isn't in the database",e);
 		}
 		Location destinationPosition = destinationPort.getPosition();
 		
-		Location newPosition = container.moveTowardsPointByDistanceInKM(destinationPosition, shipSpeedKPH);
+		container.moveTowardsPointByDistanceInKM(destinationPosition, shipSpeedKPH);
 		
-		container.setCurrentPosition(newPosition.getLatitude(), newPosition.getLongitude());
 		container.setUpdated(currentTime.toString());
 		container.save();
 	}
 	
-	public void changeContainerStatus(Container container) throws ElementSelectionException {
+	/**
+	 * Changes the internal status of a container
+	 * @param container - the container to be modified
+	 */
+	public void changeContainerStatus(Container container){
 		InternalStatus oldStatus = container.getInternalStatus();
 		float newTemperature = randomGenerator.changeTemperature(oldStatus.getTemperature());
 		float newHumidity = randomGenerator.changeHumidity(oldStatus.getHumidity());
@@ -74,7 +93,13 @@ public class UserActionGenerator {
 
 		UpdateStatus update = new UpdateStatus(newTemperature,newHumidity,newAtmosphere);
 		CompanyApplication user = new CompanyApplication();
-		user.getContainer(container.getID());
+		
+		try {
+			user.getContainer(container.getID());
+		} catch (ElementSelectionException e) {
+			throw new Error("The container isn't saved in the database",e);
+		}
+		
 		user.updateContainerInformation(update);
 	}
 }

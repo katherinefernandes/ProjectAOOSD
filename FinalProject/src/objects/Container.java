@@ -181,43 +181,16 @@ public class Container extends BusinessObject {
 	}
 	
 
-	public Location moveTowardsPointByDistanceInKM(Location destination, float distance) {
-		float[] direction = directionVectorTowardsDestination(destination);
-		float newLongitude = this.currentPosition.getLongitude() + direction[0]*distance/distancePerLongitudeDegreeKM();
-		float newLatitude = this.currentPosition.getLatitude() + direction[1]*distance/distancePerLatitudeDegreeKM();
-		return new Location(newLatitude, newLongitude);
-	}
-	
-	public float distanceTo(Location position) {
-		return (float) (Math.toRadians(distanceToPointInDegrees(position))*6378F);
-	}
-	
-	private float distancePerLatitudeDegreeKM() {
-		return 111F;
-	}
-	private float distancePerLongitudeDegreeKM() {
-		return (float) (Math.cos(Math.toRadians(this.currentPosition.getLatitude()))*111F);
-	}
-	private float[] directionVectorTowardsDestination(Location destination) {
-		float[] vector = {0,0};
-		double distanceInDegrees = distanceToPointInDegrees(destination);
-		vector[0] = (float) ((destination.getLongitude() - this.currentPosition.getLongitude()) / distanceInDegrees);
-		vector[1] = (float) ((destination.getLatitude() - this.currentPosition.getLatitude()) / distanceInDegrees);
-		return vector;
-	}
-	
-	private double distanceToPointInDegrees(Location destination) {
-		double angle1 = Math.toRadians(90. - this.currentPosition.getLatitude());
-		double angle2 = Math.toRadians(90. - destination.getLatitude());
-		double angle3 = Math.toRadians(Math.abs(this.currentPosition.getLongitude() - destination.getLongitude()));
-		double radians = Math.acos(Math.cos(angle1)*Math.cos(angle2) 
-			 	  		 + Math.sin(angle1)*Math.sin(angle2)*Math.cos(angle3));
-		double distanceInDegrees = Math.toDegrees(radians);
-		return distanceInDegrees;
-	}
-	
-	
-	
-	
+	/**
+	 * This method changes the location of the container by approximately the given distance towards a given point
+	 * @param destination - the point to move the container towards
+	 * @param distance - the distance to move the container by, in kilometres.
+	 */
+	public void moveTowardsPointByDistanceInKM(Location destination, float distance) {
+		float[] direction = currentPosition.directionVectorTowardsDestination(destination);
+		float newLongitude = this.currentPosition.getLongitude() + direction[0]*distance/currentPosition.distancePerLongitudeDegreeKM();
+		float newLatitude = this.currentPosition.getLatitude() + direction[1]*distance/currentPosition.distancePerLatitudeDegreeKM();
+		setCurrentPosition(newLatitude, newLongitude);
+	}	
 	
 }

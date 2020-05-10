@@ -12,10 +12,24 @@ import org.json.simple.parser.ParseException;
 
 import objects.Port;
 
+/**
+ * This class generates ports from the json containing port data
+ * @author simon
+ *
+ */
 class PortInitializer {
-	Random random;
-	public PortInitializer() {
+	private Random random;
+	private static PortInitializer instance;
+	
+	private PortInitializer() {
 		random = new Random();
+	}
+	
+	public static PortInitializer getInstance() {
+		if(instance == null) {
+			instance = new PortInitializer();
+		}
+		return instance;
 	}
 	
 	public void generatePorts() {
