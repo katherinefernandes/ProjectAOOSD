@@ -771,7 +771,7 @@ public class ClientController {
 		}
 		return "";
 	}
-	
+
 	
 	
 	private String getLastUpdated(long journeys) {

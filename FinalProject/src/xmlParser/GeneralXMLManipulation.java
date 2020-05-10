@@ -6,7 +6,7 @@ import java.util.List;
 import exceptions.ElementSelectionException;
 import objects.BusinessObject;
 
-public abstract class GeneralXMLManipulation<T extends BusinessObject> {
+abstract class GeneralXMLManipulation<T extends BusinessObject> {
 	protected String dataPointTagName;
 	protected String collectionTagName;
 	protected IO io;

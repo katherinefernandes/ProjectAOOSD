@@ -3,6 +3,14 @@ package xmlParser;
 import dataBase.IdentifiablePersistency;
 import objects.*;
 
+/**
+ * This class implements the database for containers.
+ * It implements the singleton pattern, and is supposed to be used through the
+ * IdentifiablePersistency interface.
+ * It is one of the four entry points to the xmlParser package.
+ * @author simon
+ *
+ */
 public class ContainerXMLManipulation extends GeneralXMLManipulation<Container> implements IdentifiablePersistency<Container> {
 	private static ContainerXMLManipulation selfInstance;
 	

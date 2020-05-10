@@ -6,6 +6,14 @@ import javax.xml.stream.events.*;
 import dataBase.IdentifiablePersistency;
 import objects.*;
 
+/**
+ * This class implements the database for clients.
+ * It implements the singleton pattern, and is supposed to be used through the
+ * IdentifiablePersistency interface.
+ * It is one of the four entry points to the xmlParser package.
+ * @author simon
+ *
+ */
 public class ClientXMLManipulation extends GeneralXMLManipulation<Client> implements IdentifiablePersistency<Client> {
 	private static ClientXMLManipulation selfInstance;
 	

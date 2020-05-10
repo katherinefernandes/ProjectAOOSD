@@ -4,6 +4,14 @@ import java.util.*;
 
 import objects.Container;
 
+/**
+ * This class implements the database for the historical record of containers.
+ * It implements the singleton pattern, and is supposed to be used through the
+ * GeneralPersistency interface.
+ * It is one of the four entry points to the xmlParser package.
+ * @author simon
+ *
+ */
 public class HistoryXMLManipulation extends ContainerXMLManipulation{	
 	private static HistoryXMLManipulation selfInstance;
 	
