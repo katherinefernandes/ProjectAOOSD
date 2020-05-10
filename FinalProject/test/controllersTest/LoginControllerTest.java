@@ -9,18 +9,15 @@ import org.junit.Test;
 
 import controllers.LoginController;
 import dataBase.DataBase;
-import graphicalInterface.LoginWindow;
 import objects.Client;
 import supportingClasses.InputParser;
 
 public class LoginControllerTest {
 	private LoginController controller;
-	private LoginWindow window ;
 
 	@Before
 	public void initialize() {
 		controller = new LoginController();
-		window = new LoginWindow(controller);
 		
 	}
 	
