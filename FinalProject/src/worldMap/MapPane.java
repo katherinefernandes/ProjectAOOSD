@@ -6,7 +6,11 @@ import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JPanel;
 
-
+/**
+ * This class displays the world map with icons in a new panel.
+ * @author simon
+ *
+ */
 public class MapPane extends JPanel{
 	private static final long serialVersionUID = 1540837497004158859L;
 	public final static int mapWidth = 1500;
@@ -20,6 +24,9 @@ public class MapPane extends JPanel{
         iconGenerator = new IconGenerator(containerSelection);
 	}
 	
+	/**
+	 * This method paints the map and all icons
+	 */
 	@Override
     public void paintComponent(Graphics g) {
 		super.paintComponents(g);

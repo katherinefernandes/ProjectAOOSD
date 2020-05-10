@@ -7,12 +7,22 @@ import dataBase.DataBase;
 import objects.Container;
 import objects.Port;
 
+/**
+ * this class converts objects in the database to icons to display on the map
+ * @author simon
+ *
+ */
 public class IconGenerator {
 	List<Port> ports;
 	String containerSelection;
 	public IconGenerator(String containerSelection) {
 		this.containerSelection = containerSelection;
 	}
+	
+	/**
+	 * returns the list of all ports as icons
+	 * @return The list of icons
+	 */
 	public List<Icon> getPortIcons() {
 		List<Icon> icons = new ArrayList<>();
 		if(ports == null) {
@@ -27,6 +37,10 @@ public class IconGenerator {
 		return icons;
 	}
 
+	/**
+	 * returns all active containers as icons
+	 * @return the list of icons
+	 */
 	public List<Icon> getContainerIcons() {
 		List<Icon> icons = new ArrayList<>();
 		List<Container> Containers = DataBase.searchContainers(containerSelection);
